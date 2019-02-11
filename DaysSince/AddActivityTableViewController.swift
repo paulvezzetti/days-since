@@ -8,7 +8,7 @@
 
 import UIKit
 
-class AddTaskTableViewController: UITableViewController, DatePickerDelegate {
+class AddActivityTableViewController: UITableViewController, DatePickerDelegate {
     
     enum ActivityRows:Int {
         case TitleLabel = 0,

@@ -8,7 +8,7 @@
 
 import UIKit
 
-class TaskCollectionViewCell: UICollectionViewCell {
+class ActivityCollectionViewCell: UICollectionViewCell {
     
     @IBOutlet var labelDate: UILabel!
 }

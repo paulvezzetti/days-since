@@ -36,7 +36,7 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
     @objc
     func showAddModally(_ sender: Any) {
         // Safe Present
-        if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "AddTaskTable") as? AddTaskTableViewController
+        if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "AddTaskTable") as? AddActivityTableViewController
         {
             present(vc, animated: true, completion: nil)
         }

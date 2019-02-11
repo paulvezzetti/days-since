@@ -14,11 +14,11 @@
 		FA3CEF53220E0F2500634DD7 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FA3CEF51220E0F2500634DD7 /* Main.storyboard */; };
 		FA3CEF55220E0F2600634DD7 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FA3CEF54220E0F2600634DD7 /* Assets.xcassets */; };
 		FA3CEF58220E0F2600634DD7 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FA3CEF56220E0F2600634DD7 /* LaunchScreen.storyboard */; };
-		FA3CEF60220E1C3500634DD7 /* TaskCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA3CEF5F220E1C3500634DD7 /* TaskCollectionViewController.swift */; };
-		FA3CEF62220E22C700634DD7 /* TaskCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA3CEF61220E22C700634DD7 /* TaskCollectionViewCell.swift */; };
-		FA5596B0220E653500113AE1 /* AddTaskTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA5596AF220E653500113AE1 /* AddTaskTableViewController.swift */; };
+		FA3CEF60220E1C3500634DD7 /* ActivityCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA3CEF5F220E1C3500634DD7 /* ActivityCollectionViewController.swift */; };
+		FA3CEF62220E22C700634DD7 /* ActivityCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA3CEF61220E22C700634DD7 /* ActivityCollectionViewCell.swift */; };
 		FA5596B2220FB8F500113AE1 /* DatePickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA5596B1220FB8F500113AE1 /* DatePickerViewController.swift */; };
 		FA5596B62210FE2600113AE1 /* DatePickerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA5596B52210FE2600113AE1 /* DatePickerDelegate.swift */; };
+		FAA6AF1E2211C1E700346CCB /* AddActivityTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAA6AF1D2211C1E700346CCB /* AddActivityTableViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -31,11 +31,11 @@
 		FA3CEF54220E0F2600634DD7 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		FA3CEF57220E0F2600634DD7 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		FA3CEF59220E0F2600634DD7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		FA3CEF5F220E1C3500634DD7 /* TaskCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskCollectionViewController.swift; sourceTree = "<group>"; };
-		FA3CEF61220E22C700634DD7 /* TaskCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskCollectionViewCell.swift; sourceTree = "<group>"; };
-		FA5596AF220E653500113AE1 /* AddTaskTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTaskTableViewController.swift; sourceTree = "<group>"; };
+		FA3CEF5F220E1C3500634DD7 /* ActivityCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityCollectionViewController.swift; sourceTree = "<group>"; };
+		FA3CEF61220E22C700634DD7 /* ActivityCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityCollectionViewCell.swift; sourceTree = "<group>"; };
 		FA5596B1220FB8F500113AE1 /* DatePickerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatePickerViewController.swift; sourceTree = "<group>"; };
 		FA5596B52210FE2600113AE1 /* DatePickerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatePickerDelegate.swift; sourceTree = "<group>"; };
+		FAA6AF1D2211C1E700346CCB /* AddActivityTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddActivityTableViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -68,6 +68,7 @@
 		FA3CEF47220E0F2500634DD7 /* DaysSince */ = {
 			isa = PBXGroup;
 			children = (
+				FAA6AF1D2211C1E700346CCB /* AddActivityTableViewController.swift */,
 				FA5596B32210FDFD00113AE1 /* view */,
 				FA3CEF48220E0F2500634DD7 /* AppDelegate.swift */,
 				FA3CEF4D220E0F2500634DD7 /* MasterViewController.swift */,
@@ -77,9 +78,8 @@
 				FA3CEF56220E0F2600634DD7 /* LaunchScreen.storyboard */,
 				FA3CEF59220E0F2600634DD7 /* Info.plist */,
 				FA3CEF4A220E0F2500634DD7 /* DaysSince.xcdatamodeld */,
-				FA3CEF5F220E1C3500634DD7 /* TaskCollectionViewController.swift */,
-				FA3CEF61220E22C700634DD7 /* TaskCollectionViewCell.swift */,
-				FA5596AF220E653500113AE1 /* AddTaskTableViewController.swift */,
+				FA3CEF5F220E1C3500634DD7 /* ActivityCollectionViewController.swift */,
+				FA3CEF61220E22C700634DD7 /* ActivityCollectionViewCell.swift */,
 			);
 			path = DaysSince;
 			sourceTree = "<group>";
@@ -175,11 +175,11 @@
 				FA5596B62210FE2600113AE1 /* DatePickerDelegate.swift in Sources */,
 				FA3CEF49220E0F2500634DD7 /* AppDelegate.swift in Sources */,
 				FA3CEF4C220E0F2500634DD7 /* DaysSince.xcdatamodeld in Sources */,
+				FAA6AF1E2211C1E700346CCB /* AddActivityTableViewController.swift in Sources */,
 				FA3CEF4E220E0F2500634DD7 /* MasterViewController.swift in Sources */,
-				FA5596B0220E653500113AE1 /* AddTaskTableViewController.swift in Sources */,
 				FA5596B2220FB8F500113AE1 /* DatePickerViewController.swift in Sources */,
-				FA3CEF62220E22C700634DD7 /* TaskCollectionViewCell.swift in Sources */,
-				FA3CEF60220E1C3500634DD7 /* TaskCollectionViewController.swift in Sources */,
+				FA3CEF62220E22C700634DD7 /* ActivityCollectionViewCell.swift in Sources */,
+				FA3CEF60220E1C3500634DD7 /* ActivityCollectionViewController.swift in Sources */,
 				FA3CEF50220E0F2500634DD7 /* DetailViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

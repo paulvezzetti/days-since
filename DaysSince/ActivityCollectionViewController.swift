@@ -10,7 +10,7 @@ import UIKit
 import CoreData
 
 
-class TaskCollectionViewController: UICollectionViewController, NSFetchedResultsControllerDelegate {
+class ActivityCollectionViewController: UICollectionViewController, NSFetchedResultsControllerDelegate {
 
     var detailViewController: DetailViewController? = nil
     var managedObjectContext: NSManagedObjectContext? = nil
@@ -82,7 +82,7 @@ class TaskCollectionViewController: UICollectionViewController, NSFetchedResults
     }
 
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "taskCell", for: indexPath) as! TaskCollectionViewCell
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "taskCell", for: indexPath) as! ActivityCollectionViewCell
     
         // Configure the cell
         let event = fetchedResultsController.object(at: indexPath)
