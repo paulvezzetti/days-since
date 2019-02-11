@@ -16,6 +16,9 @@
 		FA3CEF58220E0F2600634DD7 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FA3CEF56220E0F2600634DD7 /* LaunchScreen.storyboard */; };
 		FA3CEF60220E1C3500634DD7 /* TaskCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA3CEF5F220E1C3500634DD7 /* TaskCollectionViewController.swift */; };
 		FA3CEF62220E22C700634DD7 /* TaskCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA3CEF61220E22C700634DD7 /* TaskCollectionViewCell.swift */; };
+		FA5596B0220E653500113AE1 /* AddTaskTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA5596AF220E653500113AE1 /* AddTaskTableViewController.swift */; };
+		FA5596B2220FB8F500113AE1 /* DatePickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA5596B1220FB8F500113AE1 /* DatePickerViewController.swift */; };
+		FA5596B62210FE2600113AE1 /* DatePickerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA5596B52210FE2600113AE1 /* DatePickerDelegate.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -30,6 +33,9 @@
 		FA3CEF59220E0F2600634DD7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		FA3CEF5F220E1C3500634DD7 /* TaskCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskCollectionViewController.swift; sourceTree = "<group>"; };
 		FA3CEF61220E22C700634DD7 /* TaskCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskCollectionViewCell.swift; sourceTree = "<group>"; };
+		FA5596AF220E653500113AE1 /* AddTaskTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTaskTableViewController.swift; sourceTree = "<group>"; };
+		FA5596B1220FB8F500113AE1 /* DatePickerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatePickerViewController.swift; sourceTree = "<group>"; };
+		FA5596B52210FE2600113AE1 /* DatePickerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatePickerDelegate.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -62,6 +68,7 @@
 		FA3CEF47220E0F2500634DD7 /* DaysSince */ = {
 			isa = PBXGroup;
 			children = (
+				FA5596B32210FDFD00113AE1 /* view */,
 				FA3CEF48220E0F2500634DD7 /* AppDelegate.swift */,
 				FA3CEF4D220E0F2500634DD7 /* MasterViewController.swift */,
 				FA3CEF4F220E0F2500634DD7 /* DetailViewController.swift */,
@@ -72,8 +79,26 @@
 				FA3CEF4A220E0F2500634DD7 /* DaysSince.xcdatamodeld */,
 				FA3CEF5F220E1C3500634DD7 /* TaskCollectionViewController.swift */,
 				FA3CEF61220E22C700634DD7 /* TaskCollectionViewCell.swift */,
+				FA5596AF220E653500113AE1 /* AddTaskTableViewController.swift */,
 			);
 			path = DaysSince;
+			sourceTree = "<group>";
+		};
+		FA5596B32210FDFD00113AE1 /* view */ = {
+			isa = PBXGroup;
+			children = (
+				FA5596B42210FE0800113AE1 /* components */,
+			);
+			path = view;
+			sourceTree = "<group>";
+		};
+		FA5596B42210FE0800113AE1 /* components */ = {
+			isa = PBXGroup;
+			children = (
+				FA5596B1220FB8F500113AE1 /* DatePickerViewController.swift */,
+				FA5596B52210FE2600113AE1 /* DatePickerDelegate.swift */,
+			);
+			path = components;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -147,9 +172,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FA5596B62210FE2600113AE1 /* DatePickerDelegate.swift in Sources */,
 				FA3CEF49220E0F2500634DD7 /* AppDelegate.swift in Sources */,
 				FA3CEF4C220E0F2500634DD7 /* DaysSince.xcdatamodeld in Sources */,
 				FA3CEF4E220E0F2500634DD7 /* MasterViewController.swift in Sources */,
+				FA5596B0220E653500113AE1 /* AddTaskTableViewController.swift in Sources */,
+				FA5596B2220FB8F500113AE1 /* DatePickerViewController.swift in Sources */,
 				FA3CEF62220E22C700634DD7 /* TaskCollectionViewCell.swift in Sources */,
 				FA3CEF60220E1C3500634DD7 /* TaskCollectionViewController.swift in Sources */,
 				FA3CEF50220E0F2500634DD7 /* DetailViewController.swift in Sources */,
