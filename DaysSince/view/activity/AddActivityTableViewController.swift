@@ -139,6 +139,11 @@ class AddActivityTableViewController: UITableViewController, DatePickerDelegate 
     }
 
 
+    @IBAction func doSave(_ sender: Any) {
+        dismiss(animated: true, completion: nil)
+    }
+    
+    
     @IBAction func cancelAdd(_ sender: Any) {
         dismiss(animated: true, completion: nil)
     }
