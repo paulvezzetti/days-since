@@ -53,11 +53,12 @@ class DataModelManager {
         return managedObjectContext!
     }
     
-    func newActivity(named name:String) throws -> ActivityMO {
+    func newActivity(named name:String, every freq:Int, starting beginDate:Date) throws -> ActivityMO {
         let context = try getManagedObjectContext()
         let activity = ActivityMO(context: context)
         activity.id = UUID()
         activity.name = name
+        activity.frequency = Int16(freq)
         return activity
     }
     

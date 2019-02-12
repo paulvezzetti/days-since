@@ -147,7 +147,7 @@ class AddActivityTableViewController: UITableViewController, DatePickerDelegate 
     @IBAction func doSave(_ sender: Any) {
         if let dm = dataManager {
             do {
-                try dm.newActivity(named: titleField.text!)
+                try dm.newActivity(named: titleField.text!, every: Int(frequencyField.text!) ?? 0, starting: chosenDate)
                 try dm.saveContext()
             } catch {
                 print("Error saving activity")
