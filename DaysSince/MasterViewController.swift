@@ -67,7 +67,7 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
     // MARK: - Segues
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "showDetails" {
+        if segue.identifier == "showDetail" {
             if let indexPath = tableView.indexPathForSelectedRow {
             let object = fetchedResultsController.object(at: indexPath)
                 let controller = (segue.destination as! UINavigationController).topViewController as! DetailViewController
@@ -76,7 +76,7 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
                 controller.navigationItem.leftItemsSupplementBackButton = true
             }
         }
-        else if segue.identifier == "presentAddTask" {
+        else if segue.identifier == "presentAddActivity" {
             let controller = (segue.destination as! UINavigationController).topViewController as! AddActivityTableViewController
             controller.dataManager = dataManager
         }
