@@ -21,9 +21,14 @@ class AddActivityTableViewController: UITableViewController, DatePickerDelegate 
         NotificationButton
     }
 
+    @IBOutlet var titleField: UITextField!
+    
+    @IBOutlet var frequencyField: UITextField!
+    
     @IBOutlet var startDateLabel: UILabel!
     
     var chosenDate: Date = Date()
+    var dataManager: DataModelManager? = nil
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -140,6 +145,15 @@ class AddActivityTableViewController: UITableViewController, DatePickerDelegate 
 
 
     @IBAction func doSave(_ sender: Any) {
+        if let dm = dataManager {
+            do {
+                try dm.newActivity(named: titleField.text!)
+                try dm.saveContext()
+            } catch {
+                print("Error saving activity")
+            }
+        }
+        
         dismiss(animated: true, completion: nil)
     }
     

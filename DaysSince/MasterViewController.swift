@@ -12,7 +12,8 @@ import CoreData
 class MasterViewController: UITableViewController, NSFetchedResultsControllerDelegate {
 
     var detailViewController: DetailViewController? = nil
-    var managedObjectContext: NSManagedObjectContext? = nil
+    //var managedObjectContext: NSManagedObjectContext? = nil
+    var dataManager: DataModelManager? = nil
 
 
     override func viewDidLoad() {
@@ -38,34 +39,35 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
         // Safe Present
         if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "AddTaskTable") as? AddActivityTableViewController
         {
+            vc.dataManager = dataManager
             present(vc, animated: true, completion: nil)
         }
         
     }
     
-    @objc
-    func insertNewObject(_ sender: Any) {
-        let context = self.fetchedResultsController.managedObjectContext
-        let newEvent = EventMO(context: context)
-             
-        // If appropriate, configure the new managed object.
-        newEvent.timestamp = Date()
-
-        // Save the context.
-        do {
-            try context.save()
-        } catch {
-            // Replace this implementation with code to handle the error appropriately.
-            // fatalError() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
-            let nserror = error as NSError
-            fatalError("Unresolved error \(nserror), \(nserror.userInfo)")
-        }
-    }
+//    @objc
+//    func insertNewObject(_ sender: Any) {
+//        let context = self.fetchedResultsController.managedObjectContext
+//        let newEvent = EventMO(context: context)
+//             
+//        // If appropriate, configure the new managed object.
+//        newEvent.timestamp = Date()
+//
+//        // Save the context.
+//        do {
+//            try context.save()
+//        } catch {
+//            // Replace this implementation with code to handle the error appropriately.
+//            // fatalError() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
+//            let nserror = error as NSError
+//            fatalError("Unresolved error \(nserror), \(nserror.userInfo)")
+//        }
+//    }
 
     // MARK: - Segues
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "showDetail" {
+        if segue.identifier == "showDetails" {
             if let indexPath = tableView.indexPathForSelectedRow {
             let object = fetchedResultsController.object(at: indexPath)
                 let controller = (segue.destination as! UINavigationController).topViewController as! DetailViewController
@@ -73,6 +75,10 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
                 controller.navigationItem.leftBarButtonItem = splitViewController?.displayModeButtonItem
                 controller.navigationItem.leftItemsSupplementBackButton = true
             }
+        }
+        else if segue.identifier == "presentAddTask" {
+            let controller = (segue.destination as! UINavigationController).topViewController as! AddActivityTableViewController
+            controller.dataManager = dataManager
         }
     }
 
@@ -90,7 +96,7 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
         let event = fetchedResultsController.object(at: indexPath)
-        configureCell(cell, withEvent: event)
+        configureCell(cell, withActivity: event)
         return cell
     }
 
@@ -101,49 +107,66 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
 
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
-            let context = fetchedResultsController.managedObjectContext
-            context.delete(fetchedResultsController.object(at: indexPath))
-                
-            do {
-                try context.save()
-            } catch {
-                // Replace this implementation with code to handle the error appropriately.
-                // fatalError() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
-                let nserror = error as NSError
-                fatalError("Unresolved error \(nserror), \(nserror.userInfo)")
+            if let dm = dataManager {
+                do {
+                    try dm.removeActivity(activity: fetchedResultsController.object(at: indexPath))
+                } catch {
+                    // Replace this implementation with code to handle the error appropriately.
+                    // fatalError() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
+                    // TODO: This should show an error screen.
+                    let nserror = error as NSError
+                    fatalError("Unresolved error \(nserror), \(nserror.userInfo)")
+
+                }
             }
+//            let context = fetchedResultsController.managedObjectContext
+//            context.delete(fetchedResultsController.object(at: indexPath))
+//
+//            do {
+//                try context.save()
+//            } catch {
+//                // Replace this implementation with code to handle the error appropriately.
+//                // fatalError() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
+//                let nserror = error as NSError
+//                fatalError("Unresolved error \(nserror), \(nserror.userInfo)")
+//            }
         }
     }
 
-    func configureCell(_ cell: UITableViewCell, withEvent event: EventMO) {
-        cell.textLabel!.text = event.timestamp!.description
+    func configureCell(_ cell: UITableViewCell, withActivity activity: ActivityMO) {
+        cell.textLabel!.text = activity.name
     }
 
     // MARK: - Fetched results controller
 
-    var fetchedResultsController: NSFetchedResultsController<EventMO> {
+    var fetchedResultsController: NSFetchedResultsController<ActivityMO> {
         if _fetchedResultsController != nil {
             return _fetchedResultsController!
         }
-        
-        let fetchRequest: NSFetchRequest<EventMO> = EventMO.fetchRequest()
+        guard let dm = dataManager else {
+            fatalError()
+        }
+        let fetchRequest: NSFetchRequest<ActivityMO> = ActivityMO.fetchRequest()
         
         // Set the batch size to a suitable number.
         fetchRequest.fetchBatchSize = 20
         
         // Edit the sort key as appropriate.
-        let sortDescriptor = NSSortDescriptor(key: "timestamp", ascending: false)
+        let sortDescriptor = NSSortDescriptor(key: "name", ascending: false)
         
         fetchRequest.sortDescriptors = [sortDescriptor]
         
         // Edit the section name key path and cache name if appropriate.
         // nil for section name key path means "no sections".
-        let aFetchedResultsController = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: self.managedObjectContext!, sectionNameKeyPath: nil, cacheName: "Master")
-        aFetchedResultsController.delegate = self
-        _fetchedResultsController = aFetchedResultsController
-        
         do {
+            let moContext = try dm.getManagedObjectContext()
+
+            let aFetchedResultsController = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: moContext, sectionNameKeyPath: nil, cacheName: "Master")
+            aFetchedResultsController.delegate = self
+            _fetchedResultsController = aFetchedResultsController
+
             try _fetchedResultsController!.performFetch()
+
         } catch {
              // Replace this implementation with code to handle the error appropriately.
              // fatalError() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development. 
@@ -153,7 +176,7 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
         
         return _fetchedResultsController!
     }    
-    var _fetchedResultsController: NSFetchedResultsController<EventMO>? = nil
+    var _fetchedResultsController: NSFetchedResultsController<ActivityMO>? = nil
 
     func controllerWillChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
         tableView.beginUpdates()
@@ -177,9 +200,9 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
             case .delete:
                 tableView.deleteRows(at: [indexPath!], with: .fade)
             case .update:
-                configureCell(tableView.cellForRow(at: indexPath!)!, withEvent: anObject as! EventMO)
+                configureCell(tableView.cellForRow(at: indexPath!)!, withActivity: anObject as! ActivityMO)
             case .move:
-                configureCell(tableView.cellForRow(at: indexPath!)!, withEvent: anObject as! EventMO)
+                configureCell(tableView.cellForRow(at: indexPath!)!, withActivity: anObject as! ActivityMO)
                 tableView.moveRow(at: indexPath!, to: newIndexPath!)
         }
     }

@@ -315,7 +315,9 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="frequencyField" destination="hYo-GX-dMX" id="qHw-Et-WA5"/>
                         <outlet property="startDateLabel" destination="Yhq-5q-jNZ" id="Nfx-mI-Qtb"/>
+                        <outlet property="titleField" destination="kgE-uH-wzZ" id="FGp-BV-4Rb"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="XZG-Ht-UGG" userLabel="First Responder" sceneMemberID="firstResponder"/>

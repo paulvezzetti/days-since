@@ -17,6 +17,7 @@
 		FA5596B2220FB8F500113AE1 /* DatePickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA5596B1220FB8F500113AE1 /* DatePickerViewController.swift */; };
 		FA5596B62210FE2600113AE1 /* DatePickerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA5596B52210FE2600113AE1 /* DatePickerDelegate.swift */; };
 		FAA6AF1E2211C1E700346CCB /* AddActivityTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAA6AF1D2211C1E700346CCB /* AddActivityTableViewController.swift */; };
+		FAA6AF222211E42700346CCB /* DataModelManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAA6AF212211E42700346CCB /* DataModelManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -32,6 +33,7 @@
 		FA5596B1220FB8F500113AE1 /* DatePickerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatePickerViewController.swift; sourceTree = "<group>"; };
 		FA5596B52210FE2600113AE1 /* DatePickerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatePickerDelegate.swift; sourceTree = "<group>"; };
 		FAA6AF1D2211C1E700346CCB /* AddActivityTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddActivityTableViewController.swift; sourceTree = "<group>"; };
+		FAA6AF212211E42700346CCB /* DataModelManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataModelManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -107,6 +109,7 @@
 		FAA6AF202211D23600346CCB /* model */ = {
 			isa = PBXGroup;
 			children = (
+				FAA6AF212211E42700346CCB /* DataModelManager.swift */,
 			);
 			path = model;
 			sourceTree = "<group>";
@@ -189,6 +192,7 @@
 				FA3CEF4E220E0F2500634DD7 /* MasterViewController.swift in Sources */,
 				FA5596B2220FB8F500113AE1 /* DatePickerViewController.swift in Sources */,
 				FA3CEF50220E0F2500634DD7 /* DetailViewController.swift in Sources */,
+				FAA6AF222211E42700346CCB /* DataModelManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
