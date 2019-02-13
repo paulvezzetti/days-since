@@ -10,6 +10,9 @@ import Foundation
 
 class DataModelManager {
     
+    private static let MIN_FREQ:Int = 0
+    private static let MAX_FREQ:Int = 18262 // Roughly 50 years
+    
     private var loadError: NSError?
     private var managedObjectContext: NSManagedObjectContext?
     
@@ -53,12 +56,25 @@ class DataModelManager {
         return managedObjectContext!
     }
     
+    @discardableResult
     func newActivity(named name:String, every freq:Int, starting beginDate:Date) throws -> ActivityMO {
         let context = try getManagedObjectContext()
         let activity = ActivityMO(context: context)
         activity.id = UUID()
         activity.name = name
-        activity.frequency = Int16(freq)
+        
+        activity.frequency = {
+            if freq <= DataModelManager.MIN_FREQ {
+                return Int16(DataModelManager.MIN_FREQ)
+            }
+            return Int16(min(freq, DataModelManager.MAX_FREQ))
+        }()
+        
+        let event = EventMO(context: context)
+        event.timestamp = beginDate
+        
+        activity.addToHistory(event)
+        
         return activity
     }
     

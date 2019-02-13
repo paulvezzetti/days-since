@@ -18,6 +18,8 @@
 		FA5596B62210FE2600113AE1 /* DatePickerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA5596B52210FE2600113AE1 /* DatePickerDelegate.swift */; };
 		FAA6AF1E2211C1E700346CCB /* AddActivityTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAA6AF1D2211C1E700346CCB /* AddActivityTableViewController.swift */; };
 		FAA6AF222211E42700346CCB /* DataModelManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAA6AF212211E42700346CCB /* DataModelManager.swift */; };
+		FAA6AF242213684800346CCB /* HistoryTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAA6AF232213684800346CCB /* HistoryTableViewController.swift */; };
+		FAA6AF2622139F4A00346CCB /* ActivitySummaryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAA6AF2522139F4A00346CCB /* ActivitySummaryViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -34,6 +36,8 @@
 		FA5596B52210FE2600113AE1 /* DatePickerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatePickerDelegate.swift; sourceTree = "<group>"; };
 		FAA6AF1D2211C1E700346CCB /* AddActivityTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddActivityTableViewController.swift; sourceTree = "<group>"; };
 		FAA6AF212211E42700346CCB /* DataModelManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataModelManager.swift; sourceTree = "<group>"; };
+		FAA6AF232213684800346CCB /* HistoryTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryTableViewController.swift; sourceTree = "<group>"; };
+		FAA6AF2522139F4A00346CCB /* ActivitySummaryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivitySummaryViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -85,6 +89,7 @@
 			children = (
 				FAA6AF1F2211D10800346CCB /* activity */,
 				FA5596B42210FE0800113AE1 /* components */,
+				FAA6AF232213684800346CCB /* HistoryTableViewController.swift */,
 			);
 			path = view;
 			sourceTree = "<group>";
@@ -94,6 +99,7 @@
 			children = (
 				FA5596B1220FB8F500113AE1 /* DatePickerViewController.swift */,
 				FA5596B52210FE2600113AE1 /* DatePickerDelegate.swift */,
+				FAA6AF2522139F4A00346CCB /* ActivitySummaryViewController.swift */,
 			);
 			path = components;
 			sourceTree = "<group>";
@@ -189,7 +195,9 @@
 				FA3CEF49220E0F2500634DD7 /* AppDelegate.swift in Sources */,
 				FA3CEF4C220E0F2500634DD7 /* DaysSince.xcdatamodeld in Sources */,
 				FAA6AF1E2211C1E700346CCB /* AddActivityTableViewController.swift in Sources */,
+				FAA6AF2622139F4A00346CCB /* ActivitySummaryViewController.swift in Sources */,
 				FA3CEF4E220E0F2500634DD7 /* MasterViewController.swift in Sources */,
+				FAA6AF242213684800346CCB /* HistoryTableViewController.swift in Sources */,
 				FA5596B2220FB8F500113AE1 /* DatePickerViewController.swift in Sources */,
 				FA3CEF50220E0F2500634DD7 /* DetailViewController.swift in Sources */,
 				FAA6AF222211E42700346CCB /* DataModelManager.swift in Sources */,
