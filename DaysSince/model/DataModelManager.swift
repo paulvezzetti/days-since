@@ -84,6 +84,15 @@ class DataModelManager {
         try save(context)
     }
     
+    func setEventDone(activity:ActivityMO, at date:Date) throws {
+        let context = try getManagedObjectContext()
+        let event = EventMO(context: context)
+        event.timestamp = date
+        
+        activity.addToHistory(event)
+        try save(context)
+    }
+    
     func saveContext() throws {
         let context = try getManagedObjectContext()
         try save(context)

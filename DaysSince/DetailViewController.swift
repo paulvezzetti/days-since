@@ -8,7 +8,7 @@
 
 import UIKit
 
-class DetailViewController: UIViewController {
+class DetailViewController: UIViewController, DatePickerDelegate {
 
     @IBOutlet weak var detailDescriptionLabel: UILabel!
 
@@ -16,6 +16,33 @@ class DetailViewController: UIViewController {
     
     @IBOutlet var segmentedControl: UISegmentedControl!
     
+    @IBOutlet var markDoneButton: UIButton!
+    
+    var dataManager: DataModelManager? = nil
+
+    
+    // DataPickerDelegate
+    var chosenDate: Date = Date() {
+        didSet {
+            print("didSet")
+            guard let dm = dataManager else {
+                return
+            }
+            guard let activity = detailItem else {
+                return
+            }
+            
+            do {
+                try dm.setEventDone(activity: activity, at: chosenDate)
+            } catch {
+                // TODO: This should show an error screen.
+                let nserror = error as NSError
+                fatalError("Unresolved error \(nserror), \(nserror.userInfo)")
+
+            }
+        }
+    }
+
     
     func configureView() {
         // Update the user interface for the detail item.
@@ -41,6 +68,10 @@ class DetailViewController: UIViewController {
             if let summaryVC = summaryViewController {
                 summaryVC.activity = detailItem
             }
+        } else if segue.identifier == "chooseDoneDate" {
+            let controller = segue.destination as! DatePickerViewController
+            controller.delegate = self
+            controller.initialDate = chosenDate
         }
     }
 

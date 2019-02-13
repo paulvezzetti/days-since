@@ -27,7 +27,11 @@ class AddActivityTableViewController: UITableViewController, DatePickerDelegate 
     
     @IBOutlet var startDateLabel: UILabel!
     
-    var chosenDate: Date = Date()
+    var chosenDate: Date = Date() {
+        didSet {
+            print("Set date")
+        }
+    }
     var dataManager: DataModelManager? = nil
     
     override func viewDidLoad() {
@@ -135,7 +139,7 @@ class AddActivityTableViewController: UITableViewController, DatePickerDelegate 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         // Get the new view controller using segue.destination.
         // Pass the selected object to the new view controller.
-        if (segue.identifier == "showDatePicker") {
+        if segue.identifier == "showDatePicker" {
             let controller = segue.destination as! DatePickerViewController
             controller.delegate = self
             controller.initialDate = chosenDate

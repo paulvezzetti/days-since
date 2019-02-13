@@ -36,17 +36,27 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacingType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="sdQ-Kb-W5y">
-                                <rect key="frame" x="12" y="72" width="351" height="551"/>
+                                <rect key="frame" x="12" y="72" width="351" height="554"/>
                                 <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="J4j-nQ-u2s">
-                                        <rect key="frame" x="0.0" y="0.0" width="351" height="24"/>
-                                        <fontDescription key="fontDescription" name="AvenirNext-DemiBold" family="Avenir Next" pointSize="17"/>
-                                        <state key="normal" title="Done" image="CheckCircleIcon">
-                                            <color key="titleColor" red="0.0" green="0.0" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                        </state>
-                                    </button>
+                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="8Pc-4D-X98">
+                                        <rect key="frame" x="0.0" y="0.0" width="351" height="37"/>
+                                        <subviews>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="J4j-nQ-u2s">
+                                                <rect key="frame" x="94" y="0.0" width="163" height="37"/>
+                                                <color key="backgroundColor" red="0.20000000000000001" green="0.59999999999999998" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
+                                                <fontDescription key="fontDescription" name="AvenirNext-DemiBold" family="Avenir Next" pointSize="18"/>
+                                                <inset key="contentEdgeInsets" minX="35" minY="6" maxX="35" maxY="6"/>
+                                                <state key="normal" title="Mark Done">
+                                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                </state>
+                                                <connections>
+                                                    <segue destination="UYi-Bg-5pS" kind="presentation" identifier="chooseDoneDate" id="qqt-eR-rph"/>
+                                                </connections>
+                                            </button>
+                                        </subviews>
+                                    </stackView>
                                     <label clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" text="Activity" textAlignment="center" lineBreakMode="tailTruncation" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="0XM-y9-sOw">
-                                        <rect key="frame" x="0.0" y="32" width="351" height="35"/>
+                                        <rect key="frame" x="0.0" y="45" width="351" height="35"/>
                                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="35" id="yOY-v8-dld"/>
@@ -56,7 +66,7 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="UYh-Ao-TeW">
-                                        <rect key="frame" x="0.0" y="75" width="351" height="29"/>
+                                        <rect key="frame" x="0.0" y="88" width="351" height="29"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="28" id="4q2-xa-CLu"/>
                                         </constraints>
@@ -66,7 +76,7 @@
                                         </segments>
                                     </segmentedControl>
                                     <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kC3-vI-ZNJ">
-                                        <rect key="frame" x="0.0" y="111" width="351" height="440"/>
+                                        <rect key="frame" x="0.0" y="123" width="351" height="430"/>
                                         <connections>
                                             <segue destination="kQJ-1U-pUL" kind="embed" identifier="embedSummary" id="lmQ-oL-0iR"/>
                                         </connections>
@@ -74,7 +84,7 @@
                                 </subviews>
                             </stackView>
                             <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="YhQ-0z-CW9">
-                                <rect key="frame" x="0.0" y="629" width="375" height="38"/>
+                                <rect key="frame" x="0.0" y="632" width="375" height="35"/>
                                 <items>
                                     <barButtonItem title="Delete" id="iUL-1y-6Ht"/>
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="GiL-xD-kfU"/>
@@ -99,6 +109,7 @@
                     <connections>
                         <outlet property="alternatingView" destination="kC3-vI-ZNJ" id="EZY-gs-2Dh"/>
                         <outlet property="detailDescriptionLabel" destination="0XM-y9-sOw" id="deQ-Na-JPF"/>
+                        <outlet property="markDoneButton" destination="J4j-nQ-u2s" id="aQY-eR-CfB"/>
                         <outlet property="segmentedControl" destination="UYh-Ao-TeW" id="Kns-bE-B65"/>
                     </connections>
                 </viewController>
@@ -417,7 +428,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ICI-kW-xSz" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3992.8000000000002" y="-649.02548725637189"/>
+            <point key="canvasLocation" x="2337" y="128"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="r7l-gg-dq7">
@@ -458,11 +469,11 @@
             <objects>
                 <viewController id="kQJ-1U-pUL" customClass="ActivitySummaryViewController" customModule="DaysSince" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Enz-jz-um3">
-                        <rect key="frame" x="0.0" y="0.0" width="351" height="440"/>
+                        <rect key="frame" x="0.0" y="0.0" width="351" height="430"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacingType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="fT5-oU-vgQ">
-                                <rect key="frame" x="31.5" y="46.5" width="288" height="347"/>
+                                <rect key="frame" x="31.5" y="41.5" width="288" height="347"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" spacingType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="5wa-P4-Q6M">
                                         <rect key="frame" x="0.0" y="0.0" width="288" height="27.5"/>
@@ -692,10 +703,8 @@
             <point key="canvasLocation" x="1401" y="865"/>
         </scene>
     </scenes>
-    <resources>
-        <image name="CheckCircleIcon" width="12" height="12"/>
-    </resources>
     <inferredMetricsTieBreakers>
         <segue reference="BMi-sG-zyJ"/>
+        <segue reference="qqt-eR-rph"/>
     </inferredMetricsTieBreakers>
 </document>

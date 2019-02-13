@@ -26,6 +26,7 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
         if let split = splitViewController {
             let controllers = split.viewControllers
             detailViewController = (controllers[controllers.count-1] as! UINavigationController).topViewController as? DetailViewController
+            detailViewController?.dataManager = dataManager
         }
     }
 
@@ -74,6 +75,7 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
                 controller.detailItem = object
                 controller.navigationItem.leftBarButtonItem = splitViewController?.displayModeButtonItem
                 controller.navigationItem.leftItemsSupplementBackButton = true
+                controller.dataManager = dataManager
             }
         }
         else if segue.identifier == "presentAddActivity" {
