@@ -24,7 +24,6 @@ class DetailViewController: UIViewController, DatePickerDelegate {
     // DataPickerDelegate
     var chosenDate: Date = Date() {
         didSet {
-            print("didSet")
             guard let dm = dataManager else {
                 return
             }
@@ -87,7 +86,6 @@ class DetailViewController: UIViewController, DatePickerDelegate {
 
     @objc
     func selectionDidChange(_ sender: UISegmentedControl) {
-        print("Button changed: \(segmentedControl.selectedSegmentIndex)")
         if segmentedControl.selectedSegmentIndex == 0 {
             // Remove the history
             historyViewController.willMove(toParent: nil)
