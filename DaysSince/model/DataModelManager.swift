@@ -53,7 +53,48 @@ class DataModelManager {
             throw loadError!
         }
         managedObjectContext = container.viewContext
+        
+        // Add Observer
+        let notificationCenter = NotificationCenter.default
+        notificationCenter.addObserver(self, selector: #selector(managedObjectContextObjectsDidChange), name: NSNotification.Name.NSManagedObjectContextObjectsDidChange, object: managedObjectContext)
+//        notificationCenter.addObserver(self, selector: #selector(managedObjectContextWillSave), name: NSManagedObjectContextWillSaveNotification, object: managedObjectContext)
+//        notificationCenter.addObserver(self, selector: #selector(managedObjectContextDidSave), name: NSManagedObjectContextDidSaveNotification, object: managedObjectContext)
+
+        
+        
         return managedObjectContext!
+    }
+    
+    @objc
+    func managedObjectContextObjectsDidChange(notification: NSNotification) {
+        guard let userInfo = notification.userInfo else { return }
+        
+        if let inserts = userInfo[NSInsertedObjectsKey] as? Set<NSManagedObject>, inserts.count > 0 {
+            print("--- INSERTS ---")
+            print(inserts)
+            print("+++++++++++++++")
+            for mo in inserts {
+                if let activity = mo as? ActivityMO {
+                    print("Inserted activity \(activity.name!)")
+                } else if let event = mo as? EventMO {
+                    print("Inserted event \(event.timestamp!)")
+                }
+            }
+        }
+        
+        if let updates = userInfo[NSUpdatedObjectsKey] as? Set<NSManagedObject>, updates.count > 0 {
+            print("--- UPDATES ---")
+            for update in updates {
+                print(update.changedValues())
+            }
+            print("+++++++++++++++")
+        }
+        
+        if let deletes = userInfo[NSDeletedObjectsKey] as? Set<NSManagedObject>, deletes.count > 0 {
+            print("--- DELETES ---")
+            print(deletes)
+            print("+++++++++++++++")
+        }
     }
     
     @discardableResult
@@ -81,7 +122,7 @@ class DataModelManager {
     func removeActivity(activity: ActivityMO) throws {
         let context = try getManagedObjectContext()
         context.delete(activity)
-        try save(context)
+        //try save(context)
     }
     
     func setEventDone(activity:ActivityMO, at date:Date) throws {
@@ -90,7 +131,7 @@ class DataModelManager {
         event.timestamp = date
         
         activity.addToHistory(event)
-        try save(context)
+      //  try save(context)
     }
     
     func saveContext() throws {

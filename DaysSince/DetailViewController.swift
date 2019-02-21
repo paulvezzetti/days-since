@@ -39,6 +39,8 @@ class DetailViewController: UIViewController, DatePickerDelegate {
                 fatalError("Unresolved error \(nserror), \(nserror.userInfo)")
 
             }
+            historyViewController.activityDidChange()
+            summaryViewController!.activityDidChange()
         }
     }
 

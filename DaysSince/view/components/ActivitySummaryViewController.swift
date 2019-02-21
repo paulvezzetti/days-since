@@ -33,9 +33,15 @@ class ActivitySummaryViewController: UIViewController {
         guard let act = activity else {
             return
         }
+        let stats:ActivityStatistics = ActivityStatistics(activity: act)
+        
         expectedFrequencyLabel.text = String(act.frequency)
         numInstancesLabel.text = String(act.history?.count ?? 0)
-        
+        daysSinceLabel.text = String(stats.daySince)
+    }
+    
+    func activityDidChange() {
+        configureView()
     }
     /*
     // MARK: - Navigation

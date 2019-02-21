@@ -10,16 +10,23 @@ import UIKit
 
 class HistoryTableViewController: UITableViewController {
 
-    var activity: ActivityMO?
+    var sortedHistory: [EventMO] = []
+    var activity: ActivityMO? {
+        didSet {
+            if let act = activity {
+                sortedHistory = act.history?.sortedArray(using: [NSSortDescriptor(key: "timestamp", ascending: true)]) as! [EventMO]
+            }
+        }
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
 
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem
+
     }
 
     // MARK: - Table view data source
@@ -42,11 +49,12 @@ class HistoryTableViewController: UITableViewController {
         let cell = tableView.dequeueReusableCell(withIdentifier: "TableViewCellIdentifier", for: indexPath)
         
         // Configure the cell...
-        guard let act = activity else {
-            return cell
-        }
-        if indexPath.row < (act.history?.count ?? 0){
-            let event:EventMO = act.history![indexPath.row] as! EventMO
+//        guard let act = activity else {
+//            return cell
+//        }
+        
+        if indexPath.row < sortedHistory.count {
+            let event:EventMO = self.sortedHistory[indexPath.row]
             if let eventDate = event.timestamp {
                 let dateFormatter = DateFormatter()
                 dateFormatter.dateStyle = DateFormatter.Style.medium
@@ -59,6 +67,13 @@ class HistoryTableViewController: UITableViewController {
         return cell
     }
     
+    func activityDidChange() {
+        if let act = activity {
+            sortedHistory = act.history?.sortedArray(using: [NSSortDescriptor(key: "timestamp", ascending: true)]) as! [EventMO]
+        }
+
+        tableView.reloadData()
+    }
 
     /*
     // Override to support conditional editing of the table view.

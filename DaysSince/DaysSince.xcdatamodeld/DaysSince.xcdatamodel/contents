@@ -6,7 +6,7 @@
         <attribute name="image" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="isNotificationEnabled" attributeType="Boolean" defaultValueString="YES" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
-        <relationship name="history" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="Event" inverseName="activity" inverseEntity="Event" syncable="YES"/>
+        <relationship name="history" toMany="YES" deletionRule="Nullify" destinationEntity="Event" inverseName="activity" inverseEntity="Event" syncable="YES"/>
     </entity>
     <entity name="Event" representedClassName="EventMO" codeGenerationType="class">
         <attribute name="details" optional="YES" attributeType="String" syncable="YES"/>
