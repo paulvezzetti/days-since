@@ -73,6 +73,10 @@ class DetailViewController: UIViewController, DatePickerDelegate {
             let controller = segue.destination as! DatePickerViewController
             controller.delegate = self
             controller.initialDate = chosenDate
+        } else if segue.identifier == "editActivitySettings" {
+            let controller = (segue.destination as! UINavigationController).topViewController as! AddActivityTableViewController
+            controller.dataManager = dataManager
+            controller.editActivity = detailItem
         }
     }
 

@@ -76,7 +76,7 @@
                                         </segments>
                                     </segmentedControl>
                                     <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kC3-vI-ZNJ">
-                                        <rect key="frame" x="0.0" y="123" width="351" height="430"/>
+                                        <rect key="frame" x="0.0" y="124" width="351" height="430"/>
                                         <connections>
                                             <segue destination="kQJ-1U-pUL" kind="embed" identifier="embedSummary" id="lmQ-oL-0iR"/>
                                         </connections>
@@ -88,7 +88,11 @@
                                 <items>
                                     <barButtonItem title="Delete" id="iUL-1y-6Ht"/>
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="GiL-xD-kfU"/>
-                                    <barButtonItem title="Edit" id="iQb-z2-4uR"/>
+                                    <barButtonItem title="Edit" id="iQb-z2-4uR">
+                                        <connections>
+                                            <segue destination="9aX-Pd-bgA" kind="presentation" identifier="editActivitySettings" id="q1j-DS-gLZ"/>
+                                        </connections>
+                                    </barButtonItem>
                                 </items>
                             </toolbar>
                         </subviews>
@@ -647,6 +651,7 @@
                             <constraint firstItem="fT5-oU-vgQ" firstAttribute="centerX" secondItem="Enz-jz-um3" secondAttribute="centerX" id="IZl-ba-jq9"/>
                             <constraint firstItem="fT5-oU-vgQ" firstAttribute="centerY" secondItem="Enz-jz-um3" secondAttribute="centerY" id="bjO-OA-9IT"/>
                         </constraints>
+                        <viewLayoutGuide key="safeArea" id="I2p-X7-NBj"/>
                     </view>
                     <connections>
                         <outlet property="avgIntervalLabel" destination="KPf-QT-lOr" id="KYl-hv-wdP"/>
@@ -704,6 +709,7 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
+        <segue reference="q1j-DS-gLZ"/>
         <segue reference="BMi-sG-zyJ"/>
         <segue reference="qqt-eR-rph"/>
     </inferredMetricsTieBreakers>

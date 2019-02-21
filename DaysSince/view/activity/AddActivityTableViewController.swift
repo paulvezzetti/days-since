@@ -33,6 +33,7 @@ class AddActivityTableViewController: UITableViewController, DatePickerDelegate 
         }
     }
     var dataManager: DataModelManager? = nil
+    var editActivity: ActivityMO? = nil
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -42,6 +43,12 @@ class AddActivityTableViewController: UITableViewController, DatePickerDelegate 
         dateFormatter.timeStyle = DateFormatter.Style.none
         
         startDateLabel.text = dateFormatter.string(from: chosenDate)
+        
+        if let activity = editActivity {
+            titleField.text = activity.name
+            frequencyField.text = String(activity.frequency)
+            
+        }
         
         //startDateLabel.text = new Date().description
 
@@ -150,12 +157,17 @@ class AddActivityTableViewController: UITableViewController, DatePickerDelegate 
 
     @IBAction func doSave(_ sender: Any) {
         if let dm = dataManager {
-            do {
-                try dm.newActivity(named: titleField.text!, every: Int(frequencyField.text!) ?? 0, starting: chosenDate)
-                try dm.saveContext()
-            } catch {
-                print("Error saving activity")
+            if editActivity != nil {
+                updateActivity(dm)
+            } else {
+                createNewActivity(dm)
             }
+//            do {
+//                try dm.newActivity(named: titleField.text!, every: Int(frequencyField.text!) ?? 0, starting: chosenDate)
+//                try dm.saveContext()
+//            } catch {
+//                print("Error saving activity")
+//            }
         }
         
         dismiss(animated: true, completion: nil)
@@ -164,5 +176,23 @@ class AddActivityTableViewController: UITableViewController, DatePickerDelegate 
     
     @IBAction func cancelAdd(_ sender: Any) {
         dismiss(animated: true, completion: nil)
+    }
+    
+    func createNewActivity(_ dataManager: DataModelManager) {
+        do {
+            try dataManager.newActivity(named: titleField.text!, every: Int(frequencyField.text!) ?? 0, starting: chosenDate)
+            try dataManager.saveContext()
+        } catch {
+            print("Error saving activity")
+        }
+    }
+    
+    func updateActivity(_ dataManager: DataModelManager) {
+        if editActivity!.name != titleField.text! {
+            editActivity!.name = titleField.text!
+        }
+        if editActivity!.frequency != Int16(frequencyField.text!) {
+            editActivity!.frequency = Int16(frequencyField.text!) ?? 0
+        }
     }
 }
