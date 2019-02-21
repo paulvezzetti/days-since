@@ -38,6 +38,25 @@ class ActivitySummaryViewController: UIViewController {
         expectedFrequencyLabel.text = String(act.frequency)
         numInstancesLabel.text = String(act.history?.count ?? 0)
         daysSinceLabel.text = String(stats.daySince)
+        daysUntilLabel.text = String(stats.daysUntil)
+        
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateStyle = DateFormatter.Style.medium
+        dateFormatter.timeStyle = DateFormatter.Style.none
+        
+        dueNextLabel.text = dateFormatter.string(from: stats.nextDay)
+        
+        minIntervalLabel.text = String(stats.minDays)
+        maxIntervalLabel.text = String(stats.maxDays)
+        avgIntervalLabel.text = String(stats.avgDays)
+        
+        let firstDate = stats.firstEvent
+        if firstDate != nil {
+            firstInstanceLabel.text = dateFormatter.string(from: firstDate!)
+        } else {
+            firstInstanceLabel.text = ""
+        }
+
     }
     
     func activityDidChange() {
