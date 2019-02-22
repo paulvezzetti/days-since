@@ -90,7 +90,7 @@
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="GiL-xD-kfU"/>
                                     <barButtonItem title="Edit" id="iQb-z2-4uR">
                                         <connections>
-                                            <segue destination="9aX-Pd-bgA" kind="presentation" identifier="editActivitySettings" id="q1j-DS-gLZ"/>
+                                            <segue destination="9aX-Pd-bgA" kind="show" identifier="editActivitySettings" id="q1j-DS-gLZ"/>
                                         </connections>
                                     </barButtonItem>
                                 </items>
@@ -371,7 +371,8 @@
                         </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" style="plain" systemItem="save" id="6Ud-Wm-QIr">
                             <connections>
-                                <action selector="doSave:" destination="0zy-ap-i7T" id="6eJ-Md-BBH"/>
+                                <action selector="doSave:" destination="0zy-ap-i7T" id="FaH-Bu-XuR"/>
+                                <segue destination="7gx-al-WX6" kind="unwind" unwindAction="unwindSaveActivityWithSegue:" id="wxf-tG-E3S"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -382,6 +383,7 @@
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="XZG-Ht-UGG" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="7gx-al-WX6" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
             <point key="canvasLocation" x="2824.8000000000002" y="-622.03898050974522"/>
         </scene>
@@ -711,6 +713,6 @@
     <inferredMetricsTieBreakers>
         <segue reference="q1j-DS-gLZ"/>
         <segue reference="BMi-sG-zyJ"/>
-        <segue reference="qqt-eR-rph"/>
+        <segue reference="2bD-9g-IWs"/>
     </inferredMetricsTieBreakers>
 </document>

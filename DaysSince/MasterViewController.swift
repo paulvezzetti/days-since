@@ -83,6 +83,14 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
             controller.dataManager = dataManager
         }
     }
+    
+    @IBAction func unwindSaveActivity(segue: UIStoryboardSegue) {
+        let controller = segue.source as! AddActivityTableViewController
+        
+        controller.saveActivity()
+        controller.dismiss(animated: true, completion: nil)
+    }
+
 
     // MARK: - Table View
 

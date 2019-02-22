@@ -62,6 +62,7 @@ class DetailViewController: UIViewController, DatePickerDelegate {
         segmentedControl.addTarget(self, action: #selector(selectionDidChange(_:)), for: .valueChanged)
     }
     
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "embedSummary" {
             print("Embedding")
@@ -77,7 +78,20 @@ class DetailViewController: UIViewController, DatePickerDelegate {
             let controller = (segue.destination as! UINavigationController).topViewController as! AddActivityTableViewController
             controller.dataManager = dataManager
             controller.editActivity = detailItem
+            // TODO: When we return, we need to refresh the view
         }
+    }
+    
+    @IBAction func unwindSaveActivity(segue: UIStoryboardSegue) {
+        let controller = segue.source as! AddActivityTableViewController
+        
+        controller.saveActivity()
+        controller.dismiss(animated: true, completion: nil)
+        
+        configureView()
+        historyViewController.activityDidChange()
+        summaryViewController!.activityDidChange()
+
     }
 
     var detailItem: ActivityMO? {

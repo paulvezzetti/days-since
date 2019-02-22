@@ -173,6 +173,16 @@ class AddActivityTableViewController: UITableViewController, DatePickerDelegate 
         dismiss(animated: true, completion: nil)
     }
     
+    func saveActivity() {
+        if let dm = dataManager {
+            if editActivity != nil {
+                updateActivity(dm)
+            } else {
+                createNewActivity(dm)
+            }
+        }
+    }
+    
     
     @IBAction func cancelAdd(_ sender: Any) {
         dismiss(animated: true, completion: nil)
