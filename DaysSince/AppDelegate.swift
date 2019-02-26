@@ -25,6 +25,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
         
         // Initalize CoreData
         dataManager = DataModelManager()
+//        dataManager?.updateActivityStatus()
 
         let masterNavigationController = splitViewController.viewControllers[0] as! UINavigationController
         let controller = masterNavigationController.topViewController as! MasterViewController

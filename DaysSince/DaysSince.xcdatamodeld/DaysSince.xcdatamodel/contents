@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="14460.32" systemVersion="17G3025" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
-    <entity name="Activity" representedClassName="ActivityMO" syncable="YES" codeGenerationType="class">
+    <entity name="Activity" representedClassName="ActivityMO" syncable="YES" codeGenerationType="category">
         <attribute name="frequency" optional="YES" attributeType="Integer 16" minValueString="0" maxValueString="30000" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="id" attributeType="UUID" usesScalarValueType="NO" syncable="YES"/>
         <attribute name="image" optional="YES" attributeType="String" syncable="YES"/>
@@ -8,7 +8,7 @@
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="history" toMany="YES" deletionRule="Nullify" destinationEntity="Event" inverseName="activity" inverseEntity="Event" syncable="YES"/>
     </entity>
-    <entity name="Event" representedClassName="EventMO" codeGenerationType="class">
+    <entity name="Event" representedClassName="EventMO" codeGenerationType="category">
         <attribute name="details" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="image" optional="YES" attributeType="Binary" syncable="YES"/>
         <attribute name="timestamp" attributeType="Date">
@@ -19,6 +19,6 @@
     </entity>
     <elements>
         <element name="Activity" positionX="261" positionY="198" width="128" height="135"/>
-        <element name="Event" positionX="261" positionY="189" width="128" height="105"/>
+        <element name="Event" positionX="261" positionY="189" width="128" height="30"/>
     </elements>
 </model>

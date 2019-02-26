@@ -97,6 +97,34 @@ class DataModelManager {
         }
     }
     
+//    func updateActivityStatus() {
+//        do {
+//            let context = try getManagedObjectContext()
+//            let activityFetch = NSFetchRequest<NSFetchRequestResult>(entityName: "Activity")
+//            
+//            let activities = try context.fetch(activityFetch) as! [ActivityMO]
+//            
+//            for activity in activities {
+//                if activity.isOverdue {
+//                    activity.status = "Overdue"
+//                } else {
+//                    activity.status = "On-time"
+//                }
+//                context.refresh(activity, mergeChanges: true)
+//            }
+//        } catch {
+//            
+//        }
+//        
+//        
+//    }
+    
+    func getActivities() throws -> [ActivityMO]{
+        let context = try getManagedObjectContext()
+        let fetch = NSFetchRequest<ActivityMO>(entityName: "Activity")
+        return try context.fetch(fetch)
+    }
+    
     @discardableResult
     func newActivity(named name:String, every freq:Int, starting beginDate:Date) throws -> ActivityMO {
         let context = try getManagedObjectContext()

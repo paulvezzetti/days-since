@@ -10,6 +10,7 @@ import Foundation
 
 class ActivityStatistics {
     
+    // TODO: These should be private
     let activity:ActivityMO
     let sortedEvents: [EventMO]
     let intervals: [TimeInterval]
@@ -17,11 +18,16 @@ class ActivityStatistics {
     let maxInterval: TimeInterval
     let minInterval: TimeInterval
     let avgInterval: TimeInterval
+    let dateFormatter: DateFormatter
     
     
     // TODO: Should all dates be normalized???
     init(activity:ActivityMO) {
         self.activity = activity
+        
+        dateFormatter = DateFormatter()
+        dateFormatter.dateStyle = DateFormatter.Style.medium
+        dateFormatter.timeStyle = DateFormatter.Style.none
         
         sortedEvents = activity.history?.sortedArray(using: [NSSortDescriptor(key: "timestamp", ascending: true)]) as! [EventMO]
         var timeIntervals:[TimeInterval] = []
@@ -62,7 +68,7 @@ class ActivityStatistics {
         }
         let numSecondsSinceLast = Date().timeIntervalSince(lastEvent.timestamp!)
         
-        return Int(floor(numSecondsSinceLast / 60 / 60 / 24))
+        return Int(floor(numSecondsSinceLast / TimeConstants.SECONDS_PER_DAY))
     }
     
     var daysUntil:Int {
@@ -70,33 +76,51 @@ class ActivityStatistics {
             return -1
         }
         let frequency = activity.frequency
-        let addedTime: TimeInterval = TimeInterval(frequency) * 24 * 60 * 60 //Double(frequency * 24 * 60 * 60)
+        let addedTime: TimeInterval = TimeInterval(frequency) * TimeConstants.SECONDS_PER_DAY //Double(frequency * 24 * 60 * 60)
         let nextExpectedEvent = lastEvent.timestamp?.addingTimeInterval(addedTime)
         
         let numSecsToNextEvent =  nextExpectedEvent?.timeIntervalSince(Date())
-        return Int(floor(numSecsToNextEvent! / 60 / 60 / 24))
+        return Int(floor(numSecsToNextEvent! / TimeConstants.SECONDS_PER_DAY))
     }
     
-    var nextDay:Date {
+    var nextDate:Date {
         guard let lastEvent = sortedEvents.last else {
             return Date() // TODO: How to handle??
         }
         let frequency = activity.frequency
-        let addedTime: TimeInterval = TimeInterval(frequency) * 24 * 60 * 60 //Double(frequency * 24 * 60 * 60)
+        let addedTime: TimeInterval = TimeInterval(frequency) * TimeConstants.SECONDS_PER_DAY //Double(frequency * 24 * 60 * 60)
         return lastEvent.timestamp?.addingTimeInterval(addedTime) ?? Date()
+    }
+    
+    var nextDay:String {
+        return dateFormatter.string(from: nextDate)
+    }
+    
+    var lastDate:Date? {
+        guard let lastEvent = sortedEvents.last else {
+            return nil // TODO: How to handle??
+        }
+        return lastEvent.timestamp
+    }
+    
+    var lastDay:String {
+        guard let last = lastDate else {
+            return "Unknown"
+        }
+        return dateFormatter.string(from: last)
     }
     
     
     var maxDays: Int {
-        return Int(floor(maxInterval / 24 / 60 / 60))
+        return Int(floor(maxInterval / TimeConstants.SECONDS_PER_DAY))
     }
     
     var minDays: Int {
-        return Int(floor(minInterval / 24 / 60 / 60 ))
+        return Int(floor(minInterval / TimeConstants.SECONDS_PER_DAY ))
     }
     
     var avgDays:Int {
-        return Int(floor(avgInterval / 24 / 60 / 60))
+        return Int(floor(avgInterval / TimeConstants.SECONDS_PER_DAY))
     }
     
     var firstEvent:Date? {
@@ -104,6 +128,13 @@ class ActivityStatistics {
             return nil
         }
         return sortedEvents.first?.timestamp
+    }
+    
+    var firstDay:String {
+        guard let date = firstEvent else {
+            return ""
+        }
+        return dateFormatter.string(from: date)
     }
     
 }

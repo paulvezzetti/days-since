@@ -44,18 +44,13 @@ class ActivitySummaryViewController: UIViewController {
         dateFormatter.dateStyle = DateFormatter.Style.medium
         dateFormatter.timeStyle = DateFormatter.Style.none
         
-        dueNextLabel.text = dateFormatter.string(from: stats.nextDay)
+        dueNextLabel.text = stats.nextDay
         
         minIntervalLabel.text = String(stats.minDays)
         maxIntervalLabel.text = String(stats.maxDays)
         avgIntervalLabel.text = String(stats.avgDays)
         
-        let firstDate = stats.firstEvent
-        if firstDate != nil {
-            firstInstanceLabel.text = dateFormatter.string(from: firstDate!)
-        } else {
-            firstInstanceLabel.text = ""
-        }
+        firstInstanceLabel.text = stats.firstDay
 
     }
     
