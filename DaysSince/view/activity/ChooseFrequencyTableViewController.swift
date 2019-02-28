@@ -8,7 +8,10 @@
 
 import UIKit
 
-class ChooseFrequencyTableViewController: UITableViewController {
+class ChooseFrequencyTableViewController: UITableViewController, ByDayPickerDelegate,
+                                            ByMonthDayPickerDelegate,
+                                            ByYearDayPickerDelegate {
+    
     
     enum TableRows:Int {
         case Whenever = 0,
@@ -34,7 +37,10 @@ class ChooseFrequencyTableViewController: UITableViewController {
     @IBOutlet var monthDayPicker: UIPickerView!
     @IBOutlet var yearDayPicker: UIPickerView!
 
-
+    @IBOutlet var byWeekdayLabel: UILabel!
+    @IBOutlet var byMonthDayLabel: UILabel!
+    @IBOutlet var byYearDayLabel: UILabel!
+    
     var dayPickerController:ByDayPickerViewController?
     var monthDayPickerController :ByMonthDayPickerController?
     var yearDayPickerController: ByYearDayPickerController?
@@ -44,6 +50,8 @@ class ChooseFrequencyTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        // This makes the empty table cells not show up.
+        tableView.tableFooterView = UIView(frame: .zero)
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
 
@@ -55,15 +63,15 @@ class ChooseFrequencyTableViewController: UITableViewController {
         // When no previous activity. Set the default to Whenever.
         wheneverTableViewCell.accessoryType = .checkmark
         
-        dayPickerController = ByDayPickerViewController()
+        dayPickerController = ByDayPickerViewController(delegate: self)
         weekDayPicker.dataSource = dayPickerController
         weekDayPicker.delegate = dayPickerController
         
-        monthDayPickerController = ByMonthDayPickerController()
+        monthDayPickerController = ByMonthDayPickerController(delegate: self)
         monthDayPicker.delegate = monthDayPickerController
         monthDayPicker.dataSource = monthDayPickerController
         
-        yearDayPickerController = ByYearDayPickerController()
+        yearDayPickerController = ByYearDayPickerController(delegate: self)
         yearDayPicker.delegate = yearDayPickerController
         yearDayPicker.dataSource = yearDayPickerController
         
@@ -92,6 +100,36 @@ class ChooseFrequencyTableViewController: UITableViewController {
         
         
         currentSelectedRow = TableRows(rawValue: indexPath.row)!
+        
+        self.tableView.beginUpdates()
+        self.tableView.endUpdates()
+    }
+    
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        print("Height for row: \(indexPath.row)")
+        if indexPath.row == TableRows.MonthPicker.rawValue {
+            if currentSelectedRow != TableRows.Monthly {
+                return 0
+            } else {
+                return 120
+            }
+        }
+        if indexPath.row == TableRows.WeekDayPicker.rawValue {
+            if currentSelectedRow != TableRows.Weekly {
+                return 0
+            } else {
+                return 120
+            }
+        }
+        if indexPath.row == TableRows.YearDayPicker.rawValue {
+            if currentSelectedRow != TableRows.Yearly {
+                return 0
+            } else {
+                return 120
+            }
+        }
+
+        return super.tableView(tableView, heightForRowAt: indexPath)
     }
 
     /*
@@ -150,12 +188,32 @@ class ChooseFrequencyTableViewController: UITableViewController {
     */
 
     // MARK: UIPickerViewDataSource
-    func numberOfComponents(in pickerView: UIPickerView) -> Int {
-        return 1
+//    func numberOfComponents(in pickerView: UIPickerView) -> Int {
+//        return 1
+//    }
+//
+//    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+//        return 7
+//    }
+    
+    //TODO: Is there a way to combine these??
+    
+    // MARK: ByDatePickerDelegate
+    func pickerValueChanged(_ day: DaysOfWeek) {
+        byWeekdayLabel.text! = day.rawValue
+    }
+
+    // MARK: ByMonthDayPickerDelegate
+    func pickerValueChanged(_ day: Int, formattedValue: String) {
+        byMonthDayLabel.text! = formattedValue
+    }
+
+    // MARK: ByYearDayPickerDelegate
+    func pickerValueChanged(month: Int, day: Int) {
+        byYearDayLabel.text = Months.fromIndex(month).rawValue + " " + String(day + 1)
     }
     
-    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        return 7
-    }
+    
+
 
 }

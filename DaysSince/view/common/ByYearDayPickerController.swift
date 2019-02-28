@@ -10,20 +10,7 @@ import Foundation
 
 class ByYearDayPickerController: NSObject, UIPickerViewDataSource, UIPickerViewDelegate {
     
-    private let months: [String] = [
-        "January",
-        "February",
-        "March",
-        "April",
-        "May",
-        "June",
-        "July",
-        "August",
-        "September",
-        "October",
-        "November",
-        "December"
-    ]
+    let delegate:ByYearDayPickerDelegate
     
     private let numDays: [Int : Int ] = [
         0:31,
@@ -40,6 +27,10 @@ class ByYearDayPickerController: NSObject, UIPickerViewDataSource, UIPickerViewD
         11:31
     ]
     
+    init(delegate:ByYearDayPickerDelegate) {
+        self.delegate = delegate
+    }
+    
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
         return 2
     }
@@ -54,7 +45,7 @@ class ByYearDayPickerController: NSObject, UIPickerViewDataSource, UIPickerViewD
     
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
         if component == 0 {
-            return months[row]
+            return Months.fromIndex(row).rawValue
         }
         
         return String(row + 1)
@@ -64,6 +55,7 @@ class ByYearDayPickerController: NSObject, UIPickerViewDataSource, UIPickerViewD
         if component == 0 {
             pickerView.reloadComponent(1)
         }
+        delegate.pickerValueChanged(month: pickerView.selectedRow(inComponent: 0), day: pickerView.selectedRow(inComponent: 1))
     }
     
     

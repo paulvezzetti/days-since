@@ -10,15 +10,24 @@ import Foundation
 
 class ByMonthDayPickerController: NSObject, UIPickerViewDelegate, UIPickerViewDataSource {
     
+    private let delegate:ByMonthDayPickerDelegate
+    
     private let options: [String] =  {
         var values: [String] = []
         values.append("First Day")
-        values.append("Last Day")
+        let numberFormatter = NumberFormatter()
+        numberFormatter.numberStyle = .ordinal
         for i in 1...31 {
-            values.append(String(i))
+            values.append(numberFormatter.string(for: i) ?? "Missing")
         }
+        values.append("Last Day")
+
         return values
     }()
+    
+    init(delegate: ByMonthDayPickerDelegate) {
+        self.delegate = delegate
+    }
     
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
         return 1
@@ -33,6 +42,9 @@ class ByMonthDayPickerController: NSObject, UIPickerViewDelegate, UIPickerViewDa
         return options[row]
     }
     
+    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+        delegate.pickerValueChanged(row, formattedValue: options[row])
+    }
     
     
 }

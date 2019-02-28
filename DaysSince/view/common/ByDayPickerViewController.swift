@@ -10,6 +10,12 @@ import Foundation
 
 class ByDayPickerViewController : NSObject, UIPickerViewDelegate, UIPickerViewDataSource {
     
+    let delegate:ByDayPickerDelegate
+    
+    init(delegate:ByDayPickerDelegate) {
+        self.delegate = delegate
+    }
+    
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
         return 1
     }
@@ -19,24 +25,11 @@ class ByDayPickerViewController : NSObject, UIPickerViewDelegate, UIPickerViewDa
     }
 
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        switch row {
-        case 0:
-            return "Sunday"
-        case 1:
-            return "Monday"
-        case 2:
-            return "Tuesday"
-        case 3:
-            return "Wednesday"
-        case 4:
-            return "Thursday"
-        case 5:
-            return "Friday"
-        case 6:
-            return "Saturday"
-        default:
-            return "Unknown Day"
-        }
+        return DaysOfWeek.fromIndex(row).rawValue
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+        delegate.pickerValueChanged(DaysOfWeek.fromIndex(row))
     }
     
 }

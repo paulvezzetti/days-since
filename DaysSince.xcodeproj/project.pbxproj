@@ -17,6 +17,11 @@
 		FA1D72F22226E18500D8EBF7 /* ByDayPickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA1D72F12226E18500D8EBF7 /* ByDayPickerViewController.swift */; };
 		FA1D72F42226F7DE00D8EBF7 /* ByMonthDayPickerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA1D72F32226F7DE00D8EBF7 /* ByMonthDayPickerController.swift */; };
 		FA1D72F622272BBF00D8EBF7 /* ByYearDayPickerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA1D72F522272BBF00D8EBF7 /* ByYearDayPickerController.swift */; };
+		FA1D72F9222850A400D8EBF7 /* DaysOfWeek.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA1D72F8222850A400D8EBF7 /* DaysOfWeek.swift */; };
+		FA1D72FB222854E600D8EBF7 /* ByDayPickerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA1D72FA222854E600D8EBF7 /* ByDayPickerDelegate.swift */; };
+		FA1D72FD222863E500D8EBF7 /* Months.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA1D72FC222863E500D8EBF7 /* Months.swift */; };
+		FA1D72FF22286A8800D8EBF7 /* ByYearDayPickerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA1D72FE22286A8800D8EBF7 /* ByYearDayPickerDelegate.swift */; };
+		FA1D7301222879BA00D8EBF7 /* ByMonthDayPickerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA1D7300222879BA00D8EBF7 /* ByMonthDayPickerDelegate.swift */; };
 		FA3CEF49220E0F2500634DD7 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA3CEF48220E0F2500634DD7 /* AppDelegate.swift */; };
 		FA3CEF4C220E0F2500634DD7 /* DaysSince.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = FA3CEF4A220E0F2500634DD7 /* DaysSince.xcdatamodeld */; };
 		FA3CEF4E220E0F2500634DD7 /* MasterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA3CEF4D220E0F2500634DD7 /* MasterViewController.swift */; };
@@ -43,6 +48,11 @@
 		FA1D72F12226E18500D8EBF7 /* ByDayPickerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ByDayPickerViewController.swift; sourceTree = "<group>"; };
 		FA1D72F32226F7DE00D8EBF7 /* ByMonthDayPickerController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ByMonthDayPickerController.swift; sourceTree = "<group>"; };
 		FA1D72F522272BBF00D8EBF7 /* ByYearDayPickerController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ByYearDayPickerController.swift; sourceTree = "<group>"; };
+		FA1D72F8222850A400D8EBF7 /* DaysOfWeek.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DaysOfWeek.swift; sourceTree = "<group>"; };
+		FA1D72FA222854E600D8EBF7 /* ByDayPickerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ByDayPickerDelegate.swift; sourceTree = "<group>"; };
+		FA1D72FC222863E500D8EBF7 /* Months.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Months.swift; sourceTree = "<group>"; };
+		FA1D72FE22286A8800D8EBF7 /* ByYearDayPickerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ByYearDayPickerDelegate.swift; sourceTree = "<group>"; };
+		FA1D7300222879BA00D8EBF7 /* ByMonthDayPickerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ByMonthDayPickerDelegate.swift; sourceTree = "<group>"; };
 		FA3CEF45220E0F2500634DD7 /* DaysSince.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DaysSince.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FA3CEF48220E0F2500634DD7 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		FA3CEF4B220E0F2500634DD7 /* DaysSince.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = DaysSince.xcdatamodel; sourceTree = "<group>"; };
@@ -77,8 +87,20 @@
 				FA1D72F12226E18500D8EBF7 /* ByDayPickerViewController.swift */,
 				FA1D72F32226F7DE00D8EBF7 /* ByMonthDayPickerController.swift */,
 				FA1D72F522272BBF00D8EBF7 /* ByYearDayPickerController.swift */,
+				FA1D72FA222854E600D8EBF7 /* ByDayPickerDelegate.swift */,
+				FA1D72FE22286A8800D8EBF7 /* ByYearDayPickerDelegate.swift */,
+				FA1D7300222879BA00D8EBF7 /* ByMonthDayPickerDelegate.swift */,
 			);
 			path = common;
+			sourceTree = "<group>";
+		};
+		FA1D72F72228507C00D8EBF7 /* util */ = {
+			isa = PBXGroup;
+			children = (
+				FA1D72F8222850A400D8EBF7 /* DaysOfWeek.swift */,
+				FA1D72FC222863E500D8EBF7 /* Months.swift */,
+			);
+			path = util;
 			sourceTree = "<group>";
 		};
 		FA3CEF3C220E0F2500634DD7 = {
@@ -102,6 +124,7 @@
 		FA3CEF47220E0F2500634DD7 /* DaysSince */ = {
 			isa = PBXGroup;
 			children = (
+				FA1D72F72228507C00D8EBF7 /* util */,
 				FAA6AF202211D23600346CCB /* model */,
 				FA5596B32210FDFD00113AE1 /* view */,
 				FA3CEF48220E0F2500634DD7 /* AppDelegate.swift */,
@@ -245,9 +268,14 @@
 				FA3CEF4E220E0F2500634DD7 /* MasterViewController.swift in Sources */,
 				FA1D72E1221F82A300D8EBF7 /* MasterTableViewCell.swift in Sources */,
 				FAA6AF242213684800346CCB /* HistoryTableViewController.swift in Sources */,
+				FA1D72F9222850A400D8EBF7 /* DaysOfWeek.swift in Sources */,
 				FA5596B2220FB8F500113AE1 /* DatePickerViewController.swift in Sources */,
+				FA1D72FB222854E600D8EBF7 /* ByDayPickerDelegate.swift in Sources */,
+				FA1D72FF22286A8800D8EBF7 /* ByYearDayPickerDelegate.swift in Sources */,
 				FA1D72EF2226CA7800D8EBF7 /* ChooseFrequencyTableViewController.swift in Sources */,
 				FA3CEF50220E0F2500634DD7 /* DetailViewController.swift in Sources */,
+				FA1D7301222879BA00D8EBF7 /* ByMonthDayPickerDelegate.swift in Sources */,
+				FA1D72FD222863E500D8EBF7 /* Months.swift in Sources */,
 				FAA6AF222211E42700346CCB /* DataModelManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
