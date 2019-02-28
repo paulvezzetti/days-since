@@ -26,7 +26,16 @@ class MasterViewController: UITableViewController /*, NSFetchedResultsController
 
         tableView.rowHeight = UITableView.automaticDimension
         tableView.estimatedRowHeight = 140
+        
+        rebuildDataStructures()
 
+        do {
+            
+            let notificationCenter = NotificationCenter.default
+            try notificationCenter.addObserver(self, selector: #selector(managedObjectContextObjectsDidChange), name: NSNotification.Name.NSManagedObjectContextObjectsDidChange, object: dataManager?.getManagedObjectContext())
+        } catch {
+            
+        }
         //dataManager?.updateActivityStatus()
 //        let addButton = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(showAddModally(_:)))
 //        navigationItem.rightBarButtonItem = addButton
@@ -35,12 +44,37 @@ class MasterViewController: UITableViewController /*, NSFetchedResultsController
             detailViewController = (controllers[controllers.count-1] as! UINavigationController).topViewController as? DetailViewController
             detailViewController?.dataManager = dataManager
         }
+        
+
     }
 
     override func viewWillAppear(_ animated: Bool) {
         clearsSelectionOnViewWillAppear = splitViewController!.isCollapsed
         super.viewWillAppear(animated)
         
+    }
+
+    
+    @objc
+    func managedObjectContextObjectsDidChange(notification: NSNotification) {
+//        guard let userInfo = notification.userInfo else { return }
+        // if there are any changes? update the table
+        rebuildDataStructures()
+        tableView.reloadData()
+    }
+
+    @objc
+    func showAddModally(_ sender: Any) {
+        // Safe Present
+        if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "AddTaskTable") as? AddActivityTableViewController
+        {
+            vc.dataManager = dataManager
+            present(vc, animated: true, completion: nil)
+        }
+        
+    }
+    
+    func rebuildDataStructures() {
         var overdue: [ActivityMO] = []
         var ontime: [ActivityMO] = []
         var soon: [ActivityMO] = []
@@ -65,12 +99,12 @@ class MasterViewController: UITableViewController /*, NSFetchedResultsController
                 ontime.sort(by: sortByName)
                 soon.sort(by: sortByName)
                 
-//                activities = try fetchedActivities.sorted{(act1: ActivityMO, _ act2: ActivityMO) throws -> Bool in
-//                    if (act1.status == act2.status) {
-//                        return act1.name! < act2.name!
-//                    }
-//                    return act1.status.rawValue < act2.status.rawValue
-//                }
+                //                activities = try fetchedActivities.sorted{(act1: ActivityMO, _ act2: ActivityMO) throws -> Bool in
+                //                    if (act1.status == act2.status) {
+                //                        return act1.name! < act2.name!
+                //                    }
+                //                    return act1.status.rawValue < act2.status.rawValue
+                //                }
                 
             } catch {
                 // TODO: Handle error
@@ -94,20 +128,10 @@ class MasterViewController: UITableViewController /*, NSFetchedResultsController
             sectionIndices[sectionIndex] = ActivityMO.ActivityStatus.OnTime
             sectionIndex += 1
         }
-//        for a in activities {
-//            print ("Activity: \(a.name!) status: \(a.status)")
-//        }
-    }
+        //        for a in activities {
+        //            print ("Activity: \(a.name!) status: \(a.status)")
+        //        }
 
-    @objc
-    func showAddModally(_ sender: Any) {
-        // Safe Present
-        if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "AddTaskTable") as? AddActivityTableViewController
-        {
-            vc.dataManager = dataManager
-            present(vc, animated: true, completion: nil)
-        }
-        
     }
     
     func sectionToStatus(section index:Int) -> ActivityMO.ActivityStatus {

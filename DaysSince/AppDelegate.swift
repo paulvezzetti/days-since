@@ -8,6 +8,7 @@
 
 import UIKit
 import CoreData
+import UserNotifications
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDelegate {
@@ -37,6 +38,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
 //            // TODO: Show a error screen
 //            print(error.localizedDescription)
 //        }
+        
+        requestPermissionForPushNotifications()
         return true
     }
 
@@ -81,6 +84,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
             return true
         }
         return false
+    }
+    
+    func requestPermissionForPushNotifications() {
+        UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound, .badge]) {
+            granted, error in
+            print("Permission granted: \(granted)")
+        }
     }
     // MARK: - Core Data stack
 

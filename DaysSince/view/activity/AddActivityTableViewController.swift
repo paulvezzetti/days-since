@@ -76,7 +76,7 @@ class AddActivityTableViewController: UITableViewController, DatePickerDelegate 
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return 8
+        return 11
 //        switch section {
 //        case 0:
 //            return 1
@@ -92,10 +92,12 @@ class AddActivityTableViewController: UITableViewController, DatePickerDelegate 
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if /*indexPath.section == 1 &&*/ indexPath.row == ActivityRows.StartFromDateEntry.rawValue {
             self.performSegue(withIdentifier: "showDatePicker", sender: self)
+        } else if indexPath.row == ActivityRows.FrequencyTextField.rawValue {
+           // self.performSegue(withIdentifier: "chooseWhenSegue", sender: self)
         }
     }
 
-    /*
+        /*
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "reuseIdentifier", for: indexPath)
 
