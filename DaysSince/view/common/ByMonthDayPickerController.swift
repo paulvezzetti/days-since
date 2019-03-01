@@ -11,22 +11,23 @@ import Foundation
 class ByMonthDayPickerController: NSObject, UIPickerViewDelegate, UIPickerViewDataSource {
     
     private let delegate:ByMonthDayPickerDelegate
+    private let numberFormatter:NumberFormatter
     
-    private let options: [String] =  {
-        var values: [String] = []
-        values.append("First Day")
-        let numberFormatter = NumberFormatter()
-        numberFormatter.numberStyle = .ordinal
-        for i in 1...31 {
-            values.append(numberFormatter.string(for: i) ?? "Missing")
-        }
-        values.append("Last Day")
-
-        return values
-    }()
+    private let options: [String]
     
     init(delegate: ByMonthDayPickerDelegate) {
         self.delegate = delegate
+
+        numberFormatter = NumberFormatter()
+        numberFormatter.numberStyle = .ordinal
+        
+        var values: [String] = []
+        for i in 0...32 {
+            values.append(ByMonthDayPickerController.formattedValue(for: i, with: numberFormatter))
+        }
+        options = values
+        
+        super.init()
     }
     
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
@@ -46,5 +47,18 @@ class ByMonthDayPickerController: NSObject, UIPickerViewDelegate, UIPickerViewDa
         delegate.pickerValueChanged(row, formattedValue: options[row])
     }
     
+    func formattedValueForIndex(_ index: Int) -> String {
+        return ByMonthDayPickerController.formattedValue(for: index, with: numberFormatter)
+    }
     
+    private static func formattedValue(for index: Int, with formatter:NumberFormatter) -> String {
+        if index <= 0 {
+            return "First Day"
+        }
+        if index > 31 {
+            return "Last Day"
+        }
+        return formatter.string(for: index) ?? "Missing"
+
+    }
 }

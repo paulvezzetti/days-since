@@ -24,7 +24,7 @@ class ChooseFrequencyTableViewController: UITableViewController, ByDayPickerDele
         YearDayPicker
     }
     
-    @IBOutlet var byDateTableViewCell: UITableViewCell!
+    @IBOutlet var byDayTableViewCell: UITableViewCell!
     @IBOutlet var weeklyTableViewCell: UITableViewCell!
     @IBOutlet var weekDayPickerTableViewCell: UITableViewCell!
     @IBOutlet var monthlyTableViewCell: UITableViewCell!
@@ -33,6 +33,10 @@ class ChooseFrequencyTableViewController: UITableViewController, ByDayPickerDele
     @IBOutlet var yearDayPickerTableViewCell: UITableViewCell!
     @IBOutlet var wheneverTableViewCell: UITableViewCell!
     
+    @IBOutlet var byDayTextField: UITextField!
+    @IBOutlet var weeklyLabel: UILabel!
+    @IBOutlet var monthlyLabel: UILabel!
+    @IBOutlet var yearlyLabel: UILabel!
     @IBOutlet var weekDayPicker: UIPickerView!
     @IBOutlet var monthDayPicker: UIPickerView!
     @IBOutlet var yearDayPicker: UIPickerView!
@@ -45,26 +49,21 @@ class ChooseFrequencyTableViewController: UITableViewController, ByDayPickerDele
     var monthDayPickerController :ByMonthDayPickerController?
     var yearDayPickerController: ByYearDayPickerController?
 
-    var currentSelectedRow = TableRows.Whenever
+    private var currentSelectedRow = TableRows.Whenever
+//    var selectedType:IntervalTypes = IntervalTypes.Unlimited
+//    var day:Int = 1
+//    var month:Int = 0
     
-    var dataManager: DataModelManager? = nil
+    var settingsDelegate:IntervalSettingsDelegate? = nil
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // This makes the empty table cells not show up.
         tableView.tableFooterView = UIView(frame: .zero)
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
 
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem
-        
-        // TODO: Need to support updates by getting a reference to the activity from the delegate.
-        
-        // When no previous activity. Set the default to Whenever.
-        wheneverTableViewCell.accessoryType = .checkmark
-        
+        // Set up the pickers
         dayPickerController = ByDayPickerViewController(delegate: self)
         weekDayPicker.dataSource = dayPickerController
         weekDayPicker.delegate = dayPickerController
@@ -76,7 +75,71 @@ class ChooseFrequencyTableViewController: UITableViewController, ByDayPickerDele
         yearDayPickerController = ByYearDayPickerController(delegate: self)
         yearDayPicker.delegate = yearDayPickerController
         yearDayPicker.dataSource = yearDayPickerController
+
+        // Configure the UI based on the initial settings, if any
+        if let delegate = settingsDelegate {
+            let initialSettings = delegate.getInitialIntervalSettings()
+            switch initialSettings.type {
+            case IntervalTypes.Unlimited:
+                wheneverTableViewCell.accessoryType = .checkmark
+                currentSelectedRow = .Whenever
+            case IntervalTypes.Constant:
+                byDayTableViewCell.accessoryType = .checkmark
+                byDayTextField.text = String(initialSettings.day)
+                currentSelectedRow = .ByDay
+            case IntervalTypes.Weekly:
+                weeklyTableViewCell.accessoryType = .checkmark
+                weekDayPicker.selectRow(initialSettings.day, inComponent: 0, animated: false)
+                weeklyLabel.text = DaysOfWeek.fromIndex(initialSettings.day).rawValue
+                currentSelectedRow = .Weekly
+            case IntervalTypes.Monthly:
+                monthlyTableViewCell.accessoryType = .checkmark
+                monthDayPicker.selectRow(initialSettings.day, inComponent: 0, animated: false)
+                monthlyLabel.text = monthDayPickerController?.formattedValueForIndex(initialSettings.day)
+                currentSelectedRow = .Monthly
+            case IntervalTypes.Yearly:
+                yearlyTableViewCell.accessoryType = .checkmark
+                yearDayPicker.selectRow(initialSettings.month, inComponent: 0, animated: false)
+                yearDayPicker.selectRow(initialSettings.day, inComponent: 1, animated: false)
+                yearlyLabel.text = Months.fromIndex(initialSettings.month).rawValue + " " + String(initialSettings.day + 1)
+                currentSelectedRow = .Yearly
+            }
+            
+        } else {
+            wheneverTableViewCell.accessoryType = .checkmark
+        }
+
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
         
+        // Notify the delegate of the changes
+        
+        var iType:IntervalTypes = IntervalTypes.Unlimited
+        var day:Int = 0
+        var month:Int = 0
+        switch currentSelectedRow {
+        case .Whenever:
+            iType = IntervalTypes.Unlimited
+        case .ByDay:
+            iType = IntervalTypes.Constant
+            day = Int(byDayTextField.text ?? "0")!
+        case .Weekly:
+            iType = IntervalTypes.Weekly
+            day = weekDayPicker.selectedRow(inComponent: 0)
+        case .Monthly:
+            iType = IntervalTypes.Monthly
+            day = monthDayPicker.selectedRow(inComponent: 0)
+        case .Yearly:
+            iType = IntervalTypes.Yearly
+            month = yearDayPicker.selectedRow(inComponent: 0)
+            day = yearDayPicker.selectedRow(inComponent: 1) + 1
+        default:
+            break
+        }
+
+        settingsDelegate?.applyIntervalSettings(type: iType, day: day, month: month)
     }
 
     // MARK: - Table view data source
@@ -92,7 +155,6 @@ class ChooseFrequencyTableViewController: UITableViewController, ByDayPickerDele
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        print("Selected row \(indexPath.row)")
         // Deselect the current selected row
         let currentSelection = super.tableView(tableView, cellForRowAt: IndexPath(row: currentSelectedRow.rawValue, section: 0))
         currentSelection.accessoryType = .none

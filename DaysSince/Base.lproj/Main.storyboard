@@ -733,19 +733,23 @@
                     </tableView>
                     <navigationItem key="navigationItem" title="When" id="nR1-YR-Mzd"/>
                     <connections>
-                        <outlet property="byDateTableViewCell" destination="nHh-Nk-0Ed" id="TVl-Az-00K"/>
+                        <outlet property="byDayTableViewCell" destination="nHh-Nk-0Ed" id="TVl-Az-00K"/>
+                        <outlet property="byDayTextField" destination="2fC-pR-2Yu" id="9BT-SJ-4zH"/>
                         <outlet property="byMonthDayLabel" destination="9aQ-mF-E3J" id="HWe-0T-wAu"/>
                         <outlet property="byWeekdayLabel" destination="l71-Z3-vj1" id="PSP-BG-S5Y"/>
                         <outlet property="byYearDayLabel" destination="OTj-Op-i2Y" id="UvT-Yp-l3m"/>
                         <outlet property="monthDayPicker" destination="hR1-MB-ec2" id="6Nq-By-6Up"/>
                         <outlet property="monthDayPickerTableViewCell" destination="bNp-Rh-ib3" id="qyV-NH-dtr"/>
+                        <outlet property="monthlyLabel" destination="9aQ-mF-E3J" id="UJw-I2-Y6m"/>
                         <outlet property="monthlyTableViewCell" destination="l0W-wS-WjI" id="vMH-S6-mfg"/>
                         <outlet property="weekDayPicker" destination="957-fl-07M" id="BfM-tF-C13"/>
                         <outlet property="weekDayPickerTableViewCell" destination="zir-4f-7la" id="YOB-bl-H50"/>
+                        <outlet property="weeklyLabel" destination="l71-Z3-vj1" id="nQi-Hu-r5j"/>
                         <outlet property="weeklyTableViewCell" destination="CEX-17-Gpl" id="PJL-kP-9rK"/>
                         <outlet property="wheneverTableViewCell" destination="e11-pj-FUL" id="FPp-tb-ORH"/>
                         <outlet property="yearDayPicker" destination="ZE6-o4-rjH" id="ZV4-06-HGt"/>
                         <outlet property="yearDayPickerTableViewCell" destination="gay-bV-dQq" id="iEq-5L-qpP"/>
+                        <outlet property="yearlyLabel" destination="OTj-Op-i2Y" id="nTi-hm-e4y"/>
                         <outlet property="yearlyTableViewCell" destination="f7F-5Q-A3u" id="UJe-hR-SNE"/>
                     </connections>
                 </tableViewController>

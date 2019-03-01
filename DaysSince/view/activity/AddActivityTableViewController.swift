@@ -8,7 +8,8 @@
 
 import UIKit
 
-class AddActivityTableViewController: UITableViewController, DatePickerDelegate {
+class AddActivityTableViewController: UITableViewController, DatePickerDelegate, IntervalSettingsDelegate {
+
     
     enum ActivityRows:Int {
         case TitleLabel = 0,
@@ -154,11 +155,20 @@ class AddActivityTableViewController: UITableViewController, DatePickerDelegate 
             controller.initialDate = chosenDate
         } else if segue.identifier == "chooseWhenSegue" {
             let controller = segue.destination as! ChooseFrequencyTableViewController
-            controller.dataManager = dataManager
+            //controller.dataManager = dataManager
+            controller.settingsDelegate = self
         }
 
     }
 
+    func getInitialIntervalSettings() -> (type: IntervalTypes, day: Int, month: Int) {
+        return (type: IntervalTypes.Monthly, day: 23, month: 4)
+    }
+
+    
+    func applyIntervalSettings(type: IntervalTypes, day: Int, month: Int) {
+        print("Interval settings: \(type.rawValue) on day: \(day) on month: \(month)")
+    }
 
     @IBAction func doSave(_ sender: Any) {
         if let dm = dataManager {

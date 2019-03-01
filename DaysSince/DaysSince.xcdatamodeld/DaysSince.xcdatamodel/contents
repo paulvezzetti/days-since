@@ -26,7 +26,7 @@
         <relationship name="activity" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Activity" inverseName="interval" inverseEntity="Activity" syncable="YES"/>
     </entity>
     <entity name="MonthlyInterval" representedClassName="MonthlyIntervalMO" parentEntity="Interval" syncable="YES" codeGenerationType="category">
-        <attribute name="day" attributeType="Integer 16" minValueString="1" maxValueString="31" defaultValueString="1" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="day" attributeType="Integer 16" minValueString="1" maxValueString="32" defaultValueString="1" usesScalarValueType="YES" syncable="YES"/>
     </entity>
     <entity name="UnlimitedInterval" representedClassName="UnlimitedIntervalMO" parentEntity="Interval" syncable="YES" codeGenerationType="category"/>
     <entity name="WeeklyInterval" representedClassName="WeeklyIntervalMO" parentEntity="Interval" syncable="YES" codeGenerationType="category">
