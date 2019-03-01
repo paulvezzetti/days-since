@@ -1,5 +1,5 @@
 //
-//  WeeklyInterval+CoreDataClass.swift
+//  YearlyIntervalMO+CoreDataClass.swift
 //  DaysSince
 //
 //  Created by Paul Vezzetti on 2/28/19.
@@ -10,7 +10,7 @@
 import Foundation
 import CoreData
 
-@objc(WeeklyInterval)
-public class WeeklyInterval: Interval {
+@objc(YearlyIntervalMO)
+public class YearlyIntervalMO: IntervalMO {
 
 }

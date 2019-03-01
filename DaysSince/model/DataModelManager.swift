@@ -162,7 +162,45 @@ class DataModelManager {
       //  try save(context)
     }
     
+    func newUnlimitedInterval() throws -> UnlimitedIntervalMO {
+        let context = try getManagedObjectContext()
+        let interval = UnlimitedIntervalMO(context: context)
+        interval.type = Int16(IntervalTypes.Unlimited.rawValue)
+        return interval
+    }
     
+    func newConstantInterval(frequency: Int) throws -> ConstantIntervalMO {
+        let context = try getManagedObjectContext()
+        let interval = ConstantIntervalMO(context: context)
+        interval.type = Int16(IntervalTypes.Constant.rawValue)
+        interval.frequency = Int16(frequency)
+        return interval
+    }
+    
+    func newWeeklyInterval(weekday: Int) throws -> WeeklyIntervalMO {
+        let context = try getManagedObjectContext()
+        let interval = WeeklyIntervalMO(context: context)
+        interval.type = Int16(IntervalTypes.Weekly.rawValue)
+        interval.day = Int16(weekday)
+        return interval
+    }
+    
+    func newMonthlyInterval(day:Int) throws ->MonthlyIntervalMO {
+        let context = try getManagedObjectContext()
+        let interval = MonthlyIntervalMO(context: context)
+        interval.type = Int16(IntervalTypes.Monthly.rawValue)
+        interval.day = Int16(day)
+        return interval
+    }
+    
+    func newYearlyInterval(month:Int, day: Int) throws -> YearlyIntervalMO {
+        let context = try getManagedObjectContext()
+        let interval = YearlyIntervalMO(context: context)
+        interval.type = Int16(IntervalTypes.Yearly.rawValue)
+        interval.month = Int16(month)
+        interval.day = Int16(day)
+        return interval
+    }
     
     func saveContext() throws {
         let context = try getManagedObjectContext()

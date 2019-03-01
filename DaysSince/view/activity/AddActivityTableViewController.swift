@@ -152,6 +152,9 @@ class AddActivityTableViewController: UITableViewController, DatePickerDelegate 
             let controller = segue.destination as! DatePickerViewController
             controller.delegate = self
             controller.initialDate = chosenDate
+        } else if segue.identifier == "chooseWhenSegue" {
+            let controller = segue.destination as! ChooseFrequencyTableViewController
+            controller.dataManager = dataManager
         }
 
     }

@@ -1,5 +1,5 @@
 //
-//  MonthlyInterval+CoreDataClass.swift
+//  UnlimitedIntervalMO+CoreDataClass.swift
 //  DaysSince
 //
 //  Created by Paul Vezzetti on 2/28/19.
@@ -10,7 +10,7 @@
 import Foundation
 import CoreData
 
-@objc(MonthlyInterval)
-public class MonthlyInterval: Interval {
+@objc(UnlimitedIntervalMO)
+public class UnlimitedIntervalMO: IntervalMO {
 
 }

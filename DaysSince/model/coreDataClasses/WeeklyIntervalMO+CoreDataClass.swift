@@ -1,5 +1,5 @@
 //
-//  ConstantInterval+CoreDataClass.swift
+//  WeeklyIntervalMO+CoreDataClass.swift
 //  DaysSince
 //
 //  Created by Paul Vezzetti on 2/28/19.
@@ -10,7 +10,7 @@
 import Foundation
 import CoreData
 
-@objc(ConstantInterval)
-public class ConstantInterval: Interval {
+@objc(WeeklyIntervalMO)
+public class WeeklyIntervalMO: IntervalMO {
 
 }

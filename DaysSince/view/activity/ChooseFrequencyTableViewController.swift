@@ -47,6 +47,8 @@ class ChooseFrequencyTableViewController: UITableViewController, ByDayPickerDele
 
     var currentSelectedRow = TableRows.Whenever
     
+    var dataManager: DataModelManager? = nil
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 

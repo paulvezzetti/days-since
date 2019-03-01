@@ -9,7 +9,7 @@
         <relationship name="history" toMany="YES" deletionRule="Nullify" destinationEntity="Event" inverseName="activity" inverseEntity="Event" syncable="YES"/>
         <relationship name="interval" maxCount="1" deletionRule="Nullify" destinationEntity="Interval" inverseName="activity" inverseEntity="Interval" syncable="YES"/>
     </entity>
-    <entity name="ConstantInterval" representedClassName="ConstantInterval" parentEntity="Interval" syncable="YES" codeGenerationType="category">
+    <entity name="ConstantInterval" representedClassName="ConstantIntervalMO" parentEntity="Interval" syncable="YES" codeGenerationType="category">
         <attribute name="frequency" attributeType="Integer 16" minValueString="0" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
     </entity>
     <entity name="Event" representedClassName="EventMO" codeGenerationType="category">
@@ -21,24 +21,25 @@
         <relationship name="activity" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Activity" inverseName="history" inverseEntity="Activity" syncable="YES"/>
         <userInfo/>
     </entity>
-    <entity name="Interval" representedClassName="Interval" isAbstract="YES" syncable="YES" codeGenerationType="category">
+    <entity name="Interval" representedClassName="IntervalMO" isAbstract="YES" syncable="YES" codeGenerationType="category">
+        <attribute name="type" attributeType="Integer 16" minValueString="0" maxValueString="4" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <relationship name="activity" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Activity" inverseName="interval" inverseEntity="Activity" syncable="YES"/>
     </entity>
-    <entity name="MonthlyInterval" representedClassName="MonthlyInterval" parentEntity="Interval" syncable="YES" codeGenerationType="category">
+    <entity name="MonthlyInterval" representedClassName="MonthlyIntervalMO" parentEntity="Interval" syncable="YES" codeGenerationType="category">
         <attribute name="day" attributeType="Integer 16" minValueString="1" maxValueString="31" defaultValueString="1" usesScalarValueType="YES" syncable="YES"/>
     </entity>
-    <entity name="UnlimitedInterval" representedClassName="UnlimitedInterval" parentEntity="Interval" syncable="YES" codeGenerationType="category"/>
-    <entity name="WeeklyInterval" representedClassName="WeeklyInterval" parentEntity="Interval" syncable="YES" codeGenerationType="category">
+    <entity name="UnlimitedInterval" representedClassName="UnlimitedIntervalMO" parentEntity="Interval" syncable="YES" codeGenerationType="category"/>
+    <entity name="WeeklyInterval" representedClassName="WeeklyIntervalMO" parentEntity="Interval" syncable="YES" codeGenerationType="category">
         <attribute name="day" attributeType="Integer 16" minValueString="0" maxValueString="6" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
     </entity>
-    <entity name="YearlyInterval" representedClassName="YearlyInterval" parentEntity="Interval" syncable="YES" codeGenerationType="category">
+    <entity name="YearlyInterval" representedClassName="YearlyIntervalMO" parentEntity="Interval" syncable="YES" codeGenerationType="category">
         <attribute name="day" attributeType="Integer 16" minValueString="1" maxValueString="31" defaultValueString="1" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="month" attributeType="Integer 16" minValueString="0" maxValueString="11" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
     </entity>
     <elements>
         <element name="Activity" positionX="-63.47265625" positionY="-8.6171875" width="128" height="150"/>
         <element name="Event" positionX="306.62109375" positionY="44.29296875" width="128" height="60"/>
-        <element name="Interval" positionX="209.41015625" positionY="183.20703125" width="128" height="60"/>
+        <element name="Interval" positionX="209.41015625" positionY="183.20703125" width="128" height="75"/>
         <element name="ConstantInterval" positionX="-82.5859375" positionY="313.078125" width="128" height="60"/>
         <element name="WeeklyInterval" positionX="219.46875" positionY="311.5234375" width="128" height="60"/>
         <element name="YearlyInterval" positionX="362.30859375" positionY="311.28515625" width="128" height="75"/>
