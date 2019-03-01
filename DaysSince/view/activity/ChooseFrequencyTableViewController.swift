@@ -45,14 +45,11 @@ class ChooseFrequencyTableViewController: UITableViewController, ByDayPickerDele
     @IBOutlet var byMonthDayLabel: UILabel!
     @IBOutlet var byYearDayLabel: UILabel!
     
-    var dayPickerController:ByDayPickerViewController?
-    var monthDayPickerController :ByMonthDayPickerController?
-    var yearDayPickerController: ByYearDayPickerController?
+    private var dayPickerController:ByDayPickerViewController?
+    private var monthDayPickerController :ByMonthDayPickerController?
+    private var yearDayPickerController: ByYearDayPickerController?
 
     private var currentSelectedRow = TableRows.Whenever
-//    var selectedType:IntervalTypes = IntervalTypes.Unlimited
-//    var day:Int = 1
-//    var month:Int = 0
     
     var settingsDelegate:IntervalSettingsDelegate? = nil
     

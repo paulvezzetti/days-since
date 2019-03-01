@@ -23,9 +23,7 @@ class AddActivityTableViewController: UITableViewController, DatePickerDelegate,
     }
 
     @IBOutlet var titleField: UITextField!
-    
     @IBOutlet var frequencyField: UITextField!
-    
     @IBOutlet var startDateLabel: UILabel!
     
     var chosenDate: Date = Date() {
@@ -35,6 +33,12 @@ class AddActivityTableViewController: UITableViewController, DatePickerDelegate,
     }
     var dataManager: DataModelManager? = nil
     var editActivity: ActivityMO? = nil
+    
+    // These are the default values for the interval. They will be overwritten either by
+    // user selections or by an existing activity which is being edited.
+    private var intervalType:IntervalTypes = IntervalTypes.Unlimited
+    private var intervalDay:Int = 0
+    private var intervalMonth:Int = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
