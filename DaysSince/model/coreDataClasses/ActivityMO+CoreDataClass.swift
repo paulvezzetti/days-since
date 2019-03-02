@@ -50,6 +50,11 @@ public class ActivityMO: NSManagedObject {
         return history?.sortedArray(using: [NSSortDescriptor(key: "timestamp", ascending: true)]) as! [EventMO]
     }
     
+    var firstDate: Date {
+        let sortDates = sortedHistory
+        return sortDates.isEmpty ? Date() : sortDates[0].timestamp!
+    }
+    
     private var frequencyInSeconds: Double {
         return Double(frequency) * TimeConstants.SECONDS_PER_DAY
     }

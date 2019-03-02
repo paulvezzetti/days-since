@@ -10,7 +10,7 @@ import UIKit
 
 class ChooseFrequencyTableViewController: UITableViewController, ByDayPickerDelegate,
                                             ByMonthDayPickerDelegate,
-                                            ByYearDayPickerDelegate {
+                                            ByYearDayPickerDelegate, UITextFieldDelegate {
     
     
     enum TableRows:Int {
@@ -72,6 +72,10 @@ class ChooseFrequencyTableViewController: UITableViewController, ByDayPickerDele
         yearDayPickerController = ByYearDayPickerController(delegate: self)
         yearDayPicker.delegate = yearDayPickerController
         yearDayPicker.dataSource = yearDayPickerController
+        
+        // Set up by-day text field
+        byDayTextField.delegate = self
+        
 
         // Configure the UI based on the initial settings, if any
         if let delegate = settingsDelegate {
@@ -121,7 +125,7 @@ class ChooseFrequencyTableViewController: UITableViewController, ByDayPickerDele
             iType = IntervalTypes.Unlimited
         case .ByDay:
             iType = IntervalTypes.Constant
-            day = Int(byDayTextField.text ?? "0")!
+            day = Int(byDayTextField.text ?? "1") ?? 1
         case .Weekly:
             iType = IntervalTypes.Weekly
             day = weekDayPicker.selectedRow(inComponent: 0)
@@ -152,13 +156,12 @@ class ChooseFrequencyTableViewController: UITableViewController, ByDayPickerDele
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        setSelectedRow(row: TableRows(rawValue: indexPath.row) ?? TableRows.Whenever)
         // Deselect the current selected row
-        let currentSelection = super.tableView(tableView, cellForRowAt: IndexPath(row: currentSelectedRow.rawValue, section: 0))
-        currentSelection.accessoryType = .none
-        
-        let selectedCell = super.tableView(tableView, cellForRowAt: indexPath)
-        selectedCell.accessoryType = .checkmark
-        
+//        deselectCurrentRow()
+//
+//        let selectedCell = super.tableView(tableView, cellForRowAt: indexPath)
+//        selectedCell.accessoryType = .checkmark
         
         currentSelectedRow = TableRows(rawValue: indexPath.row)!
         
@@ -257,6 +260,25 @@ class ChooseFrequencyTableViewController: UITableViewController, ByDayPickerDele
 //        return 7
 //    }
     
+    func deselectCurrentRow() {
+        let currentSelection = super.tableView(tableView, cellForRowAt: IndexPath(row: currentSelectedRow.rawValue, section: 0))
+        currentSelection.accessoryType = .none
+    }
+    
+    func setSelectedRow(row:TableRows) {
+        guard row != currentSelectedRow else {
+            return
+        }
+        let selectedTableRow = super.tableView(tableView, cellForRowAt: IndexPath(row: currentSelectedRow.rawValue, section: 0))
+        selectedTableRow.accessoryType = .none
+
+        let selectedCell = super.tableView(tableView, cellForRowAt: IndexPath(row:row.rawValue, section: 0))
+        selectedCell.accessoryType = .checkmark
+        
+        currentSelectedRow = row
+
+    }
+    
     //TODO: Is there a way to combine these??
     
     // MARK: ByDatePickerDelegate
@@ -275,6 +297,14 @@ class ChooseFrequencyTableViewController: UITableViewController, ByDayPickerDele
     }
     
     
+    // MARK: UITextFieldDelegate
+    func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
+        setSelectedRow(row: TableRows.ByDay)
+        
+        self.tableView.beginUpdates()
+        self.tableView.endUpdates()
 
-
+        return true
+    }
+    
 }

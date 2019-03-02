@@ -13,4 +13,11 @@ import CoreData
 @objc(EventMO)
 public class EventMO: NSManagedObject {
 
+    func clone(context: NSManagedObjectContext) -> EventMO {
+        let theClone = EventMO(context: context)
+        theClone.timestamp = self.timestamp
+        theClone.details = self.details
+        theClone.image = self.image
+        return theClone
+    }
 }

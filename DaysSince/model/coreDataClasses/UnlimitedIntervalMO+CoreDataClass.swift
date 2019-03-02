@@ -13,4 +13,12 @@ import CoreData
 @objc(UnlimitedIntervalMO)
 public class UnlimitedIntervalMO: IntervalMO {
 
+    override func toPrettyString() -> String {
+        return "Whenever I feel like it"
+    }
+
+    override func clone(context:NSManagedObjectContext) ->IntervalMO {
+        return UnlimitedIntervalMO(context: context)
+    }
+
 }

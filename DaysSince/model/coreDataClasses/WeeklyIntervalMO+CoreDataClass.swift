@@ -13,4 +13,14 @@ import CoreData
 @objc(WeeklyIntervalMO)
 public class WeeklyIntervalMO: IntervalMO {
 
+    override func toPrettyString() -> String {
+        return "Every week on " + DaysOfWeek.fromIndex(Int(self.day)).rawValue
+    }
+    
+    override func clone(context:NSManagedObjectContext) ->IntervalMO {
+        let theClone = WeeklyIntervalMO(context: context)
+        theClone.day = self.day
+        return theClone
+    }
+
 }

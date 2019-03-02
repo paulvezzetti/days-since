@@ -147,6 +147,13 @@ class DataModelManager {
         return activity
     }
     
+    
+    func newChildManagedObjectContext() throws -> NSManagedObjectContext {
+        let childMOC = NSManagedObjectContext(concurrencyType: .mainQueueConcurrencyType)
+        childMOC.parent = try getManagedObjectContext()
+        return childMOC
+    }
+    
     func removeActivity(activity: ActivityMO) throws {
         let context = try getManagedObjectContext()
         context.delete(activity)

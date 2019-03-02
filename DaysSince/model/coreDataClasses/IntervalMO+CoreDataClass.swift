@@ -12,5 +12,12 @@ import CoreData
 
 @objc(IntervalMO)
 public class IntervalMO: NSManagedObject {
-
+    
+    func toPrettyString() -> String {
+        return "Abstact IntervalMO"
+    }
+    
+    func clone(context:NSManagedObjectContext) ->IntervalMO {
+        return IntervalMO(context: context)
+    }
 }

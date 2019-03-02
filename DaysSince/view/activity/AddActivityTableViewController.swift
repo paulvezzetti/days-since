@@ -5,34 +5,49 @@
 //  Created by Paul Vezzetti on 2/8/19.
 //  Copyright © 2019 Paul Vezzetti. All rights reserved.
 //
-
+import CoreData
 import UIKit
 
-class AddActivityTableViewController: UITableViewController, DatePickerDelegate, IntervalSettingsDelegate {
+class AddActivityTableViewController: UITableViewController, IntervalSettingsDelegate {
 
     
     enum ActivityRows:Int {
         case TitleLabel = 0,
         TitleTextField,
         FrequencyLabel,
-        FrequencyTextField,
         FrequencyDescLabel,
-        StartFromDateEntry,
+        StartFromDateLabel,
+        StartFromDatePicker,
         NotificationLabel,
         NotificationButton
     }
 
     @IBOutlet var titleField: UITextField!
-    @IBOutlet var frequencyField: UITextField!
+    //@IBOutlet var frequencyField: UITextField!
     @IBOutlet var startDateLabel: UILabel!
+    @IBOutlet var intervalLabel: UILabel!
     
-    var chosenDate: Date = Date() {
+    
+//    var chosenDate: Date = Date()
+    
+    var dataManager: DataModelManager? = nil {
         didSet {
-            print("Set date")
+            do {
+                self.managedObjectContext = try dataManager?.newChildManagedObjectContext()
+                if let context = self.managedObjectContext {
+                    self.tempActivity = ActivityMO(context: context)
+                }
+            } catch {
+                print("Unable to get child managed object context")
+            }
         }
     }
-    var dataManager: DataModelManager? = nil
+    private var managedObjectContext: NSManagedObjectContext? = nil
+    
     var editActivity: ActivityMO? = nil
+    var tempActivity: ActivityMO? = nil
+    
+    private var isStartDatePickerShowing: Bool = false
     
     // These are the default values for the interval. They will be overwritten either by
     // user selections or by an existing activity which is being edited.
@@ -43,34 +58,48 @@ class AddActivityTableViewController: UITableViewController, DatePickerDelegate,
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateStyle = DateFormatter.Style.medium
-        dateFormatter.timeStyle = DateFormatter.Style.none
-        
-        startDateLabel.text = dateFormatter.string(from: chosenDate)
-        
-        if let activity = editActivity {
-            titleField.text = activity.name
-            frequencyField.text = String(activity.frequency)
-            
+        guard let activity = tempActivity, let moc = managedObjectContext else {
+            // TODO: Show an error to user
+            return
         }
         
-        //startDateLabel.text = new Date().description
-
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
+        // Copy the settings to the temp activity
+        if let activityToEdit = editActivity {
+            activity.name = activityToEdit.name
+            if activityToEdit.interval != nil {
+                // Make a copy
+                activity.interval = activityToEdit.interval?.clone(context: moc)
+            }
+            // Only really need the first day, not the whole history
+            let firstEvent = EventMO(context: moc)
+            firstEvent.timestamp = activityToEdit.firstDate
+            activity.addToHistory(firstEvent)
+            
+        } else {
+            // Set some defaults
+            activity.interval = UnlimitedIntervalMO(context: moc)
+            let firstEvent = EventMO(context: moc)
+            firstEvent.timestamp = Date()
+            activity.addToHistory(firstEvent)
+        }
+        // Fill in the initial values
         let dateFormatter = DateFormatter()
         dateFormatter.dateStyle = DateFormatter.Style.medium
         dateFormatter.timeStyle = DateFormatter.Style.none
         
-        startDateLabel.text = dateFormatter.string(from: chosenDate)
+        titleField.text = activity.name
+        intervalLabel.text = activity.interval!.toPrettyString()
+        startDateLabel.text = dateFormatter.string(from: activity.firstDate)
+        
     }
+    
+//    override func viewDidAppear(_ animated: Bool) {
+//        let dateFormatter = DateFormatter()
+//        dateFormatter.dateStyle = DateFormatter.Style.medium
+//        dateFormatter.timeStyle = DateFormatter.Style.none
+//
+//        startDateLabel.text = dateFormatter.string(from: chosenDate)
+//    }
 
     // MARK: - Table view data source
 
@@ -95,12 +124,34 @@ class AddActivityTableViewController: UITableViewController, DatePickerDelegate,
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if /*indexPath.section == 1 &&*/ indexPath.row == ActivityRows.StartFromDateEntry.rawValue {
-            self.performSegue(withIdentifier: "showDatePicker", sender: self)
-        } else if indexPath.row == ActivityRows.FrequencyTextField.rawValue {
-           // self.performSegue(withIdentifier: "chooseWhenSegue", sender: self)
+        let needToShowDatePicker:Bool = (indexPath.row == ActivityRows.StartFromDateLabel.rawValue && !isStartDatePickerShowing)
+        let needToHideDataPicker:Bool = (indexPath.row != ActivityRows.StartFromDateLabel.rawValue && isStartDatePickerShowing)
+        
+        isStartDatePickerShowing = needToShowDatePicker
+        if needToShowDatePicker || needToHideDataPicker {
+            self.tableView.beginUpdates()
+            self.tableView.endUpdates()
         }
+        
+//        if /*indexPath.section == 1 &&*/ indexPath.row == ActivityRows.StartFromDateEntry.rawValue {
+//            self.performSegue(withIdentifier: "showDatePicker", sender: self)
+//        } else if indexPath.row == ActivityRows.FrequencyTextField.rawValue {
+//           // self.performSegue(withIdentifier: "chooseWhenSegue", sender: self)
+//        }
     }
+    
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        print("Height for row: \(indexPath.row)")
+        if indexPath.row == ActivityRows.StartFromDatePicker.rawValue {
+            if isStartDatePickerShowing {
+                return 138
+            } else {
+                return 0
+            }
+        }
+        return super.tableView(tableView, heightForRowAt: indexPath)
+    }
+
 
         /*
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -153,11 +204,11 @@ class AddActivityTableViewController: UITableViewController, DatePickerDelegate,
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         // Get the new view controller using segue.destination.
         // Pass the selected object to the new view controller.
-        if segue.identifier == "showDatePicker" {
+        /*if segue.identifier == "showDatePicker" {
             let controller = segue.destination as! DatePickerViewController
             controller.delegate = self
             controller.initialDate = chosenDate
-        } else if segue.identifier == "chooseWhenSegue" {
+        } else */if segue.identifier == "chooseWhenSegue" {
             let controller = segue.destination as! ChooseFrequencyTableViewController
             //controller.dataManager = dataManager
             controller.settingsDelegate = self
@@ -172,6 +223,10 @@ class AddActivityTableViewController: UITableViewController, DatePickerDelegate,
     
     func applyIntervalSettings(type: IntervalTypes, day: Int, month: Int) {
         print("Interval settings: \(type.rawValue) on day: \(day) on month: \(month)")
+        
+        let intervalPrettyString = IntervalUtils.toPrettyString(type: type, day: day, month: month)
+        intervalLabel.text = intervalPrettyString
+        
     }
 
     @IBAction func doSave(_ sender: Any) {
@@ -209,7 +264,7 @@ class AddActivityTableViewController: UITableViewController, DatePickerDelegate,
     
     func createNewActivity(_ dataManager: DataModelManager) {
         do {
-            try dataManager.newActivity(named: titleField.text!, every: Int(frequencyField.text!) ?? 0, starting: chosenDate)
+            try dataManager.newActivity(named: titleField.text!, every: 0, starting: chosenDate)
             try dataManager.saveContext()
         } catch {
             print("Error saving activity")
@@ -220,8 +275,8 @@ class AddActivityTableViewController: UITableViewController, DatePickerDelegate,
         if editActivity!.name != titleField.text! {
             editActivity!.name = titleField.text!
         }
-        if editActivity!.frequency != Int16(frequencyField.text!) {
-            editActivity!.frequency = Int16(frequencyField.text!) ?? 0
-        }
+//        if editActivity!.frequency != Int16(frequencyField.text!) {
+//            editActivity!.frequency = Int16(frequencyField.text!) ?? 0
+//        }
     }
 }

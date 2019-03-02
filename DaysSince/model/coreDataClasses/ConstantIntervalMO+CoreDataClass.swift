@@ -13,4 +13,14 @@ import CoreData
 @objc(ConstantIntervalMO)
 public class ConstantIntervalMO: IntervalMO {
 
+    override func toPrettyString() -> String {
+        return "Every " + String(self.frequency) + " days"
+    }
+
+    override func clone(context:NSManagedObjectContext) ->IntervalMO {
+        let theClone = ConstantIntervalMO(context: context)
+        theClone.frequency = self.frequency
+        return theClone
+    }
+
 }

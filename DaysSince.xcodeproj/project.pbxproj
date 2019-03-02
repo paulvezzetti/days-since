@@ -29,6 +29,7 @@
 		FA1D73312228C60E00D8EBF7 /* ConstantIntervalMO+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA1D73252228C60E00D8EBF7 /* ConstantIntervalMO+CoreDataClass.swift */; };
 		FA1D73332228C60E00D8EBF7 /* MonthlyIntervalMO+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA1D73272228C60E00D8EBF7 /* MonthlyIntervalMO+CoreDataClass.swift */; };
 		FA1D733622297D1500D8EBF7 /* IntervalSettingsDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA1D733522297D1500D8EBF7 /* IntervalSettingsDelegate.swift */; };
+		FA1D733A2229CDFB00D8EBF7 /* IntervalUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA1D73392229CDFB00D8EBF7 /* IntervalUtils.swift */; };
 		FA3CEF49220E0F2500634DD7 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA3CEF48220E0F2500634DD7 /* AppDelegate.swift */; };
 		FA3CEF4C220E0F2500634DD7 /* DaysSince.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = FA3CEF4A220E0F2500634DD7 /* DaysSince.xcdatamodeld */; };
 		FA3CEF4E220E0F2500634DD7 /* MasterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA3CEF4D220E0F2500634DD7 /* MasterViewController.swift */; };
@@ -67,6 +68,7 @@
 		FA1D73252228C60E00D8EBF7 /* ConstantIntervalMO+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ConstantIntervalMO+CoreDataClass.swift"; sourceTree = "<group>"; };
 		FA1D73272228C60E00D8EBF7 /* MonthlyIntervalMO+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MonthlyIntervalMO+CoreDataClass.swift"; sourceTree = "<group>"; };
 		FA1D733522297D1500D8EBF7 /* IntervalSettingsDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntervalSettingsDelegate.swift; sourceTree = "<group>"; };
+		FA1D73392229CDFB00D8EBF7 /* IntervalUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntervalUtils.swift; sourceTree = "<group>"; };
 		FA3CEF45220E0F2500634DD7 /* DaysSince.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DaysSince.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FA3CEF48220E0F2500634DD7 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		FA3CEF4B220E0F2500634DD7 /* DaysSince.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = DaysSince.xcdatamodel; sourceTree = "<group>"; };
@@ -206,6 +208,7 @@
 				FA1D72DA221E2D2B00D8EBF7 /* ActivityStatistics.swift */,
 				FA1D72E42220675F00D8EBF7 /* TimeConstants.swift */,
 				FA1D731B2228C34700D8EBF7 /* IntervalTypes.swift */,
+				FA1D73392229CDFB00D8EBF7 /* IntervalUtils.swift */,
 			);
 			path = model;
 			sourceTree = "<group>";
@@ -300,6 +303,7 @@
 				FAA6AF2622139F4A00346CCB /* ActivitySummaryViewController.swift in Sources */,
 				FA1D73292228C60E00D8EBF7 /* WeeklyIntervalMO+CoreDataClass.swift in Sources */,
 				FA3CEF4E220E0F2500634DD7 /* MasterViewController.swift in Sources */,
+				FA1D733A2229CDFB00D8EBF7 /* IntervalUtils.swift in Sources */,
 				FA1D732F2228C60E00D8EBF7 /* UnlimitedIntervalMO+CoreDataClass.swift in Sources */,
 				FA1D73312228C60E00D8EBF7 /* ConstantIntervalMO+CoreDataClass.swift in Sources */,
 				FA1D72E1221F82A300D8EBF7 /* MasterTableViewCell.swift in Sources */,
