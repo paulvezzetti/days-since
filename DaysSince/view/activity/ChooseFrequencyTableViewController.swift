@@ -53,62 +53,70 @@ class ChooseFrequencyTableViewController: UITableViewController, ByDayPickerDele
     
     var settingsDelegate:IntervalSettingsDelegate? = nil
     
+    deinit {
+        print("Destroying the ChooseFrequencyTVController")
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+        print("Creating a ChooseFreqTVController")
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // This makes the empty table cells not show up.
-        tableView.tableFooterView = UIView(frame: .zero)
-
-        // Set up the pickers
-        dayPickerController = ByDayPickerViewController(delegate: self)
-        weekDayPicker.dataSource = dayPickerController
-        weekDayPicker.delegate = dayPickerController
-        
-        monthDayPickerController = ByMonthDayPickerController(delegate: self)
-        monthDayPicker.delegate = monthDayPickerController
-        monthDayPicker.dataSource = monthDayPickerController
-        
-        yearDayPickerController = ByYearDayPickerController(delegate: self)
-        yearDayPicker.delegate = yearDayPickerController
-        yearDayPicker.dataSource = yearDayPickerController
-        
-        // Set up by-day text field
-        byDayTextField.delegate = self
-        
-
-        // Configure the UI based on the initial settings, if any
-        if let delegate = settingsDelegate {
-            let initialSettings = delegate.getInitialIntervalSettings()
-            switch initialSettings.type {
-            case IntervalTypes.Unlimited:
-                wheneverTableViewCell.accessoryType = .checkmark
-                currentSelectedRow = .Whenever
-            case IntervalTypes.Constant:
-                byDayTableViewCell.accessoryType = .checkmark
-                byDayTextField.text = String(initialSettings.day)
-                currentSelectedRow = .ByDay
-            case IntervalTypes.Weekly:
-                weeklyTableViewCell.accessoryType = .checkmark
-                weekDayPicker.selectRow(initialSettings.day, inComponent: 0, animated: false)
-                weeklyLabel.text = DaysOfWeek.fromIndex(initialSettings.day).rawValue
-                currentSelectedRow = .Weekly
-            case IntervalTypes.Monthly:
-                monthlyTableViewCell.accessoryType = .checkmark
-                monthDayPicker.selectRow(initialSettings.day, inComponent: 0, animated: false)
-                monthlyLabel.text = monthDayPickerController?.formattedValueForIndex(initialSettings.day)
-                currentSelectedRow = .Monthly
-            case IntervalTypes.Yearly:
-                yearlyTableViewCell.accessoryType = .checkmark
-                yearDayPicker.selectRow(initialSettings.month, inComponent: 0, animated: false)
-                yearDayPicker.selectRow(initialSettings.day, inComponent: 1, animated: false)
-                yearlyLabel.text = Months.fromIndex(initialSettings.month).rawValue + " " + String(initialSettings.day + 1)
-                currentSelectedRow = .Yearly
-            }
-            
-        } else {
-            wheneverTableViewCell.accessoryType = .checkmark
-        }
+//        tableView.tableFooterView = UIView(frame: .zero)
+//
+//        // Set up the pickers
+//        dayPickerController = ByDayPickerViewController(delegate: self)
+//        weekDayPicker.dataSource = dayPickerController
+//        weekDayPicker.delegate = dayPickerController
+//        
+//        monthDayPickerController = ByMonthDayPickerController(delegate: self)
+//        monthDayPicker.delegate = monthDayPickerController
+//        monthDayPicker.dataSource = monthDayPickerController
+//        
+//        yearDayPickerController = ByYearDayPickerController(delegate: self)
+//        yearDayPicker.delegate = yearDayPickerController
+//        yearDayPicker.dataSource = yearDayPickerController
+//        
+//        // Set up by-day text field
+//        byDayTextField.delegate = self
+//        
+//
+//        // Configure the UI based on the initial settings, if any
+//        if let delegate = settingsDelegate {
+//            let initialSettings = delegate.getInitialIntervalSettings()
+//            switch initialSettings.type {
+//            case IntervalTypes.Unlimited:
+//                wheneverTableViewCell.accessoryType = .checkmark
+//                currentSelectedRow = .Whenever
+//            case IntervalTypes.Constant:
+//                byDayTableViewCell.accessoryType = .checkmark
+//                byDayTextField.text = String(initialSettings.day)
+//                currentSelectedRow = .ByDay
+//            case IntervalTypes.Weekly:
+//                weeklyTableViewCell.accessoryType = .checkmark
+//                weekDayPicker.selectRow(initialSettings.day, inComponent: 0, animated: false)
+//                weeklyLabel.text = DaysOfWeek.fromIndex(initialSettings.day).rawValue
+//                currentSelectedRow = .Weekly
+//            case IntervalTypes.Monthly:
+//                monthlyTableViewCell.accessoryType = .checkmark
+//                monthDayPicker.selectRow(initialSettings.day, inComponent: 0, animated: false)
+//                monthlyLabel.text = monthDayPickerController?.formattedValueForIndex(initialSettings.day)
+//                currentSelectedRow = .Monthly
+//            case IntervalTypes.Yearly:
+//                yearlyTableViewCell.accessoryType = .checkmark
+//                yearDayPicker.selectRow(initialSettings.month, inComponent: 0, animated: false)
+//                yearDayPicker.selectRow(initialSettings.day, inComponent: 1, animated: false)
+//                yearlyLabel.text = Months.fromIndex(initialSettings.month).rawValue + " " + String(initialSettings.day + 1)
+//                currentSelectedRow = .Yearly
+//            }
+//            
+//        } else {
+//            wheneverTableViewCell.accessoryType = .checkmark
+//        }
 
     }
     
@@ -141,6 +149,7 @@ class ChooseFrequencyTableViewController: UITableViewController, ByDayPickerDele
         }
 
         settingsDelegate?.applyIntervalSettings(type: iType, day: day, month: month)
+        settingsDelegate = nil
     }
 
     // MARK: - Table view data source
@@ -170,7 +179,7 @@ class ChooseFrequencyTableViewController: UITableViewController, ByDayPickerDele
     }
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        print("Height for row: \(indexPath.row)")
+        //print("Height for row: \(indexPath.row)")
         if indexPath.row == TableRows.MonthPicker.rawValue {
             if currentSelectedRow != TableRows.Monthly {
                 return 0

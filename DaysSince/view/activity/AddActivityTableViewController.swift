@@ -64,7 +64,15 @@ class AddActivityTableViewController: UITableViewController, IntervalSettingsDel
     private var intervalDay:Int = 0
     private var intervalMonth:Int = 0
     
+    deinit {
+        print("Destroying the AddActivityTableViewController")
+    }
     
+    required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+        print("Creating a AddActivityTableViewController")
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -148,7 +156,7 @@ class AddActivityTableViewController: UITableViewController, IntervalSettingsDel
     }
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        print("Height for row: \(indexPath.row)")
+        //print("Height for row: \(indexPath.row)")
         if indexPath.row == ActivityRows.StartFromDatePicker.rawValue {
             if isStartDatePickerShowing {
                 return 138

@@ -59,4 +59,7 @@ public class ActivityMO: NSManagedObject {
         return Double(frequency) * TimeConstants.SECONDS_PER_DAY
     }
 
+    deinit {
+        print("Destroying an Activity")
+    }
 }

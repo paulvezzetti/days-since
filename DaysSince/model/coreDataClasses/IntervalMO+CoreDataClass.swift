@@ -20,4 +20,8 @@ public class IntervalMO: NSManagedObject {
     func clone(context:NSManagedObjectContext) ->IntervalMO {
         return IntervalMO(context: context)
     }
+    
+    deinit {
+        print("Destroying an Interval")
+    }
 }
