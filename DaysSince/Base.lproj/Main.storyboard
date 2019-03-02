@@ -88,11 +88,7 @@
                                 <items>
                                     <barButtonItem title="Delete" id="iUL-1y-6Ht"/>
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="GiL-xD-kfU"/>
-                                    <barButtonItem title="Edit" id="iQb-z2-4uR">
-                                        <connections>
-                                            <segue destination="9aX-Pd-bgA" kind="show" identifier="editActivitySettings" id="q1j-DS-gLZ"/>
-                                        </connections>
-                                    </barButtonItem>
+                                    <barButtonItem title="Edit" id="iQb-z2-4uR"/>
                                 </items>
                             </toolbar>
                         </subviews>
@@ -245,7 +241,7 @@
                     <navigationItem key="navigationItem" title="Master" id="Zdf-7t-Un8">
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="XWs-O9-GAl">
                             <connections>
-                                <segue destination="9aX-Pd-bgA" kind="presentation" identifier="presentAddActivity" id="hOo-BQ-lgX"/>
+                                <segue destination="0zy-ap-i7T" kind="show" identifier="presentAddActivity" id="m8M-iz-Q6X"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -368,12 +364,15 @@
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="138"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <datePicker contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="dateAndTime" minuteInterval="1" translatesAutoresizingMaskIntoConstraints="NO" id="xHf-6D-XnB">
+                                                <datePicker contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="date" minuteInterval="1" translatesAutoresizingMaskIntoConstraints="NO" id="xHf-6D-XnB">
                                                     <rect key="frame" x="0.0" y="0.0" width="375" height="138"/>
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                                                     <date key="date" timeIntervalSinceReferenceDate="573180247.02352595">
                                                         <!--2019-03-02 00:44:07 +0000-->
                                                     </date>
+                                                    <connections>
+                                                        <action selector="startDateValueChanged:" destination="0zy-ap-i7T" eventType="valueChanged" id="pDq-Pk-KsB"/>
+                                                    </connections>
                                                 </datePicker>
                                             </subviews>
                                         </tableViewCellContentView>
@@ -517,20 +516,22 @@
                         <barButtonItem key="rightBarButtonItem" style="plain" systemItem="save" id="6Ud-Wm-QIr">
                             <connections>
                                 <action selector="doSave:" destination="0zy-ap-i7T" id="FaH-Bu-XuR"/>
-                                <segue destination="7gx-al-WX6" kind="unwind" unwindAction="unwindSaveActivityWithSegue:" id="wxf-tG-E3S"/>
+                                <segue destination="7gx-al-WX6" kind="unwind" unwindAction="unwindSaveActivityWithSegue:" id="cfa-mR-e2R"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
                     <connections>
                         <outlet property="intervalLabel" destination="3Wr-7w-0Y2" id="pOE-og-BzO"/>
+                        <outlet property="saveButton" destination="6Ud-Wm-QIr" id="cdm-Wk-sL7"/>
                         <outlet property="startDateLabel" destination="Yhq-5q-jNZ" id="Nfx-mI-Qtb"/>
+                        <outlet property="startDatePicker" destination="xHf-6D-XnB" id="pHD-KI-u2p"/>
                         <outlet property="titleField" destination="kgE-uH-wzZ" id="FGp-BV-4Rb"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="XZG-Ht-UGG" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="7gx-al-WX6" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="2824.8000000000002" y="-622.03898050974522"/>
+            <point key="canvasLocation" x="2230" y="-622"/>
         </scene>
         <!--When-->
         <scene sceneID="KJb-9O-JHC">
@@ -804,24 +805,6 @@
             </objects>
             <point key="canvasLocation" x="-45" y="129"/>
         </scene>
-        <!--Navigation Controller-->
-        <scene sceneID="d0o-6h-cON">
-            <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="9aX-Pd-bgA" sceneMemberID="viewController">
-                    <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="Pty-w5-Nuz">
-                        <rect key="frame" x="0.0" y="20" width="375" height="44"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                    </navigationBar>
-                    <nil name="viewControllers"/>
-                    <connections>
-                        <segue destination="0zy-ap-i7T" kind="relationship" relationship="rootViewController" id="KVD-u7-jId"/>
-                    </connections>
-                </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="Hl4-TQ-NuG" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="1885.5999999999999" y="-622.03898050974522"/>
-        </scene>
         <!--Activity Summary View Controller-->
         <scene sceneID="Ihd-A5-Q9S">
             <objects>
@@ -1063,7 +1046,6 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="q1j-DS-gLZ"/>
         <segue reference="BMi-sG-zyJ"/>
     </inferredMetricsTieBreakers>
 </document>

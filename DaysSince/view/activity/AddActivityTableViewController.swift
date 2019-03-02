@@ -27,6 +27,8 @@ class AddActivityTableViewController: UITableViewController, IntervalSettingsDel
     @IBOutlet var startDateLabel: UILabel!
     @IBOutlet var intervalLabel: UILabel!
     
+    @IBOutlet var startDatePicker: UIDatePicker!
+    @IBOutlet var saveButton: UIBarButtonItem!
     
 //    var chosenDate: Date = Date()
     
@@ -49,11 +51,19 @@ class AddActivityTableViewController: UITableViewController, IntervalSettingsDel
     
     private var isStartDatePickerShowing: Bool = false
     
+    let dateFormatter:DateFormatter = {
+        let formatter = DateFormatter()
+        formatter.dateStyle = DateFormatter.Style.medium
+        formatter.timeStyle = DateFormatter.Style.none
+        return formatter
+    }()
+    
     // These are the default values for the interval. They will be overwritten either by
     // user selections or by an existing activity which is being edited.
     private var intervalType:IntervalTypes = IntervalTypes.Unlimited
     private var intervalDay:Int = 0
     private var intervalMonth:Int = 0
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -83,9 +93,6 @@ class AddActivityTableViewController: UITableViewController, IntervalSettingsDel
             activity.addToHistory(firstEvent)
         }
         // Fill in the initial values
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateStyle = DateFormatter.Style.medium
-        dateFormatter.timeStyle = DateFormatter.Style.none
         
         titleField.text = activity.name
         intervalLabel.text = activity.interval!.toPrettyString()
@@ -202,6 +209,7 @@ class AddActivityTableViewController: UITableViewController, IntervalSettingsDel
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        super.prepare(for: segue, sender: sender)
         // Get the new view controller using segue.destination.
         // Pass the selected object to the new view controller.
         /*if segue.identifier == "showDatePicker" {
@@ -212,8 +220,15 @@ class AddActivityTableViewController: UITableViewController, IntervalSettingsDel
             let controller = segue.destination as! ChooseFrequencyTableViewController
             //controller.dataManager = dataManager
             controller.settingsDelegate = self
+            return
+        }
+        
+        guard let button = sender as? UIBarButtonItem, button === saveButton else {
+            return
         }
 
+        // TODO: Update activity and save
+        
     }
 
     func getInitialIntervalSettings() -> (type: IntervalTypes, day: Int, month: Int) {
@@ -229,23 +244,23 @@ class AddActivityTableViewController: UITableViewController, IntervalSettingsDel
         
     }
 
-    @IBAction func doSave(_ sender: Any) {
-        if let dm = dataManager {
-            if editActivity != nil {
-                updateActivity(dm)
-            } else {
-                createNewActivity(dm)
-            }
-//            do {
-//                try dm.newActivity(named: titleField.text!, every: Int(frequencyField.text!) ?? 0, starting: chosenDate)
-//                try dm.saveContext()
-//            } catch {
-//                print("Error saving activity")
+//    @IBAction func doSave(_ sender: Any) {
+//        if let dm = dataManager {
+//            if editActivity != nil {
+//                updateActivity(dm)
+//            } else {
+//                createNewActivity(dm)
 //            }
-        }
-        
-        dismiss(animated: true, completion: nil)
-    }
+////            do {
+////                try dm.newActivity(named: titleField.text!, every: Int(frequencyField.text!) ?? 0, starting: chosenDate)
+////                try dm.saveContext()
+////            } catch {
+////                print("Error saving activity")
+////            }
+//        }
+//
+//        dismiss(animated: true, completion: nil)
+//    }
     
     func saveActivity() {
         if let dm = dataManager {
@@ -257,18 +272,23 @@ class AddActivityTableViewController: UITableViewController, IntervalSettingsDel
         }
     }
     
+    @IBAction func startDateValueChanged(_ sender: Any) {
+        startDateLabel.text = dateFormatter.string(from: startDatePicker.date)
+    }
     
     @IBAction func cancelAdd(_ sender: Any) {
-        dismiss(animated: true, completion: nil)
+        //dismiss(animated: true, completion: nil)
+        self.navigationController?.popViewController(animated: true)
+        
     }
     
     func createNewActivity(_ dataManager: DataModelManager) {
-        do {
-            try dataManager.newActivity(named: titleField.text!, every: 0, starting: chosenDate)
-            try dataManager.saveContext()
-        } catch {
-            print("Error saving activity")
-        }
+//        do {
+//            try dataManager.newActivity(named: titleField.text!, every: 0, starting: chosenDate)
+//            try dataManager.saveContext()
+//        } catch {
+//            print("Error saving activity")
+//        }
     }
     
     func updateActivity(_ dataManager: DataModelManager) {

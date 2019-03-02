@@ -173,16 +173,19 @@ class MasterViewController: UITableViewController /*, NSFetchedResultsController
             }
         }
         else if segue.identifier == "presentAddActivity" {
-            let controller = (segue.destination as! UINavigationController).topViewController as! AddActivityTableViewController
+//            let controller = (segue.destination as! UINavigationController).topViewController as! AddActivityTableViewController
+            let controller = segue.destination as! AddActivityTableViewController
             controller.dataManager = dataManager
         }
     }
     
     @IBAction func unwindSaveActivity(segue: UIStoryboardSegue) {
-        let controller = segue.source as! AddActivityTableViewController
+//        let controller = segue.source as! AddActivityTableViewController
+//
+//        controller.saveActivity()
+//        controller.dismiss(animated: true, completion: nil)
         
-        controller.saveActivity()
-        controller.dismiss(animated: true, completion: nil)
+        // TODO: Save the context
     }
 
 
