@@ -227,7 +227,8 @@ class AddActivityTableViewController: UITableViewController, IntervalSettingsDel
         } else */if segue.identifier == "chooseWhenSegue" {
             let controller = segue.destination as! ChooseFrequencyTableViewController
             //controller.dataManager = dataManager
-            controller.settingsDelegate = self
+            //controller.settingsDelegate = self
+            controller.activity = tempActivity
             return
         }
         

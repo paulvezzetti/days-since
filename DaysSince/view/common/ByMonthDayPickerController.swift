@@ -10,7 +10,7 @@ import Foundation
 
 class ByMonthDayPickerController: NSObject, UIPickerViewDelegate, UIPickerViewDataSource {
     
-    private let delegate:ByMonthDayPickerDelegate
+    private weak var delegate:ByMonthDayPickerDelegate?
     
     private let options: [String]
     
@@ -41,7 +41,7 @@ class ByMonthDayPickerController: NSObject, UIPickerViewDelegate, UIPickerViewDa
     }
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        delegate.pickerValueChanged(row, formattedValue: options[row])
+        delegate?.pickerValueChanged(row, formattedValue: options[row])
     }
     
 }

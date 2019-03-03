@@ -8,7 +8,7 @@
 
 import Foundation
 
-protocol ByDayPickerDelegate {
+protocol ByDayPickerDelegate : class {
     
     func pickerValueChanged(_ day:DaysOfWeek)
 }

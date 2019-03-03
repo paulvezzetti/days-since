@@ -46,8 +46,12 @@ class ChooseFrequencyTableViewController: UITableViewController, ByDayPickerDele
     @IBOutlet var byYearDayLabel: UILabel!
     
     private var currentSelectedRow = TableRows.Whenever
+    private var dayPickerController:ByDayPickerViewController?
+    private var monthDayPickerController: ByMonthDayPickerController?
+    private var yearDayPickerController: ByYearDayPickerController?
     
-    var settingsDelegate:IntervalSettingsDelegate? = nil
+    var activity:ActivityMO? = nil
+//    var settingsDelegate:IntervalSettingsDelegate? = nil
     
     deinit {
         print("Destroying the ChooseFrequencyTVController")
@@ -65,15 +69,15 @@ class ChooseFrequencyTableViewController: UITableViewController, ByDayPickerDele
         tableView.tableFooterView = UIView(frame: .zero)
 //
 //        // Set up the pickers
-        let dayPickerController = ByDayPickerViewController(delegate: self)
+        dayPickerController = ByDayPickerViewController(delegate: self)
         weekDayPicker.dataSource = dayPickerController
         weekDayPicker.delegate = dayPickerController
         
-        let monthDayPickerController = ByMonthDayPickerController(delegate: self)
+        monthDayPickerController = ByMonthDayPickerController(delegate: self)
         monthDayPicker.delegate = monthDayPickerController
         monthDayPicker.dataSource = monthDayPickerController
         
-        let yearDayPickerController = ByYearDayPickerController(delegate: self)
+        yearDayPickerController = ByYearDayPickerController(delegate: self)
         yearDayPicker.delegate = yearDayPickerController
         yearDayPicker.dataSource = yearDayPickerController
         
@@ -81,72 +85,117 @@ class ChooseFrequencyTableViewController: UITableViewController, ByDayPickerDele
         byDayTextField.delegate = self
         
 
-        // Configure the UI based on the initial settings, if any
-        if let delegate = settingsDelegate {
-            let initialSettings = delegate.getInitialIntervalSettings()
-            switch initialSettings.type {
-            case IntervalTypes.Unlimited:
+        // Configure the UI based on the activity, if any
+//        guard let act = activity, let interval = act.interval else {
+//            return
+//        }
+        
+        if let interval = activity?.interval {
+            let type = Int(interval.type)
+            switch type {
+            case IntervalTypes.Unlimited.rawValue:
                 wheneverTableViewCell.accessoryType = .checkmark
                 currentSelectedRow = .Whenever
-            case IntervalTypes.Constant:
+            case IntervalTypes.Constant.rawValue:
                 byDayTableViewCell.accessoryType = .checkmark
-                byDayTextField.text = String(initialSettings.day)
+                let constantInterval = interval as! ConstantIntervalMO
+                byDayTextField.text = String(constantInterval.frequency)
                 currentSelectedRow = .ByDay
-            case IntervalTypes.Weekly:
+            case IntervalTypes.Weekly.rawValue:
                 weeklyTableViewCell.accessoryType = .checkmark
-                weekDayPicker.selectRow(initialSettings.day, inComponent: 0, animated: false)
-                weeklyLabel.text = DaysOfWeek.fromIndex(initialSettings.day).rawValue
+                let weeklyInterval = interval as! WeeklyIntervalMO
+                weekDayPicker.selectRow(Int(weeklyInterval.day), inComponent: 0, animated: false)
+                weeklyLabel.text = DaysOfWeek.fromIndex(Int(weeklyInterval.day)).rawValue
                 currentSelectedRow = .Weekly
-            case IntervalTypes.Monthly:
+            case IntervalTypes.Monthly.rawValue:
                 monthlyTableViewCell.accessoryType = .checkmark
-                monthDayPicker.selectRow(initialSettings.day, inComponent: 0, animated: false)
-                monthlyLabel.text = DaysOfMonth().formattedValueForIndex(initialSettings.day) //monthDayPickerController?.formattedValueForIndex(initialSettings.day)
+                let monthlyInterval = interval as! MonthlyIntervalMO
+                monthDayPicker.selectRow(Int(monthlyInterval.day), inComponent: 0, animated: false)
+                monthlyLabel.text = DaysOfMonth().formattedValueForIndex(Int(monthlyInterval.day))
                 currentSelectedRow = .Monthly
-            case IntervalTypes.Yearly:
+            case IntervalTypes.Yearly.rawValue:
                 yearlyTableViewCell.accessoryType = .checkmark
-                yearDayPicker.selectRow(initialSettings.month, inComponent: 0, animated: false)
-                yearDayPicker.selectRow(initialSettings.day, inComponent: 1, animated: false)
-                yearlyLabel.text = Months.fromIndex(initialSettings.month).rawValue + " " + String(initialSettings.day + 1)
+                let yearlyInterval = interval as! YearlyIntervalMO
+                yearDayPicker.selectRow(Int(yearlyInterval.month), inComponent: 0, animated: false)
+                yearDayPicker.selectRow(Int(yearlyInterval.day), inComponent: 1, animated: false)
+                yearlyLabel.text = Months.fromIndex(Int(yearlyInterval.month)).rawValue + " " + String(Int(yearlyInterval.day) + 1)
                 currentSelectedRow = .Yearly
+            default:
+                wheneverTableViewCell.accessoryType = .checkmark
+                currentSelectedRow = .Whenever
+
             }
-            
+
         } else {
             wheneverTableViewCell.accessoryType = .checkmark
         }
 
+        
+//        if let delegate = settingsDelegate {
+//            let initialSettings = delegate.getInitialIntervalSettings()
+//            switch initialSettings.type {
+//            case IntervalTypes.Unlimited:
+//                wheneverTableViewCell.accessoryType = .checkmark
+//                currentSelectedRow = .Whenever
+//            case IntervalTypes.Constant:
+//                byDayTableViewCell.accessoryType = .checkmark
+//                byDayTextField.text = String(initialSettings.day)
+//                currentSelectedRow = .ByDay
+//            case IntervalTypes.Weekly:
+//                weeklyTableViewCell.accessoryType = .checkmark
+//                weekDayPicker.selectRow(initialSettings.day, inComponent: 0, animated: false)
+//                weeklyLabel.text = DaysOfWeek.fromIndex(initialSettings.day).rawValue
+//                currentSelectedRow = .Weekly
+//            case IntervalTypes.Monthly:
+//                monthlyTableViewCell.accessoryType = .checkmark
+//                monthDayPicker.selectRow(initialSettings.day, inComponent: 0, animated: false)
+//                monthlyLabel.text = DaysOfMonth().formattedValueForIndex(initialSettings.day) //monthDayPickerController?.formattedValueForIndex(initialSettings.day)
+//                currentSelectedRow = .Monthly
+//            case IntervalTypes.Yearly:
+//                yearlyTableViewCell.accessoryType = .checkmark
+//                yearDayPicker.selectRow(initialSettings.month, inComponent: 0, animated: false)
+//                yearDayPicker.selectRow(initialSettings.day, inComponent: 1, animated: false)
+//                yearlyLabel.text = Months.fromIndex(initialSettings.month).rawValue + " " + String(initialSettings.day + 1)
+//                currentSelectedRow = .Yearly
+//            }
+//
+//        } else {
+//            wheneverTableViewCell.accessoryType = .checkmark
+//        }
+
     }
     
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        
-        // Notify the delegate of the changes
-        
-        var iType:IntervalTypes = IntervalTypes.Unlimited
-        var day:Int = 0
-        var month:Int = 0
-        switch currentSelectedRow {
-        case .Whenever:
-            iType = IntervalTypes.Unlimited
-        case .ByDay:
-            iType = IntervalTypes.Constant
-            day = Int(byDayTextField.text ?? "1") ?? 1
-        case .Weekly:
-            iType = IntervalTypes.Weekly
-            day = weekDayPicker.selectedRow(inComponent: 0)
-        case .Monthly:
-            iType = IntervalTypes.Monthly
-            day = monthDayPicker.selectedRow(inComponent: 0)
-        case .Yearly:
-            iType = IntervalTypes.Yearly
-            month = yearDayPicker.selectedRow(inComponent: 0)
-            day = yearDayPicker.selectedRow(inComponent: 1) + 1
-        default:
-            break
-        }
-
-        settingsDelegate?.applyIntervalSettings(type: iType, day: day, month: month)
-        settingsDelegate = nil
-    }
+//    override func viewWillDisappear(_ animated: Bool) {
+//        super.viewWillDisappear(animated)
+//
+//        // Notify the delegate of the changes
+//
+//        var iType:IntervalTypes = IntervalTypes.Unlimited
+//        var day:Int = 0
+//        var month:Int = 0
+//        switch currentSelectedRow {
+//        case .Whenever:
+//            iType = IntervalTypes.Unlimited
+//        case .ByDay:
+//            iType = IntervalTypes.Constant
+//            day = Int(byDayTextField.text ?? "1") ?? 1
+//        case .Weekly:
+//            iType = IntervalTypes.Weekly
+//            day = weekDayPicker.selectedRow(inComponent: 0)
+//        case .Monthly:
+//            iType = IntervalTypes.Monthly
+//            day = monthDayPicker.selectedRow(inComponent: 0)
+//        case .Yearly:
+//            iType = IntervalTypes.Yearly
+//            month = yearDayPicker.selectedRow(inComponent: 0)
+//            day = yearDayPicker.selectedRow(inComponent: 1) + 1
+//        default:
+//            break
+//        }
+//
+//        settingsDelegate?.applyIntervalSettings(type: iType, day: day, month: month)
+//        settingsDelegate = nil
+//    }
 
     // MARK: - Table view data source
 

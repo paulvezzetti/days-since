@@ -10,7 +10,7 @@ import Foundation
 
 class ByYearDayPickerController: NSObject, UIPickerViewDataSource, UIPickerViewDelegate {
     
-    let delegate:ByYearDayPickerDelegate
+    private weak var delegate:ByYearDayPickerDelegate?
     
     private let numDays: [Int : Int ] = [
         0:31,
@@ -55,7 +55,7 @@ class ByYearDayPickerController: NSObject, UIPickerViewDataSource, UIPickerViewD
         if component == 0 {
             pickerView.reloadComponent(1)
         }
-        delegate.pickerValueChanged(month: pickerView.selectedRow(inComponent: 0), day: pickerView.selectedRow(inComponent: 1))
+        delegate?.pickerValueChanged(month: pickerView.selectedRow(inComponent: 0), day: pickerView.selectedRow(inComponent: 1))
     }
     
     

@@ -10,7 +10,7 @@ import Foundation
 
 class ByDayPickerViewController : NSObject, UIPickerViewDelegate, UIPickerViewDataSource {
     
-    let delegate:ByDayPickerDelegate
+    weak var delegate:ByDayPickerDelegate?
     
     init(delegate:ByDayPickerDelegate) {
         self.delegate = delegate
@@ -29,7 +29,7 @@ class ByDayPickerViewController : NSObject, UIPickerViewDelegate, UIPickerViewDa
     }
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        delegate.pickerValueChanged(DaysOfWeek.fromIndex(row))
+        delegate?.pickerValueChanged(DaysOfWeek.fromIndex(row))
     }
     
 }
