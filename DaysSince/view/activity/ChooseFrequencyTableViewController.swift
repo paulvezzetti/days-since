@@ -86,10 +86,6 @@ class ChooseFrequencyTableViewController: UITableViewController, ByDayPickerDele
         
 
         // Configure the UI based on the activity, if any
-//        guard let act = activity, let interval = act.interval else {
-//            return
-//        }
-        
         if let interval = activity?.interval {
             let type = Int(interval.type)
             switch type {
@@ -165,8 +161,10 @@ class ChooseFrequencyTableViewController: UITableViewController, ByDayPickerDele
 
     }
     
-//    override func viewWillDisappear(_ animated: Bool) {
-//        super.viewWillDisappear(animated)
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        updateInterval()
 //
 //        // Notify the delegate of the changes
 //
@@ -195,7 +193,7 @@ class ChooseFrequencyTableViewController: UITableViewController, ByDayPickerDele
 //
 //        settingsDelegate?.applyIntervalSettings(type: iType, day: day, month: month)
 //        settingsDelegate = nil
-//    }
+    }
 
     // MARK: - Table view data source
 
@@ -210,14 +208,13 @@ class ChooseFrequencyTableViewController: UITableViewController, ByDayPickerDele
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        setSelectedRow(row: TableRows(rawValue: indexPath.row) ?? TableRows.Whenever)
-        // Deselect the current selected row
-//        deselectCurrentRow()
-//
-//        let selectedCell = super.tableView(tableView, cellForRowAt: indexPath)
-//        selectedCell.accessoryType = .checkmark
+        let selectionChanged = setSelectedRow(row: TableRows(rawValue: indexPath.row) ?? TableRows.Whenever)
         
         currentSelectedRow = TableRows(rawValue: indexPath.row)!
+        
+//        if selectionChanged {
+//            updateInterval()
+//        }
         
         self.tableView.beginUpdates()
         self.tableView.endUpdates()
@@ -314,14 +311,11 @@ class ChooseFrequencyTableViewController: UITableViewController, ByDayPickerDele
 //        return 7
 //    }
     
-    func deselectCurrentRow() {
-        let currentSelection = super.tableView(tableView, cellForRowAt: IndexPath(row: currentSelectedRow.rawValue, section: 0))
-        currentSelection.accessoryType = .none
-    }
     
-    func setSelectedRow(row:TableRows) {
+    // Sets the selected. Returns true if selection changes; Otherwise false.
+    func setSelectedRow(row:TableRows) -> Bool{
         guard row != currentSelectedRow else {
-            return
+            return false
         }
         let selectedTableRow = super.tableView(tableView, cellForRowAt: IndexPath(row: currentSelectedRow.rawValue, section: 0))
         selectedTableRow.accessoryType = .none
@@ -330,7 +324,38 @@ class ChooseFrequencyTableViewController: UITableViewController, ByDayPickerDele
         selectedCell.accessoryType = .checkmark
         
         currentSelectedRow = row
-
+        return true
+    }
+    
+    func updateInterval() {
+        guard let act = activity, let moc = act.managedObjectContext else {
+            return
+        }
+        
+        // Create a new interval
+        var interval:IntervalMO? = nil
+        
+        switch currentSelectedRow {
+        case .Whenever:
+            interval = UnlimitedIntervalMO(context: moc)
+        case .ByDay:
+            interval = ConstantIntervalMO(context: moc)
+            (interval as! ConstantIntervalMO).frequency = Int16(byDayTextField.text ?? "1") ?? 1
+        case .Weekly:
+            interval = WeeklyIntervalMO(context:moc)
+            (interval as! WeeklyIntervalMO).day = Int16(weekDayPicker.selectedRow(inComponent: 0))
+        case .Monthly:
+            interval = MonthlyIntervalMO(context:moc)
+            (interval as! MonthlyIntervalMO).day = Int16(monthDayPicker.selectedRow(inComponent: 0))
+        case .Yearly:
+            interval = YearlyIntervalMO(context: moc)
+            (interval as! YearlyIntervalMO).month = Int16(yearDayPicker.selectedRow(inComponent: 0))
+            (interval as! YearlyIntervalMO).day = Int16(yearDayPicker.selectedRow(inComponent: 1))
+        default:
+            break
+        }
+        
+        act.interval = interval
     }
     
     //TODO: Is there a way to combine these??

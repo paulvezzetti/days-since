@@ -7,6 +7,7 @@
 //
 import CoreData
 import UIKit
+import UserNotifications
 
 class AddActivityTableViewController: UITableViewController, IntervalSettingsDelegate {
 
@@ -29,6 +30,7 @@ class AddActivityTableViewController: UITableViewController, IntervalSettingsDel
     
     @IBOutlet var startDatePicker: UIDatePicker!
     @IBOutlet var saveButton: UIBarButtonItem!
+    @IBOutlet var enableNotificationsSwitch: UISwitch!
     
 //    var chosenDate: Date = Date()
     
@@ -101,20 +103,12 @@ class AddActivityTableViewController: UITableViewController, IntervalSettingsDel
             activity.addToHistory(firstEvent)
         }
         // Fill in the initial values
-        
-        titleField.text = activity.name
-        intervalLabel.text = activity.interval!.toPrettyString()
-        startDateLabel.text = dateFormatter.string(from: activity.firstDate)
-        
+        configureViewForActivity()
     }
     
-//    override func viewDidAppear(_ animated: Bool) {
-//        let dateFormatter = DateFormatter()
-//        dateFormatter.dateStyle = DateFormatter.Style.medium
-//        dateFormatter.timeStyle = DateFormatter.Style.none
-//
-//        startDateLabel.text = dateFormatter.string(from: chosenDate)
-//    }
+    override func viewDidAppear(_ animated: Bool) {
+        configureViewForActivity()
+    }
 
     // MARK: - Table view data source
 
@@ -240,6 +234,15 @@ class AddActivityTableViewController: UITableViewController, IntervalSettingsDel
         
     }
 
+    func configureViewForActivity() {
+        guard let activity = tempActivity else {
+            return
+        }
+        titleField.text = activity.name
+        intervalLabel.text = activity.interval!.toPrettyString()
+        startDateLabel.text = dateFormatter.string(from: activity.firstDate)
+    }
+    
     func getInitialIntervalSettings() -> (type: IntervalTypes, day: Int, month: Int) {
         return (type: IntervalTypes.Monthly, day: 23, month: 4)
     }
@@ -280,6 +283,13 @@ class AddActivityTableViewController: UITableViewController, IntervalSettingsDel
             }
         }
     }
+    @IBAction func enableNotificationsChanged(_ sender: Any) {
+        if enableNotificationsSwitch.isOn {
+            requestPermissionForPushNotifications()
+        }
+        
+        
+    }
     
     @IBAction func startDateValueChanged(_ sender: Any) {
         startDateLabel.text = dateFormatter.string(from: startDatePicker.date)
@@ -308,4 +318,14 @@ class AddActivityTableViewController: UITableViewController, IntervalSettingsDel
 //            editActivity!.frequency = Int16(frequencyField.text!) ?? 0
 //        }
     }
+    
+    
+    // TODO: This needs to move to some type of Notification Manager for the app
+    func requestPermissionForPushNotifications() {
+        UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound, .badge]) {
+            granted, error in
+            print("Permission granted: \(granted)")
+        }
+    }
+
 }
