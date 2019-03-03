@@ -28,7 +28,6 @@
 		FA1D732F2228C60E00D8EBF7 /* UnlimitedIntervalMO+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA1D73232228C60E00D8EBF7 /* UnlimitedIntervalMO+CoreDataClass.swift */; };
 		FA1D73312228C60E00D8EBF7 /* ConstantIntervalMO+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA1D73252228C60E00D8EBF7 /* ConstantIntervalMO+CoreDataClass.swift */; };
 		FA1D73332228C60E00D8EBF7 /* MonthlyIntervalMO+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA1D73272228C60E00D8EBF7 /* MonthlyIntervalMO+CoreDataClass.swift */; };
-		FA1D733622297D1500D8EBF7 /* IntervalSettingsDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA1D733522297D1500D8EBF7 /* IntervalSettingsDelegate.swift */; };
 		FA1D733A2229CDFB00D8EBF7 /* IntervalUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA1D73392229CDFB00D8EBF7 /* IntervalUtils.swift */; };
 		FA1D733C222B622700D8EBF7 /* DaysOfMonth.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA1D733B222B622700D8EBF7 /* DaysOfMonth.swift */; };
 		FA3CEF49220E0F2500634DD7 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA3CEF48220E0F2500634DD7 /* AppDelegate.swift */; };
@@ -68,7 +67,6 @@
 		FA1D73232228C60E00D8EBF7 /* UnlimitedIntervalMO+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UnlimitedIntervalMO+CoreDataClass.swift"; sourceTree = "<group>"; };
 		FA1D73252228C60E00D8EBF7 /* ConstantIntervalMO+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ConstantIntervalMO+CoreDataClass.swift"; sourceTree = "<group>"; };
 		FA1D73272228C60E00D8EBF7 /* MonthlyIntervalMO+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MonthlyIntervalMO+CoreDataClass.swift"; sourceTree = "<group>"; };
-		FA1D733522297D1500D8EBF7 /* IntervalSettingsDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntervalSettingsDelegate.swift; sourceTree = "<group>"; };
 		FA1D73392229CDFB00D8EBF7 /* IntervalUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntervalUtils.swift; sourceTree = "<group>"; };
 		FA1D733B222B622700D8EBF7 /* DaysOfMonth.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DaysOfMonth.swift; sourceTree = "<group>"; };
 		FA3CEF45220E0F2500634DD7 /* DaysSince.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DaysSince.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -198,7 +196,6 @@
 			children = (
 				FAA6AF1D2211C1E700346CCB /* AddActivityTableViewController.swift */,
 				FA1D72EE2226CA7800D8EBF7 /* ChooseFrequencyTableViewController.swift */,
-				FA1D733522297D1500D8EBF7 /* IntervalSettingsDelegate.swift */,
 			);
 			path = activity;
 			sourceTree = "<group>";
@@ -298,7 +295,6 @@
 				FA1D732D2228C60E00D8EBF7 /* IntervalMO+CoreDataClass.swift in Sources */,
 				FA1D72EC2220784900D8EBF7 /* EventMO+CoreDataClass.swift in Sources */,
 				FA1D733C222B622700D8EBF7 /* DaysOfMonth.swift in Sources */,
-				FA1D733622297D1500D8EBF7 /* IntervalSettingsDelegate.swift in Sources */,
 				FA1D72DB221E2D2B00D8EBF7 /* ActivityStatistics.swift in Sources */,
 				FA1D72F22226E18500D8EBF7 /* ByDayPickerViewController.swift in Sources */,
 				FA1D72F42226F7DE00D8EBF7 /* ByMonthDayPickerController.swift in Sources */,

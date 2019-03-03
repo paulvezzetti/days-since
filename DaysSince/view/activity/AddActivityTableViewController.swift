@@ -9,7 +9,7 @@ import CoreData
 import UIKit
 import UserNotifications
 
-class AddActivityTableViewController: UITableViewController, IntervalSettingsDelegate {
+class AddActivityTableViewController: UITableViewController {
 
     
     enum ActivityRows:Int {
@@ -243,18 +243,6 @@ class AddActivityTableViewController: UITableViewController, IntervalSettingsDel
         startDateLabel.text = dateFormatter.string(from: activity.firstDate)
     }
     
-    func getInitialIntervalSettings() -> (type: IntervalTypes, day: Int, month: Int) {
-        return (type: IntervalTypes.Monthly, day: 23, month: 4)
-    }
-
-    
-    func applyIntervalSettings(type: IntervalTypes, day: Int, month: Int) {
-        print("Interval settings: \(type.rawValue) on day: \(day) on month: \(month)")
-        
-        let intervalPrettyString = IntervalUtils.toPrettyString(type: type, day: day, month: month)
-        intervalLabel.text = intervalPrettyString
-        
-    }
 
 //    @IBAction func doSave(_ sender: Any) {
 //        if let dm = dataManager {

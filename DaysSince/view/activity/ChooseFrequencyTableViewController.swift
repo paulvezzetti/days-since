@@ -87,31 +87,26 @@ class ChooseFrequencyTableViewController: UITableViewController, ByDayPickerDele
 
         // Configure the UI based on the activity, if any
         if let interval = activity?.interval {
-            let type = Int(interval.type)
-            switch type {
-            case IntervalTypes.Unlimited.rawValue:
+            switch interval {
+            case is UnlimitedIntervalMO:
                 wheneverTableViewCell.accessoryType = .checkmark
                 currentSelectedRow = .Whenever
-            case IntervalTypes.Constant.rawValue:
+            case let constantInterval as ConstantIntervalMO:
                 byDayTableViewCell.accessoryType = .checkmark
-                let constantInterval = interval as! ConstantIntervalMO
                 byDayTextField.text = String(constantInterval.frequency)
                 currentSelectedRow = .ByDay
-            case IntervalTypes.Weekly.rawValue:
+            case let weeklyInterval as WeeklyIntervalMO:
                 weeklyTableViewCell.accessoryType = .checkmark
-                let weeklyInterval = interval as! WeeklyIntervalMO
                 weekDayPicker.selectRow(Int(weeklyInterval.day), inComponent: 0, animated: false)
                 weeklyLabel.text = DaysOfWeek.fromIndex(Int(weeklyInterval.day)).rawValue
                 currentSelectedRow = .Weekly
-            case IntervalTypes.Monthly.rawValue:
+            case let monthlyInterval as MonthlyIntervalMO:
                 monthlyTableViewCell.accessoryType = .checkmark
-                let monthlyInterval = interval as! MonthlyIntervalMO
                 monthDayPicker.selectRow(Int(monthlyInterval.day), inComponent: 0, animated: false)
                 monthlyLabel.text = DaysOfMonth().formattedValueForIndex(Int(monthlyInterval.day))
                 currentSelectedRow = .Monthly
-            case IntervalTypes.Yearly.rawValue:
+            case let yearlyInterval as YearlyIntervalMO:
                 yearlyTableViewCell.accessoryType = .checkmark
-                let yearlyInterval = interval as! YearlyIntervalMO
                 yearDayPicker.selectRow(Int(yearlyInterval.month), inComponent: 0, animated: false)
                 yearDayPicker.selectRow(Int(yearlyInterval.day), inComponent: 1, animated: false)
                 yearlyLabel.text = Months.fromIndex(Int(yearlyInterval.month)).rawValue + " " + String(Int(yearlyInterval.day) + 1)
@@ -354,7 +349,6 @@ class ChooseFrequencyTableViewController: UITableViewController, ByDayPickerDele
         default:
             break
         }
-        
         act.interval = interval
     }
     
