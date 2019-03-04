@@ -9,7 +9,7 @@ import CoreData
 import UIKit
 import UserNotifications
 
-class AddActivityTableViewController: UITableViewController {
+class AddActivityTableViewController: UITableViewController, UITextFieldDelegate {
 
     
     enum ActivityRows:Int {
@@ -40,6 +40,7 @@ class AddActivityTableViewController: UITableViewController {
                 self.managedObjectContext = try dataManager?.newChildManagedObjectContext()
                 if let context = self.managedObjectContext {
                     self.tempActivity = ActivityMO(context: context)
+                    self.tempActivity?.id = UUID()
                 }
             } catch {
                 print("Unable to get child managed object context")
@@ -83,6 +84,8 @@ class AddActivityTableViewController: UITableViewController {
             return
         }
         
+        titleField.delegate = self
+        
         // Copy the settings to the temp activity
         if let activityToEdit = editActivity {
             activity.name = activityToEdit.name
@@ -94,6 +97,7 @@ class AddActivityTableViewController: UITableViewController {
             let firstEvent = EventMO(context: moc)
             firstEvent.timestamp = activityToEdit.firstDate
             activity.addToHistory(firstEvent)
+            
             
         } else {
             // Set some defaults
@@ -230,7 +234,35 @@ class AddActivityTableViewController: UITableViewController {
             return
         }
 
+        guard let activity = tempActivity else {
+            return
+        }
+        
+        activity.name = titleField.text!
+
         // TODO: Update activity and save
+        if let activityToUpdate = editActivity {
+            if activity.name != activityToUpdate.name {
+                activityToUpdate.name = activity.name
+            }
+            if activity.interval !== activityToUpdate.interval {
+                activityToUpdate.interval = activity.interval
+            }
+            // TODO: Update the first date
+//            if activity.firstDate != activityToUpdate.firstDate {
+//
+//            }
+            
+            
+        } else {
+            // Save the context
+            do {
+                try managedObjectContext?.save()
+            } catch let error as NSError {
+                print("Unable to save new activity: \(error)")
+            }
+        }
+        
         
     }
 
@@ -241,6 +273,9 @@ class AddActivityTableViewController: UITableViewController {
         titleField.text = activity.name
         intervalLabel.text = activity.interval!.toPrettyString()
         startDateLabel.text = dateFormatter.string(from: activity.firstDate)
+        
+        let title = titleField.text ?? ""
+        saveButton.isEnabled = !title.isEmpty
     }
     
 
@@ -316,4 +351,24 @@ class AddActivityTableViewController: UITableViewController {
         }
     }
 
+    
+    @IBAction func titleFieldChanged(_ sender: Any) {
+        
+        let title = titleField.text ?? ""
+        saveButton.isEnabled = !title.isEmpty
+        navigationItem.title = title
+    }
+    
+    
+    // MARK -  UITextFieldDelegate
+    
+    
+    func textFieldDidEndEditing(_ textField: UITextField, reason: UITextField.DidEndEditingReason) {
+        if textField === titleField {
+            let title = textField.text ?? ""
+            saveButton.isEnabled = !title.isEmpty
+            navigationItem.title = title
+            tempActivity?.name = title
+        }
+    }
 }

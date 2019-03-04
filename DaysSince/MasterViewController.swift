@@ -186,6 +186,11 @@ class MasterViewController: UITableViewController /*, NSFetchedResultsController
 //        controller.dismiss(animated: true, completion: nil)
         
         // TODO: Save the context
+        do {
+            try dataManager?.saveContext()
+        } catch {
+            
+        }
     }
 
 
