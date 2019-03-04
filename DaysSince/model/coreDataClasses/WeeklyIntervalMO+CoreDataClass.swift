@@ -25,7 +25,7 @@ public class WeeklyIntervalMO: IntervalMO {
 
     
     override func toPrettyString() -> String {
-        return "Every week on " + DaysOfWeek.fromIndex(Int(self.day)).rawValue
+        return "Every week on " + Weekdays.day(for: Int(self.day))
     }
     
     override func clone(context:NSManagedObjectContext) ->IntervalMO {

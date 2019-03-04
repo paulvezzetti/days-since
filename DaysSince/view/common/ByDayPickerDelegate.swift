@@ -10,5 +10,5 @@ import Foundation
 
 protocol ByDayPickerDelegate : class {
     
-    func pickerValueChanged(_ day:DaysOfWeek)
+    func weekdayChosen(index:Int, value:String)
 }

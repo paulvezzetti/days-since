@@ -46,7 +46,7 @@ class ChooseFrequencyTableViewController: UITableViewController, ByDayPickerDele
     @IBOutlet var byYearDayLabel: UILabel!
     
     private var currentSelectedRow = TableRows.Whenever
-    private var dayPickerController:ByDayPickerViewController?
+    private var weekdayPickerController:WeekDayPickerViewController?
     private var monthDayPickerController: ByMonthDayPickerController?
     private var yearDayPickerController: ByYearDayPickerController?
     
@@ -69,9 +69,7 @@ class ChooseFrequencyTableViewController: UITableViewController, ByDayPickerDele
         tableView.tableFooterView = UIView(frame: .zero)
 //
 //        // Set up the pickers
-        dayPickerController = ByDayPickerViewController(delegate: self)
-        weekDayPicker.dataSource = dayPickerController
-        weekDayPicker.delegate = dayPickerController
+        weekdayPickerController = WeekDayPickerViewController(picker: weekDayPicker, delegate: self)
         
         monthDayPickerController = ByMonthDayPickerController(delegate: self)
         monthDayPicker.delegate = monthDayPickerController
@@ -97,8 +95,10 @@ class ChooseFrequencyTableViewController: UITableViewController, ByDayPickerDele
                 currentSelectedRow = .ByDay
             case let weeklyInterval as WeeklyIntervalMO:
                 weeklyTableViewCell.accessoryType = .checkmark
-                weekDayPicker.selectRow(Int(weeklyInterval.day), inComponent: 0, animated: false)
-                weeklyLabel.text = DaysOfWeek.fromIndex(Int(weeklyInterval.day)).rawValue
+                weekdayPickerController?.setWeekday(to: Int(weeklyInterval.day))
+//                weekDayPicker.selectRow(Int(weeklyInterval.day), inComponent: 0, animated: false)
+                // TODO: Switch to Calendar
+                weeklyLabel.text = Weekdays.day(for: weekdayPickerController?.getWeekday() ?? 0)
                 currentSelectedRow = .Weekly
             case let monthlyInterval as MonthlyIntervalMO:
                 monthlyTableViewCell.accessoryType = .checkmark
@@ -338,7 +338,7 @@ class ChooseFrequencyTableViewController: UITableViewController, ByDayPickerDele
             (interval as! ConstantIntervalMO).frequency = Int16(byDayTextField.text ?? "1") ?? 1
         case .Weekly:
             interval = WeeklyIntervalMO(context:moc)
-            (interval as! WeeklyIntervalMO).day = Int16(weekDayPicker.selectedRow(inComponent: 0))
+            (interval as! WeeklyIntervalMO).day = Int16(weekdayPickerController?.getWeekday() ?? 0)
         case .Monthly:
             interval = MonthlyIntervalMO(context:moc)
             (interval as! MonthlyIntervalMO).day = Int16(monthDayPicker.selectedRow(inComponent: 0))
@@ -355,8 +355,8 @@ class ChooseFrequencyTableViewController: UITableViewController, ByDayPickerDele
     //TODO: Is there a way to combine these??
     
     // MARK: ByDatePickerDelegate
-    func pickerValueChanged(_ day: DaysOfWeek) {
-        byWeekdayLabel.text! = day.rawValue
+    func weekdayChosen(index:Int, value:String) {
+        byWeekdayLabel.text! = value // TODO: Update the interval
     }
 
     // MARK: ByMonthDayPickerDelegate

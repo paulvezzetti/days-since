@@ -93,7 +93,14 @@ class ActivityStatistics {
     }
     
     var nextDay:String {
+        guard let interval = activity.interval, let last = self.lastDate else {
+            return "Unknown"
+        }
+        let nextDate = interval.getNextDate(since: last)
         return dateFormatter.string(from: nextDate)
+        
+        
+       // return dateFormatter.string(from: nextDate)
     }
     
     var lastDate:Date? {
