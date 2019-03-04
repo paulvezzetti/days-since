@@ -24,6 +24,14 @@ struct Months {
         let months = calendar.monthSymbols
         return months.firstIndex(of: month)! + 1
     }
+    
+    static func daysInMonth(month:Int) -> Int {
+        let dateComponents = DateComponents(year: 2018, month: month, day: 15 )
+        let representativeDate = calendar.date(from: dateComponents)
+        let range = calendar.range(of: .day, in: .month, for: representativeDate!)
+
+        return range?.last ?? 30
+    }
 
     
 }

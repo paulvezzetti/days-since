@@ -8,25 +8,10 @@
 import UIKit
 import Foundation
 
-class ByYearDayPickerController: NSObject {
+class YearDayPickerController: NSObject {
     
     private weak var delegate:ByYearDayPickerDelegate?
     private weak var picker:UIPickerView?
-    
-    private let numDays: [Int : Int ] = [
-        0:31,
-        1:29,
-        2:31,
-        3:30,
-        4:31,
-        5:30,
-        6:31,
-        7:31,
-        8:30,
-        9:31,
-        10:30,
-        11:31
-    ]
     
     init(picker: UIPickerView, delegate:ByYearDayPickerDelegate) {
         self.picker = picker
@@ -36,17 +21,14 @@ class ByYearDayPickerController: NSObject {
         
         self.picker?.delegate = self
         self.picker?.dataSource = self
+        
     }
-    
-    
-    
-    
     
 }
 
 // MARK : Public
 
-extension ByYearDayPickerController {
+extension YearDayPickerController {
     
     func setYearDay(month: Int, day:Int) {
         // Months are 1-12, rows are 0-11
@@ -65,7 +47,7 @@ extension ByYearDayPickerController {
 
 
 // MARK: UIPickerViewDataSource
-extension ByYearDayPickerController : UIPickerViewDataSource {
+extension YearDayPickerController : UIPickerViewDataSource {
     
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
         return 2
@@ -75,13 +57,13 @@ extension ByYearDayPickerController : UIPickerViewDataSource {
         if component == 0 {
             return 12
         }
-        let selectedMonth = pickerView.selectedRow(inComponent: 0)
-        return numDays[selectedMonth] ?? 31
+        
+        return Months.daysInMonth(month: pickerView.selectedRow(inComponent: 0) + 1)
     }
 
 }
 // MARK: UIPickerViewDelegate
-extension ByYearDayPickerController : UIPickerViewDelegate {
+extension YearDayPickerController : UIPickerViewDelegate {
     
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
         if component == 0 {

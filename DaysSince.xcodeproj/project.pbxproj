@@ -15,7 +15,7 @@
 		FA1D72EF2226CA7800D8EBF7 /* ChooseFrequencyTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA1D72EE2226CA7800D8EBF7 /* ChooseFrequencyTableViewController.swift */; };
 		FA1D72F22226E18500D8EBF7 /* WeekDayPickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA1D72F12226E18500D8EBF7 /* WeekDayPickerViewController.swift */; };
 		FA1D72F42226F7DE00D8EBF7 /* ByMonthDayPickerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA1D72F32226F7DE00D8EBF7 /* ByMonthDayPickerController.swift */; };
-		FA1D72F622272BBF00D8EBF7 /* ByYearDayPickerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA1D72F522272BBF00D8EBF7 /* ByYearDayPickerController.swift */; };
+		FA1D72F622272BBF00D8EBF7 /* YearDayPickerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA1D72F522272BBF00D8EBF7 /* YearDayPickerController.swift */; };
 		FA1D72FB222854E600D8EBF7 /* ByDayPickerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA1D72FA222854E600D8EBF7 /* ByDayPickerDelegate.swift */; };
 		FA1D72FF22286A8800D8EBF7 /* ByYearDayPickerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA1D72FE22286A8800D8EBF7 /* ByYearDayPickerDelegate.swift */; };
 		FA1D7301222879BA00D8EBF7 /* ByMonthDayPickerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA1D7300222879BA00D8EBF7 /* ByMonthDayPickerDelegate.swift */; };
@@ -53,7 +53,7 @@
 		FA1D72EE2226CA7800D8EBF7 /* ChooseFrequencyTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChooseFrequencyTableViewController.swift; sourceTree = "<group>"; };
 		FA1D72F12226E18500D8EBF7 /* WeekDayPickerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeekDayPickerViewController.swift; sourceTree = "<group>"; };
 		FA1D72F32226F7DE00D8EBF7 /* ByMonthDayPickerController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ByMonthDayPickerController.swift; sourceTree = "<group>"; };
-		FA1D72F522272BBF00D8EBF7 /* ByYearDayPickerController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ByYearDayPickerController.swift; sourceTree = "<group>"; };
+		FA1D72F522272BBF00D8EBF7 /* YearDayPickerController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YearDayPickerController.swift; sourceTree = "<group>"; };
 		FA1D72FA222854E600D8EBF7 /* ByDayPickerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ByDayPickerDelegate.swift; sourceTree = "<group>"; };
 		FA1D72FE22286A8800D8EBF7 /* ByYearDayPickerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ByYearDayPickerDelegate.swift; sourceTree = "<group>"; };
 		FA1D7300222879BA00D8EBF7 /* ByMonthDayPickerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ByMonthDayPickerDelegate.swift; sourceTree = "<group>"; };
@@ -100,7 +100,7 @@
 			children = (
 				FA1D72F12226E18500D8EBF7 /* WeekDayPickerViewController.swift */,
 				FA1D72F32226F7DE00D8EBF7 /* ByMonthDayPickerController.swift */,
-				FA1D72F522272BBF00D8EBF7 /* ByYearDayPickerController.swift */,
+				FA1D72F522272BBF00D8EBF7 /* YearDayPickerController.swift */,
 				FA1D72FA222854E600D8EBF7 /* ByDayPickerDelegate.swift */,
 				FA1D72FE22286A8800D8EBF7 /* ByYearDayPickerDelegate.swift */,
 				FA1D7300222879BA00D8EBF7 /* ByMonthDayPickerDelegate.swift */,
@@ -286,7 +286,7 @@
 				FA3CEF49220E0F2500634DD7 /* AppDelegate.swift in Sources */,
 				FA1D733E222D85DF00D8EBF7 /* Weekdays.swift in Sources */,
 				FA1D732B2228C60E00D8EBF7 /* YearlyIntervalMO+CoreDataClass.swift in Sources */,
-				FA1D72F622272BBF00D8EBF7 /* ByYearDayPickerController.swift in Sources */,
+				FA1D72F622272BBF00D8EBF7 /* YearDayPickerController.swift in Sources */,
 				FA3CEF4C220E0F2500634DD7 /* DaysSince.xcdatamodeld in Sources */,
 				FA1D731C2228C34700D8EBF7 /* IntervalTypes.swift in Sources */,
 				FA1D72EA2220784900D8EBF7 /* ActivityMO+CoreDataClass.swift in Sources */,

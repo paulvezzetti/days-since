@@ -50,7 +50,7 @@ class ChooseFrequencyTableViewController: UITableViewController, ByDayPickerDele
     private var currentSelectedRow = TableRows.Whenever
     private var weekdayPickerController:WeekDayPickerViewController?
     private var monthDayPickerController: ByMonthDayPickerController?
-    private var yearDayPickerController: ByYearDayPickerController?
+    private var yearDayPickerController: YearDayPickerController?
     
     var activity:ActivityMO? = nil
 //    var settingsDelegate:IntervalSettingsDelegate? = nil
@@ -77,7 +77,7 @@ class ChooseFrequencyTableViewController: UITableViewController, ByDayPickerDele
         monthDayPicker.delegate = monthDayPickerController
         monthDayPicker.dataSource = monthDayPickerController
         
-        yearDayPickerController = ByYearDayPickerController(picker: yearDayPicker, delegate: self)
+        yearDayPickerController = YearDayPickerController(picker: yearDayPicker, delegate: self)
         
         // Set up by-day text field
         byDayTextField.delegate = self
