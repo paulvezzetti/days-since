@@ -13,6 +13,10 @@ import CoreData
 @objc(UnlimitedIntervalMO)
 public class UnlimitedIntervalMO: IntervalMO {
 
+    override func getNextDate(since lastDate: Date) -> Date {
+        return lastDate
+    }
+    
     override func toPrettyString() -> String {
         return "Whenever I feel like it"
     }

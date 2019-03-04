@@ -13,6 +13,10 @@ import CoreData
 @objc(IntervalMO)
 public class IntervalMO: NSManagedObject {
     
+    func getNextDate(since lastDate: Date) -> Date {
+        return lastDate
+    }
+    
     func toPrettyString() -> String {
         return "Abstact IntervalMO"
     }

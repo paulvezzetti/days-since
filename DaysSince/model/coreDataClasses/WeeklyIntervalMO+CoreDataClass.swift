@@ -13,6 +13,17 @@ import CoreData
 @objc(WeeklyIntervalMO)
 public class WeeklyIntervalMO: IntervalMO {
 
+    override func getNextDate(since lastDate: Date) -> Date {
+        // Construct a new date based on the previous week
+        let calendar = Calendar.current
+        var nextDate = calendar.date(bySetting: .weekday, value: Int(self.day), of: lastDate)
+        if nextDate != nil {
+            nextDate = calendar.date(byAdding: DateComponents(weekOfYear: 1), to: nextDate!)
+        }
+        return nextDate ?? Date()
+    }
+
+    
     override func toPrettyString() -> String {
         return "Every week on " + DaysOfWeek.fromIndex(Int(self.day)).rawValue
     }

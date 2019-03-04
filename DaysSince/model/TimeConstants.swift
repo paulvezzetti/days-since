@@ -15,4 +15,7 @@ struct TimeConstants {
     static let SECONDS_PER_MINUTE:Double = 60
     static let SECONDS_PER_DAY = SECONDS_PER_MINUTE * MINUTES_PER_HOUR * HOURS_PER_DAY
 
+    static func daysToSeconds(_ days:Int) -> TimeInterval {
+        return Double(days) * SECONDS_PER_DAY
+    }
 }
