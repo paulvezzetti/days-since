@@ -24,6 +24,7 @@ class ChooseFrequencyTableViewController: UITableViewController, ByDayPickerDele
         YearDayPicker
     }
     
+    // MARK: Outlets
     @IBOutlet var byDayTableViewCell: UITableViewCell!
     @IBOutlet var weeklyTableViewCell: UITableViewCell!
     @IBOutlet var weekDayPickerTableViewCell: UITableViewCell!
@@ -45,6 +46,7 @@ class ChooseFrequencyTableViewController: UITableViewController, ByDayPickerDele
     @IBOutlet var byMonthDayLabel: UILabel!
     @IBOutlet var byYearDayLabel: UILabel!
     
+    // MARK: Private variables
     private var currentSelectedRow = TableRows.Whenever
     private var weekdayPickerController:WeekDayPickerViewController?
     private var monthDayPickerController: ByMonthDayPickerController?
@@ -122,37 +124,6 @@ class ChooseFrequencyTableViewController: UITableViewController, ByDayPickerDele
         }
 
         
-//        if let delegate = settingsDelegate {
-//            let initialSettings = delegate.getInitialIntervalSettings()
-//            switch initialSettings.type {
-//            case IntervalTypes.Unlimited:
-//                wheneverTableViewCell.accessoryType = .checkmark
-//                currentSelectedRow = .Whenever
-//            case IntervalTypes.Constant:
-//                byDayTableViewCell.accessoryType = .checkmark
-//                byDayTextField.text = String(initialSettings.day)
-//                currentSelectedRow = .ByDay
-//            case IntervalTypes.Weekly:
-//                weeklyTableViewCell.accessoryType = .checkmark
-//                weekDayPicker.selectRow(initialSettings.day, inComponent: 0, animated: false)
-//                weeklyLabel.text = DaysOfWeek.fromIndex(initialSettings.day).rawValue
-//                currentSelectedRow = .Weekly
-//            case IntervalTypes.Monthly:
-//                monthlyTableViewCell.accessoryType = .checkmark
-//                monthDayPicker.selectRow(initialSettings.day, inComponent: 0, animated: false)
-//                monthlyLabel.text = DaysOfMonth().formattedValueForIndex(initialSettings.day) //monthDayPickerController?.formattedValueForIndex(initialSettings.day)
-//                currentSelectedRow = .Monthly
-//            case IntervalTypes.Yearly:
-//                yearlyTableViewCell.accessoryType = .checkmark
-//                yearDayPicker.selectRow(initialSettings.month, inComponent: 0, animated: false)
-//                yearDayPicker.selectRow(initialSettings.day, inComponent: 1, animated: false)
-//                yearlyLabel.text = Months.fromIndex(initialSettings.month).rawValue + " " + String(initialSettings.day + 1)
-//                currentSelectedRow = .Yearly
-//            }
-//
-//        } else {
-//            wheneverTableViewCell.accessoryType = .checkmark
-//        }
 
     }
     
