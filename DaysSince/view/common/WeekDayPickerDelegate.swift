@@ -8,7 +8,7 @@
 
 import Foundation
 
-protocol ByDayPickerDelegate : class {
+protocol WeekDayPickerDelegate : class {
     
-    func weekdayChosen(index:Int, value:String)
+    func weekdayChosen(day:Int, symbol:String)
 }

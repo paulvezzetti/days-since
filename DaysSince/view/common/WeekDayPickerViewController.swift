@@ -10,10 +10,10 @@ import Foundation
 
 class WeekDayPickerViewController : NSObject {
     
-    private weak var delegate:ByDayPickerDelegate?
+    private weak var delegate:WeekDayPickerDelegate?
     private weak var picker: UIPickerView?
     
-    init(picker: UIPickerView, delegate:ByDayPickerDelegate) {
+    init(picker: UIPickerView, delegate:WeekDayPickerDelegate) {
         self.picker = picker
         self.delegate = delegate
         
@@ -60,7 +60,7 @@ extension WeekDayPickerViewController: UIPickerViewDelegate {
     }
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        delegate?.weekdayChosen(index: row + 1, value: Weekdays.day(for: row + 1))
+        delegate?.weekdayChosen(day: row + 1, symbol: Weekdays.day(for: row + 1))
     }
 
 }

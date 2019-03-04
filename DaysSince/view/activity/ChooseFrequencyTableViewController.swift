@@ -8,9 +8,9 @@
 
 import UIKit
 
-class ChooseFrequencyTableViewController: UITableViewController, ByDayPickerDelegate,
+class ChooseFrequencyTableViewController: UITableViewController, WeekDayPickerDelegate,
                                             ByMonthDayPickerDelegate,
-                                            ByYearDayPickerDelegate, UITextFieldDelegate {
+                                            YearDayPickerDelegate, UITextFieldDelegate {
     
     
     enum TableRows:Int {
@@ -325,8 +325,8 @@ class ChooseFrequencyTableViewController: UITableViewController, ByDayPickerDele
     //TODO: Is there a way to combine these??
     
     // MARK: ByDatePickerDelegate
-    func weekdayChosen(index:Int, value:String) {
-        byWeekdayLabel.text! = value // TODO: Update the interval
+    func weekdayChosen(day:Int, symbol:String) {
+        byWeekdayLabel.text! = symbol // TODO: Update the interval
     }
 
     // MARK: ByMonthDayPickerDelegate
@@ -335,8 +335,8 @@ class ChooseFrequencyTableViewController: UITableViewController, ByDayPickerDele
     }
 
     // MARK: ByYearDayPickerDelegate
-    func pickerValueChanged(month: Int, day: Int) {
-        byYearDayLabel.text = Months.month(for: month) + " " + String(day) // TODO: Update the interval
+    func yearDayChosen(month: Int, monthSymbol:String, day: Int) {
+        byYearDayLabel.text = monthSymbol + " " + String(day) // TODO: Update the interval
     }
     
     

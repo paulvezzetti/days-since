@@ -10,10 +10,10 @@ import Foundation
 
 class YearDayPickerController: NSObject {
     
-    private weak var delegate:ByYearDayPickerDelegate?
+    private weak var delegate:YearDayPickerDelegate?
     private weak var picker:UIPickerView?
     
-    init(picker: UIPickerView, delegate:ByYearDayPickerDelegate) {
+    init(picker: UIPickerView, delegate:YearDayPickerDelegate) {
         self.picker = picker
         self.delegate = delegate
         
@@ -77,7 +77,8 @@ extension YearDayPickerController : UIPickerViewDelegate {
         if component == 0 {
             pickerView.reloadComponent(1)
         }
-        delegate?.pickerValueChanged(month: pickerView.selectedRow(inComponent: 0) + 1, day: pickerView.selectedRow(inComponent: 1) + 1)
+        let selectedMonth = pickerView.selectedRow(inComponent: 0) + 1
+        delegate?.yearDayChosen(month: selectedMonth, monthSymbol: Months.month(for: selectedMonth), day: pickerView.selectedRow(inComponent: 1) + 1)
     }
 
 }

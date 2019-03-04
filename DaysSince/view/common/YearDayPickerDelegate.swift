@@ -8,7 +8,7 @@
 
 import Foundation
 
-protocol ByYearDayPickerDelegate : class {
+protocol YearDayPickerDelegate : class {
     
-    func pickerValueChanged(month:Int, day: Int)
+    func yearDayChosen(month:Int, monthSymbol:String, day: Int)
 }
