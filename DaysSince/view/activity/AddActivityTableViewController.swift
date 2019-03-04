@@ -245,8 +245,11 @@ class AddActivityTableViewController: UITableViewController, UITextFieldDelegate
             if activity.name != activityToUpdate.name {
                 activityToUpdate.name = activity.name
             }
-            if activity.interval !== activityToUpdate.interval {
-                activityToUpdate.interval = activity.interval
+            
+            if activity.interval !== activityToUpdate.interval { // TODO: Need equals method
+                if let parentMoc = managedObjectContext?.parent {
+                    activityToUpdate.interval = activity.interval?.clone(context: parentMoc)
+                }
             }
             let firstDate = activity.firstDate
             if firstDate != activityToUpdate.firstDate {

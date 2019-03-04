@@ -88,7 +88,11 @@
                                 <items>
                                     <barButtonItem title="Delete" id="iUL-1y-6Ht"/>
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="GiL-xD-kfU"/>
-                                    <barButtonItem title="Edit" id="iQb-z2-4uR"/>
+                                    <barButtonItem title="Edit" id="iQb-z2-4uR">
+                                        <connections>
+                                            <segue destination="0zy-ap-i7T" kind="show" identifier="editActivity" id="vV1-vt-UA0"/>
+                                        </connections>
+                                    </barButtonItem>
                                 </items>
                             </toolbar>
                         </subviews>
@@ -1055,5 +1059,6 @@
     </scenes>
     <inferredMetricsTieBreakers>
         <segue reference="BMi-sG-zyJ"/>
+        <segue reference="vV1-vt-UA0"/>
     </inferredMetricsTieBreakers>
 </document>
