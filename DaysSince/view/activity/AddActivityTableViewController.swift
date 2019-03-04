@@ -248,10 +248,10 @@ class AddActivityTableViewController: UITableViewController, UITextFieldDelegate
             if activity.interval !== activityToUpdate.interval {
                 activityToUpdate.interval = activity.interval
             }
-            // TODO: Update the first date
-//            if activity.firstDate != activityToUpdate.firstDate {
-//
-//            }
+            let firstDate = activity.firstDate
+            if firstDate != activityToUpdate.firstDate {
+                activityToUpdate.updateFirstDate(to: firstDate)
+            }
             
             
         } else {
@@ -316,6 +316,7 @@ class AddActivityTableViewController: UITableViewController, UITextFieldDelegate
     
     @IBAction func startDateValueChanged(_ sender: Any) {
         startDateLabel.text = dateFormatter.string(from: startDatePicker.date)
+        tempActivity?.updateFirstDate(to: startDatePicker.date)
     }
     
     @IBAction func cancelAdd(_ sender: Any) {

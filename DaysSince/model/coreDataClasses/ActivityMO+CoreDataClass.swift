@@ -55,6 +55,14 @@ public class ActivityMO: NSManagedObject {
         return sortDates.isEmpty ? Date() : sortDates[0].timestamp!
     }
     
+    func updateFirstDate(to date:Date) {
+        let sortDates = sortedHistory
+        guard !sortDates.isEmpty else {
+            return
+        }
+        sortDates[0].timestamp = date
+    }
+    
     private var frequencyInSeconds: Double {
         return Double(frequency) * TimeConstants.SECONDS_PER_DAY
     }
