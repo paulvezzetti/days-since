@@ -28,7 +28,7 @@ public class YearlyIntervalMO: IntervalMO {
 
     
     override func toPrettyString() -> String {
-        return "Every year on " + Months.fromIndex(Int(self.month)).rawValue + " " + String(day)
+        return "Every year on " + Months.month(for: Int(self.month)) + " " + String(day)
     }
 
     override func clone(context:NSManagedObjectContext) ->IntervalMO {

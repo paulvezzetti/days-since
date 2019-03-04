@@ -77,9 +77,7 @@ class ChooseFrequencyTableViewController: UITableViewController, ByDayPickerDele
         monthDayPicker.delegate = monthDayPickerController
         monthDayPicker.dataSource = monthDayPickerController
         
-        yearDayPickerController = ByYearDayPickerController(delegate: self)
-        yearDayPicker.delegate = yearDayPickerController
-        yearDayPicker.dataSource = yearDayPickerController
+        yearDayPickerController = ByYearDayPickerController(picker: yearDayPicker, delegate: self)
         
         // Set up by-day text field
         byDayTextField.delegate = self
@@ -109,9 +107,10 @@ class ChooseFrequencyTableViewController: UITableViewController, ByDayPickerDele
                 currentSelectedRow = .Monthly
             case let yearlyInterval as YearlyIntervalMO:
                 yearlyTableViewCell.accessoryType = .checkmark
-                yearDayPicker.selectRow(Int(yearlyInterval.month), inComponent: 0, animated: false)
-                yearDayPicker.selectRow(Int(yearlyInterval.day), inComponent: 1, animated: false)
-                yearlyLabel.text = Months.fromIndex(Int(yearlyInterval.month)).rawValue + " " + String(Int(yearlyInterval.day) + 1)
+//                yearDayPicker.selectRow(Int(yearlyInterval.month), inComponent: 0, animated: false)
+//                yearDayPicker.selectRow(Int(yearlyInterval.day), inComponent: 1, animated: false)
+                yearDayPickerController?.setYearDay(month: Int(yearlyInterval.month), day: Int(yearlyInterval.day))
+                yearlyLabel.text = Months.month(for: yearDayPickerController?.getMonth() ?? 0) + " " + String(yearDayPickerController?.getDay() ?? 4)
                 currentSelectedRow = .Yearly
             default:
                 wheneverTableViewCell.accessoryType = .checkmark
@@ -315,8 +314,8 @@ class ChooseFrequencyTableViewController: UITableViewController, ByDayPickerDele
             (interval as! MonthlyIntervalMO).day = Int16(monthDayPicker.selectedRow(inComponent: 0))
         case .Yearly:
             interval = YearlyIntervalMO(context: moc)
-            (interval as! YearlyIntervalMO).month = Int16(yearDayPicker.selectedRow(inComponent: 0))
-            (interval as! YearlyIntervalMO).day = Int16(yearDayPicker.selectedRow(inComponent: 1))
+            (interval as! YearlyIntervalMO).month = Int16(yearDayPickerController?.getMonth() ?? 2)
+            (interval as! YearlyIntervalMO).day = Int16(yearDayPickerController?.getDay() ?? 10)
         default:
             break
         }
@@ -337,7 +336,7 @@ class ChooseFrequencyTableViewController: UITableViewController, ByDayPickerDele
 
     // MARK: ByYearDayPickerDelegate
     func pickerValueChanged(month: Int, day: Int) {
-        byYearDayLabel.text = Months.fromIndex(month).rawValue + " " + String(day + 1)
+        byYearDayLabel.text = Months.month(for: month) + " " + String(day) // TODO: Update the interval
     }
     
     
