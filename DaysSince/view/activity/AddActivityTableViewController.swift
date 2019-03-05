@@ -24,15 +24,12 @@ class AddActivityTableViewController: UITableViewController, UITextFieldDelegate
     }
 
     @IBOutlet var titleField: UITextField!
-    //@IBOutlet var frequencyField: UITextField!
     @IBOutlet var startDateLabel: UILabel!
     @IBOutlet var intervalLabel: UILabel!
     
     @IBOutlet var startDatePicker: UIDatePicker!
     @IBOutlet var saveButton: UIBarButtonItem!
     @IBOutlet var enableNotificationsSwitch: UISwitch!
-    
-//    var chosenDate: Date = Date()
     
     var dataManager: DataModelManager? = nil {
         didSet {
@@ -122,18 +119,7 @@ class AddActivityTableViewController: UITableViewController, UITextFieldDelegate
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of rows
         return 11
-//        switch section {
-//        case 0:
-//            return 1
-//        case 1:
-//            return 2
-//        case 2:
-//            return 3
-//        default:
-//            return 1
-//        }
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -146,11 +132,6 @@ class AddActivityTableViewController: UITableViewController, UITextFieldDelegate
             self.tableView.endUpdates()
         }
         
-//        if /*indexPath.section == 1 &&*/ indexPath.row == ActivityRows.StartFromDateEntry.rawValue {
-//            self.performSegue(withIdentifier: "showDatePicker", sender: self)
-//        } else if indexPath.row == ActivityRows.FrequencyTextField.rawValue {
-//           // self.performSegue(withIdentifier: "chooseWhenSegue", sender: self)
-//        }
     }
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -165,51 +146,6 @@ class AddActivityTableViewController: UITableViewController, UITextFieldDelegate
         return super.tableView(tableView, heightForRowAt: indexPath)
     }
 
-
-        /*
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "reuseIdentifier", for: indexPath)
-
-        // Configure the cell...
-
-        return cell
-    }
-    */
-
-    /*
-    // Override to support conditional editing of the table view.
-    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the specified item to be editable.
-        return true
-    }
-    */
-
-    /*
-    // Override to support editing the table view.
-    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
-        if editingStyle == .delete {
-            // Delete the row from the data source
-            tableView.deleteRows(at: [indexPath], with: .fade)
-        } else if editingStyle == .insert {
-            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-        }    
-    }
-    */
-
-    /*
-    // Override to support rearranging the table view.
-    override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to: IndexPath) {
-
-    }
-    */
-
-    /*
-    // Override to support conditional rearranging of the table view.
-    override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the item to be re-orderable.
-        return true
-    }
-    */
 
     // MARK: - Navigation
 
@@ -281,34 +217,6 @@ class AddActivityTableViewController: UITableViewController, UITextFieldDelegate
         saveButton.isEnabled = !title.isEmpty
     }
     
-
-//    @IBAction func doSave(_ sender: Any) {
-//        if let dm = dataManager {
-//            if editActivity != nil {
-//                updateActivity(dm)
-//            } else {
-//                createNewActivity(dm)
-//            }
-////            do {
-////                try dm.newActivity(named: titleField.text!, every: Int(frequencyField.text!) ?? 0, starting: chosenDate)
-////                try dm.saveContext()
-////            } catch {
-////                print("Error saving activity")
-////            }
-//        }
-//
-//        dismiss(animated: true, completion: nil)
-//    }
-    
-    func saveActivity() {
-        if let dm = dataManager {
-            if editActivity != nil {
-                updateActivity(dm)
-            } else {
-                createNewActivity(dm)
-            }
-        }
-    }
     @IBAction func enableNotificationsChanged(_ sender: Any) {
         if enableNotificationsSwitch.isOn {
             requestPermissionForPushNotifications()
@@ -328,23 +236,6 @@ class AddActivityTableViewController: UITableViewController, UITextFieldDelegate
         
     }
     
-    func createNewActivity(_ dataManager: DataModelManager) {
-//        do {
-//            try dataManager.newActivity(named: titleField.text!, every: 0, starting: chosenDate)
-//            try dataManager.saveContext()
-//        } catch {
-//            print("Error saving activity")
-//        }
-    }
-    
-    func updateActivity(_ dataManager: DataModelManager) {
-        if editActivity!.name != titleField.text! {
-            editActivity!.name = titleField.text!
-        }
-//        if editActivity!.frequency != Int16(frequencyField.text!) {
-//            editActivity!.frequency = Int16(frequencyField.text!) ?? 0
-//        }
-    }
     
     
     // TODO: This needs to move to some type of Notification Manager for the app

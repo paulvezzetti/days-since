@@ -189,7 +189,8 @@ class MasterViewController: UITableViewController /*, NSFetchedResultsController
         do {
             try dataManager?.saveContext()
         } catch {
-            
+            let nserror = error as NSError
+            fatalError("Unresolved error \(nserror), \(nserror.userInfo)")
         }
     }
 

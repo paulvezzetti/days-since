@@ -83,10 +83,18 @@ class DetailViewController: UIViewController, DatePickerDelegate {
     }
     
     @IBAction func unwindSaveActivity(segue: UIStoryboardSegue) {
-        let controller = segue.source as! AddActivityTableViewController
+  //      let controller = segue.source as! AddActivityTableViewController
         
-        controller.saveActivity()
-        controller.dismiss(animated: true, completion: nil)
+        do {
+            try dataManager?.saveContext()
+        } catch {
+            let nserror = error as NSError
+            fatalError("Unresolved error \(nserror), \(nserror.userInfo)")
+        }
+
+        
+//        controller.saveActivity()
+//        controller.dismiss(animated: true, completion: nil)
         
         configureView()
         historyViewController.activityDidChange()
