@@ -20,6 +20,21 @@ public class WeeklyIntervalMO: IntervalMO {
         if nextDate != nil {
             nextDate = calendar.date(byAdding: DateComponents(weekOfYear: 1), to: nextDate!)
         }
+        
+        // This seems to work well and relies on standard library code.
+        // TODO: Need to consider if the next date comes out to be in the same week
+        // as the last date, we may want to advance to the next week. Ex: If it is
+        // done on Tuesday, but due on Wednesdays, it should really push out 8 days not 1.
+        let nextWeekdayDateComponent = DateComponents(weekday: Int(self.day))
+        let maybeNextDate = calendar.nextDate(after: lastDate, matching: nextWeekdayDateComponent, matchingPolicy: .nextTime)
+        
+        let formatter = DateFormatter()
+        formatter.dateStyle = DateFormatter.Style.medium
+        formatter.timeStyle = DateFormatter.Style.none
+
+        print("Using calendar: \(formatter.string(from: maybeNextDate!))")
+        print("Using my calc : \(formatter.string(from: nextDate!))")
+
         return nextDate ?? Date()
     }
 

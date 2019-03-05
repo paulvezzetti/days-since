@@ -20,6 +20,18 @@ public class MonthlyIntervalMO: IntervalMO {
         if nextDate != nil {
             nextDate = calendar.date(byAdding: DateComponents(month: 1), to: nextDate!)
         }
+        
+        let nextMonthdayDateComponent = DateComponents(day: Int(self.day))
+        let maybeNextDate = calendar.nextDate(after: lastDate, matching: nextMonthdayDateComponent, matchingPolicy: .nextTime)
+        
+        let formatter = DateFormatter()
+        formatter.dateStyle = DateFormatter.Style.medium
+        formatter.timeStyle = DateFormatter.Style.none
+        
+        print("Using calendar: \(formatter.string(from: maybeNextDate!))")
+        print("Using my calc : \(formatter.string(from: nextDate!))")
+
+        
         return nextDate ?? Date()
     }
 

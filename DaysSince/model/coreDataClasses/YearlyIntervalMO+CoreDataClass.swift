@@ -23,6 +23,17 @@ public class YearlyIntervalMO: IntervalMO {
                 nextDate = calendar.date(byAdding: DateComponents(year: 1), to: nextDate!)
             }
         }
+        
+        let nextYearDayDateComponent = DateComponents(month: Int(self.month), day: Int(self.day))
+        let maybeNextDate = calendar.nextDate(after: lastDate, matching: nextYearDayDateComponent, matchingPolicy: .nextTime)
+        
+        let formatter = DateFormatter()
+        formatter.dateStyle = DateFormatter.Style.medium
+        formatter.timeStyle = DateFormatter.Style.none
+        
+        print("Using calendar: \(formatter.string(from: maybeNextDate!))")
+        print("Using my calc : \(formatter.string(from: nextDate!))")
+
         return nextDate ?? Date()
     }
 
