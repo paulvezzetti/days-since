@@ -12,7 +12,7 @@ import UserNotifications
 class AddActivityTableViewController: UITableViewController, UITextFieldDelegate {
 
     
-    enum ActivityRows:Int {
+    private enum ActivityRows:Int {
         case TitleLabel = 0,
         TitleTextField,
         FrequencyLabel,
@@ -23,39 +23,30 @@ class AddActivityTableViewController: UITableViewController, UITextFieldDelegate
         NotificationButton
     }
 
-    @IBOutlet var titleField: UITextField!
-    @IBOutlet var startDateLabel: UILabel!
-    @IBOutlet var intervalLabel: UILabel!
+    // MARK: - Outlets
+    @IBOutlet private var titleField: UITextField!
+    @IBOutlet private var startDateLabel: UILabel!
+    @IBOutlet private var intervalLabel: UILabel!
     
-    @IBOutlet var startDatePicker: UIDatePicker!
-    @IBOutlet var saveButton: UIBarButtonItem!
-    @IBOutlet var enableNotificationsSwitch: UISwitch!
-    @IBOutlet var remindTextField: UITextField!
-    @IBOutlet var snoozeSwitch: UISwitch!
-    @IBOutlet var snoozeTextField: UITextField!
+    @IBOutlet private var startDatePicker: UIDatePicker!
+    @IBOutlet private var saveButton: UIBarButtonItem!
+    @IBOutlet private var enableNotificationsSwitch: UISwitch!
+    @IBOutlet private var remindTextField: UITextField!
+    @IBOutlet private var snoozeSwitch: UISwitch!
+    @IBOutlet private var snoozeTextField: UITextField!
+
+    // MARK: - Public properties
+    var editActivity: ActivityMO? = nil
+    var dataManager: DataModelManager? = nil
     
-    var dataManager: DataModelManager? = nil {
-        didSet {
-            do {
-                self.managedObjectContext = try dataManager?.newChildManagedObjectContext()
-                if let context = self.managedObjectContext {
-                    self.tempActivity = ActivityMO(context: context)
-                    self.tempActivity?.id = UUID()
-                    self.tempActivity?.notifications = NotificationMO(context: context)
-                }
-            } catch {
-                print("Unable to get child managed object context")
-            }
-        }
-    }
+    // MARK: - Private properties
     private var managedObjectContext: NSManagedObjectContext? = nil
     
-    var editActivity: ActivityMO? = nil
-    var tempActivity: ActivityMO? = nil
+    private var tempActivity: ActivityMO? = nil
     
     private var isStartDatePickerShowing: Bool = false
     
-    let dateFormatter:DateFormatter = {
+    private let dateFormatter:DateFormatter = {
         let formatter = DateFormatter()
         formatter.dateStyle = DateFormatter.Style.medium
         formatter.timeStyle = DateFormatter.Style.none
@@ -74,39 +65,35 @@ class AddActivityTableViewController: UITableViewController, UITextFieldDelegate
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        guard let activity = tempActivity, let moc = managedObjectContext else {
-            // TODO: Show an error to user
+        do {
+            try initializeManagedObjectContext()
+        } catch {
+            
+        }
+        
+        guard let context = managedObjectContext else {
+            // TODO Show the user an error
             return
         }
         
-        titleField.delegate = self
         
         // Copy the settings to the temp activity
         if let activityToEdit = editActivity {
-            activity.name = activityToEdit.name
-            if activityToEdit.interval != nil {
-                // Make a copy
-                activity.interval = activityToEdit.interval?.clone(context: moc)
-            }
-            // Only really need the first day, not the whole history
-            let firstEvent = EventMO(context: moc)
-            firstEvent.timestamp = activityToEdit.firstDate
-            activity.addToHistory(firstEvent)
-            
-            if activityToEdit.notifications != nil {
-                activity.notifications?.enabled = activityToEdit.notifications?.enabled ?? false
-                activity.notifications?.allowSnooze = activityToEdit.notifications?.allowSnooze ?? false
-                activity.notifications?.daysBefore = activityToEdit.notifications?.daysBefore ?? 1
-                activity.notifications?.snooze = activityToEdit.notifications?.snooze ?? 1
-            }
-            
+            // If we are editing an existing activity, clone it with just the first event history
+            tempActivity = activityToEdit.clone(context: context, eventCloneOptions: .First)
         } else {
-            // Set some defaults
-            activity.interval = UnlimitedIntervalMO(context: moc)
-            let firstEvent = EventMO(context: moc)
+            // Otherwise, initialize a new one
+            self.tempActivity = ActivityMO(context: context)
+            self.tempActivity?.id = UUID()
+            self.tempActivity?.notifications = NotificationMO(context: context)
+            self.tempActivity?.interval = UnlimitedIntervalMO(context: context)
+            let firstEvent = EventMO(context: context)
             firstEvent.timestamp = Date()
-            activity.addToHistory(firstEvent)
+            self.tempActivity?.addToHistory(firstEvent)
         }
+        
+        titleField.delegate = self
+
         // Fill in the initial values
         configureViewForActivity()
     }
@@ -218,6 +205,12 @@ class AddActivityTableViewController: UITableViewController, UITextFieldDelegate
         
     }
 
+    func initializeManagedObjectContext() throws {
+        if self.managedObjectContext == nil {
+            self.managedObjectContext = try dataManager?.newChildManagedObjectContext()
+        }
+    }
+    
     func configureViewForActivity() {
         guard let activity = tempActivity else {
             return
@@ -230,7 +223,7 @@ class AddActivityTableViewController: UITableViewController, UITextFieldDelegate
         saveButton.isEnabled = !title.isEmpty
         
         let enableNotifications = activity.notifications?.enabled ?? false
-        enableNotificationsSwitch.isEnabled = enableNotifications
+        enableNotificationsSwitch.isEnabled = true
         enableNotificationsSwitch.setOn(enableNotifications, animated: false)
         remindTextField.isEnabled = enableNotifications
         remindTextField.text = String(activity.notifications?.daysBefore ?? 1)

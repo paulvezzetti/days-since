@@ -13,4 +13,15 @@ import CoreData
 @objc(NotificationMO)
 public class NotificationMO: NSManagedObject {
 
+    
+    func clone(context:NSManagedObjectContext) ->NotificationMO {
+        let notification = NotificationMO(context: context)
+        notification.enabled = self.enabled
+        notification.daysBefore = self.daysBefore
+        notification.allowSnooze = self.allowSnooze
+        notification.snooze = self.snooze
+        
+        return notification
+    }
+
 }
