@@ -72,24 +72,41 @@ class ActivityStatistics {
     }
     
     var daysUntil:Int {
-        guard let lastEvent = sortedEvents.last else {
+        guard let interval = activity.interval else {
             return -1
         }
-        let frequency = activity.frequency
-        let addedTime: TimeInterval = TimeInterval(frequency) * TimeConstants.SECONDS_PER_DAY //Double(frequency * 24 * 60 * 60)
-        let nextExpectedEvent = lastEvent.timestamp?.addingTimeInterval(addedTime)
+        let lastEvent = activity.lastEvent
+        let nextDate = interval.getNextDate(since: lastEvent?.timestamp ?? Date())
         
-        let numSecsToNextEvent =  nextExpectedEvent?.timeIntervalSince(Date())
-        return Int(floor(numSecsToNextEvent! / TimeConstants.SECONDS_PER_DAY))
+        let calendar = Calendar.current
+        return calendar.dateComponents([.day], from: Date(), to: nextDate).day ?? 0
+        
+//
+//        guard let lastEvent = sortedEvents.last else {
+//            return -1
+//        }
+//        let frequency = activity.frequency
+//        let addedTime: TimeInterval = TimeInterval(frequency) * TimeConstants.SECONDS_PER_DAY //Double(frequency * 24 * 60 * 60)
+//        let nextExpectedEvent = lastEvent.timestamp?.addingTimeInterval(addedTime)
+//
+//        let numSecsToNextEvent =  nextExpectedEvent?.timeIntervalSince(Date())
+//        return Int(floor(numSecsToNextEvent! / TimeConstants.SECONDS_PER_DAY))
     }
     
     var nextDate:Date {
-        guard let lastEvent = sortedEvents.last else {
-            return Date() // TODO: How to handle??
+
+        guard let interval = activity.interval else {
+            return Date()
         }
-        let frequency = activity.frequency
-        let addedTime: TimeInterval = TimeInterval(frequency) * TimeConstants.SECONDS_PER_DAY //Double(frequency * 24 * 60 * 60)
-        return lastEvent.timestamp?.addingTimeInterval(addedTime) ?? Date()
+        let lastEvent = activity.lastEvent
+        return interval.getNextDate(since: lastEvent?.timestamp ?? Date())
+
+//        guard let lastEvent = sortedEvents.last else {
+//            return Date() // TODO: How to handle??
+//        }
+//        let frequency = activity.frequency
+//        let addedTime: TimeInterval = TimeInterval(frequency) * TimeConstants.SECONDS_PER_DAY //Double(frequency * 24 * 60 * 60)
+//        return lastEvent.timestamp?.addingTimeInterval(addedTime) ?? Date()
     }
     
     var nextDay:String {

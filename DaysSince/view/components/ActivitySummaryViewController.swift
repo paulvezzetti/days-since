@@ -35,7 +35,7 @@ class ActivitySummaryViewController: UIViewController {
         }
         let stats:ActivityStatistics = ActivityStatistics(activity: act)
         
-        expectedFrequencyLabel.text = String(act.frequency)
+        expectedFrequencyLabel.text = ""
         numInstancesLabel.text = String(act.history?.count ?? 0)
         daysSinceLabel.text = String(stats.daySince)
         daysUntilLabel.text = String(stats.daysUntil)
