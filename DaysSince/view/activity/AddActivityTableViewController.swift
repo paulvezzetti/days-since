@@ -105,7 +105,6 @@ class AddActivityTableViewController: UITableViewController, UITextFieldDelegate
     // MARK: - Table view data source
 
     override func numberOfSections(in tableView: UITableView) -> Int {
-        // #warning Incomplete implementation, return the number of sections
         return 1
     }
 
@@ -122,11 +121,9 @@ class AddActivityTableViewController: UITableViewController, UITextFieldDelegate
             self.tableView.beginUpdates()
             self.tableView.endUpdates()
         }
-        
     }
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        //print("Height for row: \(indexPath.row)")
         if indexPath.row == ActivityRows.StartFromDatePicker.rawValue {
             if isStartDatePickerShowing {
                 return 138
@@ -143,16 +140,8 @@ class AddActivityTableViewController: UITableViewController, UITextFieldDelegate
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         super.prepare(for: segue, sender: sender)
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-        /*if segue.identifier == "showDatePicker" {
-            let controller = segue.destination as! DatePickerViewController
-            controller.delegate = self
-            controller.initialDate = chosenDate
-        } else */if segue.identifier == "chooseWhenSegue" {
+        if segue.identifier == "chooseWhenSegue" {
             let controller = segue.destination as! ChooseIntervalTableViewController
-            //controller.dataManager = dataManager
-            //controller.settingsDelegate = self
             controller.activity = tempActivity
             return
         }
@@ -265,6 +254,7 @@ class AddActivityTableViewController: UITableViewController, UITextFieldDelegate
         UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound, .badge]) {
             granted, error in
             print("Permission granted: \(granted)")
+            
         }
     }
 

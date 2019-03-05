@@ -70,18 +70,10 @@ public class ActivityMO: NSManagedObject {
     
     
     var isOverdue: Bool {
-        let intervalFreq = frequencyInSeconds
-        if intervalFreq == 0 {
-            return false // No frequency set, so it's never overdue
-        }
-        
-        let history = sortedHistory
-        
-        guard let lastEvent = history.last else {
+        guard let lastDate = lastEvent?.timestamp, let nextDate = self.interval?.getNextDate(since: lastDate) else {
             return false
         }
-        let due = lastEvent.timestamp?.addingTimeInterval(intervalFreq)
-        return due! < Date();
+        return nextDate < Date()
     }
     
     var sortedHistory: [EventMO] {
@@ -111,10 +103,6 @@ public class ActivityMO: NSManagedObject {
         sortDates[0].timestamp = date
     }
     
-    private var frequencyInSeconds: Double {
-        return Double(frequency) * TimeConstants.SECONDS_PER_DAY
-    }
-
     deinit {
         print("Destroying an Activity")
     }

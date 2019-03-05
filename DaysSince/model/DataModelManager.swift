@@ -55,8 +55,8 @@ class DataModelManager {
         managedObjectContext = container.viewContext
         
         // Add Observer
-        let notificationCenter = NotificationCenter.default
-        notificationCenter.addObserver(self, selector: #selector(managedObjectContextObjectsDidChange), name: NSNotification.Name.NSManagedObjectContextObjectsDidChange, object: managedObjectContext)
+//        let notificationCenter = NotificationCenter.default
+//        notificationCenter.addObserver(self, selector: #selector(managedObjectContextObjectsDidChange), name: NSNotification.Name.NSManagedObjectContextObjectsDidChange, object: managedObjectContext)
 //        notificationCenter.addObserver(self, selector: #selector(managedObjectContextWillSave), name: NSManagedObjectContextWillSaveNotification, object: managedObjectContext)
 //        notificationCenter.addObserver(self, selector: #selector(managedObjectContextDidSave), name: NSManagedObjectContextDidSaveNotification, object: managedObjectContext)
 
@@ -64,38 +64,38 @@ class DataModelManager {
         
         return managedObjectContext!
     }
-    
-    @objc
-    func managedObjectContextObjectsDidChange(notification: NSNotification) {
-        guard let userInfo = notification.userInfo else { return }
-        
-        if let inserts = userInfo[NSInsertedObjectsKey] as? Set<NSManagedObject>, inserts.count > 0 {
-            print("--- INSERTS ---")
-            print(inserts)
-            print("+++++++++++++++")
-            for mo in inserts {
-                if let activity = mo as? ActivityMO {
-                    print("Inserted activity \(activity.name!)")
-                } else if let event = mo as? EventMO {
-                    print("Inserted event \(event.timestamp!)")
-                }
-            }
-        }
-        
-        if let updates = userInfo[NSUpdatedObjectsKey] as? Set<NSManagedObject>, updates.count > 0 {
-            print("--- UPDATES ---")
-            for update in updates {
-                print(update.changedValues())
-            }
-            print("+++++++++++++++")
-        }
-        
-        if let deletes = userInfo[NSDeletedObjectsKey] as? Set<NSManagedObject>, deletes.count > 0 {
-            print("--- DELETES ---")
-            print(deletes)
-            print("+++++++++++++++")
-        }
-    }
+//    
+//    @objc
+//    func managedObjectContextObjectsDidChange(notification: NSNotification) {
+//        guard let userInfo = notification.userInfo else { return }
+//        
+//        if let inserts = userInfo[NSInsertedObjectsKey] as? Set<NSManagedObject>, inserts.count > 0 {
+//            print("--- INSERTS ---")
+//            print(inserts)
+//            print("+++++++++++++++")
+//            for mo in inserts {
+//                if let activity = mo as? ActivityMO {
+//                    print("Inserted activity \(activity.name!)")
+//                } else if let event = mo as? EventMO {
+//                    print("Inserted event \(event.timestamp!)")
+//                }
+//            }
+//        }
+//        
+//        if let updates = userInfo[NSUpdatedObjectsKey] as? Set<NSManagedObject>, updates.count > 0 {
+//            print("--- UPDATES ---")
+//            for update in updates {
+//                print(update.changedValues())
+//            }
+//            print("+++++++++++++++")
+//        }
+//        
+//        if let deletes = userInfo[NSDeletedObjectsKey] as? Set<NSManagedObject>, deletes.count > 0 {
+//            print("--- DELETES ---")
+//            print(deletes)
+//            print("+++++++++++++++")
+//        }
+//    }
     
 //    func updateActivityStatus() {
 //        do {
@@ -125,27 +125,6 @@ class DataModelManager {
         return try context.fetch(fetch)
     }
     
-    @discardableResult
-    func newActivity(named name:String, every freq:Int, starting beginDate:Date) throws -> ActivityMO {
-        let context = try getManagedObjectContext()
-        let activity = ActivityMO(context: context)
-        activity.id = UUID()
-        activity.name = name
-        
-        activity.frequency = {
-            if freq <= DataModelManager.MIN_FREQ {
-                return Int16(DataModelManager.MIN_FREQ)
-            }
-            return Int16(min(freq, DataModelManager.MAX_FREQ))
-        }()
-        
-        let event = EventMO(context: context)
-        event.timestamp = beginDate
-        
-        activity.addToHistory(event)
-        
-        return activity
-    }
     
     
     func newChildManagedObjectContext() throws -> NSManagedObjectContext {
