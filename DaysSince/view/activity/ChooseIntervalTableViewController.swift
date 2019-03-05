@@ -8,9 +8,7 @@
 
 import UIKit
 
-class ChooseIntervalTableViewController: UITableViewController, WeekDayPickerDelegate,
-                                            MonthDayPickerDelegate,
-                                            YearDayPickerDelegate, UITextFieldDelegate {
+class ChooseIntervalTableViewController: UITableViewController, UITextFieldDelegate {
     
     
     enum TableRows:Int {
@@ -113,9 +111,6 @@ class ChooseIntervalTableViewController: UITableViewController, WeekDayPickerDel
         } else {
             wheneverTableViewCell.accessoryType = .checkmark
         }
-
-        
-
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -125,14 +120,11 @@ class ChooseIntervalTableViewController: UITableViewController, WeekDayPickerDel
     }
 
     // MARK: - Table view data source
-
     override func numberOfSections(in tableView: UITableView) -> Int {
-        // #warning Incomplete implementation, return the number of sections
         return 1
     }
-
+    
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of rows
         return 8
     }
     
@@ -141,9 +133,9 @@ class ChooseIntervalTableViewController: UITableViewController, WeekDayPickerDel
         
         currentSelectedRow = TableRows(rawValue: indexPath.row)!
         
-//        if selectionChanged {
-//            updateInterval()
-//        }
+        //        if selectionChanged {
+        //            updateInterval()
+        //        }
         
         self.tableView.beginUpdates()
         self.tableView.endUpdates()
@@ -172,9 +164,10 @@ class ChooseIntervalTableViewController: UITableViewController, WeekDayPickerDel
                 return 120
             }
         }
-
+        
         return super.tableView(tableView, heightForRowAt: indexPath)
     }
+
 
 
     /*
@@ -234,23 +227,6 @@ class ChooseIntervalTableViewController: UITableViewController, WeekDayPickerDel
         act.interval = interval
     }
     
-    //TODO: Is there a way to combine these??
-    
-    // MARK: ByDatePickerDelegate
-    func weekdaySet(day:Int, symbol:String) {
-        byWeekdayLabel.text! = symbol // TODO: Update the interval
-    }
-
-    // MARK: ByMonthDayPickerDelegate
-    func monthDaySet(_ day: Int, formattedValue: String) {
-        byMonthDayLabel.text! = formattedValue
-    }
-
-    // MARK: ByYearDayPickerDelegate
-    func yearDaySet(month: Int, monthSymbol:String, day: Int) {
-        byYearDayLabel.text = monthSymbol + " " + String(day) // TODO: Update the interval
-    }
-    
     
     // MARK: UITextFieldDelegate
     func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
@@ -263,3 +239,29 @@ class ChooseIntervalTableViewController: UITableViewController, WeekDayPickerDel
     }
     
 }
+
+// MARK: WeekDayPickerDelegate
+extension ChooseIntervalTableViewController : WeekDayPickerDelegate {
+    
+    func weekdaySet(day:Int, symbol:String) {
+        byWeekdayLabel.text! = symbol // TODO: Update the interval
+    }
+    
+}
+// MARK: ByMonthDayPickerDelegate
+extension ChooseIntervalTableViewController : MonthDayPickerDelegate {
+    
+    func monthDaySet(_ day: Int, formattedValue: String) {
+        byMonthDayLabel.text! = formattedValue
+    }
+
+}
+// MARK: ByYearDayPickerDelegate
+extension ChooseIntervalTableViewController : YearDayPickerDelegate {
+    
+    func yearDaySet(month: Int, monthSymbol:String, day: Int) {
+        byYearDayLabel.text = monthSymbol + " " + String(day) // TODO: Update the interval
+    }
+
+}
+
