@@ -76,7 +76,6 @@ class ChooseIntervalTableViewController: UITableViewController, UITextFieldDeleg
         // Set up by-day text field
         byDayTextField.delegate = self
         
-
         // Configure the UI based on the activity, if any
         if let interval = activity?.interval {
             switch interval {
@@ -133,9 +132,9 @@ class ChooseIntervalTableViewController: UITableViewController, UITextFieldDeleg
         
         currentSelectedRow = TableRows(rawValue: indexPath.row)!
         
-        //        if selectionChanged {
-        //            updateInterval()
-        //        }
+        if selectionChanged {
+            updateInterval()
+        }
         
         self.tableView.beginUpdates()
         self.tableView.endUpdates()
@@ -183,6 +182,7 @@ class ChooseIntervalTableViewController: UITableViewController, UITextFieldDeleg
     
     
     // Sets the selected. Returns true if selection changes; Otherwise false.
+    @discardableResult
     func setSelectedRow(row:TableRows) -> Bool{
         guard row != currentSelectedRow else {
             return false
@@ -203,38 +203,51 @@ class ChooseIntervalTableViewController: UITableViewController, UITextFieldDeleg
         }
         
         // Create a new interval
-        var interval:IntervalMO? = nil
+        var interval:IntervalMO? = act.interval
         
         switch currentSelectedRow {
         case .Whenever:
-            interval = UnlimitedIntervalMO(context: moc)
+            if !(interval is UnlimitedIntervalMO) {
+                interval = UnlimitedIntervalMO(context: moc)
+                act.interval = interval
+            }
         case .ByDay:
-            interval = ConstantIntervalMO(context: moc)
+            if !(interval is ConstantIntervalMO) {
+                interval = ConstantIntervalMO(context: moc)
+                act.interval = interval
+            }
             (interval as! ConstantIntervalMO).frequency = Int16(byDayTextField.text ?? "1") ?? 1
         case .Weekly:
-            interval = WeeklyIntervalMO(context:moc)
+            if !(interval is WeeklyIntervalMO) {
+                interval = WeeklyIntervalMO(context:moc)
+                act.interval = interval
+            }
             (interval as! WeeklyIntervalMO).day = Int16(weekdayPickerController?.getWeekday() ?? 0)
         case .Monthly:
-            interval = MonthlyIntervalMO(context:moc)
+            if !(interval is MonthlyIntervalMO) {
+                interval = MonthlyIntervalMO(context:moc)
+                act.interval = interval
+            }
             (interval as! MonthlyIntervalMO).day = Int16(monthDayPicker.selectedRow(inComponent: 0))
         case .Yearly:
-            interval = YearlyIntervalMO(context: moc)
+            if !(interval is YearlyIntervalMO) {
+                interval = YearlyIntervalMO(context:moc)
+                act.interval = interval
+            }
             (interval as! YearlyIntervalMO).month = Int16(yearDayPickerController?.getMonth() ?? 2)
             (interval as! YearlyIntervalMO).day = Int16(yearDayPickerController?.getDay() ?? 10)
         default:
             break
         }
-        act.interval = interval
     }
     
     
     // MARK: UITextFieldDelegate
     func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
-        setSelectedRow(row: TableRows.ByDay)
-        
-        self.tableView.beginUpdates()
-        self.tableView.endUpdates()
-
+        if setSelectedRow(row: TableRows.ByDay) {
+            self.tableView.beginUpdates()
+            self.tableView.endUpdates()
+        }
         return true
     }
     
@@ -261,6 +274,31 @@ extension ChooseIntervalTableViewController : YearDayPickerDelegate {
     
     func yearDaySet(month: Int, monthSymbol:String, day: Int) {
         byYearDayLabel.text = monthSymbol + " " + String(day) // TODO: Update the interval
+    }
+
+}
+
+// MARK: Private functions
+extension ChooseIntervalTableViewController {
+    
+    private func configureWheneverTableViewCell(interval:IntervalMO) {
+        if interval is UnlimitedIntervalMO {
+            wheneverTableViewCell.accessoryType = .checkmark
+            currentSelectedRow = .Whenever
+        } else {
+            wheneverTableViewCell.accessoryType = .none
+        }
+    }
+
+    private func configureConstantTableViewCell(interval:IntervalMO) {
+        if interval is ConstantIntervalMO {
+            let constantInterval = interval as! ConstantIntervalMO
+            byDayTableViewCell.accessoryType = .checkmark
+            byDayTextField.text = String(constantInterval.frequency)
+            currentSelectedRow = .ByDay
+        } else {
+            byDayTableViewCell.accessoryType = .none
+        }
     }
 
 }
