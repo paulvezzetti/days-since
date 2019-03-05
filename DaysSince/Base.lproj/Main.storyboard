@@ -548,7 +548,7 @@
         <!--When-->
         <scene sceneID="KJb-9O-JHC">
             <objects>
-                <tableViewController id="2gy-Gc-JoY" customClass="ChooseFrequencyTableViewController" customModule="DaysSince" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController id="2gy-Gc-JoY" customClass="ChooseIntervalTableViewController" customModule="DaysSince" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="plain" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="nr3-bV-eWR">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>

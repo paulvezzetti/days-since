@@ -12,13 +12,13 @@
 		FA1D72E52220675F00D8EBF7 /* TimeConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA1D72E42220675F00D8EBF7 /* TimeConstants.swift */; };
 		FA1D72EA2220784900D8EBF7 /* ActivityMO+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA1D72E62220784900D8EBF7 /* ActivityMO+CoreDataClass.swift */; };
 		FA1D72EC2220784900D8EBF7 /* EventMO+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA1D72E82220784900D8EBF7 /* EventMO+CoreDataClass.swift */; };
-		FA1D72EF2226CA7800D8EBF7 /* ChooseFrequencyTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA1D72EE2226CA7800D8EBF7 /* ChooseFrequencyTableViewController.swift */; };
-		FA1D72F22226E18500D8EBF7 /* WeekDayPickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA1D72F12226E18500D8EBF7 /* WeekDayPickerViewController.swift */; };
-		FA1D72F42226F7DE00D8EBF7 /* ByMonthDayPickerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA1D72F32226F7DE00D8EBF7 /* ByMonthDayPickerController.swift */; };
+		FA1D72EF2226CA7800D8EBF7 /* ChooseIntervalTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA1D72EE2226CA7800D8EBF7 /* ChooseIntervalTableViewController.swift */; };
+		FA1D72F22226E18500D8EBF7 /* WeekDayPickerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA1D72F12226E18500D8EBF7 /* WeekDayPickerController.swift */; };
+		FA1D72F42226F7DE00D8EBF7 /* MonthDayPickerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA1D72F32226F7DE00D8EBF7 /* MonthDayPickerController.swift */; };
 		FA1D72F622272BBF00D8EBF7 /* YearDayPickerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA1D72F522272BBF00D8EBF7 /* YearDayPickerController.swift */; };
 		FA1D72FB222854E600D8EBF7 /* WeekDayPickerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA1D72FA222854E600D8EBF7 /* WeekDayPickerDelegate.swift */; };
 		FA1D72FF22286A8800D8EBF7 /* YearDayPickerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA1D72FE22286A8800D8EBF7 /* YearDayPickerDelegate.swift */; };
-		FA1D7301222879BA00D8EBF7 /* ByMonthDayPickerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA1D7300222879BA00D8EBF7 /* ByMonthDayPickerDelegate.swift */; };
+		FA1D7301222879BA00D8EBF7 /* MonthDayPickerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA1D7300222879BA00D8EBF7 /* MonthDayPickerDelegate.swift */; };
 		FA1D731C2228C34700D8EBF7 /* IntervalTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA1D731B2228C34700D8EBF7 /* IntervalTypes.swift */; };
 		FA1D73292228C60E00D8EBF7 /* WeeklyIntervalMO+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA1D731D2228C60E00D8EBF7 /* WeeklyIntervalMO+CoreDataClass.swift */; };
 		FA1D732B2228C60E00D8EBF7 /* YearlyIntervalMO+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA1D731F2228C60E00D8EBF7 /* YearlyIntervalMO+CoreDataClass.swift */; };
@@ -50,13 +50,13 @@
 		FA1D72E42220675F00D8EBF7 /* TimeConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeConstants.swift; sourceTree = "<group>"; };
 		FA1D72E62220784900D8EBF7 /* ActivityMO+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ActivityMO+CoreDataClass.swift"; sourceTree = "<group>"; };
 		FA1D72E82220784900D8EBF7 /* EventMO+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "EventMO+CoreDataClass.swift"; sourceTree = "<group>"; };
-		FA1D72EE2226CA7800D8EBF7 /* ChooseFrequencyTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChooseFrequencyTableViewController.swift; sourceTree = "<group>"; };
-		FA1D72F12226E18500D8EBF7 /* WeekDayPickerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeekDayPickerViewController.swift; sourceTree = "<group>"; };
-		FA1D72F32226F7DE00D8EBF7 /* ByMonthDayPickerController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ByMonthDayPickerController.swift; sourceTree = "<group>"; };
+		FA1D72EE2226CA7800D8EBF7 /* ChooseIntervalTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChooseIntervalTableViewController.swift; sourceTree = "<group>"; };
+		FA1D72F12226E18500D8EBF7 /* WeekDayPickerController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeekDayPickerController.swift; sourceTree = "<group>"; };
+		FA1D72F32226F7DE00D8EBF7 /* MonthDayPickerController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonthDayPickerController.swift; sourceTree = "<group>"; };
 		FA1D72F522272BBF00D8EBF7 /* YearDayPickerController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YearDayPickerController.swift; sourceTree = "<group>"; };
 		FA1D72FA222854E600D8EBF7 /* WeekDayPickerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeekDayPickerDelegate.swift; sourceTree = "<group>"; };
 		FA1D72FE22286A8800D8EBF7 /* YearDayPickerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YearDayPickerDelegate.swift; sourceTree = "<group>"; };
-		FA1D7300222879BA00D8EBF7 /* ByMonthDayPickerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ByMonthDayPickerDelegate.swift; sourceTree = "<group>"; };
+		FA1D7300222879BA00D8EBF7 /* MonthDayPickerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonthDayPickerDelegate.swift; sourceTree = "<group>"; };
 		FA1D731B2228C34700D8EBF7 /* IntervalTypes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntervalTypes.swift; sourceTree = "<group>"; };
 		FA1D731D2228C60E00D8EBF7 /* WeeklyIntervalMO+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "WeeklyIntervalMO+CoreDataClass.swift"; sourceTree = "<group>"; };
 		FA1D731F2228C60E00D8EBF7 /* YearlyIntervalMO+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "YearlyIntervalMO+CoreDataClass.swift"; sourceTree = "<group>"; };
@@ -98,12 +98,12 @@
 		FA1D72F02226E16600D8EBF7 /* common */ = {
 			isa = PBXGroup;
 			children = (
-				FA1D72F12226E18500D8EBF7 /* WeekDayPickerViewController.swift */,
-				FA1D72F32226F7DE00D8EBF7 /* ByMonthDayPickerController.swift */,
-				FA1D72F522272BBF00D8EBF7 /* YearDayPickerController.swift */,
+				FA1D72F32226F7DE00D8EBF7 /* MonthDayPickerController.swift */,
+				FA1D7300222879BA00D8EBF7 /* MonthDayPickerDelegate.swift */,
+				FA1D72F12226E18500D8EBF7 /* WeekDayPickerController.swift */,
 				FA1D72FA222854E600D8EBF7 /* WeekDayPickerDelegate.swift */,
+				FA1D72F522272BBF00D8EBF7 /* YearDayPickerController.swift */,
 				FA1D72FE22286A8800D8EBF7 /* YearDayPickerDelegate.swift */,
-				FA1D7300222879BA00D8EBF7 /* ByMonthDayPickerDelegate.swift */,
 			);
 			path = common;
 			sourceTree = "<group>";
@@ -193,7 +193,7 @@
 			isa = PBXGroup;
 			children = (
 				FAA6AF1D2211C1E700346CCB /* AddActivityTableViewController.swift */,
-				FA1D72EE2226CA7800D8EBF7 /* ChooseFrequencyTableViewController.swift */,
+				FA1D72EE2226CA7800D8EBF7 /* ChooseIntervalTableViewController.swift */,
 			);
 			path = activity;
 			sourceTree = "<group>";
@@ -295,8 +295,8 @@
 				FA1D72EC2220784900D8EBF7 /* EventMO+CoreDataClass.swift in Sources */,
 				FA1D733C222B622700D8EBF7 /* DaysOfMonth.swift in Sources */,
 				FA1D72DB221E2D2B00D8EBF7 /* ActivityStatistics.swift in Sources */,
-				FA1D72F22226E18500D8EBF7 /* WeekDayPickerViewController.swift in Sources */,
-				FA1D72F42226F7DE00D8EBF7 /* ByMonthDayPickerController.swift in Sources */,
+				FA1D72F22226E18500D8EBF7 /* WeekDayPickerController.swift in Sources */,
+				FA1D72F42226F7DE00D8EBF7 /* MonthDayPickerController.swift in Sources */,
 				FA1D73332228C60E00D8EBF7 /* MonthlyIntervalMO+CoreDataClass.swift in Sources */,
 				FA1D72E52220675F00D8EBF7 /* TimeConstants.swift in Sources */,
 				FAA6AF2622139F4A00346CCB /* ActivitySummaryViewController.swift in Sources */,
@@ -309,9 +309,9 @@
 				FA5596B2220FB8F500113AE1 /* DatePickerViewController.swift in Sources */,
 				FA1D72FB222854E600D8EBF7 /* WeekDayPickerDelegate.swift in Sources */,
 				FA1D72FF22286A8800D8EBF7 /* YearDayPickerDelegate.swift in Sources */,
-				FA1D72EF2226CA7800D8EBF7 /* ChooseFrequencyTableViewController.swift in Sources */,
+				FA1D72EF2226CA7800D8EBF7 /* ChooseIntervalTableViewController.swift in Sources */,
 				FA3CEF50220E0F2500634DD7 /* DetailViewController.swift in Sources */,
-				FA1D7301222879BA00D8EBF7 /* ByMonthDayPickerDelegate.swift in Sources */,
+				FA1D7301222879BA00D8EBF7 /* MonthDayPickerDelegate.swift in Sources */,
 				FAA6AF222211E42700346CCB /* DataModelManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

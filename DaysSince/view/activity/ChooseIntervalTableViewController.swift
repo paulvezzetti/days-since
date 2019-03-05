@@ -1,5 +1,5 @@
 //
-//  ChooseFrequencyTableViewController.swift
+//  ChooseIntervalTableViewController.swift
 //  DaysSince
 //
 //  Created by Paul Vezzetti on 2/27/19.
@@ -8,8 +8,8 @@
 
 import UIKit
 
-class ChooseFrequencyTableViewController: UITableViewController, WeekDayPickerDelegate,
-                                            ByMonthDayPickerDelegate,
+class ChooseIntervalTableViewController: UITableViewController, WeekDayPickerDelegate,
+                                            MonthDayPickerDelegate,
                                             YearDayPickerDelegate, UITextFieldDelegate {
     
     
@@ -48,12 +48,12 @@ class ChooseFrequencyTableViewController: UITableViewController, WeekDayPickerDe
     
     // MARK: Private variables
     private var currentSelectedRow = TableRows.Whenever
-    private var weekdayPickerController:WeekDayPickerViewController?
-    private var monthDayPickerController: ByMonthDayPickerController?
+    private var weekdayPickerController:WeekDayPickerController?
+    private var monthDayPickerController: MonthDayPickerController?
     private var yearDayPickerController: YearDayPickerController?
     
+    // MARK: Public
     var activity:ActivityMO? = nil
-//    var settingsDelegate:IntervalSettingsDelegate? = nil
     
     deinit {
         print("Destroying the ChooseFrequencyTVController")
@@ -69,14 +69,10 @@ class ChooseFrequencyTableViewController: UITableViewController, WeekDayPickerDe
 
         // This makes the empty table cells not show up.
         tableView.tableFooterView = UIView(frame: .zero)
-//
-//        // Set up the pickers
-        weekdayPickerController = WeekDayPickerViewController(picker: weekDayPicker, delegate: self)
-        
-        monthDayPickerController = ByMonthDayPickerController(delegate: self)
-        monthDayPicker.delegate = monthDayPickerController
-        monthDayPicker.dataSource = monthDayPickerController
-        
+
+        // Set up the pickers
+        weekdayPickerController = WeekDayPickerController(picker: weekDayPicker, delegate: self)
+        monthDayPickerController = MonthDayPickerController(picker:monthDayPicker, delegate: self)
         yearDayPickerController = YearDayPickerController(picker: yearDayPicker, delegate: self)
         
         // Set up by-day text field
@@ -96,19 +92,15 @@ class ChooseFrequencyTableViewController: UITableViewController, WeekDayPickerDe
             case let weeklyInterval as WeeklyIntervalMO:
                 weeklyTableViewCell.accessoryType = .checkmark
                 weekdayPickerController?.setWeekday(to: Int(weeklyInterval.day))
-//                weekDayPicker.selectRow(Int(weeklyInterval.day), inComponent: 0, animated: false)
-                // TODO: Switch to Calendar
                 weeklyLabel.text = Weekdays.day(for: weekdayPickerController?.getWeekday() ?? 0)
                 currentSelectedRow = .Weekly
             case let monthlyInterval as MonthlyIntervalMO:
                 monthlyTableViewCell.accessoryType = .checkmark
-                monthDayPicker.selectRow(Int(monthlyInterval.day), inComponent: 0, animated: false)
-                monthlyLabel.text = DaysOfMonth().formattedValueForIndex(Int(monthlyInterval.day))
+                monthDayPickerController?.setDay(Int(monthlyInterval.day))
+                monthlyLabel.text = String(monthDayPickerController?.getDay() ?? 1)
                 currentSelectedRow = .Monthly
             case let yearlyInterval as YearlyIntervalMO:
                 yearlyTableViewCell.accessoryType = .checkmark
-//                yearDayPicker.selectRow(Int(yearlyInterval.month), inComponent: 0, animated: false)
-//                yearDayPicker.selectRow(Int(yearlyInterval.day), inComponent: 1, animated: false)
                 yearDayPickerController?.setYearDay(month: Int(yearlyInterval.month), day: Int(yearlyInterval.day))
                 yearlyLabel.text = Months.month(for: yearDayPickerController?.getMonth() ?? 0) + " " + String(yearDayPickerController?.getDay() ?? 4)
                 currentSelectedRow = .Yearly
@@ -130,34 +122,6 @@ class ChooseFrequencyTableViewController: UITableViewController, WeekDayPickerDe
         super.viewWillDisappear(animated)
         
         updateInterval()
-//
-//        // Notify the delegate of the changes
-//
-//        var iType:IntervalTypes = IntervalTypes.Unlimited
-//        var day:Int = 0
-//        var month:Int = 0
-//        switch currentSelectedRow {
-//        case .Whenever:
-//            iType = IntervalTypes.Unlimited
-//        case .ByDay:
-//            iType = IntervalTypes.Constant
-//            day = Int(byDayTextField.text ?? "1") ?? 1
-//        case .Weekly:
-//            iType = IntervalTypes.Weekly
-//            day = weekDayPicker.selectedRow(inComponent: 0)
-//        case .Monthly:
-//            iType = IntervalTypes.Monthly
-//            day = monthDayPicker.selectedRow(inComponent: 0)
-//        case .Yearly:
-//            iType = IntervalTypes.Yearly
-//            month = yearDayPicker.selectedRow(inComponent: 0)
-//            day = yearDayPicker.selectedRow(inComponent: 1) + 1
-//        default:
-//            break
-//        }
-//
-//        settingsDelegate?.applyIntervalSettings(type: iType, day: day, month: month)
-//        settingsDelegate = nil
     }
 
     // MARK: - Table view data source
@@ -212,50 +176,6 @@ class ChooseFrequencyTableViewController: UITableViewController, WeekDayPickerDe
         return super.tableView(tableView, heightForRowAt: indexPath)
     }
 
-    /*
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "reuseIdentifier", for: indexPath)
-
-        // Configure the cell...
-
-        return cell
-    }
-    */
-
-    /*
-    // Override to support conditional editing of the table view.
-    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the specified item to be editable.
-        return true
-    }
-    */
-
-    /*
-    // Override to support editing the table view.
-    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
-        if editingStyle == .delete {
-            // Delete the row from the data source
-            tableView.deleteRows(at: [indexPath], with: .fade)
-        } else if editingStyle == .insert {
-            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-        }    
-    }
-    */
-
-    /*
-    // Override to support rearranging the table view.
-    override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to: IndexPath) {
-
-    }
-    */
-
-    /*
-    // Override to support conditional rearranging of the table view.
-    override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the item to be re-orderable.
-        return true
-    }
-    */
 
     /*
     // MARK: - Navigation
@@ -267,14 +187,6 @@ class ChooseFrequencyTableViewController: UITableViewController, WeekDayPickerDe
     }
     */
 
-    // MARK: UIPickerViewDataSource
-//    func numberOfComponents(in pickerView: UIPickerView) -> Int {
-//        return 1
-//    }
-//
-//    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-//        return 7
-//    }
     
     
     // Sets the selected. Returns true if selection changes; Otherwise false.
@@ -325,17 +237,17 @@ class ChooseFrequencyTableViewController: UITableViewController, WeekDayPickerDe
     //TODO: Is there a way to combine these??
     
     // MARK: ByDatePickerDelegate
-    func weekdayChosen(day:Int, symbol:String) {
+    func weekdaySet(day:Int, symbol:String) {
         byWeekdayLabel.text! = symbol // TODO: Update the interval
     }
 
     // MARK: ByMonthDayPickerDelegate
-    func pickerValueChanged(_ day: Int, formattedValue: String) {
+    func monthDaySet(_ day: Int, formattedValue: String) {
         byMonthDayLabel.text! = formattedValue
     }
 
     // MARK: ByYearDayPickerDelegate
-    func yearDayChosen(month: Int, monthSymbol:String, day: Int) {
+    func yearDaySet(month: Int, monthSymbol:String, day: Int) {
         byYearDayLabel.text = monthSymbol + " " + String(day) // TODO: Update the interval
     }
     

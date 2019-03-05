@@ -223,7 +223,7 @@ class AddActivityTableViewController: UITableViewController, UITextFieldDelegate
             controller.delegate = self
             controller.initialDate = chosenDate
         } else */if segue.identifier == "chooseWhenSegue" {
-            let controller = segue.destination as! ChooseFrequencyTableViewController
+            let controller = segue.destination as! ChooseIntervalTableViewController
             //controller.dataManager = dataManager
             //controller.settingsDelegate = self
             controller.activity = tempActivity

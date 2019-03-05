@@ -1,5 +1,5 @@
 //
-//  ByMonthDayPickerDelegate.swift
+//  MonthDayPickerDelegate.swift
 //  DaysSince
 //
 //  Created by Paul Vezzetti on 2/28/19.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-protocol ByMonthDayPickerDelegate : class {
+protocol MonthDayPickerDelegate : class {
     
-    func pickerValueChanged(_ day:Int, formattedValue:String)
+    func monthDaySet(_ day:Int, formattedValue:String)
 }

@@ -1,5 +1,5 @@
 //
-//  ByYearDayPickerDelegate.swift
+//  YearDayPickerDelegate.swift
 //  DaysSince
 //
 //  Created by Paul Vezzetti on 2/28/19.
@@ -10,5 +10,5 @@ import Foundation
 
 protocol YearDayPickerDelegate : class {
     
-    func yearDayChosen(month:Int, monthSymbol:String, day: Int)
+    func yearDaySet(month:Int, monthSymbol:String, day: Int)
 }

@@ -1,5 +1,5 @@
 //
-//  ByDayPickerDelegate.swift
+//  WeekDayPickerDelegate.swift
 //  DaysSince
 //
 //  Created by Paul Vezzetti on 2/28/19.
@@ -10,5 +10,5 @@ import Foundation
 
 protocol WeekDayPickerDelegate : class {
     
-    func weekdayChosen(day:Int, symbol:String)
+    func weekdaySet(day:Int, symbol:String)
 }

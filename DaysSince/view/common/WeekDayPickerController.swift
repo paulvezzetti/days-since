@@ -1,5 +1,5 @@
 //
-//  ByDayPickerViewController.swift
+//  WeekDayPickerController.swift
 //  DaysSince
 //
 //  Created by Paul Vezzetti on 2/27/19.
@@ -8,7 +8,7 @@
 import UIKit
 import Foundation
 
-class WeekDayPickerViewController : NSObject {
+class WeekDayPickerController : NSObject {
     
     private weak var delegate:WeekDayPickerDelegate?
     private weak var picker: UIPickerView?
@@ -26,7 +26,7 @@ class WeekDayPickerViewController : NSObject {
 
 // MARK : Public
 
-extension WeekDayPickerViewController {
+extension WeekDayPickerController {
     
     func setWeekday(to index:Int) {
         // Weekdays are 1-7. Row indices are 0-6
@@ -39,7 +39,7 @@ extension WeekDayPickerViewController {
 }
 // MARK: UIPickerViewDataSource
 
-extension WeekDayPickerViewController: UIPickerViewDataSource {
+extension WeekDayPickerController: UIPickerViewDataSource {
 
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
         return 1
@@ -53,14 +53,14 @@ extension WeekDayPickerViewController: UIPickerViewDataSource {
 
 // MARK: UIPickerViewDelegate
 
-extension WeekDayPickerViewController: UIPickerViewDelegate {
+extension WeekDayPickerController: UIPickerViewDelegate {
 
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
         return Weekdays.day(for: row + 1)
     }
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        delegate?.weekdayChosen(day: row + 1, symbol: Weekdays.day(for: row + 1))
+        delegate?.weekdaySet(day: row + 1, symbol: Weekdays.day(for: row + 1))
     }
 
 }

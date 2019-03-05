@@ -1,5 +1,5 @@
 //
-//  ByYearDayPickerController.swift
+//  YearDayPickerController.swift
 //  DaysSince
 //
 //  Created by Paul Vezzetti on 2/27/19.
@@ -78,7 +78,7 @@ extension YearDayPickerController : UIPickerViewDelegate {
             pickerView.reloadComponent(1)
         }
         let selectedMonth = pickerView.selectedRow(inComponent: 0) + 1
-        delegate?.yearDayChosen(month: selectedMonth, monthSymbol: Months.month(for: selectedMonth), day: pickerView.selectedRow(inComponent: 1) + 1)
+        delegate?.yearDaySet(month: selectedMonth, monthSymbol: Months.month(for: selectedMonth), day: pickerView.selectedRow(inComponent: 1) + 1)
     }
 
 }
