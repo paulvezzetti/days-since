@@ -14,26 +14,13 @@ import CoreData
 public class YearlyIntervalMO: IntervalMO {
 
     override func getNextDate(since lastDate: Date) -> Date {
-        // Construct a new date based on the previous week
+        // Construct a new date based on the previous.
+        // TODO: Need to consider how close we are to the expected date to know if we need to push to
+        // the next year.
         let calendar = Calendar.current
-        var nextDate = calendar.date(bySetting: .month, value: Int(self.month), of: lastDate)
-        if nextDate != nil {
-            nextDate = calendar.date(bySetting: .day, value: Int(self.day), of: nextDate!)
-            if nextDate != nil {
-                nextDate = calendar.date(byAdding: DateComponents(year: 1), to: nextDate!)
-            }
-        }
-        
         let nextYearDayDateComponent = DateComponents(month: Int(self.month), day: Int(self.day))
-        let maybeNextDate = calendar.nextDate(after: lastDate, matching: nextYearDayDateComponent, matchingPolicy: .nextTime)
+        let nextDate = calendar.nextDate(after: lastDate, matching: nextYearDayDateComponent, matchingPolicy: .nextTime)
         
-        let formatter = DateFormatter()
-        formatter.dateStyle = DateFormatter.Style.medium
-        formatter.timeStyle = DateFormatter.Style.none
-        
-        print("Using calendar: \(formatter.string(from: maybeNextDate!))")
-        print("Using my calc : \(formatter.string(from: nextDate!))")
-
         return nextDate ?? Date()
     }
 
