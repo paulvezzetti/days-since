@@ -8,7 +8,7 @@
 
 import UIKit
 
-class DetailViewController: UIViewController, DatePickerDelegate {
+class DetailViewController: UIViewController {
 
     @IBOutlet weak var detailDescriptionLabel: UILabel!
 
@@ -19,30 +19,6 @@ class DetailViewController: UIViewController, DatePickerDelegate {
     @IBOutlet var markDoneButton: UIButton!
     
     var dataManager: DataModelManager? = nil
-
-    
-    // DataPickerDelegate
-    var chosenDate: Date = Date() {
-        didSet {
-            guard let dm = dataManager else {
-                return
-            }
-            guard let activity = detailItem else {
-                return
-            }
-            
-            do {
-                try dm.setEventDone(activity: activity, at: chosenDate)
-            } catch {
-                // TODO: This should show an error screen.
-                let nserror = error as NSError
-                fatalError("Unresolved error \(nserror), \(nserror.userInfo)")
-
-            }
-            historyViewController.activityDidChange()
-            summaryViewController!.activityDidChange()
-        }
-    }
 
     
     func configureView() {
@@ -65,15 +41,13 @@ class DetailViewController: UIViewController, DatePickerDelegate {
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "embedSummary" {
-            print("Embedding")
             summaryViewController = segue.destination as? ActivitySummaryViewController
             if let summaryVC = summaryViewController {
                 summaryVC.activity = detailItem
             }
-        } else if segue.identifier == "chooseDoneDate" {
-            let controller = segue.destination as! DatePickerViewController
-            controller.delegate = self
-            controller.initialDate = chosenDate
+        } else if segue.identifier == "markDoneSegue" {
+            let controller = (segue.destination as! UINavigationController).topViewController as! MarkDoneTableViewController
+            controller.doneDelegate = self
         } else if segue.identifier == "editActivity" {
             let controller = segue.destination as! AddActivityTableViewController
             controller.dataManager = dataManager
@@ -159,3 +133,32 @@ class DetailViewController: UIViewController, DatePickerDelegate {
     }()
 }
 
+extension DetailViewController : MarkDoneDelegate {
+    func done(at date: Date, withDetails details: String, sender: UIViewController) {
+        do {
+            defer {
+                sender.dismiss(animated: true, completion: nil)
+            }
+            guard let activity = self.detailItem, let moc = try dataManager?.getManagedObjectContext() else {
+                return
+            }
+            let event = EventMO(context: moc)
+            event.timestamp = date
+            event.details = details
+            activity.addToHistory(event)
+            
+            historyViewController.activityDidChange()
+            summaryViewController!.activityDidChange()
+
+        } catch {
+            // TODO: Show error
+        }
+    }
+    
+    func cancelled(sender: UIViewController) {
+        sender.dismiss(animated: true, completion: nil)
+    }
+    
+    
+    
+}
