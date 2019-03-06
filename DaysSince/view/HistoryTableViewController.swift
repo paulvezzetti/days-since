@@ -46,7 +46,7 @@ class HistoryTableViewController: UITableViewController {
 
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "TableViewCellIdentifier", for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: "historyCell", for: indexPath) as! HistoryTableViewCell
         
         // Configure the cell...
 //        guard let act = activity else {
@@ -55,12 +55,14 @@ class HistoryTableViewController: UITableViewController {
         
         if indexPath.row < sortedHistory.count {
             let event:EventMO = self.sortedHistory[indexPath.row]
+            cell.detailsLabel!.text = event.details
+            cell.intervalLabel!.text = ""
             if let eventDate = event.timestamp {
                 let dateFormatter = DateFormatter()
-                dateFormatter.dateStyle = DateFormatter.Style.medium
+                dateFormatter.dateStyle = DateFormatter.Style.long
                 dateFormatter.timeStyle = DateFormatter.Style.none
                 
-                cell.textLabel!.text = dateFormatter.string(from: eventDate)
+                cell.dateLabel!.text = dateFormatter.string(from: eventDate)
             }
         }
 //        cell.textLabel!.text = "History"

@@ -38,6 +38,16 @@ class DetailViewController: UIViewController {
         segmentedControl.addTarget(self, action: #selector(selectionDidChange(_:)), for: .valueChanged)
     }
     
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        do {
+            try dataManager?.saveContext()
+        } catch {
+            // TODO: Alert of save failure
+        }
+    }
+    
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "embedSummary" {

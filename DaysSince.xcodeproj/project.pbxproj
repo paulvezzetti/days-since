@@ -31,6 +31,7 @@
 		FA1D7343222E165000D8EBF7 /* NotificationMO+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA1D7341222E165000D8EBF7 /* NotificationMO+CoreDataClass.swift */; };
 		FA1D7347222F550D00D8EBF7 /* MarkDoneTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA1D7346222F550D00D8EBF7 /* MarkDoneTableViewController.swift */; };
 		FA1D734922300A5000D8EBF7 /* MarkDoneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA1D734822300A5000D8EBF7 /* MarkDoneDelegate.swift */; };
+		FA1D734B22303F4600D8EBF7 /* HistoryTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA1D734A22303F4600D8EBF7 /* HistoryTableViewCell.swift */; };
 		FA3CEF49220E0F2500634DD7 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA3CEF48220E0F2500634DD7 /* AppDelegate.swift */; };
 		FA3CEF4C220E0F2500634DD7 /* DaysSince.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = FA3CEF4A220E0F2500634DD7 /* DaysSince.xcdatamodeld */; };
 		FA3CEF4E220E0F2500634DD7 /* MasterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA3CEF4D220E0F2500634DD7 /* MasterViewController.swift */; };
@@ -69,6 +70,7 @@
 		FA1D7341222E165000D8EBF7 /* NotificationMO+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NotificationMO+CoreDataClass.swift"; sourceTree = "<group>"; };
 		FA1D7346222F550D00D8EBF7 /* MarkDoneTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarkDoneTableViewController.swift; sourceTree = "<group>"; };
 		FA1D734822300A5000D8EBF7 /* MarkDoneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarkDoneDelegate.swift; sourceTree = "<group>"; };
+		FA1D734A22303F4600D8EBF7 /* HistoryTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryTableViewCell.swift; sourceTree = "<group>"; };
 		FA3CEF45220E0F2500634DD7 /* DaysSince.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DaysSince.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FA3CEF48220E0F2500634DD7 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		FA3CEF4B220E0F2500634DD7 /* DaysSince.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = DaysSince.xcdatamodel; sourceTree = "<group>"; };
@@ -192,8 +194,8 @@
 		FA5596B42210FE0800113AE1 /* components */ = {
 			isa = PBXGroup;
 			children = (
-				FAA6AF2522139F4A00346CCB /* ActivitySummaryViewController.swift */,
 				FA1D72E0221F82A300D8EBF7 /* MasterTableViewCell.swift */,
+				FA1D734A22303F4600D8EBF7 /* HistoryTableViewCell.swift */,
 			);
 			path = components;
 			sourceTree = "<group>";
@@ -201,6 +203,7 @@
 		FAA6AF1F2211D10800346CCB /* activity */ = {
 			isa = PBXGroup;
 			children = (
+				FAA6AF2522139F4A00346CCB /* ActivitySummaryViewController.swift */,
 				FAA6AF1D2211C1E700346CCB /* AddActivityTableViewController.swift */,
 				FA1D72EE2226CA7800D8EBF7 /* ChooseIntervalTableViewController.swift */,
 			);
@@ -319,6 +322,7 @@
 				FA1D72FF22286A8800D8EBF7 /* YearDayPickerDelegate.swift in Sources */,
 				FA1D72EF2226CA7800D8EBF7 /* ChooseIntervalTableViewController.swift in Sources */,
 				FA3CEF50220E0F2500634DD7 /* DetailViewController.swift in Sources */,
+				FA1D734B22303F4600D8EBF7 /* HistoryTableViewCell.swift in Sources */,
 				FA1D7301222879BA00D8EBF7 /* MonthDayPickerDelegate.swift in Sources */,
 				FAA6AF222211E42700346CCB /* DataModelManager.swift in Sources */,
 			);
