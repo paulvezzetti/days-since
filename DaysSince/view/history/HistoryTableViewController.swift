@@ -57,13 +57,7 @@ class HistoryTableViewController: UITableViewController {
             let event:EventMO = self.sortedHistory[indexPath.row]
             cell.detailsLabel!.text = event.details
             cell.intervalLabel!.text = ""
-            if let eventDate = event.timestamp {
-                let dateFormatter = DateFormatter()
-                dateFormatter.dateStyle = DateFormatter.Style.long
-                dateFormatter.timeStyle = DateFormatter.Style.none
-                
-                cell.dateLabel!.text = dateFormatter.string(from: eventDate)
-            }
+            cell.dateLabel!.text = event.getFormattedDate(style: .long)
         }
 //        cell.textLabel!.text = "History"
         return cell
@@ -112,14 +106,25 @@ class HistoryTableViewController: UITableViewController {
     }
     */
 
-    /*
+    
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+        super.prepare(for: segue, sender: sender)
+        if segue.identifier == "showHistoryDetail" {
+            
+            //destination.event = tableView.sele
+            guard let destination = segue.destination as? EventDetailsViewController,
+                let indexPath = tableView.indexPathForSelectedRow else {
+                return
+            }
+            if indexPath.row < sortedHistory.count {
+                destination.event = sortedHistory[indexPath.row]
+            }
+        }
+
     }
-    */
+    
 
 }

@@ -20,4 +20,15 @@ public class EventMO: NSManagedObject {
         theClone.image = self.image
         return theClone
     }
+    
+    func getFormattedDate(style:DateFormatter.Style) -> String {
+        guard let eventDate = self.timestamp else {
+            return ""
+        }
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateStyle = style
+        dateFormatter.timeStyle = DateFormatter.Style.none
+        
+        return dateFormatter.string(from: eventDate)
+    }
 }
