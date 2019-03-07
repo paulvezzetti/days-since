@@ -14,9 +14,15 @@ class EventDetailsViewController: UIViewController {
     @IBOutlet var intervalLabel: UILabel!
     @IBOutlet var detailTextView: UITextView!
     var event:EventMO?
+    var delegate:EventChangeDelegate?
+    var isUpdated:Bool = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        detailTextView.layer.cornerRadius = 5
+        detailTextView.layer.borderColor = UIColor.lightGray.cgColor
+        detailTextView.layer.borderWidth = 1
 
         // Do any additional setup after loading the view.
         if let currentEvent = event {
@@ -25,7 +31,24 @@ class EventDetailsViewController: UIViewController {
         }
     }
     
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        guard let eventDelegate = delegate, let e = event else {
+            return
+        }
+        if isUpdated {
+            eventDelegate.eventChanged(event: e)
+        }
+    }
+    
 
+    @IBAction func updateEvent(_ sender: Any) {
+        if detailTextView.text != event?.details {
+            event?.details = detailTextView.text
+            isUpdated = true
+        }
+    }
     /*
     // MARK: - Navigation
 

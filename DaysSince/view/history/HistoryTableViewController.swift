@@ -121,10 +121,21 @@ class HistoryTableViewController: UITableViewController {
             }
             if indexPath.row < sortedHistory.count {
                 destination.event = sortedHistory[indexPath.row]
+                destination.delegate = self
             }
         }
 
     }
     
+}
 
+extension HistoryTableViewController : EventChangeDelegate {
+    func eventChanged(event: EventMO) {
+        let indexPath = tableView.indexPathForSelectedRow
+        if indexPath != nil {
+            tableView.reloadRows(at: [indexPath!], with: .automatic)
+        }
+    }
+    
+    
 }
