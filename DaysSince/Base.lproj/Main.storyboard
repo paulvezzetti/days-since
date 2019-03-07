@@ -38,8 +38,18 @@
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacingType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="sdQ-Kb-W5y">
                                 <rect key="frame" x="12" y="72" width="351" height="554"/>
                                 <subviews>
+                                    <label clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" text="Activity" textAlignment="center" lineBreakMode="tailTruncation" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="0XM-y9-sOw">
+                                        <rect key="frame" x="0.0" y="0.0" width="351" height="35"/>
+                                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="35" id="yOY-v8-dld"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" name="AvenirNext-DemiBold" family="Avenir Next" pointSize="20"/>
+                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="8Pc-4D-X98">
-                                        <rect key="frame" x="0.0" y="0.0" width="351" height="37"/>
+                                        <rect key="frame" x="0.0" y="43" width="351" height="37"/>
                                         <subviews>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="J4j-nQ-u2s">
                                                 <rect key="frame" x="94" y="0.0" width="163" height="37"/>
@@ -55,16 +65,6 @@
                                             </button>
                                         </subviews>
                                     </stackView>
-                                    <label clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" text="Activity" textAlignment="center" lineBreakMode="tailTruncation" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="0XM-y9-sOw">
-                                        <rect key="frame" x="0.0" y="45" width="351" height="35"/>
-                                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="35" id="yOY-v8-dld"/>
-                                        </constraints>
-                                        <fontDescription key="fontDescription" name="AvenirNext-DemiBold" family="Avenir Next" pointSize="20"/>
-                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
                                     <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="UYh-Ao-TeW">
                                         <rect key="frame" x="0.0" y="88" width="351" height="29"/>
                                         <constraints>
@@ -109,7 +109,7 @@
                         <viewLayoutGuide key="safeArea" id="VUw-jc-0yf"/>
                     </view>
                     <toolbarItems/>
-                    <navigationItem key="navigationItem" title="Detail" id="mOI-FS-AaM"/>
+                    <navigationItem key="navigationItem" title="Activity" id="mOI-FS-AaM"/>
                     <connections>
                         <outlet property="alternatingView" destination="kC3-vI-ZNJ" id="EZY-gs-2Dh"/>
                         <outlet property="detailDescriptionLabel" destination="0XM-y9-sOw" id="deQ-Na-JPF"/>
@@ -526,6 +526,7 @@
                         <barButtonItem key="rightBarButtonItem" style="plain" systemItem="save" id="6Ud-Wm-QIr">
                             <connections>
                                 <action selector="doSave:" destination="0zy-ap-i7T" id="FaH-Bu-XuR"/>
+                                <segue destination="7gx-al-WX6" kind="unwind" unwindAction="unwindSaveActivityWithSegue:" id="vYw-KQ-E1i"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -543,6 +544,7 @@
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="XZG-Ht-UGG" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="7gx-al-WX6" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
             <point key="canvasLocation" x="2229.5999999999999" y="-622.03898050974522"/>
         </scene>
