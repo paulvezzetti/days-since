@@ -136,7 +136,7 @@ class DataModelManager {
     func removeActivity(activity: ActivityMO) throws {
         let context = try getManagedObjectContext()
         context.delete(activity)
-        //try save(context)
+        try save(context)
     }
     
     func setEventDone(activity:ActivityMO, at date:Date) throws {

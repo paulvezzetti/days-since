@@ -22,7 +22,7 @@ class MasterViewController: UITableViewController /*, NSFetchedResultsController
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
-        navigationItem.leftBarButtonItem = editButtonItem
+        //navigationItem.leftBarButtonItem = editButtonItem
 
         tableView.rowHeight = UITableView.automaticDimension
         tableView.estimatedRowHeight = 140
@@ -234,41 +234,63 @@ class MasterViewController: UITableViewController /*, NSFetchedResultsController
         return cell
     }
 
-    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the specified item to be editable.
-        return true
+    override func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        let done = doneAction(at: indexPath)
+        let delete = deleteAction(at: indexPath)
+        return UISwipeActionsConfiguration(actions: [delete, done])
     }
-
-    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-        if editingStyle == .delete {
-            if let dm = dataManager {
-                do {
-                    let sectionActivities = activityDict[sectionToStatus(section: indexPath.section)] ?? []
-                    let activity = sectionActivities[indexPath.row] // TODO: Array size check
-                    try dm.removeActivity(activity: activity)
-//                    try dm.removeActivity(activity: fetchedResultsController.object(at: indexPath))
-                } catch {
-                    // Replace this implementation with code to handle the error appropriately.
-                    // fatalError() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
-                    // TODO: This should show an error screen.
-                    let nserror = error as NSError
-                    fatalError("Unresolved error \(nserror), \(nserror.userInfo)")
-
-                }
-            }
-//            let context = fetchedResultsController.managedObjectContext
-//            context.delete(fetchedResultsController.object(at: indexPath))
-//
-//            do {
-//                try context.save()
-//            } catch {
-//                // Replace this implementation with code to handle the error appropriately.
-//                // fatalError() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
-//                let nserror = error as NSError
-//                fatalError("Unresolved error \(nserror), \(nserror.userInfo)")
-//            }
+    
+    func doneAction(at indexPath: IndexPath) -> UIContextualAction {
+        
+        let action = UIContextualAction(style: .normal, title: "Done") { (action, view, completion) in
+            completion(true)
         }
+        action.image = UIImage(named: "done")
+        action.title = "Mark Done"
+        action.backgroundColor = .green
+        return action
     }
+
+    func deleteAction(at indexPath: IndexPath) -> UIContextualAction {
+        
+        let action = UIContextualAction(style: .normal, title: "Delete") { (action, view, completion) in
+            let alert = UIAlertController(title: "Delete this activity?", message: "This will permanently delete this activity and all of its history.", preferredStyle: UIAlertController.Style.alert)
+            alert.addAction(UIAlertAction(title: "Yes", style: .destructive) { (alert) in
+                self.deleteActivity(at: indexPath)
+            })
+            alert.addAction(UIAlertAction(title: "No", style: .default, handler: nil))
+            self.present(alert, animated: true, completion: nil)
+            completion(true)
+        }
+        //action.image =
+        action.title = "Delete"
+        action.backgroundColor = .red
+        return action
+    }
+
+//    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+//        // Return false if you do not want the specified item to be editable.
+//        return true
+//    }
+
+//    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+//        if editingStyle == .delete {
+//            if let dm = dataManager {
+//                do {
+//                    let sectionActivities = activityDict[sectionToStatus(section: indexPath.section)] ?? []
+//                    let activity = sectionActivities[indexPath.row] // TODO: Array size check
+//                    try dm.removeActivity(activity: activity)
+//                } catch {
+//                    // Replace this implementation with code to handle the error appropriately.
+//                    // fatalError() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
+//                    // TODO: This should show an error screen.
+//                    let nserror = error as NSError
+//                    fatalError("Unresolved error \(nserror), \(nserror.userInfo)")
+//
+//                }
+//            }
+//        }
+//    }
 
     func configureCell(_ cell: UITableViewCell, withActivity activity: ActivityMO) {
         guard let masterCell = cell as? MasterTableViewCell else {
@@ -283,6 +305,21 @@ class MasterViewController: UITableViewController /*, NSFetchedResultsController
         print("Activity: \(activity.name ?? "unknown") is overdue: \(activity.isOverdue)")
         
 //        cell.textLabel!.text = activity.name
+    }
+    
+    func deleteActivity(at indexPath:IndexPath) {
+        if let dm = dataManager {
+            do {
+                let sectionActivities = activityDict[sectionToStatus(section: indexPath.section)] ?? []
+                let activity = sectionActivities[indexPath.row] // TODO: Array size check
+                try dm.removeActivity(activity: activity)
+            } catch {
+                // TODO: This should show an error screen.
+                let nserror = error as NSError
+                fatalError("Unresolved error \(nserror), \(nserror.userInfo)")
+
+            }
+        }
     }
 
     // MARK: - Fetched results controller
