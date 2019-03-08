@@ -88,9 +88,7 @@ class AddActivityTableViewController: UITableViewController, UITextFieldDelegate
             self.tempActivity?.notifications = NotificationMO(context: context)
             self.tempActivity?.interval = UnlimitedIntervalMO(context: context)
             let firstEvent = EventMO(context: context)
-            var today = Date()
-            today.normalize()
-            firstEvent.timestamp = today
+            firstEvent.timestamp = Date.normalize(date: Date())
             print("Event timestamp: \(firstEvent.timestamp!.getLongString())")
 
             self.tempActivity?.addToHistory(firstEvent)
@@ -177,7 +175,7 @@ class AddActivityTableViewController: UITableViewController, UITextFieldDelegate
             }
             let firstDate = activity.firstDate
             if firstDate != activityToUpdate.firstDate {
-                activityToUpdate.updateFirstDate(to: firstDate)
+                activityToUpdate.updateFirstDate(to: Date.normalize(date:firstDate))
             }
             
             activityToUpdate.notifications?.enabled = activity.notifications?.enabled ?? false
@@ -242,7 +240,7 @@ class AddActivityTableViewController: UITableViewController, UITextFieldDelegate
     
     @IBAction func startDateValueChanged(_ sender: Any) {
         startDateLabel.text = dateFormatter.string(from: startDatePicker.date)
-        tempActivity?.updateFirstDate(to: startDatePicker.date)
+        tempActivity?.updateFirstDate(to: Date.normalize(date: startDatePicker.date))
     }
     
     @IBAction func cancelAdd(_ sender: Any) {

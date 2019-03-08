@@ -6,6 +6,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="Stack View standard spacing" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -53,7 +54,7 @@
                                         <subviews>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="J4j-nQ-u2s">
                                                 <rect key="frame" x="94" y="0.0" width="163" height="37"/>
-                                                <color key="backgroundColor" red="0.20000000000000001" green="0.59999999999999998" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
+                                                <color key="backgroundColor" name="Medium Green"/>
                                                 <fontDescription key="fontDescription" name="AvenirNext-DemiBold" family="Avenir Next" pointSize="18"/>
                                                 <inset key="contentEdgeInsets" minX="35" minY="6" maxX="35" maxY="6"/>
                                                 <state key="normal" title="Mark Done">
@@ -1235,8 +1236,13 @@
             <point key="canvasLocation" x="2104.8000000000002" y="127.28635682158921"/>
         </scene>
     </scenes>
+    <resources>
+        <namedColor name="Medium Green">
+            <color red="0.0" green="0.67699998617172241" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+    </resources>
     <inferredMetricsTieBreakers>
         <segue reference="BMi-sG-zyJ"/>
-        <segue reference="vV1-vt-UA0"/>
+        <segue reference="m8M-iz-Q6X"/>
     </inferredMetricsTieBreakers>
 </document>

@@ -10,11 +10,16 @@ import Foundation
 
 extension Date {
     
-    // Normalizes a Date to 12:01 AM on that day
+    // Normalizes a Date to 12:00 AM on that day
     mutating func normalize() {
+//        let calendar = Calendar.current
+//        self = calendar.startOfDay(for: self)
+        self = Date.normalize(date: self)
+    }
+    
+    static func normalize(date:Date) -> Date {
         let calendar = Calendar.current
-        self = calendar.startOfDay(for: self)
-//        self = calendar.date(bySettingHour: 0, minute: 1, second: 0, of: self) ?? self
+        return calendar.startOfDay(for:date)
     }
     
     func getLongString() -> String {
