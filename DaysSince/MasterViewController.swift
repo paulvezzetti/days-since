@@ -208,7 +208,7 @@ class MasterViewController: UITableViewController {
             completion(true)
         }
         action.image = UIImage(named: "done")
-        action.title = "Mark Done"
+        //action.title = "Mark Done"
         action.backgroundColor = UIColor(named: "Medium Green")
         return action
     }
@@ -225,7 +225,7 @@ class MasterViewController: UITableViewController {
             completion(true)
         }
         action.image = UIImage(named: "trash")
-        action.title = "Delete"
+        //action.title = "Delete"
         action.backgroundColor = .red
         return action
     }
