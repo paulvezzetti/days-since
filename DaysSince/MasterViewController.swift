@@ -9,12 +9,10 @@
 import UIKit
 import CoreData
 
-class MasterViewController: UITableViewController /*, NSFetchedResultsControllerDelegate */ {
+class MasterViewController: UITableViewController {
 
     var detailViewController: DetailViewController? = nil
-    //var managedObjectContext: NSManagedObjectContext? = nil
     var dataManager: DataModelManager? = nil
-//    var activities: [ActivityMO] = []
     var activityDict: [ActivityMO.ActivityStatus : [ActivityMO] ] = [:]
     var sectionIndices: [Int : ActivityMO.ActivityStatus] = [:]
 
@@ -22,7 +20,6 @@ class MasterViewController: UITableViewController /*, NSFetchedResultsController
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
-        //navigationItem.leftBarButtonItem = editButtonItem
 
         tableView.rowHeight = UITableView.automaticDimension
         tableView.estimatedRowHeight = 140
@@ -36,9 +33,6 @@ class MasterViewController: UITableViewController /*, NSFetchedResultsController
         } catch {
             
         }
-        //dataManager?.updateActivityStatus()
-//        let addButton = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(showAddModally(_:)))
-//        navigationItem.rightBarButtonItem = addButton
         if let split = splitViewController {
             let controllers = split.viewControllers
             detailViewController = (controllers[controllers.count-1] as! UINavigationController).topViewController as? DetailViewController
@@ -57,8 +51,6 @@ class MasterViewController: UITableViewController /*, NSFetchedResultsController
     
     @objc
     func managedObjectContextObjectsDidChange(notification: NSNotification) {
-//        guard let userInfo = notification.userInfo else { return }
-        // if there are any changes? update the table
         rebuildDataStructures()
         tableView.reloadData()
     }
@@ -99,13 +91,6 @@ class MasterViewController: UITableViewController /*, NSFetchedResultsController
                 ontime.sort(by: sortByName)
                 soon.sort(by: sortByName)
                 
-                //                activities = try fetchedActivities.sorted{(act1: ActivityMO, _ act2: ActivityMO) throws -> Bool in
-                //                    if (act1.status == act2.status) {
-                //                        return act1.name! < act2.name!
-                //                    }
-                //                    return act1.status.rawValue < act2.status.rawValue
-                //                }
-                
             } catch {
                 // TODO: Handle error
             }
@@ -128,34 +113,12 @@ class MasterViewController: UITableViewController /*, NSFetchedResultsController
             sectionIndices[sectionIndex] = ActivityMO.ActivityStatus.OnTime
             sectionIndex += 1
         }
-        //        for a in activities {
-        //            print ("Activity: \(a.name!) status: \(a.status)")
-        //        }
-
     }
     
     func sectionToStatus(section index:Int) -> ActivityMO.ActivityStatus {
         return sectionIndices[index] ?? ActivityMO.ActivityStatus.OnTime // TODO
     }
     
-//    @objc
-//    func insertNewObject(_ sender: Any) {
-//        let context = self.fetchedResultsController.managedObjectContext
-//        let newEvent = EventMO(context: context)
-//             
-//        // If appropriate, configure the new managed object.
-//        newEvent.timestamp = Date()
-//
-//        // Save the context.
-//        do {
-//            try context.save()
-//        } catch {
-//            // Replace this implementation with code to handle the error appropriately.
-//            // fatalError() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
-//            let nserror = error as NSError
-//            fatalError("Unresolved error \(nserror), \(nserror.userInfo)")
-//        }
-//    }
 
     // MARK: - Segues
 
@@ -164,7 +127,6 @@ class MasterViewController: UITableViewController /*, NSFetchedResultsController
             if let indexPath = tableView.indexPathForSelectedRow {
                 let sectionActivities = activityDict[sectionToStatus(section: indexPath.section)] ?? []
                 let activity = sectionActivities[indexPath.row] // TODO: Array size check
-//            let object = fetchedResultsController.object(at: indexPath)
                 let controller = (segue.destination as! UINavigationController).topViewController as! DetailViewController
                 controller.detailItem = activity //object
                 controller.navigationItem.leftBarButtonItem = splitViewController?.displayModeButtonItem
@@ -247,7 +209,7 @@ class MasterViewController: UITableViewController /*, NSFetchedResultsController
         }
         action.image = UIImage(named: "done")
         action.title = "Mark Done"
-        action.backgroundColor = .green
+        action.backgroundColor = UIColor(named: "Medium Green")
         return action
     }
 
@@ -262,7 +224,7 @@ class MasterViewController: UITableViewController /*, NSFetchedResultsController
             self.present(alert, animated: true, completion: nil)
             completion(true)
         }
-        //action.image =
+        action.image = UIImage(named: "trash")
         action.title = "Delete"
         action.backgroundColor = .red
         return action
@@ -321,89 +283,6 @@ class MasterViewController: UITableViewController /*, NSFetchedResultsController
             }
         }
     }
-
-    // MARK: - Fetched results controller
-
-//    var fetchedResultsController: NSFetchedResultsController<ActivityMO> {
-//        if _fetchedResultsController != nil {
-//            return _fetchedResultsController!
-//        }
-//        guard let dm = dataManager else {
-//            fatalError()
-//        }
-//        let fetchRequest: NSFetchRequest<ActivityMO> = ActivityMO.fetchRequest()
-//
-//        // Set the batch size to a suitable number.
-//        fetchRequest.fetchBatchSize = 20
-//
-//        // Edit the sort key as appropriate.
-//        //let sortStatusDescriptor = NSSortDescriptor(key: "status", ascending: false)
-//        let sortDescriptor = NSSortDescriptor(key: "name", ascending: false)
-//
-//        fetchRequest.sortDescriptors = [/*sortStatusDescriptor,*/ sortDescriptor]
-//
-//        // Edit the section name key path and cache name if appropriate.
-//        // nil for section name key path means "no sections".
-//        do {
-//            let moContext = try dm.getManagedObjectContext()
-//
-//            let aFetchedResultsController = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: moContext, sectionNameKeyPath: nil, cacheName: "Master")
-//            aFetchedResultsController.delegate = self
-//            _fetchedResultsController = aFetchedResultsController
-//
-//            try _fetchedResultsController!.performFetch()
-//        } catch {
-//             // Replace this implementation with code to handle the error appropriately.
-//             // fatalError() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
-//             let nserror = error as NSError
-//             fatalError("Unresolved error \(nserror), \(nserror.userInfo)")
-//        }
-//
-//        return _fetchedResultsController!
-//    }
-//    var _fetchedResultsController: NSFetchedResultsController<ActivityMO>? = nil
-//
-//    func controllerWillChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
-//        tableView.beginUpdates()
-//    }
-//
-//    func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange sectionInfo: NSFetchedResultsSectionInfo, atSectionIndex sectionIndex: Int, for type: NSFetchedResultsChangeType) {
-//        switch type {
-//            case .insert:
-//                tableView.insertSections(IndexSet(integer: sectionIndex), with: .fade)
-//            case .delete:
-//                tableView.deleteSections(IndexSet(integer: sectionIndex), with: .fade)
-//            default:
-//                return
-//        }
-//    }
-//
-//    func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange anObject: Any, at indexPath: IndexPath?, for type: NSFetchedResultsChangeType, newIndexPath: IndexPath?) {
-//        switch type {
-//            case .insert:
-//                tableView.insertRows(at: [newIndexPath!], with: .fade)
-//            case .delete:
-//                tableView.deleteRows(at: [indexPath!], with: .fade)
-//            case .update:
-//                configureCell(tableView.cellForRow(at: indexPath!)!, withActivity: anObject as! ActivityMO)
-//            case .move:
-//                configureCell(tableView.cellForRow(at: indexPath!)!, withActivity: anObject as! ActivityMO)
-//                tableView.moveRow(at: indexPath!, to: newIndexPath!)
-//        }
-//    }
-//
-//    func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
-//        tableView.endUpdates()
-//    }
-
-    /*
-     // Implementing the above methods to update the table view in response to individual changes may have performance implications if a large number of changes are made simultaneously. If this proves to be an issue, you can instead just implement controllerDidChangeContent: which notifies the delegate that all section and object changes have been processed.
-     
-     func controllerDidChangeContent(controller: NSFetchedResultsController) {
-         // In the simplest, most efficient, case, reload the table view.
-         tableView.reloadData()
-     }
-     */
 
 }
 

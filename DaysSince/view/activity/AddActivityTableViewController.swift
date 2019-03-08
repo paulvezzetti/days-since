@@ -88,7 +88,11 @@ class AddActivityTableViewController: UITableViewController, UITextFieldDelegate
             self.tempActivity?.notifications = NotificationMO(context: context)
             self.tempActivity?.interval = UnlimitedIntervalMO(context: context)
             let firstEvent = EventMO(context: context)
-            firstEvent.timestamp = Date()
+            var today = Date()
+            today.normalize()
+            firstEvent.timestamp = today
+            print("Event timestamp: \(firstEvent.timestamp!.getLongString())")
+
             self.tempActivity?.addToHistory(firstEvent)
         }
         

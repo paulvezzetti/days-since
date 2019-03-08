@@ -153,7 +153,10 @@ extension DetailViewController : MarkDoneDelegate {
                 return
             }
             let event = EventMO(context: moc)
-            event.timestamp = date
+            var normalizedDate = Date(timeInterval: 0, since: date)
+            normalizedDate.normalize()
+            event.timestamp = normalizedDate
+            print("Event timestamp: \(event.timestamp!.getLongString())")
             event.details = details
             activity.addToHistory(event)
             
