@@ -16,11 +16,13 @@ class MasterViewController: UITableViewController {
     var activityDict: [ActivityMO.ActivityStatus : [ActivityMO] ] = [:]
     var sectionIndices: [Int : ActivityMO.ActivityStatus] = [:]
 
+    private var markDoneIndexPath:IndexPath?
 
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
 
+        self.clearsSelectionOnViewWillAppear = false
         tableView.rowHeight = UITableView.automaticDimension
         tableView.estimatedRowHeight = 140
         
@@ -205,6 +207,12 @@ class MasterViewController: UITableViewController {
     func doneAction(at indexPath: IndexPath) -> UIContextualAction {
         
         let action = UIContextualAction(style: .normal, title: "Done") { (action, view, completion) in
+            if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "markDoneNavigationController") as? MarkDoneTableViewController
+            {
+                self.markDoneIndexPath = indexPath
+                vc.doneDelegate = self
+                self.show(vc, sender: self)
+            }
             completion(true)
         }
         action.image = UIImage(named: "done")
@@ -285,4 +293,39 @@ class MasterViewController: UITableViewController {
     }
 
 }
+
+extension MasterViewController : MarkDoneDelegate {
+    func done(at date: Date, withDetails details: String, sender: UIViewController) {
+        do {
+            defer {
+                sender.navigationController!.popViewController(animated: false)
+            }
+            
+            guard let selectedIndex = markDoneIndexPath, let dm = dataManager else {
+                return
+            }
+            let sectionActivities = activityDict[sectionToStatus(section: selectedIndex.section)] ?? []
+            let activity = sectionActivities[selectedIndex.row] // TODO: Array size check
+            let moc = try dm.getManagedObjectContext()
+            let event = EventMO(context: moc)
+            event.timestamp = Date.normalize(date: date)
+            event.details = details
+            activity.addToHistory(event)
+            
+            tableView.reloadRows(at: [selectedIndex], with: .automatic)
+            
+        } catch {
+            
+        }
+    }
+    
+    func cancelled(sender: UIViewController) {
+       // sender.dismiss(animated: false, completion: nil)
+        sender.navigationController!.popViewController(animated: false)
+    }
+    
+    
+    
+}
+
 

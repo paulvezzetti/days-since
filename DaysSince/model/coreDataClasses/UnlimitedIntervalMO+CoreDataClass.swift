@@ -14,7 +14,7 @@ import CoreData
 public class UnlimitedIntervalMO: IntervalMO {
 
     override func getNextDate(since lastDate: Date) -> Date {
-        return lastDate
+        return Date.distantFuture
     }
     
     override func toPrettyString() -> String {
