@@ -53,14 +53,14 @@ class AddActivityTableViewController: UITableViewController, UITextFieldDelegate
         return formatter
     }()
         
-    deinit {
-        print("Destroying the AddActivityTableViewController")
-    }
+//    deinit {
+//        print("Destroying the AddActivityTableViewController")
+//    }
     
-    required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
-        print("Creating a AddActivityTableViewController")
-    }
+//    required init?(coder aDecoder: NSCoder) {
+//        super.init(coder: aDecoder)
+//        print("Creating a AddActivityTableViewController")
+//    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -89,7 +89,7 @@ class AddActivityTableViewController: UITableViewController, UITextFieldDelegate
             self.tempActivity?.interval = UnlimitedIntervalMO(context: context)
             let firstEvent = EventMO(context: context)
             firstEvent.timestamp = Date.normalize(date: Date())
-            print("Event timestamp: \(firstEvent.timestamp!.getLongString())")
+            //print("Event timestamp: \(firstEvent.timestamp!.getLongString())")
 
             self.tempActivity?.addToHistory(firstEvent)
         }

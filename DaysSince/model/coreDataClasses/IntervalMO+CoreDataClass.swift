@@ -25,7 +25,7 @@ public class IntervalMO: NSManagedObject {
         return IntervalMO(context: context)
     }
     
-    deinit {
-        print("Destroying an Interval")
-    }
+//    deinit {
+//        print("Destroying an Interval")
+//    }
 }

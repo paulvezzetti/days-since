@@ -272,7 +272,7 @@ class MasterViewController: UITableViewController {
         masterCell.nextDateLabel!.text = stats.nextDay
         masterCell.lastDateLabel!.text = stats.lastDay
         
-        print("Activity: \(activity.name ?? "unknown") is overdue: \(activity.isOverdue)")
+        //print("Activity: \(activity.name ?? "unknown") is overdue: \(activity.isOverdue)")
         
 //        cell.textLabel!.text = activity.name
     }

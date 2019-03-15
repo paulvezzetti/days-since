@@ -103,7 +103,7 @@ public class ActivityMO: NSManagedObject {
         sortDates[0].timestamp = date
     }
     
-    deinit {
-        print("Destroying an Activity")
-    }
+//    deinit {
+//        print("Destroying an Activity")
+//    }
 }

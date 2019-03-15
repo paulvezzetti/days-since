@@ -35,61 +35,54 @@ class NotificationManager : NSObject {
         notificationCenter.setNotificationCategories([daysSinceCategory])
         
         // Register for changes to the data model so we can schedule the notifications
-        do {
-            let context = try dataManager.getManagedObjectContext()
-            let notificationCenter = NotificationCenter.default
-            notificationCenter.addObserver(self, selector: #selector(managedObjectContextObjectsDidChange), name: NSNotification.Name.NSManagedObjectContextObjectsDidChange, object: context)
-            notificationCenter.addObserver(self, selector: #selector(managedObjectContextWillSave), name: NSNotification.Name.NSManagedObjectContextWillSave, object: context)
-            notificationCenter.addObserver(self, selector: #selector(managedObjectContextDidSave), name: NSNotification.Name.NSManagedObjectContextDidSave, object: context)
-        } catch {
-            
-        }
-    }
-    
-    
+        NotificationCenter.default.addObserver(self, selector: #selector(activityAdded(notification:)), name: Notification.Name.activityAdded, object: nil)
 
-    @objc
-    func managedObjectContextObjectsDidChange(notification: NSNotification) {
-        guard let userInfo = notification.userInfo else { return }
+        NotificationCenter.default.addObserver(self, selector: #selector(activityRemoved(notification:)), name: Notification.Name.activityRemoved, object: nil)
 
-        if let inserts = userInfo[NSInsertedObjectsKey] as? Set<NSManagedObject>, inserts.count > 0 {
-                //print("--- INSERTS ---")
-                //print(inserts)
-                //print("+++++++++++++++")
-            for mo in inserts {
-                if let activity = mo as? ActivityMO {
-                    scheduleReminderNotification(for: activity)
-              //      print("Inserted activity \(activity.name!)")
-                } //else if let event = mo as? EventMO {
-              //      print("Inserted event \(event.timestamp!)")
-              //  }
-            }
-        }
-
-//            if let updates = userInfo[NSUpdatedObjectsKey] as? Set<NSManagedObject>, updates.count > 0 {
-//                print("--- UPDATES ---")
-//                for update in updates {
-//                    print(update.changedValues())
-//                }
-//                print("+++++++++++++++")
-//            }
+        //        do {
+//            let context = try dataManager.getManagedObjectContext()
+//            let notificationCenter = NotificationCenter.default
+//            notificationCenter.addObserver(self, selector: #selector(managedObjectContextObjectsDidChange), name: NSNotification.Name.NSManagedObjectContextObjectsDidChange, object: context)
+//            notificationCenter.addObserver(self, selector: #selector(managedObjectContextWillSave), name: NSNotification.Name.NSManagedObjectContextWillSave, object: context)
+//            notificationCenter.addObserver(self, selector: #selector(managedObjectContextDidSave), name: NSNotification.Name.NSManagedObjectContextDidSave, object: context)
+//        } catch {
 //
-//            if let deletes = userInfo[NSDeletedObjectsKey] as? Set<NSManagedObject>, deletes.count > 0 {
-//                print("--- DELETES ---")
-//                print(deletes)
-//                print("+++++++++++++++")
-//            }
+//        }
     }
     
-    @objc
-    func managedObjectContextWillSave(notification: NSNotification) {
-
+    @objc func activityAdded(notification: Notification ) {
+        guard let activity = notification.object as? ActivityMO else {
+            return
+        }
+        scheduleReminderNotification(for: activity)
     }
-    
-    @objc
-    func managedObjectContextDidSave(notification: NSNotification) {
 
+    @objc func activityRemoved(notification: Notification ) {
+        guard let activity = notification.object as? ActivityMO else {
+            return
+        }
+        removeAllPendingNotifications(for: activity)
     }
+
+    /* ----------------------------------------------------------
+     What is the logic for setting up our notifications.
+     - if notifications are enabled:
+     - When a new activity is created:
+        - Calculate the time to the next event
+        - Subtract the time before for the notification
+        - Schedule the notification for that time
+     - When an activity interval is modified
+        - Remove all pending notifications
+        - Schedule a new notification just like this was an existing activity
+     - When an activity's history changes (either a new event or an event is removed)
+        - Remove all pending notifications
+        - Schedule a new notification just like this was an existing activity
+     - When the user 'snoozes' an activity.
+        - Remove all pending notifications (there shouldn't be any)
+        - Schedule a new snooze notification based on 'now' plus 'snooze'
+ 
+       ---------------------------------------------------------- */
+
     
     func scheduleReminderNotification(for activity:ActivityMO) {
         let uuid = activity.id!.uuidString
@@ -99,7 +92,7 @@ class NotificationManager : NSObject {
             notificationCenter.removePendingNotificationRequests(withIdentifiers: [uuid])
             return
         }
-        print("Scheduling reminder for activity with uuid: \(uuid) ")
+        print("Scheduling reminder for activity: \(activity.name ?? "") with uuid: \(uuid) ")
         let content = UNMutableNotificationContent()
         // TODO: Need to figure out the content to display
         // title = Activity Name
@@ -134,6 +127,12 @@ class NotificationManager : NSObject {
             }
         }
         
+    }
+    
+    func removeAllPendingNotifications(for activity:ActivityMO) {
+        let uuid = activity.id!.uuidString
+        print("Cancelling reminder for activity: \(activity.name ?? "") with uuid: \(uuid) ")
+        notificationCenter.removePendingNotificationRequests(withIdentifiers: [uuid])
     }
     
     

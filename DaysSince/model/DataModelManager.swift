@@ -55,8 +55,8 @@ class DataModelManager {
         managedObjectContext = container.viewContext
         
         // Add Observer
-//        let notificationCenter = NotificationCenter.default
-//        notificationCenter.addObserver(self, selector: #selector(managedObjectContextObjectsDidChange), name: NSNotification.Name.NSManagedObjectContextObjectsDidChange, object: managedObjectContext)
+        let notificationCenter = NotificationCenter.default
+        notificationCenter.addObserver(self, selector: #selector(managedObjectContextObjectsDidChange), name: NSNotification.Name.NSManagedObjectContextObjectsDidChange, object: managedObjectContext)
 //        notificationCenter.addObserver(self, selector: #selector(managedObjectContextWillSave), name: NSManagedObjectContextWillSaveNotification, object: managedObjectContext)
 //        notificationCenter.addObserver(self, selector: #selector(managedObjectContextDidSave), name: NSManagedObjectContextDidSaveNotification, object: managedObjectContext)
 
@@ -64,38 +64,55 @@ class DataModelManager {
         
         return managedObjectContext!
     }
-//    
-//    @objc
-//    func managedObjectContextObjectsDidChange(notification: NSNotification) {
-//        guard let userInfo = notification.userInfo else { return }
-//        
-//        if let inserts = userInfo[NSInsertedObjectsKey] as? Set<NSManagedObject>, inserts.count > 0 {
+    
+    @objc
+    func managedObjectContextObjectsDidChange(notification: NSNotification) {
+        guard let userInfo = notification.userInfo else { return }
+        
+        if let inserts = userInfo[NSInsertedObjectsKey] as? Set<NSManagedObject>, inserts.count > 0 {
 //            print("--- INSERTS ---")
 //            print(inserts)
 //            print("+++++++++++++++")
-//            for mo in inserts {
-//                if let activity = mo as? ActivityMO {
-//                    print("Inserted activity \(activity.name!)")
-//                } else if let event = mo as? EventMO {
-//                    print("Inserted event \(event.timestamp!)")
+            // Only activities and events should be inserts.
+            for mo in inserts {
+                if let activity = mo as? ActivityMO {
+                    print("Inserted activity \(activity.name!)")
+                    NotificationCenter.default.post(name: Notification.Name.activityAdded, object: activity)
+                } else if let event = mo as? EventMO {
+                    print("Inserted event \(event.timestamp!)")
+                    NotificationCenter.default.post(name: Notification.Name.eventAdded, object: event)
+                }
+//                else if let _ = mo as? IntervalMO {
+//                    print("Should not be here for interval")
+//                } else if let _ = mo as? NotificationMO {
+//                    print("Should not be here for notification")
 //                }
-//            }
-//        }
-//        
-//        if let updates = userInfo[NSUpdatedObjectsKey] as? Set<NSManagedObject>, updates.count > 0 {
+            }
+        }
+        
+        if let updates = userInfo[NSUpdatedObjectsKey] as? Set<NSManagedObject>, updates.count > 0 {
 //            print("--- UPDATES ---")
 //            for update in updates {
 //                print(update.changedValues())
 //            }
 //            print("+++++++++++++++")
-//        }
-//        
-//        if let deletes = userInfo[NSDeletedObjectsKey] as? Set<NSManagedObject>, deletes.count > 0 {
+        }
+        
+        if let deletes = userInfo[NSDeletedObjectsKey] as? Set<NSManagedObject>, deletes.count > 0 {
 //            print("--- DELETES ---")
 //            print(deletes)
 //            print("+++++++++++++++")
-//        }
-//    }
+            for mo in deletes {
+                if let activity = mo as? ActivityMO {
+                    print("Deleted activity \(activity.name!)")
+                    NotificationCenter.default.post(name: Notification.Name.activityRemoved, object: activity)
+                } else if let event = mo as? EventMO {
+                    print("Deleted event \(event.timestamp!)")
+                    NotificationCenter.default.post(name: Notification.Name.eventRemoved, object: event)
+                }
+            }
+        }
+    }
     
 //    func updateActivityStatus() {
 //        do {
@@ -172,4 +189,16 @@ class DataModelManager {
         }
     }
 
+}
+
+extension Notification.Name {
+    
+    static let activityAdded = Notification.Name("activityAdded")
+    static let activityRemoved = Notification.Name("activityRemoved")
+    static let activityUpdated = Notification.Name("activityUpdated")
+    static let intervalUpdated = Notification.Name("intervalUpdated")
+    static let eventAdded = Notification.Name("eventAdded")
+    static let eventRemoved = Notification.Name("eventRemoved")
+    static let notificationsUpdated = Notification.Name("notificationsUpdated")
+    
 }
