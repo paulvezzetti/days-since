@@ -46,6 +46,7 @@
 		FAA6AF222211E42700346CCB /* DataModelManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAA6AF212211E42700346CCB /* DataModelManager.swift */; };
 		FAA6AF242213684800346CCB /* HistoryTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAA6AF232213684800346CCB /* HistoryTableViewController.swift */; };
 		FAA6AF2622139F4A00346CCB /* ActivitySummaryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAA6AF2522139F4A00346CCB /* ActivitySummaryViewController.swift */; };
+		FAB23B74223AC332004C6252 /* NotificationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAB23B73223AC332004C6252 /* NotificationManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -90,6 +91,7 @@
 		FAA6AF212211E42700346CCB /* DataModelManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataModelManager.swift; sourceTree = "<group>"; };
 		FAA6AF232213684800346CCB /* HistoryTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryTableViewController.swift; sourceTree = "<group>"; };
 		FAA6AF2522139F4A00346CCB /* ActivitySummaryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivitySummaryViewController.swift; sourceTree = "<group>"; };
+		FAB23B73223AC332004C6252 /* NotificationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -226,6 +228,7 @@
 				FAA6AF212211E42700346CCB /* DataModelManager.swift */,
 				FA1D72DA221E2D2B00D8EBF7 /* ActivityStatistics.swift */,
 				FA1D72E42220675F00D8EBF7 /* TimeConstants.swift */,
+				FAB23B73223AC332004C6252 /* NotificationManager.swift */,
 			);
 			path = model;
 			sourceTree = "<group>";
@@ -309,6 +312,7 @@
 				FA3CEF4C220E0F2500634DD7 /* DaysSince.xcdatamodeld in Sources */,
 				FA1D72EA2220784900D8EBF7 /* ActivityMO+CoreDataClass.swift in Sources */,
 				FAA6AF1E2211C1E700346CCB /* AddActivityTableViewController.swift in Sources */,
+				FAB23B74223AC332004C6252 /* NotificationManager.swift in Sources */,
 				FA1D732D2228C60E00D8EBF7 /* IntervalMO+CoreDataClass.swift in Sources */,
 				FA1D72EC2220784900D8EBF7 /* EventMO+CoreDataClass.swift in Sources */,
 				FA1D733C222B622700D8EBF7 /* DaysOfMonth.swift in Sources */,

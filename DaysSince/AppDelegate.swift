@@ -15,6 +15,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
 
     var window: UIWindow?
     var dataManager: DataModelManager?
+    var notificationManager: NotificationManager?
 
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
@@ -26,7 +27,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
         
         // Initalize CoreData
         dataManager = DataModelManager()
-//        dataManager?.updateActivityStatus()
+        
+        // Initialize the user notifications
+        notificationManager = NotificationManager(dataManager: dataManager!)
 
         let masterNavigationController = splitViewController.viewControllers[0] as! UINavigationController
         let controller = masterNavigationController.topViewController as! MasterViewController
