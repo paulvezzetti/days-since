@@ -125,6 +125,18 @@ class DataModelManager {
         return try context.fetch(fetch)
     }
     
+    func getOverdueActivities() throws -> [ActivityMO] {
+        let allActivities = try getActivities()
+        var overdue:[ActivityMO] = []
+        
+        for activity in allActivities {
+            if activity.isOverdue {
+                overdue.append(activity)
+            }
+        }
+        return overdue
+    }
+    
     
     
     func newChildManagedObjectContext() throws -> NSManagedObjectContext {

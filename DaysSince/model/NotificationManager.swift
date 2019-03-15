@@ -50,21 +50,21 @@ class NotificationManager : NSObject {
 
     @objc
     func managedObjectContextObjectsDidChange(notification: NSNotification) {
-            guard let userInfo = notification.userInfo else { return }
+        guard let userInfo = notification.userInfo else { return }
 
-            if let inserts = userInfo[NSInsertedObjectsKey] as? Set<NSManagedObject>, inserts.count > 0 {
+        if let inserts = userInfo[NSInsertedObjectsKey] as? Set<NSManagedObject>, inserts.count > 0 {
                 //print("--- INSERTS ---")
                 //print(inserts)
                 //print("+++++++++++++++")
-                for mo in inserts {
-                    if let activity = mo as? ActivityMO {
-                        scheduleReminderNotification(for: activity)
-                  //      print("Inserted activity \(activity.name!)")
-                    } //else if let event = mo as? EventMO {
-                  //      print("Inserted event \(event.timestamp!)")
-                  //  }
-                }
+            for mo in inserts {
+                if let activity = mo as? ActivityMO {
+                    scheduleReminderNotification(for: activity)
+              //      print("Inserted activity \(activity.name!)")
+                } //else if let event = mo as? EventMO {
+              //      print("Inserted event \(event.timestamp!)")
+              //  }
             }
+        }
 
 //            if let updates = userInfo[NSUpdatedObjectsKey] as? Set<NSManagedObject>, updates.count > 0 {
 //                print("--- UPDATES ---")
@@ -92,8 +92,14 @@ class NotificationManager : NSObject {
     }
     
     func scheduleReminderNotification(for activity:ActivityMO) {
-        
         let uuid = activity.id!.uuidString
+        guard activity.isNotificationEnabled else {
+            // If this activity is not enabled for notifications, then yank any pending notifications from
+            // the notification center. It's not likely.
+            notificationCenter.removePendingNotificationRequests(withIdentifiers: [uuid])
+            return
+        }
+        print("Scheduling reminder for activity with uuid: \(uuid) ")
         let content = UNMutableNotificationContent()
         // TODO: Need to figure out the content to display
         // title = Activity Name
@@ -101,6 +107,7 @@ class NotificationManager : NSObject {
         // body = Longer description of the activity status (e.g. Last completed, Next due, Frequency, Avg interval, etc.
         // badge = Total number of activities that are overdue
         // userInfo : Probably need to include at least the activity uuid
+        // attachments : Maybe include an icon
         
         let stats:ActivityStatistics = ActivityStatistics(activity: activity)
         content.title = activity.name ?? "Activity"
@@ -140,7 +147,25 @@ extension NotificationManager : UNUserNotificationCenterDelegate {
     }
     
     func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
-        
+
+        let request = response.notification.request
+
+        switch (response.actionIdentifier) {
+        case NotificationActions.MARK_DONE.rawValue:
+            print("TODO: Mark done for \(request.identifier)")
+            
+        case NotificationActions.SNOOZE.rawValue:
+            print("TODO: Snooze for \(request.identifier)")
+        case UNNotificationDefaultActionIdentifier:
+            print("TODO: User pressed open")
+        case UNNotificationDefaultActionIdentifier:
+            print("TODO: User dismissed")
+        default:
+            print("TODO: Unknown action identifier")
+        }
+
+
+        completionHandler()
     }
     
 }

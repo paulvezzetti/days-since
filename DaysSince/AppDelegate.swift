@@ -35,6 +35,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
         let controller = masterNavigationController.topViewController as! MasterViewController
 //        controller.managedObjectContext = self.persistentContainer.viewContext
         controller.dataManager = dataManager
+        
 //        do {
 //            controller.managedObjectContext = try dataManager?.getManagedObjectContext()
 //        } catch let error as NSError {
@@ -43,6 +44,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
 //        }
         
 //        requestPermissionForPushNotifications()
+        
+        
         return true
     }
 
