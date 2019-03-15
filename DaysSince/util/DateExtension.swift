@@ -30,5 +30,13 @@ extension Date {
         return formatter.string(from: self)
     }
     
+    func getFormattedDate() -> String {
+        let formatter = DateFormatter()
+        formatter.dateStyle = .long
+        formatter.timeStyle = .none
+        
+        return formatter.string(from: self)
+    }
+    
     
 }

@@ -50,21 +50,22 @@ class NotificationManager : NSObject {
 
     @objc
     func managedObjectContextObjectsDidChange(notification: NSNotification) {
-//            guard let userInfo = notification.userInfo else { return }
-//
-//            if let inserts = userInfo[NSInsertedObjectsKey] as? Set<NSManagedObject>, inserts.count > 0 {
-//                print("--- INSERTS ---")
-//                print(inserts)
-//                print("+++++++++++++++")
-//                for mo in inserts {
-//                    if let activity = mo as? ActivityMO {
-//                        print("Inserted activity \(activity.name!)")
-//                    } else if let event = mo as? EventMO {
-//                        print("Inserted event \(event.timestamp!)")
-//                    }
-//                }
-//            }
-//
+            guard let userInfo = notification.userInfo else { return }
+
+            if let inserts = userInfo[NSInsertedObjectsKey] as? Set<NSManagedObject>, inserts.count > 0 {
+                //print("--- INSERTS ---")
+                //print(inserts)
+                //print("+++++++++++++++")
+                for mo in inserts {
+                    if let activity = mo as? ActivityMO {
+                        scheduleReminderNotification(for: activity)
+                  //      print("Inserted activity \(activity.name!)")
+                    } //else if let event = mo as? EventMO {
+                  //      print("Inserted event \(event.timestamp!)")
+                  //  }
+                }
+            }
+
 //            if let updates = userInfo[NSUpdatedObjectsKey] as? Set<NSManagedObject>, updates.count > 0 {
 //                print("--- UPDATES ---")
 //                for update in updates {
@@ -92,6 +93,40 @@ class NotificationManager : NSObject {
     
     func scheduleReminderNotification(for activity:ActivityMO) {
         
+        let uuid = activity.id!.uuidString
+        let content = UNMutableNotificationContent()
+        // TODO: Need to figure out the content to display
+        // title = Activity Name
+        // subtitle = Status of activity (ex: Activity is 10 days overdue or Activity is due tomorrow.
+        // body = Longer description of the activity status (e.g. Last completed, Next due, Frequency, Avg interval, etc.
+        // badge = Total number of activities that are overdue
+        // userInfo : Probably need to include at least the activity uuid
+        
+        let stats:ActivityStatistics = ActivityStatistics(activity: activity)
+        content.title = activity.name ?? "Activity"
+        content.subtitle = "Subtitle"
+        content.body = "Next due date: " + stats.nextDay
+        
+        content.userInfo = ["UUID": uuid]
+        
+        // Set the category identifier
+        content.categoryIdentifier = ACTIVITY_CATEGORY_ID
+        // Set the thread identifier to the UUID of the Activity so they are grouped together
+        content.threadIdentifier = uuid
+        
+        // Set up the trigger.
+        // TODO: This should be a UNCalendarNotificationTrigger which is based off of the next notification date
+        let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 30, repeats: false)
+        // Create the request
+        let request = UNNotificationRequest(identifier: uuid, content: content, trigger: trigger)
+        
+        notificationCenter.add(request) {
+            (error) in
+            if error != nil {
+                print("Unable to add notification request" + error!.localizedDescription)
+            }
+        }
+        
     }
     
     
@@ -101,6 +136,7 @@ extension NotificationManager : UNUserNotificationCenterDelegate {
     
     func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
         
+        completionHandler([.alert, .badge])
     }
     
     func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
