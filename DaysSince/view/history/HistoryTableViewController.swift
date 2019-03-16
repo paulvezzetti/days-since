@@ -77,8 +77,8 @@ class HistoryTableViewController: UITableViewController {
         let action = UIContextualAction(style: .normal, title: "Delete") { (action, view, completion) in
             let alert = UIAlertController(title: "Delete this event?", message: "This will permanently delete this event from the activity history.", preferredStyle: UIAlertController.Style.alert)
             alert.addAction(UIAlertAction(title: "Yes", style: .destructive) { (alert) in
-                let event = self.sortedHistory[indexPath.row]
-                self.activity?.removeFromHistory(event)
+                let event = self.sortedHistory.remove(at: indexPath.row)
+                self.activity?.deleteEvent(event: event)
                 self.activityDidChange()
             })
             alert.addAction(UIAlertAction(title: "No", style: .default, handler: nil))

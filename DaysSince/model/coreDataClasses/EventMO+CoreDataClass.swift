@@ -31,4 +31,8 @@ public class EventMO: NSManagedObject {
         
         return dateFormatter.string(from: eventDate)
     }
+    
+    deinit {
+        print("Destroying Event at \(getFormattedDate(style: DateFormatter.Style.long))")
+    }
 }

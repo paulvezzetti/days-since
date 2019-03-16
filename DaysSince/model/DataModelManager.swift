@@ -91,11 +91,25 @@ class DataModelManager {
         }
         
         if let updates = userInfo[NSUpdatedObjectsKey] as? Set<NSManagedObject>, updates.count > 0 {
-//            print("--- UPDATES ---")
-//            for update in updates {
-//                print(update.changedValues())
-//            }
-//            print("+++++++++++++++")
+            print("--- UPDATES ---")
+            for update in updates {
+                print("**** Change ****")
+                print(update.changedValuesForCurrentEvent())
+                if let activity = update as? ActivityMO {
+                    print("Updated activity \(activity.name!)")
+//                    NotificationCenter.default.post(name: Notification.Name.activityAdded, object: activity)
+                } else if let event = update as? EventMO {
+                    print("Updated event \(event.timestamp!)")
+//                    NotificationCenter.default.post(name: Notification.Name.eventAdded, object: event)
+                }
+                else if let _ = update as? IntervalMO {
+                    print("Update for interval")
+                } else if let _ = update as? NotificationMO {
+                    print("Update for notification")
+                }
+
+            }
+            print("+++++++++++++++")
         }
         
         if let deletes = userInfo[NSDeletedObjectsKey] as? Set<NSManagedObject>, deletes.count > 0 {
