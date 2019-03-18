@@ -73,6 +73,7 @@ class DetailViewController: UIViewController {
         } else if segue.identifier == "markDoneSegue" {
             let controller = (segue.destination as! UINavigationController).topViewController as! MarkDoneTableViewController
             controller.doneDelegate = self
+            controller.activity = detailItem
         } else if segue.identifier == "editActivity" {
             let controller = segue.destination as! AddActivityTableViewController
             controller.dataManager = dataManager
@@ -156,25 +157,26 @@ class DetailViewController: UIViewController {
 
 extension DetailViewController : MarkDoneDelegate {
     func done(at date: Date, withDetails details: String, sender: UIViewController) {
-        do {
-            defer {
-                sender.dismiss(animated: true, completion: nil)
-            }
-            guard let activity = self.detailItem, let moc = try dataManager?.getManagedObjectContext() else {
-                return
-            }
-            let event = EventMO(context: moc)
-            event.timestamp = Date.normalize(date: date)
-            //print("Event timestamp: \(event.timestamp!.getLongString())")
-            event.details = details
-            activity.addToHistory(event)
-            
-            //historyViewController.activityDidChange()
-            //summaryViewController!.activityDidChange()
-
-        } catch {
-            // TODO: Show error
-        }
+        sender.dismiss(animated: true, completion: nil)
+//        do {
+//            defer {
+//                sender.dismiss(animated: true, completion: nil)
+//            }
+//            guard let activity = self.detailItem, let moc = try dataManager?.getManagedObjectContext() else {
+//                return
+//            }
+//            let event = EventMO(context: moc)
+//            event.timestamp = Date.normalize(date: date)
+//            //print("Event timestamp: \(event.timestamp!.getLongString())")
+//            event.details = details
+//            activity.addToHistory(event)
+//            
+//            //historyViewController.activityDidChange()
+//            //summaryViewController!.activityDidChange()
+//
+//        } catch {
+//            // TODO: Show error
+//        }
     }
     
     func cancelled(sender: UIViewController) {

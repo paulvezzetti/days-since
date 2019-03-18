@@ -16,7 +16,7 @@ class MasterViewController: UITableViewController {
     var activityDict: [ActivityMO.ActivityStatus : [ActivityMO] ] = [:]
     var sectionIndices: [Int : ActivityMO.ActivityStatus] = [:]
 
-    private var markDoneIndexPath:IndexPath?
+    //private var markDoneIndexPath:IndexPath?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -34,7 +34,10 @@ class MasterViewController: UITableViewController {
         NotificationCenter.default.addObserver(self, selector: #selector(onAnyActivityChanged(notification:)), name: Notification.Name.activityAdded, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(onAnyActivityChanged(notification:)), name: Notification.Name.activityRemoved, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(onAnyActivityChanged(notification:)), name: Notification.Name.activityChanged, object: nil)
-        
+        NotificationCenter.default.addObserver(self, selector: #selector(onAnyActivityChanged(notification:)), name: Notification.Name.eventAdded, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(onAnyActivityChanged(notification:)), name: Notification.Name.eventRemoved, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(onAnyActivityChanged(notification:)), name: Notification.Name.eventChanged, object: nil)
+
 //        do {
 //            
 //            let notificationCenter = NotificationCenter.default
@@ -218,11 +221,12 @@ class MasterViewController: UITableViewController {
     
     func doneAction(at indexPath: IndexPath) -> UIContextualAction {
         
-        let action = UIContextualAction(style: .normal, title: "Done") { (action, view, completion) in
+        let action = UIContextualAction(style: .normal, title: "Done") {[unowned self] (action, view, completion) in
             if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "markDoneNavigationController") as? MarkDoneTableViewController
             {
-                self.markDoneIndexPath = indexPath
+                //self.markDoneIndexPath = indexPath
                 vc.doneDelegate = self
+                vc.activity = self.getActivity(at: indexPath)
                 self.show(vc, sender: self)
             }
             completion(true)
@@ -292,8 +296,7 @@ class MasterViewController: UITableViewController {
     func deleteActivity(at indexPath:IndexPath) {
         if let dm = dataManager {
             do {
-                let sectionActivities = activityDict[sectionToStatus(section: indexPath.section)] ?? []
-                let activity = sectionActivities[indexPath.row] // TODO: Array size check
+                let activity = getActivity(at: indexPath)
                 try dm.removeActivity(activity: activity)
             } catch {
                 // TODO: This should show an error screen.
@@ -303,32 +306,38 @@ class MasterViewController: UITableViewController {
             }
         }
     }
+    
+    func getActivity(at indexPath:IndexPath) -> ActivityMO {
+        let sectionActivities = activityDict[sectionToStatus(section: indexPath.section)] ?? []
+        return sectionActivities[indexPath.row] // TODO: Array size check
+    }
 
 }
 
 extension MasterViewController : MarkDoneDelegate {
     func done(at date: Date, withDetails details: String, sender: UIViewController) {
-        do {
-            defer {
-                sender.navigationController!.popViewController(animated: false)
-            }
-            
-            guard let selectedIndex = markDoneIndexPath, let dm = dataManager else {
-                return
-            }
-            let sectionActivities = activityDict[sectionToStatus(section: selectedIndex.section)] ?? []
-            let activity = sectionActivities[selectedIndex.row] // TODO: Array size check
-            let moc = try dm.getManagedObjectContext()
-            let event = EventMO(context: moc)
-            event.timestamp = Date.normalize(date: date)
-            event.details = details
-            activity.addToHistory(event)
-            
-            tableView.reloadRows(at: [selectedIndex], with: .automatic)
-            
-        } catch {
-            
-        }
+        sender.navigationController!.popViewController(animated: false)
+//        do {
+//            defer {
+//                sender.navigationController!.popViewController(animated: false)
+//            }
+//            
+//            guard let selectedIndex = markDoneIndexPath, let dm = dataManager else {
+//                return
+//            }
+//            let sectionActivities = activityDict[sectionToStatus(section: selectedIndex.section)] ?? []
+//            let activity = sectionActivities[selectedIndex.row] // TODO: Array size check
+//            let moc = try dm.getManagedObjectContext()
+//            let event = EventMO(context: moc)
+//            event.timestamp = Date.normalize(date: date)
+//            event.details = details
+//            activity.addToHistory(event)
+//            
+//            tableView.reloadRows(at: [selectedIndex], with: .automatic)
+//            
+//        } catch {
+//            
+//        }
     }
     
     func cancelled(sender: UIViewController) {

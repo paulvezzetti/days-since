@@ -131,7 +131,7 @@ class DataModelManager {
                 return
             } else if deletedEvent != nil {
                 print("POST: EventRemoved for event: " + deletedEvent!.getFormattedDate(style: .full))
-                NotificationCenter.default.post(name: Notification.Name.eventRemoved, object: deletedEvent?.activity)
+                NotificationCenter.default.post(name: Notification.Name.eventRemoved, object: deletedEvent)
                 return
             }
 
