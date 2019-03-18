@@ -3,11 +3,11 @@
     <entity name="Activity" representedClassName="ActivityMO" syncable="YES" codeGenerationType="category">
         <attribute name="id" attributeType="UUID" usesScalarValueType="NO" syncable="YES"/>
         <attribute name="image" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="isNotificationEnabled" attributeType="Boolean" defaultValueString="YES" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="isReminderEnabled" attributeType="Boolean" defaultValueString="YES" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="history" toMany="YES" deletionRule="Nullify" destinationEntity="Event" inverseName="activity" inverseEntity="Event" syncable="YES"/>
         <relationship name="interval" maxCount="1" deletionRule="Nullify" destinationEntity="Interval" inverseName="activity" inverseEntity="Interval" syncable="YES"/>
-        <relationship name="notifications" maxCount="1" deletionRule="Nullify" destinationEntity="Notification" inverseName="activity" inverseEntity="Notification" syncable="YES"/>
+        <relationship name="reminder" maxCount="1" deletionRule="Nullify" destinationEntity="Reminder" inverseName="activity" inverseEntity="Reminder" syncable="YES"/>
     </entity>
     <entity name="ConstantInterval" representedClassName="ConstantIntervalMO" parentEntity="Interval" syncable="YES" codeGenerationType="category">
         <attribute name="frequency" attributeType="Integer 16" minValueString="0" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
@@ -27,12 +27,12 @@
     <entity name="MonthlyInterval" representedClassName="MonthlyIntervalMO" parentEntity="Interval" syncable="YES" codeGenerationType="category">
         <attribute name="day" attributeType="Integer 16" minValueString="0" maxValueString="32" defaultValueString="1" usesScalarValueType="YES" syncable="YES"/>
     </entity>
-    <entity name="Notification" representedClassName="NotificationMO" syncable="YES" codeGenerationType="category">
+    <entity name="Reminder" representedClassName="ReminderMO" syncable="YES" codeGenerationType="category">
         <attribute name="allowSnooze" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="daysBefore" attributeType="Integer 16" minValueString="1" defaultValueString="1" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="enabled" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="snooze" attributeType="Integer 16" minValueString="1" defaultValueString="1" usesScalarValueType="YES" syncable="YES"/>
-        <relationship name="activity" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Activity" inverseName="notifications" inverseEntity="Activity" syncable="YES"/>
+        <relationship name="activity" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Activity" inverseName="reminder" inverseEntity="Activity" syncable="YES"/>
     </entity>
     <entity name="UnlimitedInterval" representedClassName="UnlimitedIntervalMO" parentEntity="Interval" syncable="YES" codeGenerationType="category"/>
     <entity name="WeeklyInterval" representedClassName="WeeklyIntervalMO" parentEntity="Interval" syncable="YES" codeGenerationType="category">
@@ -40,7 +40,7 @@
     </entity>
     <entity name="YearlyInterval" representedClassName="YearlyIntervalMO" parentEntity="Interval" syncable="YES" codeGenerationType="category">
         <attribute name="day" attributeType="Integer 16" minValueString="1" maxValueString="31" defaultValueString="1" usesScalarValueType="YES" syncable="YES"/>
-        <attribute name="month" attributeType="Integer 16" minValueString="1" maxValueString="12" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="month" attributeType="Integer 16" minValueString="1" maxValueString="12" defaultValueString="1" usesScalarValueType="YES" syncable="YES"/>
     </entity>
     <elements>
         <element name="Activity" positionX="-63.47265625" positionY="-8.6171875" width="128" height="150"/>
@@ -48,7 +48,7 @@
         <element name="Event" positionX="-74.6171875" positionY="192.96484375" width="128" height="60"/>
         <element name="Interval" positionX="209.41015625" positionY="183.20703125" width="128" height="60"/>
         <element name="MonthlyInterval" positionX="77.70703125" positionY="311.53125" width="128" height="60"/>
-        <element name="Notification" positionX="158.08984375" positionY="-19.03125" width="128" height="120"/>
+        <element name="Reminder" positionX="158.08984375" positionY="-19.03125" width="128" height="120"/>
         <element name="UnlimitedInterval" positionX="503.921875" positionY="314.13671875" width="128" height="45"/>
         <element name="WeeklyInterval" positionX="219.46875" positionY="311.5234375" width="128" height="60"/>
         <element name="YearlyInterval" positionX="362.30859375" positionY="311.28515625" width="128" height="75"/>

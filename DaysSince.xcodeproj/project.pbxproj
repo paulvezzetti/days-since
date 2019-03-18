@@ -29,7 +29,6 @@
 		FA1D733C222B622700D8EBF7 /* DaysOfMonth.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA1D733B222B622700D8EBF7 /* DaysOfMonth.swift */; };
 		FA1D733E222D85DF00D8EBF7 /* Weekdays.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA1D733D222D85DE00D8EBF7 /* Weekdays.swift */; };
 		FA1D7340222DB9DB00D8EBF7 /* Months.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA1D733F222DB9DB00D8EBF7 /* Months.swift */; };
-		FA1D7343222E165000D8EBF7 /* NotificationMO+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA1D7341222E165000D8EBF7 /* NotificationMO+CoreDataClass.swift */; };
 		FA1D7347222F550D00D8EBF7 /* MarkDoneTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA1D7346222F550D00D8EBF7 /* MarkDoneTableViewController.swift */; };
 		FA1D734922300A5000D8EBF7 /* MarkDoneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA1D734822300A5000D8EBF7 /* MarkDoneDelegate.swift */; };
 		FA1D734B22303F4600D8EBF7 /* HistoryTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA1D734A22303F4600D8EBF7 /* HistoryTableViewCell.swift */; };
@@ -47,6 +46,7 @@
 		FAA6AF242213684800346CCB /* HistoryTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAA6AF232213684800346CCB /* HistoryTableViewController.swift */; };
 		FAA6AF2622139F4A00346CCB /* ActivitySummaryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAA6AF2522139F4A00346CCB /* ActivitySummaryViewController.swift */; };
 		FAB23B74223AC332004C6252 /* NotificationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAB23B73223AC332004C6252 /* NotificationManager.swift */; };
+		FAB23B7B223F2436004C6252 /* ReminderMO+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAB23B77223F2436004C6252 /* ReminderMO+CoreDataClass.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -72,7 +72,6 @@
 		FA1D733B222B622700D8EBF7 /* DaysOfMonth.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DaysOfMonth.swift; sourceTree = "<group>"; };
 		FA1D733D222D85DE00D8EBF7 /* Weekdays.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Weekdays.swift; sourceTree = "<group>"; };
 		FA1D733F222DB9DB00D8EBF7 /* Months.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Months.swift; sourceTree = "<group>"; };
-		FA1D7341222E165000D8EBF7 /* NotificationMO+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NotificationMO+CoreDataClass.swift"; sourceTree = "<group>"; };
 		FA1D7346222F550D00D8EBF7 /* MarkDoneTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarkDoneTableViewController.swift; sourceTree = "<group>"; };
 		FA1D734822300A5000D8EBF7 /* MarkDoneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarkDoneDelegate.swift; sourceTree = "<group>"; };
 		FA1D734A22303F4600D8EBF7 /* HistoryTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryTableViewCell.swift; sourceTree = "<group>"; };
@@ -92,6 +91,7 @@
 		FAA6AF232213684800346CCB /* HistoryTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryTableViewController.swift; sourceTree = "<group>"; };
 		FAA6AF2522139F4A00346CCB /* ActivitySummaryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivitySummaryViewController.swift; sourceTree = "<group>"; };
 		FAB23B73223AC332004C6252 /* NotificationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationManager.swift; sourceTree = "<group>"; };
+		FAB23B77223F2436004C6252 /* ReminderMO+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ReminderMO+CoreDataClass.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -137,7 +137,7 @@
 				FA1D72E82220784900D8EBF7 /* EventMO+CoreDataClass.swift */,
 				FA1D73212228C60E00D8EBF7 /* IntervalMO+CoreDataClass.swift */,
 				FA1D73272228C60E00D8EBF7 /* MonthlyIntervalMO+CoreDataClass.swift */,
-				FA1D7341222E165000D8EBF7 /* NotificationMO+CoreDataClass.swift */,
+				FAB23B77223F2436004C6252 /* ReminderMO+CoreDataClass.swift */,
 				FA1D73232228C60E00D8EBF7 /* UnlimitedIntervalMO+CoreDataClass.swift */,
 				FA1D731D2228C60E00D8EBF7 /* WeeklyIntervalMO+CoreDataClass.swift */,
 				FA1D731F2228C60E00D8EBF7 /* YearlyIntervalMO+CoreDataClass.swift */,
@@ -305,6 +305,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				FA1D7340222DB9DB00D8EBF7 /* Months.swift in Sources */,
+				FAB23B7B223F2436004C6252 /* ReminderMO+CoreDataClass.swift in Sources */,
 				FA3CEF49220E0F2500634DD7 /* AppDelegate.swift in Sources */,
 				FA1D733E222D85DF00D8EBF7 /* Weekdays.swift in Sources */,
 				FA1D732B2228C60E00D8EBF7 /* YearlyIntervalMO+CoreDataClass.swift in Sources */,
@@ -328,7 +329,6 @@
 				FAA6AF2622139F4A00346CCB /* ActivitySummaryViewController.swift in Sources */,
 				FA1D73292228C60E00D8EBF7 /* WeeklyIntervalMO+CoreDataClass.swift in Sources */,
 				FA3CEF4E220E0F2500634DD7 /* MasterViewController.swift in Sources */,
-				FA1D7343222E165000D8EBF7 /* NotificationMO+CoreDataClass.swift in Sources */,
 				FA1D732F2228C60E00D8EBF7 /* UnlimitedIntervalMO+CoreDataClass.swift in Sources */,
 				FA1D734922300A5000D8EBF7 /* MarkDoneDelegate.swift in Sources */,
 				FA1D73312228C60E00D8EBF7 /* ConstantIntervalMO+CoreDataClass.swift in Sources */,

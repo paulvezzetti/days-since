@@ -30,7 +30,7 @@ class AddActivityTableViewController: UITableViewController, UITextFieldDelegate
     
     @IBOutlet private var startDatePicker: UIDatePicker!
     @IBOutlet private var saveButton: UIBarButtonItem!
-    @IBOutlet private var enableNotificationsSwitch: UISwitch!
+    @IBOutlet private var enableRemindersSwitch: UISwitch!
     @IBOutlet private var remindTextField: UITextField!
     @IBOutlet private var snoozeSwitch: UISwitch!
     @IBOutlet private var snoozeTextField: UITextField!
@@ -85,7 +85,7 @@ class AddActivityTableViewController: UITableViewController, UITextFieldDelegate
             // Otherwise, initialize a new one
             self.tempActivity = ActivityMO(context: context)
             self.tempActivity?.id = UUID()
-            self.tempActivity?.notifications = NotificationMO(context: context)
+            self.tempActivity?.reminder = ReminderMO(context: context)
             self.tempActivity?.interval = UnlimitedIntervalMO(context: context)
             let firstEvent = EventMO(context: context)
             firstEvent.timestamp = Date.normalize(date: Date())
@@ -157,10 +157,10 @@ class AddActivityTableViewController: UITableViewController, UITextFieldDelegate
         }
         
         activity.name = titleField.text!
-        activity.notifications?.enabled = enableNotificationsSwitch.isOn
-        activity.notifications?.allowSnooze = snoozeSwitch.isOn
-        activity.notifications?.daysBefore = Int16(remindTextField.text ?? "1") ?? 1
-        activity.notifications?.snooze = Int16(snoozeTextField.text ?? "1") ?? 1
+        activity.reminder?.enabled = enableRemindersSwitch.isOn
+        activity.reminder?.allowSnooze = snoozeSwitch.isOn
+        activity.reminder?.daysBefore = Int16(remindTextField.text ?? "1") ?? 1
+        activity.reminder?.snooze = Int16(snoozeTextField.text ?? "1") ?? 1
         
         // TODO: Update activity and save
         if let activityToUpdate = editActivity {
@@ -177,11 +177,11 @@ class AddActivityTableViewController: UITableViewController, UITextFieldDelegate
             if firstDate != activityToUpdate.firstDate {
                 activityToUpdate.updateFirstDate(to: Date.normalize(date:firstDate))
             }
-            if !(activity.notifications!.isEquivalent(to: activityToUpdate.notifications!)) {
-                activityToUpdate.notifications?.enabled = activity.notifications?.enabled ?? false
-                activityToUpdate.notifications?.allowSnooze = activity.notifications?.allowSnooze ?? false
-                activityToUpdate.notifications?.daysBefore = activity.notifications?.daysBefore ?? 1
-                activityToUpdate.notifications?.snooze = activity.notifications?.snooze ?? 1
+            if !(activity.reminder!.isEquivalent(to: activityToUpdate.reminder!)) {
+                activityToUpdate.reminder?.enabled = activity.reminder?.enabled ?? false
+                activityToUpdate.reminder?.allowSnooze = activity.reminder?.allowSnooze ?? false
+                activityToUpdate.reminder?.daysBefore = activity.reminder?.daysBefore ?? 1
+                activityToUpdate.reminder?.snooze = activity.reminder?.snooze ?? 1
             }
         } else {
             // Save the context
@@ -212,29 +212,29 @@ class AddActivityTableViewController: UITableViewController, UITextFieldDelegate
         let title = titleField.text ?? ""
         saveButton.isEnabled = !title.isEmpty
         
-        let enableNotifications = activity.notifications?.enabled ?? false
-        enableNotificationsSwitch.isEnabled = true
-        enableNotificationsSwitch.setOn(enableNotifications, animated: false)
-        remindTextField.isEnabled = enableNotifications
-        remindTextField.text = String(activity.notifications?.daysBefore ?? 1)
-        snoozeSwitch.setOn(enableNotifications, animated: false)
-        snoozeSwitch.isSelected = activity.notifications?.allowSnooze ?? false
-        snoozeTextField.isEnabled = enableNotifications
-        snoozeTextField.text = String(activity.notifications?.snooze ?? 1)
+        let enableReminder = activity.reminder?.enabled ?? false
+        enableRemindersSwitch.isEnabled = true
+        enableRemindersSwitch.setOn(enableReminder, animated: false)
+        remindTextField.isEnabled = enableReminder
+        remindTextField.text = String(activity.reminder?.daysBefore ?? 1)
+        snoozeSwitch.setOn(enableReminder, animated: false)
+        snoozeSwitch.isSelected = activity.reminder?.allowSnooze ?? false
+        snoozeTextField.isEnabled = enableReminder
+        snoozeTextField.text = String(activity.reminder?.snooze ?? 1)
 
     }
     
     
-    @IBAction func enableNotificationsChanged(_ sender: Any) {
-        let enableNotifications = enableNotificationsSwitch.isOn
-        if enableNotifications {
+    @IBAction func enableReminderChanged(_ sender: Any) {
+        let enableReminders = enableRemindersSwitch.isOn
+        if enableReminders {
             // Check for push permission. This is async. If it fails, we will disable notifications.
             requestPermissionForPushNotifications()
         }
-        tempActivity?.notifications?.enabled = enableNotifications
-        remindTextField.isEnabled = enableNotifications
-        snoozeSwitch.isEnabled = enableNotifications
-        snoozeTextField.isEnabled = enableNotifications
+        tempActivity?.reminder?.enabled = enableReminders
+        remindTextField.isEnabled = enableReminders
+        snoozeSwitch.isEnabled = enableReminders
+        snoozeTextField.isEnabled = enableReminders
     }
     
     @IBAction func startDateValueChanged(_ sender: Any) {

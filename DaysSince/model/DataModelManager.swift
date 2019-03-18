@@ -87,8 +87,8 @@ class DataModelManager {
                 }
                 else if let interval = mo as? IntervalMO {
                     print("INSERT interval: " + interval.toPrettyString() + " for activity: \(interval.activity?.name ?? "nil")" )
-                } else if let _ = mo as? NotificationMO {
-                    print("INSERT notification")
+                } else if let _ = mo as? ReminderMO {
+                    print("INSERT reminder")
                 }
             }
             
@@ -123,8 +123,8 @@ class DataModelManager {
                 }
                 else if let interval = mo as? IntervalMO {
                     print("DELETE for interval: " + interval.toPrettyString() + " for activity: \(interval.activity?.name ?? "nil")")
-                } else if let _ = mo as? NotificationMO {
-                    print("DELETE for notification")
+                } else if let _ = mo as? ReminderMO {
+                    print("DELETE for reminder")
                 }
             }
             if deletedActivity != nil {
@@ -160,9 +160,9 @@ class DataModelManager {
                 }
                 else if let interval = update as? IntervalMO {
                     print("Update for interval : " + interval.toPrettyString())
-                } else if let notification = update as? NotificationMO {
-                    print("POST for notification")
-                    NotificationCenter.default.post(name: Notification.Name.reminderChanged, object: notification)
+                } else if let reminder = update as? ReminderMO {
+                    print("POST for reminder")
+                    NotificationCenter.default.post(name: Notification.Name.reminderChanged, object: reminder)
                 }
 
             }

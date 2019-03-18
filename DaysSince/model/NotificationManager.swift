@@ -65,11 +65,11 @@ class NotificationManager : NSObject {
     }
 
     /* ----------------------------------------------------------
-     What is the logic for setting up our notifications.
-     - if notifications are enabled:
+     What is the logic for setting up our reminders.
+     - if reminders are enabled:
      - When a new activity is created:
         - Calculate the time to the next event
-        - Subtract the time before for the notification
+        - Subtract the time before for the reminder
         - Schedule the notification for that time
      - When an activity interval is modified
         - Remove all pending notifications
@@ -86,7 +86,7 @@ class NotificationManager : NSObject {
     
     func scheduleReminderNotification(for activity:ActivityMO) {
         let uuid = activity.id!.uuidString
-        guard activity.isNotificationEnabled else {
+        guard activity.isReminderEnabled else {
             // If this activity is not enabled for notifications, then yank any pending notifications from
             // the notification center. It's not likely.
             notificationCenter.removePendingNotificationRequests(withIdentifiers: [uuid])

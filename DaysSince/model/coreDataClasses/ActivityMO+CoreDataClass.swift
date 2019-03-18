@@ -23,9 +23,9 @@ public class ActivityMO: NSManagedObject {
     func clone(context:NSManagedObjectContext, eventCloneOptions:ActivityMO.EventCloneOptions) -> ActivityMO {
         let activity = ActivityMO(context: context)
         activity.name = self.name
-        activity.isNotificationEnabled = self.isNotificationEnabled
+        activity.isReminderEnabled = self.isReminderEnabled
         activity.interval = self.interval?.clone(context: context)
-        activity.notifications = self.notifications?.clone(context: context)
+        activity.reminder = self.reminder?.clone(context: context)
         
         if let history = self.history?.allObjects {
             switch eventCloneOptions {
