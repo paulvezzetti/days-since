@@ -20,7 +20,16 @@ class ActivitySummaryViewController: UIViewController {
     @IBOutlet var numInstancesLabel: UILabel!
     @IBOutlet var firstInstanceLabel: UILabel!
     
-    var activity:ActivityMO?
+    var activity:ActivityMO? {
+        didSet {
+            NotificationCenter.default.removeObserver(self)
+            // Add new observers
+            NotificationCenter.default.addObserver(self, selector: #selector(onActivityChanged(notification:)), name: Notification.Name.activityChanged, object: activity)
+            NotificationCenter.default.addObserver(self, selector: #selector(onActivityChanged(notification:)), name: Notification.Name.eventAdded, object: activity)
+            NotificationCenter.default.addObserver(self, selector: #selector(onActivityChanged(notification:)), name: Notification.Name.eventRemoved, object: activity)
+            NotificationCenter.default.addObserver(self, selector: #selector(onActivityChanged(notification:)), name: Notification.Name.eventChanged, object: nil)
+        }
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -52,6 +61,10 @@ class ActivitySummaryViewController: UIViewController {
         
         firstInstanceLabel.text = stats.firstDay
 
+    }
+    
+    @objc func onActivityChanged(notification:Notification) {
+        configureView()
     }
     
     func activityDidChange() {

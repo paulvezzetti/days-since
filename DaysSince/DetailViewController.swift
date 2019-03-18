@@ -19,6 +19,20 @@ class DetailViewController: UIViewController {
     @IBOutlet var markDoneButton: UIButton!
     
     var dataManager: DataModelManager? = nil
+    
+    var detailItem: ActivityMO? {
+        didSet {
+            NotificationCenter.default.removeObserver(self)
+            // Add new observers
+            NotificationCenter.default.addObserver(self, selector: #selector(onActivityChanged(notification:)), name: Notification.Name.activityChanged, object: detailItem)
+
+            // Update the view.
+            configureView()
+            if let summaryVC = summaryViewController {
+                summaryVC.activity = detailItem
+            }
+        }
+    }
 
     
     func configureView() {
@@ -32,6 +46,7 @@ class DetailViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         // Do any additional setup after loading the view, typically from a nib.
         configureView()
         
@@ -81,20 +96,16 @@ class DetailViewController: UIViewController {
 //        controller.dismiss(animated: true, completion: nil)
         
         configureView()
-        historyViewController.activityDidChange()
-        summaryViewController!.activityDidChange()
+        //historyViewController.activityDidChange()
+        //summaryViewController!.activityDidChange()
 
     }
-
-    var detailItem: ActivityMO? {
-        didSet {
-            // Update the view.
-            configureView()
-            if let summaryVC = summaryViewController {
-                summaryVC.activity = detailItem
-            }
-        }
+    
+    @objc
+    func onActivityChanged(notification:Notification) {
+        configureView()
     }
+
 
     @objc
     func selectionDidChange(_ sender: UISegmentedControl) {
@@ -158,8 +169,8 @@ extension DetailViewController : MarkDoneDelegate {
             event.details = details
             activity.addToHistory(event)
             
-            historyViewController.activityDidChange()
-            summaryViewController!.activityDidChange()
+            //historyViewController.activityDidChange()
+            //summaryViewController!.activityDidChange()
 
         } catch {
             // TODO: Show error

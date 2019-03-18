@@ -98,7 +98,7 @@ class DataModelManager {
                 return
             } else if newEvent != nil {
                 print("POST: EventAdded for event: " + newEvent!.getFormattedDate(style: .full))
-                NotificationCenter.default.post(name: Notification.Name.eventAdded, object: newEvent)
+                NotificationCenter.default.post(name: Notification.Name.eventAdded, object: newEvent?.activity)
                 return
             }
             print("--- End INSERTS")
@@ -115,11 +115,9 @@ class DataModelManager {
                 if let activity = mo as? ActivityMO {
                     print("DELETE activity \(activity.name!)")
                     deletedActivity = activity
-                    NotificationCenter.default.post(name: Notification.Name.activityRemoved, object: activity)
                 } else if let event = mo as? EventMO {
                     print("DELETE event \(event.timestamp!)")
                     deletedEvent = event
-                    NotificationCenter.default.post(name: Notification.Name.eventRemoved, object: event)
                 }
                 else if let interval = mo as? IntervalMO {
                     print("DELETE for interval: " + interval.toPrettyString() + " for activity: \(interval.activity?.name ?? "nil")")
@@ -133,7 +131,7 @@ class DataModelManager {
                 return
             } else if deletedEvent != nil {
                 print("POST: EventRemoved for event: " + deletedEvent!.getFormattedDate(style: .full))
-                NotificationCenter.default.post(name: Notification.Name.eventRemoved, object: deletedEvent)
+                NotificationCenter.default.post(name: Notification.Name.eventRemoved, object: deletedEvent?.activity)
                 return
             }
 
@@ -162,7 +160,7 @@ class DataModelManager {
                     print("Update for interval : " + interval.toPrettyString())
                 } else if let reminder = update as? ReminderMO {
                     print("POST for reminder")
-                    NotificationCenter.default.post(name: Notification.Name.reminderChanged, object: reminder)
+                    NotificationCenter.default.post(name: Notification.Name.reminderChanged, object: reminder.activity)
                 }
 
             }

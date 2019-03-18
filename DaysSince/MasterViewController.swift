@@ -28,6 +28,9 @@ class MasterViewController: UITableViewController {
         
         rebuildDataStructures()
 
+        // Remove any current observers
+        NotificationCenter.default.removeObserver(self)
+        // Add new observers
         NotificationCenter.default.addObserver(self, selector: #selector(onAnyActivityChanged(notification:)), name: Notification.Name.activityAdded, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(onAnyActivityChanged(notification:)), name: Notification.Name.activityRemoved, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(onAnyActivityChanged(notification:)), name: Notification.Name.activityChanged, object: nil)

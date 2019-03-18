@@ -13,6 +13,13 @@ class HistoryTableViewController: UITableViewController {
     var sortedHistory: [EventMO] = []
     var activity: ActivityMO? {
         didSet {
+            NotificationCenter.default.removeObserver(self)
+            // Add new observers
+            NotificationCenter.default.addObserver(self, selector: #selector(onActivityChanged(notification:)), name: Notification.Name.activityChanged, object: activity)
+            NotificationCenter.default.addObserver(self, selector: #selector(onActivityChanged(notification:)), name: Notification.Name.eventAdded, object: activity)
+            NotificationCenter.default.addObserver(self, selector: #selector(onActivityChanged(notification:)), name: Notification.Name.eventRemoved, object: activity)
+            NotificationCenter.default.addObserver(self, selector: #selector(onEventChanged(notification:)), name: Notification.Name.eventChanged, object: nil)
+
             if let act = activity {
                 sortedHistory = act.history?.sortedArray(using: [NSSortDescriptor(key: "timestamp", ascending: true)]) as! [EventMO]
             }
@@ -28,6 +35,7 @@ class HistoryTableViewController: UITableViewController {
         // self.navigationItem.rightBarButtonItem = self.editButtonItem
 
     }
+    
 
     // MARK: - Table view data source
 
@@ -79,7 +87,6 @@ class HistoryTableViewController: UITableViewController {
             alert.addAction(UIAlertAction(title: "Yes", style: .destructive) { (alert) in
                 let event = self.sortedHistory.remove(at: indexPath.row)
                 self.activity?.deleteEvent(event: event)
-                self.activityDidChange()
             })
             alert.addAction(UIAlertAction(title: "No", style: .default, handler: nil))
             self.present(alert, animated: true, completion: nil)
@@ -91,16 +98,24 @@ class HistoryTableViewController: UITableViewController {
         return action
     }
 
-    
-    
-    func activityDidChange() {
+    @objc func onActivityChanged(notification:Notification) {
         if let act = activity {
             sortedHistory = act.history?.sortedArray(using: [NSSortDescriptor(key: "timestamp", ascending: true)]) as! [EventMO]
         }
-
         tableView.reloadData()
     }
-
+    
+    @objc func onEventChanged(notification:Notification) {
+        // TODO: This could be more granular
+        if let act = activity {
+            sortedHistory = act.history?.sortedArray(using: [NSSortDescriptor(key: "timestamp", ascending: true)]) as! [EventMO]
+        }
+        tableView.reloadData()
+        
+        // TODO: Do we need some central save controller logic
+        
+    }
+    
     /*
     // Override to support conditional editing of the table view.
     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
@@ -151,7 +166,6 @@ class HistoryTableViewController: UITableViewController {
             }
             if indexPath.row < sortedHistory.count {
                 destination.event = sortedHistory[indexPath.row]
-                destination.delegate = self
             }
         }
 
@@ -159,13 +173,3 @@ class HistoryTableViewController: UITableViewController {
     
 }
 
-extension HistoryTableViewController : EventChangeDelegate {
-    func eventChanged(event: EventMO) {
-        let indexPath = tableView.indexPathForSelectedRow
-        if indexPath != nil {
-            tableView.reloadRows(at: [indexPath!], with: .automatic)
-        }
-    }
-    
-    
-}

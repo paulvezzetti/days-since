@@ -14,7 +14,6 @@ class EventDetailsViewController: UIViewController {
     @IBOutlet var intervalLabel: UILabel!
     @IBOutlet var detailTextView: UITextView!
     var event:EventMO?
-    var delegate:EventChangeDelegate?
     var isUpdated:Bool = false
     
     override func viewDidLoad() {
@@ -32,16 +31,16 @@ class EventDetailsViewController: UIViewController {
         }
     }
     
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        
-        guard let eventDelegate = delegate, let e = event else {
-            return
-        }
-        if isUpdated {
-            eventDelegate.eventChanged(event: e)
-        }
-    }
+//    override func viewWillDisappear(_ animated: Bool) {
+//        super.viewWillDisappear(animated)
+//
+//        guard let eventDelegate = delegate, let e = event else {
+//            return
+//        }
+//        if isUpdated {
+//            eventDelegate.eventChanged(event: e)
+//        }
+//    }
     
 
     @IBAction func updateEvent(_ sender: Any) {

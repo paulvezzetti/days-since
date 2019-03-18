@@ -33,7 +33,6 @@
 		FA1D734922300A5000D8EBF7 /* MarkDoneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA1D734822300A5000D8EBF7 /* MarkDoneDelegate.swift */; };
 		FA1D734B22303F4600D8EBF7 /* HistoryTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA1D734A22303F4600D8EBF7 /* HistoryTableViewCell.swift */; };
 		FA1D734D22307F9B00D8EBF7 /* EventDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA1D734C22307F9B00D8EBF7 /* EventDetailsViewController.swift */; };
-		FA1D734F2230B66900D8EBF7 /* EventChangeDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA1D734E2230B66900D8EBF7 /* EventChangeDelegate.swift */; };
 		FA3CEF49220E0F2500634DD7 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA3CEF48220E0F2500634DD7 /* AppDelegate.swift */; };
 		FA3CEF4C220E0F2500634DD7 /* DaysSince.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = FA3CEF4A220E0F2500634DD7 /* DaysSince.xcdatamodeld */; };
 		FA3CEF4E220E0F2500634DD7 /* MasterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA3CEF4D220E0F2500634DD7 /* MasterViewController.swift */; };
@@ -76,7 +75,6 @@
 		FA1D734822300A5000D8EBF7 /* MarkDoneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarkDoneDelegate.swift; sourceTree = "<group>"; };
 		FA1D734A22303F4600D8EBF7 /* HistoryTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryTableViewCell.swift; sourceTree = "<group>"; };
 		FA1D734C22307F9B00D8EBF7 /* EventDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventDetailsViewController.swift; sourceTree = "<group>"; };
-		FA1D734E2230B66900D8EBF7 /* EventChangeDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventChangeDelegate.swift; sourceTree = "<group>"; };
 		FA3CEF45220E0F2500634DD7 /* DaysSince.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DaysSince.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FA3CEF48220E0F2500634DD7 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		FA3CEF4B220E0F2500634DD7 /* DaysSince.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = DaysSince.xcdatamodel; sourceTree = "<group>"; };
@@ -152,7 +150,6 @@
 				FA1D7346222F550D00D8EBF7 /* MarkDoneTableViewController.swift */,
 				FA1D734822300A5000D8EBF7 /* MarkDoneDelegate.swift */,
 				FA1D734C22307F9B00D8EBF7 /* EventDetailsViewController.swift */,
-				FA1D734E2230B66900D8EBF7 /* EventChangeDelegate.swift */,
 			);
 			path = history;
 			sourceTree = "<group>";
@@ -318,7 +315,6 @@
 				FA1D72EC2220784900D8EBF7 /* EventMO+CoreDataClass.swift in Sources */,
 				FA1D733C222B622700D8EBF7 /* DaysOfMonth.swift in Sources */,
 				FA1D72DB221E2D2B00D8EBF7 /* ActivityStatistics.swift in Sources */,
-				FA1D734F2230B66900D8EBF7 /* EventChangeDelegate.swift in Sources */,
 				FA133A902231D6B600F363D1 /* DateExtension.swift in Sources */,
 				FA1D72F22226E18500D8EBF7 /* WeekDayPickerController.swift in Sources */,
 				FA1D7347222F550D00D8EBF7 /* MarkDoneTableViewController.swift in Sources */,
