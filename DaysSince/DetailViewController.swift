@@ -156,33 +156,9 @@ class DetailViewController: UIViewController {
 }
 
 extension DetailViewController : MarkDoneDelegate {
-    func done(at date: Date, withDetails details: String, sender: UIViewController) {
-        sender.dismiss(animated: true, completion: nil)
-//        do {
-//            defer {
-//                sender.dismiss(animated: true, completion: nil)
-//            }
-//            guard let activity = self.detailItem, let moc = try dataManager?.getManagedObjectContext() else {
-//                return
-//            }
-//            let event = EventMO(context: moc)
-//            event.timestamp = Date.normalize(date: date)
-//            //print("Event timestamp: \(event.timestamp!.getLongString())")
-//            event.details = details
-//            activity.addToHistory(event)
-//            
-//            //historyViewController.activityDidChange()
-//            //summaryViewController!.activityDidChange()
-//
-//        } catch {
-//            // TODO: Show error
-//        }
-    }
     
-    func cancelled(sender: UIViewController) {
+    func complete(sender: UIViewController) {
         sender.dismiss(animated: true, completion: nil)
     }
-    
-    
-    
+
 }

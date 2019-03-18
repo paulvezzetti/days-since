@@ -59,23 +59,21 @@ class MarkDoneTableViewController: UITableViewController {
     
     @IBAction func cancel(_ sender: Any) {
         if let delegate = doneDelegate {
-            delegate.cancelled(sender: self)
+            delegate.complete(sender: self)
         }
     }
     
     
     
     @IBAction func markDone(_ sender: Any) {
-        
         if let act = activity, let moc = act.managedObjectContext {
             let event = EventMO(context: moc)
             event.timestamp = Date.normalize(date: datePicker.date)
             event.details = detailTextView.text!
             act.addToHistory(event)
         }
-
         if let delegate = doneDelegate {
-            delegate.done(at: datePicker.date, withDetails: detailTextView.text!, sender: self)
+            delegate.complete(sender: self)
         }
     }
 }

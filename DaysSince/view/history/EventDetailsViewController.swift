@@ -31,16 +31,22 @@ class EventDetailsViewController: UIViewController {
         }
     }
     
-//    override func viewWillDisappear(_ animated: Bool) {
-//        super.viewWillDisappear(animated)
-//
-//        guard let eventDelegate = delegate, let e = event else {
-//            return
-//        }
-//        if isUpdated {
-//            eventDelegate.eventChanged(event: e)
-//        }
-//    }
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+
+        guard let e = event else {
+            return
+        }
+        if isUpdated {
+            if let moc = e.managedObjectContext {
+                do {
+                    try moc.save()
+                } catch {
+                    
+                }
+            }
+        }
+    }
     
 
     @IBAction func updateEvent(_ sender: Any) {

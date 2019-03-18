@@ -131,7 +131,17 @@ class DataModelManager {
                 return
             } else if deletedEvent != nil {
                 print("POST: EventRemoved for event: " + deletedEvent!.getFormattedDate(style: .full))
-                NotificationCenter.default.post(name: Notification.Name.eventRemoved, object: deletedEvent)
+                // If an event was removed, it's reference to the activity is null. However, we should be able to
+                // get it from the updates.
+                if let updates = userInfo[NSUpdatedObjectsKey] as? Set<NSManagedObject>, updates.count > 0 {
+                    for update in updates {
+                        if let activity = update as? ActivityMO {
+                            deletedActivity = activity
+                            break
+                        }
+                    }
+                }
+                NotificationCenter.default.post(name: Notification.Name.eventRemoved, object: deletedActivity)
                 return
             }
 

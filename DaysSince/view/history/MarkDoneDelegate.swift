@@ -11,7 +11,5 @@ import UIKit
 
 protocol MarkDoneDelegate {
     
-    func done(at date:Date, withDetails details:String, sender: UIViewController)
-    
-    func cancelled(sender: UIViewController)
+    func complete(sender: UIViewController)
 }

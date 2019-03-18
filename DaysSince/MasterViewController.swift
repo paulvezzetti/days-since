@@ -315,37 +315,10 @@ class MasterViewController: UITableViewController {
 }
 
 extension MasterViewController : MarkDoneDelegate {
-    func done(at date: Date, withDetails details: String, sender: UIViewController) {
-        sender.navigationController!.popViewController(animated: false)
-//        do {
-//            defer {
-//                sender.navigationController!.popViewController(animated: false)
-//            }
-//            
-//            guard let selectedIndex = markDoneIndexPath, let dm = dataManager else {
-//                return
-//            }
-//            let sectionActivities = activityDict[sectionToStatus(section: selectedIndex.section)] ?? []
-//            let activity = sectionActivities[selectedIndex.row] // TODO: Array size check
-//            let moc = try dm.getManagedObjectContext()
-//            let event = EventMO(context: moc)
-//            event.timestamp = Date.normalize(date: date)
-//            event.details = details
-//            activity.addToHistory(event)
-//            
-//            tableView.reloadRows(at: [selectedIndex], with: .automatic)
-//            
-//        } catch {
-//            
-//        }
-    }
     
-    func cancelled(sender: UIViewController) {
-       // sender.dismiss(animated: false, completion: nil)
+    func complete(sender: UIViewController) {
         sender.navigationController!.popViewController(animated: false)
     }
-    
-    
     
 }
 
