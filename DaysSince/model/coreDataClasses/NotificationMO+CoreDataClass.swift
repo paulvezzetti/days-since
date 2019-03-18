@@ -23,5 +23,13 @@ public class NotificationMO: NSManagedObject {
         
         return notification
     }
+    
+    func isEquivalent(to other:NotificationMO) -> Bool {
+        return self.enabled == other.enabled &&
+            self.daysBefore == other.daysBefore &&
+            self.allowSnooze == other.allowSnooze &&
+            self.snooze == other.snooze
+        
+    }
 
 }

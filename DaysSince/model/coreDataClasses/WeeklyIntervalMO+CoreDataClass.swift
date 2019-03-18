@@ -36,5 +36,14 @@ public class WeeklyIntervalMO: IntervalMO {
         theClone.day = self.day
         return theClone
     }
+    
+    override func isEquivalent(to other:IntervalMO) -> Bool {
+        if !(other is WeeklyIntervalMO) {
+            return false
+        }
+        let weeklyInterval = other as! WeeklyIntervalMO
+        return self.day == weeklyInterval.day
+    }
+
 
 }

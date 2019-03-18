@@ -28,4 +28,12 @@ public class ConstantIntervalMO: IntervalMO {
         return theClone
     }
 
+    override func isEquivalent(to other:IntervalMO) -> Bool {
+        if !(other is ConstantIntervalMO) {
+            return false
+        }
+        let constantInterval = other as! ConstantIntervalMO
+        return self.frequency == constantInterval.frequency
+    }
+
 }

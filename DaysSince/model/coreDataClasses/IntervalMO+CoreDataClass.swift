@@ -25,6 +25,10 @@ public class IntervalMO: NSManagedObject {
         return IntervalMO(context: context)
     }
     
+    func isEquivalent(to other:IntervalMO) -> Bool {
+        return false
+    }
+    
 //    deinit {
 //        print("Destroying an Interval")
 //    }

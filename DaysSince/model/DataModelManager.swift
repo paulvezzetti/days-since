@@ -68,64 +68,109 @@ class DataModelManager {
     @objc
     func managedObjectContextObjectsDidChange(notification: NSNotification) {
         guard let userInfo = notification.userInfo else { return }
+        print("---> Managed Object Did Change")
+        // Check for inserts. Any new object creation is an insert.
         
         if let inserts = userInfo[NSInsertedObjectsKey] as? Set<NSManagedObject>, inserts.count > 0 {
-//            print("--- INSERTS ---")
-//            print(inserts)
-//            print("+++++++++++++++")
-            // Only activities and events should be inserts.
+            print("--- INSERTS count: \(inserts.count)")
+            // When an activity is created, we get inserts for the activity and all of its components.
+            // We only want to send a notification for the activity and not the subcomponents
+            var newActivity:ActivityMO?
+            var newEvent:EventMO?
             for mo in inserts {
                 if let activity = mo as? ActivityMO {
-                    print("Inserted activity \(activity.name!)")
-                    NotificationCenter.default.post(name: Notification.Name.activityAdded, object: activity)
+                    print("INSERT activity \(activity.name!)")
+                    newActivity = activity
                 } else if let event = mo as? EventMO {
-                    print("Inserted event \(event.timestamp!)")
-                    NotificationCenter.default.post(name: Notification.Name.eventAdded, object: event)
+                    print("INSERT event \(event.timestamp!)")
+                    newEvent = event
                 }
-//                else if let _ = mo as? IntervalMO {
-//                    print("Should not be here for interval")
-//                } else if let _ = mo as? NotificationMO {
-//                    print("Should not be here for notification")
-//                }
+                else if let interval = mo as? IntervalMO {
+                    print("INSERT interval: " + interval.toPrettyString() + " for activity: \(interval.activity?.name ?? "nil")" )
+                } else if let _ = mo as? NotificationMO {
+                    print("INSERT notification")
+                }
             }
-        }
-        
-        if let updates = userInfo[NSUpdatedObjectsKey] as? Set<NSManagedObject>, updates.count > 0 {
-            print("--- UPDATES ---")
-            for update in updates {
-                print("**** Change ****")
-                print(update.changedValuesForCurrentEvent())
-                if let activity = update as? ActivityMO {
-                    print("Updated activity \(activity.name!)")
-//                    NotificationCenter.default.post(name: Notification.Name.activityAdded, object: activity)
-                } else if let event = update as? EventMO {
-                    print("Updated event \(event.timestamp!)")
-//                    NotificationCenter.default.post(name: Notification.Name.eventAdded, object: event)
-                }
-                else if let _ = update as? IntervalMO {
-                    print("Update for interval")
-                } else if let _ = update as? NotificationMO {
-                    print("Update for notification")
-                }
-
+            
+            if newActivity != nil {
+                print("POST: ActivityAdded for activity: " + newActivity!.name!)
+                NotificationCenter.default.post(name: Notification.Name.activityAdded, object: newActivity)
+                return
+            } else if newEvent != nil {
+                print("POST: EventAdded for event: " + newEvent!.getFormattedDate(style: .full))
+                NotificationCenter.default.post(name: Notification.Name.eventAdded, object: newEvent)
+                return
             }
-            print("+++++++++++++++")
+            print("--- End INSERTS")
         }
         
         if let deletes = userInfo[NSDeletedObjectsKey] as? Set<NSManagedObject>, deletes.count > 0 {
-//            print("--- DELETES ---")
-//            print(deletes)
-//            print("+++++++++++++++")
+            print("--- DELETES count :\(deletes.count)")
+            //            print(deletes)
+            //            print("+++++++++++++++")
+            // We only care about deleted activities or events
+            var deletedActivity:ActivityMO?
+            var deletedEvent:EventMO?
             for mo in deletes {
                 if let activity = mo as? ActivityMO {
-                    print("Deleted activity \(activity.name!)")
+                    print("DELETE activity \(activity.name!)")
+                    deletedActivity = activity
                     NotificationCenter.default.post(name: Notification.Name.activityRemoved, object: activity)
                 } else if let event = mo as? EventMO {
-                    print("Deleted event \(event.timestamp!)")
+                    print("DELETE event \(event.timestamp!)")
+                    deletedEvent = event
                     NotificationCenter.default.post(name: Notification.Name.eventRemoved, object: event)
                 }
+                else if let interval = mo as? IntervalMO {
+                    print("DELETE for interval: " + interval.toPrettyString() + " for activity: \(interval.activity?.name ?? "nil")")
+                } else if let _ = mo as? NotificationMO {
+                    print("DELETE for notification")
+                }
             }
+            if deletedActivity != nil {
+                print("POST: ActivityRemoved for activity: " + deletedActivity!.name!)
+                NotificationCenter.default.post(name: Notification.Name.activityRemoved, object: deletedActivity)
+                return
+            } else if deletedEvent != nil {
+                print("POST: EventRemoved for event: " + deletedEvent!.getFormattedDate(style: .full))
+                NotificationCenter.default.post(name: Notification.Name.eventRemoved, object: deletedEvent)
+                return
+            }
+
+            print("--- End DELETES")
         }
+
+        if let updates = userInfo[NSUpdatedObjectsKey] as? Set<NSManagedObject>, updates.count > 0 {
+            print("--- UPDATES count: \(updates.count)")
+            for update in updates {
+                print("**** Changed values for current event ****")
+                let currentValues = update.changedValuesForCurrentEvent()
+                if currentValues.count == 0 {
+                    print("No changed values")
+                    continue
+                }
+                print(currentValues)
+                print("******************************************")
+                if let activity = update as? ActivityMO {
+                    print("POST activityChanged for activity \(activity.name!)")
+                    NotificationCenter.default.post(name: Notification.Name.activityChanged, object: activity)
+                } else if let event = update as? EventMO {
+                    print("POST eventChanged at \(event.getFormattedDate(style: .long))")
+                    NotificationCenter.default.post(name: Notification.Name.eventChanged, object: event)
+                }
+                else if let interval = update as? IntervalMO {
+                    print("Update for interval : " + interval.toPrettyString())
+                } else if let notification = update as? NotificationMO {
+                    print("POST for notification")
+                    NotificationCenter.default.post(name: Notification.Name.reminderChanged, object: notification)
+                }
+
+            }
+            print("--- End UPDATES")
+        }
+        
+        print("<--- Managed Object Did Change")
+
     }
     
 //    func updateActivityStatus() {
@@ -209,10 +254,11 @@ extension Notification.Name {
     
     static let activityAdded = Notification.Name("activityAdded")
     static let activityRemoved = Notification.Name("activityRemoved")
-    static let activityUpdated = Notification.Name("activityUpdated")
-    static let intervalUpdated = Notification.Name("intervalUpdated")
+    static let activityChanged = Notification.Name("activityChanged")
+    static let intervalChanged = Notification.Name("intervalChanged")
     static let eventAdded = Notification.Name("eventAdded")
+    static let eventChanged = Notification.Name("eventChanged")
     static let eventRemoved = Notification.Name("eventRemoved")
-    static let notificationsUpdated = Notification.Name("notificationsUpdated")
+    static let reminderChanged = Notification.Name("reminderChanged")
     
 }

@@ -32,5 +32,14 @@ public class MonthlyIntervalMO: IntervalMO {
         theClone.day = self.day
         return theClone
     }
+    
+    override func isEquivalent(to other:IntervalMO) -> Bool {
+        if !(other is MonthlyIntervalMO) {
+            return false
+        }
+        let monthlyInterval = other as! MonthlyIntervalMO
+        return self.day == monthlyInterval.day
+    }
+
 
 }

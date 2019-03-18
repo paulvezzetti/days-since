@@ -36,4 +36,12 @@ public class YearlyIntervalMO: IntervalMO {
         return theClone
     }
 
+    override func isEquivalent(to other:IntervalMO) -> Bool {
+        if !(other is YearlyIntervalMO) {
+            return false
+        }
+        let yearlyInterval = other as! YearlyIntervalMO
+        return self.day == yearlyInterval.day && self.month == yearlyInterval.month
+    }
+
 }

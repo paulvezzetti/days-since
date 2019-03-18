@@ -28,13 +28,17 @@ class MasterViewController: UITableViewController {
         
         rebuildDataStructures()
 
-        do {
-            
-            let notificationCenter = NotificationCenter.default
-            try notificationCenter.addObserver(self, selector: #selector(managedObjectContextObjectsDidChange), name: NSNotification.Name.NSManagedObjectContextObjectsDidChange, object: dataManager?.getManagedObjectContext())
-        } catch {
-            
-        }
+        NotificationCenter.default.addObserver(self, selector: #selector(onAnyActivityChanged(notification:)), name: Notification.Name.activityAdded, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(onAnyActivityChanged(notification:)), name: Notification.Name.activityRemoved, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(onAnyActivityChanged(notification:)), name: Notification.Name.activityChanged, object: nil)
+        
+//        do {
+//            
+//            let notificationCenter = NotificationCenter.default
+//            try notificationCenter.addObserver(self, selector: #selector(managedObjectContextObjectsDidChange), name: NSNotification.Name.NSManagedObjectContextObjectsDidChange, object: dataManager?.getManagedObjectContext())
+//        } catch {
+//            
+//        }
         if let split = splitViewController {
             let controllers = split.viewControllers
             detailViewController = (controllers[controllers.count-1] as! UINavigationController).topViewController as? DetailViewController
@@ -53,6 +57,11 @@ class MasterViewController: UITableViewController {
     
     @objc
     func managedObjectContextObjectsDidChange(notification: NSNotification) {
+        rebuildDataStructures()
+        tableView.reloadData()
+    }
+    
+    @objc func onAnyActivityChanged(notification: Notification) {
         rebuildDataStructures()
         tableView.reloadData()
     }

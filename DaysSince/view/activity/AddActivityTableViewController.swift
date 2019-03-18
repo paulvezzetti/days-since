@@ -168,7 +168,7 @@ class AddActivityTableViewController: UITableViewController, UITextFieldDelegate
                 activityToUpdate.name = activity.name
             }
             
-            if activity.interval !== activityToUpdate.interval { // TODO: Need equals method
+            if !(activity.interval!.isEquivalent(to: activityToUpdate.interval!)) {
                 if let parentMoc = managedObjectContext?.parent {
                     activityToUpdate.interval = activity.interval?.clone(context: parentMoc)
                 }
@@ -177,13 +177,12 @@ class AddActivityTableViewController: UITableViewController, UITextFieldDelegate
             if firstDate != activityToUpdate.firstDate {
                 activityToUpdate.updateFirstDate(to: Date.normalize(date:firstDate))
             }
-            
-            activityToUpdate.notifications?.enabled = activity.notifications?.enabled ?? false
-            activityToUpdate.notifications?.allowSnooze = activity.notifications?.allowSnooze ?? false
-            activityToUpdate.notifications?.daysBefore = activity.notifications?.daysBefore ?? 1
-            activityToUpdate.notifications?.snooze = activity.notifications?.snooze ?? 1
-            
-            
+            if !(activity.notifications!.isEquivalent(to: activityToUpdate.notifications!)) {
+                activityToUpdate.notifications?.enabled = activity.notifications?.enabled ?? false
+                activityToUpdate.notifications?.allowSnooze = activity.notifications?.allowSnooze ?? false
+                activityToUpdate.notifications?.daysBefore = activity.notifications?.daysBefore ?? 1
+                activityToUpdate.notifications?.snooze = activity.notifications?.snooze ?? 1
+            }
         } else {
             // Save the context
             do {

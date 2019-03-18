@@ -25,4 +25,8 @@ public class UnlimitedIntervalMO: IntervalMO {
         return UnlimitedIntervalMO(context: context)
     }
 
+    override func isEquivalent(to other:IntervalMO) -> Bool {
+        return other is UnlimitedIntervalMO ? true : false
+    }
+
 }
