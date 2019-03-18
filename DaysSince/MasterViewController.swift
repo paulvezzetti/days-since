@@ -155,6 +155,9 @@ class MasterViewController: UITableViewController {
 //            let controller = (segue.destination as! UINavigationController).topViewController as! AddActivityTableViewController
             let controller = segue.destination as! AddActivityTableViewController
             controller.dataManager = dataManager
+            if let activity = sender as? ActivityMO {
+                controller.editActivity = activity
+            }
         }
     }
     
@@ -215,10 +218,30 @@ class MasterViewController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         let done = doneAction(at: indexPath)
+        let edit = editAction(at: indexPath)
         let delete = deleteAction(at: indexPath)
-        return UISwipeActionsConfiguration(actions: [delete, done])
+        return UISwipeActionsConfiguration(actions: [edit, delete, done])
     }
-    
+
+    func editAction(at indexPath: IndexPath) -> UIContextualAction {
+        
+        let action = UIContextualAction(style: .normal, title: "Edit") {[unowned self] (action, view, completion) in
+//            if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "markDoneNavigationController") as? MarkDoneTableViewController
+//            {
+//                //self.markDoneIndexPath = indexPath
+//                vc.doneDelegate = self
+//                vc.activity = self.getActivity(at: indexPath)
+//                self.show(vc, sender: self)
+//            }
+            self.performSegue(withIdentifier: "presentAddActivity", sender: self.getActivity(at: indexPath))
+            completion(true)
+        }
+        action.image = UIImage(named: "edit")
+        //action.title = "Mark Done"
+        //action.backgroundColor = UIColor(named: "Medium Green")
+        return action
+    }
+
     func doneAction(at indexPath: IndexPath) -> UIContextualAction {
         
         let action = UIContextualAction(style: .normal, title: "Done") {[unowned self] (action, view, completion) in

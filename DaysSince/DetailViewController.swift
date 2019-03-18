@@ -102,9 +102,36 @@ class DetailViewController: UIViewController {
 
     }
     
+    @IBAction func onDelete(_ sender: Any) {
+        let alert = UIAlertController(title: "Delete this activity?", message: "This will permanently delete this activity and all of its history.", preferredStyle: UIAlertController.Style.alert)
+        alert.addAction(UIAlertAction(title: "Yes", style: .destructive) { (alert) in
+            self.deleteActivity()
+        })
+        alert.addAction(UIAlertAction(title: "No", style: .default, handler: nil))
+        self.present(alert, animated: true, completion: nil)
+    }
+    
+    
     @objc
     func onActivityChanged(notification:Notification) {
         configureView()
+    }
+
+    
+    func deleteActivity() {
+        guard let activity = detailItem else {
+            return
+        }
+        if let dm = dataManager {
+            do {
+                try dm.removeActivity(activity: activity)
+            } catch {
+                // TODO: This should show an error screen.
+                let nserror = error as NSError
+                fatalError("Unresolved error \(nserror), \(nserror.userInfo)")
+                
+            }
+        }
     }
 
 

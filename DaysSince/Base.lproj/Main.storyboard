@@ -87,7 +87,11 @@
                             <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="YhQ-0z-CW9">
                                 <rect key="frame" x="0.0" y="632" width="375" height="35"/>
                                 <items>
-                                    <barButtonItem title="Delete" id="iUL-1y-6Ht"/>
+                                    <barButtonItem title="Delete" id="iUL-1y-6Ht">
+                                        <connections>
+                                            <action selector="onDelete:" destination="JEX-9P-axG" id="v37-jd-m3a"/>
+                                        </connections>
+                                    </barButtonItem>
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="GiL-xD-kfU"/>
                                     <barButtonItem title="Edit" id="iQb-z2-4uR">
                                         <connections>
@@ -1241,6 +1245,6 @@
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="BMi-sG-zyJ"/>
-        <segue reference="m8M-iz-Q6X"/>
+        <segue reference="vV1-vt-UA0"/>
     </inferredMetricsTieBreakers>
 </document>
