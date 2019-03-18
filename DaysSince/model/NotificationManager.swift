@@ -11,8 +11,9 @@ import UserNotifications
 
 class NotificationManager : NSObject {
     
-    private let ACTIVITY_CATEGORY_ID:String = "DAYS_SINCE_ACTIVITY_CATEGORY"
-    
+    private let DONE_ONLY_CATEGORY_ID:String = "DAYS_SINCE_DONE_CATEGORY"
+    private let DONE_AND_SNOOZE_CATEGORY_ID:String = "DAYS_SINCE_DONE_SNOOZE_CATEGORY"
+
     private enum NotificationActions: String {
         case MARK_DONE, SNOOZE
     }
@@ -30,9 +31,10 @@ class NotificationManager : NSObject {
         // Register the notification actions for 'mark done' and 'snooze'
         let markDoneAction = UNNotificationAction(identifier: NotificationActions.MARK_DONE.rawValue, title: "Mark Done", options: UNNotificationActionOptions(rawValue: 0))
         let snoozeAction = UNNotificationAction(identifier: NotificationActions.SNOOZE.rawValue, title: "Snooze", options: UNNotificationActionOptions(rawValue: 0))
-        let daysSinceCategory = UNNotificationCategory(identifier: ACTIVITY_CATEGORY_ID, actions: [markDoneAction, snoozeAction], intentIdentifiers: [], hiddenPreviewsBodyPlaceholder: "", options: UNNotificationCategoryOptions(rawValue: 0))
+        let doneCategory = UNNotificationCategory(identifier: DONE_ONLY_CATEGORY_ID, actions: [markDoneAction], intentIdentifiers: [], hiddenPreviewsBodyPlaceholder: "", options: UNNotificationCategoryOptions(rawValue: 0))
+        let doneAndSnoozeCategory = UNNotificationCategory(identifier: DONE_AND_SNOOZE_CATEGORY_ID, actions: [markDoneAction, snoozeAction], intentIdentifiers: [], hiddenPreviewsBodyPlaceholder: "", options: UNNotificationCategoryOptions(rawValue: 0))
         // Set the notification category
-        notificationCenter.setNotificationCategories([daysSinceCategory])
+        notificationCenter.setNotificationCategories([doneCategory, doneAndSnoozeCategory])
         
         // Register for changes to the data model so we can schedule the notifications
         NotificationCenter.default.addObserver(self, selector: #selector(activityAdded(notification:)), name: Notification.Name.activityAdded, object: nil)
@@ -86,7 +88,7 @@ class NotificationManager : NSObject {
     
     func scheduleReminderNotification(for activity:ActivityMO) {
         let uuid = activity.id!.uuidString
-        guard activity.isReminderEnabled else {
+        guard activity.reminder!.enabled else {
             // If this activity is not enabled for notifications, then yank any pending notifications from
             // the notification center. It's not likely.
             notificationCenter.removePendingNotificationRequests(withIdentifiers: [uuid])
@@ -110,13 +112,13 @@ class NotificationManager : NSObject {
         content.userInfo = ["UUID": uuid]
         
         // Set the category identifier
-        content.categoryIdentifier = ACTIVITY_CATEGORY_ID
+        content.categoryIdentifier = (activity.reminder?.allowSnooze)! ? DONE_AND_SNOOZE_CATEGORY_ID : DONE_ONLY_CATEGORY_ID
         // Set the thread identifier to the UUID of the Activity so they are grouped together
         content.threadIdentifier = uuid
         
         // Set up the trigger.
         // TODO: This should be a UNCalendarNotificationTrigger which is based off of the next notification date
-        let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 30, repeats: false)
+        let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 15, repeats: false)
         // Create the request
         let request = UNNotificationRequest(identifier: uuid, content: content, trigger: trigger)
         
