@@ -128,7 +128,51 @@ class NotificationManager : NSObject {
                 print("Unable to add notification request" + error!.localizedDescription)
             }
         }
+    }
+    
+    func scheduleSnoozeReminder(for activity:ActivityMO) {
+        let uuid = activity.id!.uuidString
+        guard activity.reminder!.allowSnooze else {
+            // If this activity is not enabled for snooze, then yank any pending notifications from
+            // the notification center. User could have turned off snooze before the notification arrived.
+            notificationCenter.removePendingNotificationRequests(withIdentifiers: [uuid])
+            return
+        }
+        print("Scheduling snnoze for activity: \(activity.name ?? "") with uuid: \(uuid) ")
+        let content = UNMutableNotificationContent()
+        // TODO: Need to figure out the content to display
+        // title = Activity Name
+        // subtitle = Status of activity (ex: Activity is 10 days overdue or Activity is due tomorrow.
+        // body = Longer description of the activity status (e.g. Last completed, Next due, Frequency, Avg interval, etc.
+        // badge = Total number of activities that are overdue
+        // userInfo : Probably need to include at least the activity uuid
+        // attachments : Maybe include an icon
         
+        let stats:ActivityStatistics = ActivityStatistics(activity: activity)
+        content.title = activity.name ?? "Activity"
+        content.subtitle = "You snooze, you lose."
+        content.body = "Next due date: " + stats.nextDay
+        
+        content.userInfo = ["UUID": uuid]
+        
+        // Set the category identifier
+        content.categoryIdentifier = (activity.reminder?.allowSnooze)! ? DONE_AND_SNOOZE_CATEGORY_ID : DONE_ONLY_CATEGORY_ID
+        // Set the thread identifier to the UUID of the Activity so they are grouped together
+        content.threadIdentifier = uuid
+        
+        // Set up the trigger.
+        // TODO: This should be a UNCalendarNotificationTrigger which is based off of the next notification date
+        let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 15, repeats: false)
+        // Create the request
+        let request = UNNotificationRequest(identifier: uuid, content: content, trigger: trigger)
+        
+        notificationCenter.add(request) {
+            (error) in
+            if error != nil {
+                print("Unable to add notification request" + error!.localizedDescription)
+            }
+        }
+
     }
     
     func removeAllPendingNotifications(for activity:ActivityMO) {
@@ -148,25 +192,36 @@ extension NotificationManager : UNUserNotificationCenterDelegate {
     }
     
     func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
+        
+        defer {
+            completionHandler()
+        }
 
         let request = response.notification.request
-
+        let activityUUID = request.identifier
+        guard let activity = dataManager.getActivityByID(uuid: activityUUID) else {
+            return
+        }
+        
         switch (response.actionIdentifier) {
         case NotificationActions.MARK_DONE.rawValue:
             print("TODO: Mark done for \(request.identifier)")
-            
+            do {
+                try dataManager.markActivityDone(activity: activity)
+            } catch {
+                // TODO: Alert the user?
+            }
         case NotificationActions.SNOOZE.rawValue:
             print("TODO: Snooze for \(request.identifier)")
+            scheduleSnoozeReminder(for: activity)
         case UNNotificationDefaultActionIdentifier:
             print("TODO: User pressed open")
+        // TODO: We should navigate to the activity
         case UNNotificationDefaultActionIdentifier:
             print("TODO: User dismissed")
         default:
             print("TODO: Unknown action identifier")
         }
-
-
-        completionHandler()
     }
     
 }

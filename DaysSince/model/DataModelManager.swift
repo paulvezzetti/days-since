@@ -209,6 +209,20 @@ class DataModelManager {
         return try context.fetch(fetch)
     }
     
+    func getActivityByID(uuid:String) -> ActivityMO? {
+        do {
+            let activities = try getActivities()
+            for activity in activities {
+                if activity.id?.uuidString == uuid {
+                    return activity
+                }
+            }
+        } catch {
+            
+        }
+        return nil
+    }
+    
     func getOverdueActivities() throws -> [ActivityMO] {
         let allActivities = try getActivities()
         var overdue:[ActivityMO] = []
@@ -235,13 +249,16 @@ class DataModelManager {
         try save(context)
     }
     
-    func setEventDone(activity:ActivityMO, at date:Date) throws {
+    func markActivityDone(activity:ActivityMO, at date:Date? = nil, with details:String? = nil) throws {
         let context = try getManagedObjectContext()
         let event = EventMO(context: context)
-        event.timestamp = date
-        
+        event.timestamp = Date.normalize(date: date ?? Date())
+        if details != nil {
+            event.details = details
+        }
         activity.addToHistory(event)
-      //  try save(context)
+        
+        try save(context)
     }
     
     
