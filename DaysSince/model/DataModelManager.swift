@@ -270,6 +270,10 @@ class DataModelManager {
 
     }
     
+    static func registerForActivityListChangeNotification(_ observer:Any, selector: Selector) {
+        NotificationCenter.default.addObserver(observer, selector: selector, name: NSNotification.Name.activityAdded, object: nil)
+        NotificationCenter.default.addObserver(observer, selector: selector, name: NSNotification.Name.activityRemoved, object: nil)
+    }
     static func registerForNamedNotifications(_ observer:Any, selector: Selector, names: [NSNotification.Name], object: Any?) {
         for name in names {
             NotificationCenter.default.addObserver(observer, selector: selector, name: name, object: object)

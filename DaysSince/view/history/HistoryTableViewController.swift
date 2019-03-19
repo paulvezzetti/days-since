@@ -160,6 +160,7 @@ class HistoryTableViewController: UITableViewController {
             }
             if indexPath.row < sortedHistory.count {
                 destination.event = sortedHistory[indexPath.row]
+                destination.dataManager = dataManager
             }
         }
 

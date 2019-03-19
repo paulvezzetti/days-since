@@ -14,15 +14,17 @@ class EventDetailsViewController: UIViewController {
     @IBOutlet var intervalLabel: UILabel!
     @IBOutlet var detailTextView: UITextView!
     var event:EventMO?
+    var dataManager:DataModelManager?
+    
     var isUpdated:Bool = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        detailTextView.layer.cornerRadius = 5
-        detailTextView.layer.shadowColor = UIColor.lightGray.cgColor
+        //detailTextView.layer.cornerRadius = 5
+        //detailTextView.layer.shadowColor = UIColor.lightGray.cgColor
        // detailTextView.layer.borderColor = UIColor.lightGray.cgColor
-        detailTextView.layer.borderWidth = 1
+       // detailTextView.layer.borderWidth = 1
 
         // Do any additional setup after loading the view.
         if let currentEvent = event {

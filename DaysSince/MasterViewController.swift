@@ -32,6 +32,7 @@ class MasterViewController: UITableViewController {
         NotificationCenter.default.removeObserver(self)
         // Add new observers
         DataModelManager.registerForAnyActivityChangeNotification(self, selector: #selector(onAnyActivityChanged(notification:)), activity: nil)
+        DataModelManager.registerForActivityListChangeNotification(self, selector: #selector(onAnyActivityChanged(notification:)))
 
         if let split = splitViewController {
             let controllers = split.viewControllers
