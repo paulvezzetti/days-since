@@ -103,6 +103,19 @@ public class ActivityMO: NSManagedObject {
         sortDates[0].timestamp = date
     }
     
+    func daysSincePreviousEvent(event:EventMO)->Int {
+        let sorted = sortedHistory
+        
+        guard let eventIndex = sorted.firstIndex(of: event), eventIndex > 0 else {
+            return -1
+        }
+        
+        let previousEvent = sorted[eventIndex - 1]
+        let timeInterval = event.timestamp!.timeIntervalSince(previousEvent.timestamp!)
+        
+        return Int(timeInterval / (60*60*24))
+    }
+    
 //    deinit {
 //        print("Destroying an Activity")
 //    }

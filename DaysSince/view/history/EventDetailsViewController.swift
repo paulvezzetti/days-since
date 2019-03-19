@@ -21,14 +21,23 @@ class EventDetailsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        //detailTextView.layer.cornerRadius = 5
-        //detailTextView.layer.shadowColor = UIColor.lightGray.cgColor
-       // detailTextView.layer.borderColor = UIColor.lightGray.cgColor
-       // detailTextView.layer.borderWidth = 1
+        detailTextView.layer.cornerRadius = 5
+//        detailTextView.layer.shadowColor = UIColor.lightGray.cgColor
+//        detailTextView.layer.shadowOpacity = 0.2
+        detailTextView.layer.borderColor = UIColor.init(red: 0.2, green: 0.2, blue: 0.2, alpha: 0.2).cgColor
+        detailTextView.layer.borderWidth = 1
 
         // Do any additional setup after loading the view.
         if let currentEvent = event {
             dateLabel.text = currentEvent.getFormattedDate(style: .long)
+            if currentEvent.activity != nil {
+                let numDays = currentEvent.activity!.daysSincePreviousEvent(event: currentEvent)
+                if numDays < 0 {
+                    intervalLabel.text = "No previous event"
+                } else {
+                    intervalLabel.text = String(numDays) + " days between events"
+                }
+            }
             detailTextView.text = currentEvent.details
         }
     }
