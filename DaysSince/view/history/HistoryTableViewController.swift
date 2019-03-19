@@ -15,9 +15,7 @@ class HistoryTableViewController: UITableViewController {
         didSet {
             NotificationCenter.default.removeObserver(self)
             // Add new observers
-            NotificationCenter.default.addObserver(self, selector: #selector(onActivityChanged(notification:)), name: Notification.Name.activityChanged, object: activity)
-            NotificationCenter.default.addObserver(self, selector: #selector(onActivityChanged(notification:)), name: Notification.Name.eventAdded, object: activity)
-            NotificationCenter.default.addObserver(self, selector: #selector(onActivityChanged(notification:)), name: Notification.Name.eventRemoved, object: activity)
+            DataModelManager.registerForNamedNotifications(self, selector: #selector(onActivityChanged(notification:)), names: [.activityChanged, .eventAdded, .eventRemoved], object: activity)
             NotificationCenter.default.addObserver(self, selector: #selector(onEventChanged(notification:)), name: Notification.Name.eventChanged, object: nil)
 
             if let act = activity {

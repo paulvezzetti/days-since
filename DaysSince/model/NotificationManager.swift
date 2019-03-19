@@ -40,16 +40,9 @@ class NotificationManager : NSObject {
         NotificationCenter.default.addObserver(self, selector: #selector(activityAdded(notification:)), name: Notification.Name.activityAdded, object: nil)
 
         NotificationCenter.default.addObserver(self, selector: #selector(activityRemoved(notification:)), name: Notification.Name.activityRemoved, object: nil)
+        
+        DataModelManager.registerForAnyActivityChangeNotification(self, selector:  #selector(activityChanged(notification:)), activity: nil)
 
-        //        do {
-//            let context = try dataManager.getManagedObjectContext()
-//            let notificationCenter = NotificationCenter.default
-//            notificationCenter.addObserver(self, selector: #selector(managedObjectContextObjectsDidChange), name: NSNotification.Name.NSManagedObjectContextObjectsDidChange, object: context)
-//            notificationCenter.addObserver(self, selector: #selector(managedObjectContextWillSave), name: NSNotification.Name.NSManagedObjectContextWillSave, object: context)
-//            notificationCenter.addObserver(self, selector: #selector(managedObjectContextDidSave), name: NSNotification.Name.NSManagedObjectContextDidSave, object: context)
-//        } catch {
-//
-//        }
     }
     
     @objc func activityAdded(notification: Notification ) {
@@ -64,6 +57,14 @@ class NotificationManager : NSObject {
             return
         }
         removeAllPendingNotifications(for: activity)
+    }
+
+    @objc func activityChanged(notification: Notification ) {
+        guard let activity = notification.object as? ActivityMO else {
+            return
+        }
+        removeAllPendingNotifications(for: activity)
+        scheduleReminderNotification(for: activity)
     }
 
     /* ----------------------------------------------------------

@@ -31,20 +31,8 @@ class MasterViewController: UITableViewController {
         // Remove any current observers
         NotificationCenter.default.removeObserver(self)
         // Add new observers
-        NotificationCenter.default.addObserver(self, selector: #selector(onAnyActivityChanged(notification:)), name: Notification.Name.activityAdded, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(onAnyActivityChanged(notification:)), name: Notification.Name.activityRemoved, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(onAnyActivityChanged(notification:)), name: Notification.Name.activityChanged, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(onAnyActivityChanged(notification:)), name: Notification.Name.eventAdded, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(onAnyActivityChanged(notification:)), name: Notification.Name.eventRemoved, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(onAnyActivityChanged(notification:)), name: Notification.Name.eventChanged, object: nil)
+        DataModelManager.registerForAnyActivityChangeNotification(self, selector: #selector(onAnyActivityChanged(notification:)), activity: nil)
 
-//        do {
-//            
-//            let notificationCenter = NotificationCenter.default
-//            try notificationCenter.addObserver(self, selector: #selector(managedObjectContextObjectsDidChange), name: NSNotification.Name.NSManagedObjectContextObjectsDidChange, object: dataManager?.getManagedObjectContext())
-//        } catch {
-//            
-//        }
         if let split = splitViewController {
             let controllers = split.viewControllers
             detailViewController = (controllers[controllers.count-1] as! UINavigationController).topViewController as? DetailViewController

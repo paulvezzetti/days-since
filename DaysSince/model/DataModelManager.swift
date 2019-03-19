@@ -273,6 +273,22 @@ class DataModelManager {
         }
     }
 
+    
+    static func registerForAnyActivityChangeNotification(_ observer:Any, selector: Selector, activity:ActivityMO?) {
+        NotificationCenter.default.addObserver(observer, selector: selector, name: NSNotification.Name.activityChanged, object: activity)
+        NotificationCenter.default.addObserver(observer, selector: selector, name: NSNotification.Name.intervalChanged, object: activity)
+        NotificationCenter.default.addObserver(observer, selector: selector, name: NSNotification.Name.eventAdded, object: activity)
+        NotificationCenter.default.addObserver(observer, selector: selector, name: NSNotification.Name.eventChanged, object: activity)
+        NotificationCenter.default.addObserver(observer, selector: selector, name: NSNotification.Name.eventRemoved, object: activity)
+        NotificationCenter.default.addObserver(observer, selector: selector, name: NSNotification.Name.reminderChanged, object: activity)
+
+    }
+    
+    static func registerForNamedNotifications(_ observer:Any, selector: Selector, names: [NSNotification.Name], object: Any?) {
+        for name in names {
+            NotificationCenter.default.addObserver(observer, selector: selector, name: name, object: object)
+        }
+    }
 }
 
 extension Notification.Name {
