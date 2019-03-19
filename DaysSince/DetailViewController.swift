@@ -74,6 +74,7 @@ class DetailViewController: UIViewController {
             let controller = (segue.destination as! UINavigationController).topViewController as! MarkDoneTableViewController
             controller.doneDelegate = self
             controller.activity = detailItem
+            controller.dataManager = dataManager
         } else if segue.identifier == "editActivity" {
             let controller = segue.destination as! AddActivityTableViewController
             controller.dataManager = dataManager
@@ -83,7 +84,6 @@ class DetailViewController: UIViewController {
     }
     
     @IBAction func unwindSaveActivity(segue: UIStoryboardSegue) {
-  //      let controller = segue.source as! AddActivityTableViewController
         
         do {
             try dataManager?.saveContext()
@@ -92,14 +92,7 @@ class DetailViewController: UIViewController {
             fatalError("Unresolved error \(nserror), \(nserror.userInfo)")
         }
 
-        
-//        controller.saveActivity()
-//        controller.dismiss(animated: true, completion: nil)
-        
         configureView()
-        //historyViewController.activityDidChange()
-        //summaryViewController!.activityDidChange()
-
     }
     
     @IBAction func onDelete(_ sender: Any) {
@@ -129,7 +122,6 @@ class DetailViewController: UIViewController {
                 // TODO: This should show an error screen.
                 let nserror = error as NSError
                 fatalError("Unresolved error \(nserror), \(nserror.userInfo)")
-                
             }
         }
     }
@@ -176,6 +168,7 @@ class DetailViewController: UIViewController {
         
         var viewController = storyboard.instantiateViewController(withIdentifier: "HistoryTableViewController") as! HistoryTableViewController
         viewController.activity = detailItem
+        viewController.dataManager = dataManager
         
         self.addChild(viewController)
         return viewController

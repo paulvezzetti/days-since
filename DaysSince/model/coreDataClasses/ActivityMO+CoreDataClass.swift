@@ -50,12 +50,6 @@ public class ActivityMO: NSManagedObject {
         return activity
     }
     
-    func deleteEvent(event:EventMO) {
-        self.removeFromHistory(event)
-        if let context = managedObjectContext {
-            context.delete(event)
-        }
-    }
 
 //    enum SectionIndex: Int {
 //        case onTime = 0, soon, overdue

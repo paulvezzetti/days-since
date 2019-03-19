@@ -214,18 +214,10 @@ class MasterViewController: UITableViewController {
     func editAction(at indexPath: IndexPath) -> UIContextualAction {
         
         let action = UIContextualAction(style: .normal, title: "Edit") {[unowned self] (action, view, completion) in
-//            if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "markDoneNavigationController") as? MarkDoneTableViewController
-//            {
-//                //self.markDoneIndexPath = indexPath
-//                vc.doneDelegate = self
-//                vc.activity = self.getActivity(at: indexPath)
-//                self.show(vc, sender: self)
-//            }
             self.performSegue(withIdentifier: "presentAddActivity", sender: self.getActivity(at: indexPath))
             completion(true)
         }
         action.image = UIImage(named: "edit")
-        //action.title = "Mark Done"
         //action.backgroundColor = UIColor(named: "Medium Green")
         return action
     }
@@ -235,15 +227,14 @@ class MasterViewController: UITableViewController {
         let action = UIContextualAction(style: .normal, title: "Done") {[unowned self] (action, view, completion) in
             if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "markDoneNavigationController") as? MarkDoneTableViewController
             {
-                //self.markDoneIndexPath = indexPath
                 vc.doneDelegate = self
                 vc.activity = self.getActivity(at: indexPath)
+                vc.dataManager = self.dataManager
                 self.show(vc, sender: self)
             }
             completion(true)
         }
         action.image = UIImage(named: "done")
-        //action.title = "Mark Done"
         action.backgroundColor = UIColor(named: "Medium Green")
         return action
     }
@@ -260,34 +251,10 @@ class MasterViewController: UITableViewController {
             completion(true)
         }
         action.image = UIImage(named: "trash")
-        //action.title = "Delete"
         action.backgroundColor = .red
         return action
     }
 
-//    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-//        // Return false if you do not want the specified item to be editable.
-//        return true
-//    }
-
-//    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-//        if editingStyle == .delete {
-//            if let dm = dataManager {
-//                do {
-//                    let sectionActivities = activityDict[sectionToStatus(section: indexPath.section)] ?? []
-//                    let activity = sectionActivities[indexPath.row] // TODO: Array size check
-//                    try dm.removeActivity(activity: activity)
-//                } catch {
-//                    // Replace this implementation with code to handle the error appropriately.
-//                    // fatalError() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
-//                    // TODO: This should show an error screen.
-//                    let nserror = error as NSError
-//                    fatalError("Unresolved error \(nserror), \(nserror.userInfo)")
-//
-//                }
-//            }
-//        }
-//    }
 
     func configureCell(_ cell: UITableViewCell, withActivity activity: ActivityMO) {
         guard let masterCell = cell as? MasterTableViewCell else {
@@ -298,10 +265,6 @@ class MasterViewController: UITableViewController {
         masterCell.freqLabel!.text = String(stats.daySince)
         masterCell.nextDateLabel!.text = stats.nextDay
         masterCell.lastDateLabel!.text = stats.lastDay
-        
-        //print("Activity: \(activity.name ?? "unknown") is overdue: \(activity.isOverdue)")
-        
-//        cell.textLabel!.text = activity.name
     }
     
     func deleteActivity(at indexPath:IndexPath) {
@@ -313,7 +276,6 @@ class MasterViewController: UITableViewController {
                 // TODO: This should show an error screen.
                 let nserror = error as NSError
                 fatalError("Unresolved error \(nserror), \(nserror.userInfo)")
-
             }
         }
     }

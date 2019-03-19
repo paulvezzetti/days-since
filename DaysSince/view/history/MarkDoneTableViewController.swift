@@ -14,6 +14,7 @@ class MarkDoneTableViewController: UITableViewController {
     @IBOutlet var detailTextView: UITextView!
     
     var activity:ActivityMO?
+    var dataManager:DataModelManager?
     
     
     private let dateFormatter:DateFormatter = {
@@ -66,11 +67,12 @@ class MarkDoneTableViewController: UITableViewController {
     
     
     @IBAction func markDone(_ sender: Any) {
-        if let act = activity, let moc = act.managedObjectContext {
-            let event = EventMO(context: moc)
-            event.timestamp = Date.normalize(date: datePicker.date)
-            event.details = detailTextView.text!
-            act.addToHistory(event)
+        if let act = activity, let dm = dataManager {
+            do {
+                try dm.markActivityDone(activity: act, at: datePicker.date, with: detailTextView.text!)
+            } catch {
+                
+            }
         }
         if let delegate = doneDelegate {
             delegate.complete(sender: self)

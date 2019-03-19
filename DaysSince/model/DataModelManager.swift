@@ -181,27 +181,6 @@ class DataModelManager {
 
     }
     
-//    func updateActivityStatus() {
-//        do {
-//            let context = try getManagedObjectContext()
-//            let activityFetch = NSFetchRequest<NSFetchRequestResult>(entityName: "Activity")
-//            
-//            let activities = try context.fetch(activityFetch) as! [ActivityMO]
-//            
-//            for activity in activities {
-//                if activity.isOverdue {
-//                    activity.status = "Overdue"
-//                } else {
-//                    activity.status = "On-time"
-//                }
-//                context.refresh(activity, mergeChanges: true)
-//            }
-//        } catch {
-//            
-//        }
-//        
-//        
-//    }
     
     func getActivities() throws -> [ActivityMO]{
         let context = try getManagedObjectContext()
@@ -258,6 +237,13 @@ class DataModelManager {
         }
         activity.addToHistory(event)
         
+        try save(context)
+    }
+    
+    func removeEvent(activity:ActivityMO, event:EventMO) throws {
+        activity.removeFromHistory(event)
+        let context = try getManagedObjectContext()
+        context.delete(event)
         try save(context)
     }
     

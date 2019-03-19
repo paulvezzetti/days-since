@@ -24,10 +24,7 @@ class ActivitySummaryViewController: UIViewController {
         didSet {
             NotificationCenter.default.removeObserver(self)
             // Add new observers
-            NotificationCenter.default.addObserver(self, selector: #selector(onActivityChanged(notification:)), name: Notification.Name.activityChanged, object: activity)
-            NotificationCenter.default.addObserver(self, selector: #selector(onActivityChanged(notification:)), name: Notification.Name.eventAdded, object: activity)
-            NotificationCenter.default.addObserver(self, selector: #selector(onActivityChanged(notification:)), name: Notification.Name.eventRemoved, object: activity)
-            NotificationCenter.default.addObserver(self, selector: #selector(onActivityChanged(notification:)), name: Notification.Name.eventChanged, object: nil)
+            DataModelManager.registerForAnyActivityChangeNotification(self, selector: #selector(onActivityChanged(notification:)), activity: activity)
         }
     }
     

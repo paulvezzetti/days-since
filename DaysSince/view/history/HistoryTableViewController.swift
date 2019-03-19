@@ -23,18 +23,8 @@ class HistoryTableViewController: UITableViewController {
             }
         }
     }
+    var dataManager:DataModelManager?
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem
-
-    }
-    
-
     // MARK: - Table view data source
 
     override func numberOfSections(in tableView: UITableView) -> Int {
@@ -82,16 +72,22 @@ class HistoryTableViewController: UITableViewController {
         
         let action = UIContextualAction(style: .normal, title: "Delete") { (action, view, completion) in
             let alert = UIAlertController(title: "Delete this event?", message: "This will permanently delete this event from the activity history.", preferredStyle: UIAlertController.Style.alert)
-            alert.addAction(UIAlertAction(title: "Yes", style: .destructive) { (alert) in
+            alert.addAction(UIAlertAction(title: "Yes", style: .destructive) { [unowned self](alert) in
+                guard indexPath.row < self.sortedHistory.count, let activity = self.activity, let dm = self.dataManager else {
+                    return
+                }
                 let event = self.sortedHistory.remove(at: indexPath.row)
-                self.activity?.deleteEvent(event: event)
+                do {
+                    try dm.removeEvent(activity: activity, event: event)
+                } catch {
+                    // TODO: Delete failed?
+                }
             })
             alert.addAction(UIAlertAction(title: "No", style: .default, handler: nil))
             self.present(alert, animated: true, completion: nil)
             completion(true)
         }
         action.image = UIImage(named: "trash")
-        //action.title = "Delete"
         action.backgroundColor = .red
         return action
     }
