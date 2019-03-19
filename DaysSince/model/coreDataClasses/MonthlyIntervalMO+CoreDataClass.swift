@@ -24,7 +24,7 @@ public class MonthlyIntervalMO: IntervalMO {
     }
 
     override func toPrettyString() -> String {
-        return "Every month on the " + String(self.day)
+        return "Every month on the " + NumberFormatterOrdinal.string(Int(self.day))
     }
 
     override func clone(context:NSManagedObjectContext) ->IntervalMO {

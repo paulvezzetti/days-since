@@ -53,14 +53,14 @@ class ChooseIntervalTableViewController: UITableViewController, UITextFieldDeleg
     // MARK: Public
     var activity:ActivityMO? = nil
     
-    deinit {
-        print("Destroying the ChooseFrequencyTVController")
-    }
-    
-    required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
-        print("Creating a ChooseFreqTVController")
-    }
+//    deinit {
+//        print("Destroying the ChooseFrequencyTVController")
+//    }
+//
+//    required init?(coder aDecoder: NSCoder) {
+//        super.init(coder: aDecoder)
+//        print("Creating a ChooseFreqTVController")
+//    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -94,7 +94,7 @@ class ChooseIntervalTableViewController: UITableViewController, UITextFieldDeleg
             case let monthlyInterval as MonthlyIntervalMO:
                 monthlyTableViewCell.accessoryType = .checkmark
                 monthDayPickerController?.setDay(Int(monthlyInterval.day))
-                monthlyLabel.text = String(monthDayPickerController?.getDay() ?? 1)
+                monthlyLabel.text = NumberFormatterOrdinal.string(monthDayPickerController?.getDay() ?? 1)
                 currentSelectedRow = .Monthly
             case let yearlyInterval as YearlyIntervalMO:
                 yearlyTableViewCell.accessoryType = .checkmark
@@ -228,7 +228,7 @@ class ChooseIntervalTableViewController: UITableViewController, UITextFieldDeleg
                 interval = MonthlyIntervalMO(context:moc)
                 act.interval = interval
             }
-            (interval as! MonthlyIntervalMO).day = Int16(monthDayPicker.selectedRow(inComponent: 0))
+            (interval as! MonthlyIntervalMO).day = Int16(monthDayPickerController?.getDay() ?? 1)
         case .Yearly:
             if !(interval is YearlyIntervalMO) {
                 interval = YearlyIntervalMO(context:moc)
