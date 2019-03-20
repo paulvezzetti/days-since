@@ -15,12 +15,16 @@ public class MonthlyIntervalMO: IntervalMO {
 
     override func getNextDate(since lastDate: Date) -> Date? {
         // Construct a new date based on the previous month
-        // TODO: Need to consider pushing out a month if the last date was just before the expected date
         let calendar = Calendar.current
         let nextMonthdayDateComponent = DateComponents(day: Int(self.day))
         var nextDate = calendar.nextDate(after: lastDate, matching: nextMonthdayDateComponent, matchingPolicy: .previousTimePreservingSmallerComponents)
         if nextDate != nil {
             nextDate!.normalize()
+            // Allow for a 10 day grace period for early events
+            let daysComponent = calendar.dateComponents([.day], from: lastDate, to: nextDate!)
+            if daysComponent.day! <= 10 {
+                nextDate = calendar.nextDate(after: nextDate!, matching: nextMonthdayDateComponent, matchingPolicy: .previousTimePreservingSmallerComponents)
+            }
         }
         return nextDate
     }

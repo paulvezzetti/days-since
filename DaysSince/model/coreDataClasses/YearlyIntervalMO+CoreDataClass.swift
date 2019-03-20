@@ -19,9 +19,16 @@ public class YearlyIntervalMO: IntervalMO {
         // the next year.
         let calendar = Calendar.current
         let nextYearDayDateComponent = DateComponents(month: Int(self.month), day: Int(self.day))
-        var nextDate = calendar.nextDate(after: lastDate, matching: nextYearDayDateComponent, matchingPolicy: .nextTime)
+        var nextDate = calendar.nextDate(after: lastDate, matching: nextYearDayDateComponent, matchingPolicy: .nextTimePreservingSmallerComponents)
         if nextDate != nil {
             nextDate!.normalize()
+            // Allow for a 90 day grace period for early events
+            // TODO: Add these grace period numbers to a global settings
+            let daysComponent = calendar.dateComponents([.day], from: lastDate, to: nextDate!)
+            if daysComponent.day! <= 90 {
+                nextDate = calendar.nextDate(after: nextDate!, matching: nextYearDayDateComponent, matchingPolicy: .nextTime)
+            }
+
         }
         return nextDate
     }
