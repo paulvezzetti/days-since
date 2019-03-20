@@ -18,7 +18,7 @@ public class MonthlyIntervalMO: IntervalMO {
         // TODO: Need to consider pushing out a month if the last date was just before the expected date
         let calendar = Calendar.current
         let nextMonthdayDateComponent = DateComponents(day: Int(self.day))
-        let nextDate = calendar.nextDate(after: lastDate, matching: nextMonthdayDateComponent, matchingPolicy: .nextTime)
+        let nextDate = calendar.nextDate(after: lastDate, matching: nextMonthdayDateComponent, matchingPolicy: .previousTimePreservingSmallerComponents)
         
         return nextDate ?? Date()
     }
