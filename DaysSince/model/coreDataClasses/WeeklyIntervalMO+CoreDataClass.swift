@@ -21,8 +21,15 @@ public class WeeklyIntervalMO: IntervalMO {
         // as the last date, we may want to advance to the next week. Ex: If it is
         // done on Tuesday, but due on Wednesdays, it should really push out 8 days not 1.
         let nextWeekdayDateComponent = DateComponents(weekday: Int(self.day))
-        let nextDate = calendar.nextDate(after: lastDate, matching: nextWeekdayDateComponent, matchingPolicy: .nextTime)
-        
+        var nextDate = calendar.nextDate(after: lastDate, matching: nextWeekdayDateComponent, matchingPolicy: .nextTime)
+        if nextDate != nil {
+            nextDate!.normalize()
+            // Any time in the last week counts as this "week" so advance if it's been done.
+            let daysComponent = calendar.dateComponents([.day], from: lastDate, to: nextDate!)
+            if daysComponent.day! < 7 {
+                nextDate = calendar.nextDate(after: nextDate!, matching: nextWeekdayDateComponent, matchingPolicy: .nextTime)
+            }
+        }
         
         return nextDate
     }

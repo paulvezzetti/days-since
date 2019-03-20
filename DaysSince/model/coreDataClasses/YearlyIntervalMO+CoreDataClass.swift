@@ -19,8 +19,10 @@ public class YearlyIntervalMO: IntervalMO {
         // the next year.
         let calendar = Calendar.current
         let nextYearDayDateComponent = DateComponents(month: Int(self.month), day: Int(self.day))
-        let nextDate = calendar.nextDate(after: lastDate, matching: nextYearDayDateComponent, matchingPolicy: .nextTime)
-        
+        var nextDate = calendar.nextDate(after: lastDate, matching: nextYearDayDateComponent, matchingPolicy: .nextTime)
+        if nextDate != nil {
+            nextDate!.normalize()
+        }
         return nextDate
     }
 

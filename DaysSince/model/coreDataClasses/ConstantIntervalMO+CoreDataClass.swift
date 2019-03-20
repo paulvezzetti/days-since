@@ -15,7 +15,11 @@ public class ConstantIntervalMO: IntervalMO {
 
     override func getNextDate(since lastDate: Date) -> Date? {
         let calendar = Calendar.current
-        return calendar.date(byAdding: DateComponents(day: Int(self.frequency)), to: lastDate)
+        var nextDate = calendar.date(byAdding: DateComponents(day: Int(self.frequency)), to: lastDate)
+        if nextDate != nil {
+            nextDate!.normalize()
+        }
+        return nextDate
     }
 
     override func toPrettyString() -> String {
