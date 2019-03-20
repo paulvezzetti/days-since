@@ -10,15 +10,15 @@ import UIKit
 
 class ActivitySummaryViewController: UIViewController {
 
-    @IBOutlet var daysSinceLabel: UILabel!
-    @IBOutlet var daysUntilLabel: UILabel!
-    @IBOutlet var dueNextLabel: UILabel!
-    @IBOutlet var expectedFrequencyLabel: UILabel!
-    @IBOutlet var avgIntervalLabel: UILabel!
-    @IBOutlet var maxIntervalLabel: UILabel!
-    @IBOutlet var minIntervalLabel: UILabel!
-    @IBOutlet var numInstancesLabel: UILabel!
-    @IBOutlet var firstInstanceLabel: UILabel!
+//    @IBOutlet var daysSinceLabel: UILabel!
+//    @IBOutlet var daysUntilLabel: UILabel!
+//    @IBOutlet var dueNextLabel: UILabel!
+//    @IBOutlet var expectedFrequencyLabel: UILabel!
+//    @IBOutlet var avgIntervalLabel: UILabel!
+//    @IBOutlet var maxIntervalLabel: UILabel!
+//    @IBOutlet var minIntervalLabel: UILabel!
+//    @IBOutlet var numInstancesLabel: UILabel!
+//    @IBOutlet var firstInstanceLabel: UILabel!
     
     var activity:ActivityMO? {
         didSet {
@@ -36,28 +36,30 @@ class ActivitySummaryViewController: UIViewController {
     }
     
     func configureView() {
-        guard let act = activity else {
-            return
-        }
-        let stats:ActivityStatistics = ActivityStatistics(activity: act)
-        let daysSince = stats.daySince
-        let daysUntil = stats.daysUntil
-        expectedFrequencyLabel.text = ""
-        numInstancesLabel.text = String(act.history?.count ?? 0)
-        daysSinceLabel.text = daysSince != nil ? String(stats.daySince!) : "--"
-        daysUntilLabel.text = daysUntil != nil ? String(stats.daysUntil!) : "--"
+//        guard let act = activity else {
+//            return
+//        }
         
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateStyle = DateFormatter.Style.medium
-        dateFormatter.timeStyle = DateFormatter.Style.none
         
-        dueNextLabel.text = stats.nextDay
-        
-        minIntervalLabel.text = String(stats.minDays)
-        maxIntervalLabel.text = String(stats.maxDays)
-        avgIntervalLabel.text = String(stats.avgDays)
-        
-        firstInstanceLabel.text = stats.firstDay
+//        let stats:ActivityStatistics = ActivityStatistics(activity: act)
+//        let daysSince = stats.daySince
+//        let daysUntil = stats.daysUntil
+//        expectedFrequencyLabel.text = ""
+//        numInstancesLabel.text = String(act.history?.count ?? 0)
+//        daysSinceLabel.text = daysSince != nil ? String(stats.daySince!) : "--"
+//        daysUntilLabel.text = daysUntil != nil ? String(stats.daysUntil!) : "--"
+//
+//        let dateFormatter = DateFormatter()
+//        dateFormatter.dateStyle = DateFormatter.Style.medium
+//        dateFormatter.timeStyle = DateFormatter.Style.none
+//
+//        dueNextLabel.text = stats.nextDay
+//
+//        minIntervalLabel.text = String(stats.minDays)
+//        maxIntervalLabel.text = String(stats.maxDays)
+//        avgIntervalLabel.text = String(stats.avgDays)
+//
+//        firstInstanceLabel.text = stats.firstDay
 
     }
     
@@ -65,9 +67,9 @@ class ActivitySummaryViewController: UIViewController {
         configureView()
     }
     
-    func activityDidChange() {
-        configureView()
-    }
+//    func activityDidChange() {
+//        configureView()
+//    }
     /*
     // MARK: - Navigation
 
