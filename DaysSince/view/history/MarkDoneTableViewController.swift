@@ -31,6 +31,9 @@ class MarkDoneTableViewController: UITableViewController {
 
         datePicker.date = Date()
         
+        detailTextView.layer.cornerRadius = 5
+        detailTextView.layer.borderColor = UIColor.init(red: 0.2, green: 0.2, blue: 0.2, alpha: 0.2).cgColor
+        detailTextView.layer.borderWidth = 1
     }
 
     // MARK: - Table view data source

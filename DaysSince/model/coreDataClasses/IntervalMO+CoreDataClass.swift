@@ -13,8 +13,8 @@ import CoreData
 @objc(IntervalMO)
 public class IntervalMO: NSManagedObject {
     
-    func getNextDate(since lastDate: Date) -> Date {
-        return lastDate
+    func getNextDate(since lastDate: Date) -> Date? {
+        return nil
     }
     
     func toPrettyString() -> String {

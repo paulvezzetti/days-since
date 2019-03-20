@@ -13,14 +13,14 @@ import CoreData
 @objc(MonthlyIntervalMO)
 public class MonthlyIntervalMO: IntervalMO {
 
-    override func getNextDate(since lastDate: Date) -> Date {
+    override func getNextDate(since lastDate: Date) -> Date? {
         // Construct a new date based on the previous month
         // TODO: Need to consider pushing out a month if the last date was just before the expected date
         let calendar = Calendar.current
         let nextMonthdayDateComponent = DateComponents(day: Int(self.day))
         let nextDate = calendar.nextDate(after: lastDate, matching: nextMonthdayDateComponent, matchingPolicy: .previousTimePreservingSmallerComponents)
         
-        return nextDate ?? Date()
+        return nextDate
     }
 
     override func toPrettyString() -> String {

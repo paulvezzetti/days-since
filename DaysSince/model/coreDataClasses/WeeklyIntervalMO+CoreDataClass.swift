@@ -13,7 +13,7 @@ import CoreData
 @objc(WeeklyIntervalMO)
 public class WeeklyIntervalMO: IntervalMO {
 
-    override func getNextDate(since lastDate: Date) -> Date {
+    override func getNextDate(since lastDate: Date) -> Date? {
         // Construct a new date based on the previous week
         let calendar = Calendar.current
         // This seems to work well and relies on standard library code.
@@ -23,7 +23,8 @@ public class WeeklyIntervalMO: IntervalMO {
         let nextWeekdayDateComponent = DateComponents(weekday: Int(self.day))
         let nextDate = calendar.nextDate(after: lastDate, matching: nextWeekdayDateComponent, matchingPolicy: .nextTime)
         
-        return nextDate ?? Date()
+        
+        return nextDate
     }
 
     

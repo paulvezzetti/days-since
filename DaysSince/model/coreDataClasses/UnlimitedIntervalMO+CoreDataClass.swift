@@ -13,8 +13,8 @@ import CoreData
 @objc(UnlimitedIntervalMO)
 public class UnlimitedIntervalMO: IntervalMO {
 
-    override func getNextDate(since lastDate: Date) -> Date {
-        return Date.distantFuture
+    override func getNextDate(since lastDate: Date) -> Date? {
+        return nil
     }
     
     override func toPrettyString() -> String {

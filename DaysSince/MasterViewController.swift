@@ -262,8 +262,9 @@ class MasterViewController: UITableViewController {
             return
         }
         let stats:ActivityStatistics = ActivityStatistics(activity: activity)
+        let daysSince = stats.daySince
         masterCell.nameLabel!.text = activity.name
-        masterCell.freqLabel!.text = String(stats.daySince)
+        masterCell.freqLabel!.text = daysSince != nil ? String(stats.daySince!) : "--"
         masterCell.nextDateLabel!.text = stats.nextDay
         masterCell.lastDateLabel!.text = stats.lastDay
     }

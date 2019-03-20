@@ -62,24 +62,21 @@ class ActivityStatistics {
         self.minInterval = min < Double.infinity ? min : 0
     }
     
-    var daySince:Int {
+    var daySince:Int? {
         guard let lastEvent = sortedEvents.last else {
-            return -1
+            return nil
         }
         let numSecondsSinceLast = Date().timeIntervalSince(lastEvent.timestamp!)
         
         return Int(floor(numSecondsSinceLast / TimeConstants.SECONDS_PER_DAY))
     }
     
-    var daysUntil:Int {
-        guard let interval = activity.interval else {
-            return -1
+    var daysUntil:Int? {
+        guard let lastDate = activity.lastEvent?.timestamp, let nextDate = activity.interval?.getNextDate(since: lastDate) else {
+            return nil
         }
-        let lastEvent = activity.lastEvent
-        let nextDate = interval.getNextDate(since: lastEvent?.timestamp ?? Date())
         
-        let calendar = Calendar.current
-        return calendar.dateComponents([.day], from: Date(), to: nextDate).day ?? 0
+        return Calendar.current.dateComponents([.day], from: Date(), to: nextDate).day
         
 //
 //        guard let lastEvent = sortedEvents.last else {
@@ -93,13 +90,12 @@ class ActivityStatistics {
 //        return Int(floor(numSecsToNextEvent! / TimeConstants.SECONDS_PER_DAY))
     }
     
-    var nextDate:Date {
+    var nextDate:Date? {
 
-        guard let interval = activity.interval else {
-            return Date()
+        guard let interval = activity.interval, let lastDate = activity.lastEvent?.timestamp else {
+            return nil
         }
-        let lastEvent = activity.lastEvent
-        return interval.getNextDate(since: lastEvent?.timestamp ?? Date())
+        return interval.getNextDate(since: lastDate)
 
 //        guard let lastEvent = sortedEvents.last else {
 //            return Date() // TODO: How to handle??
@@ -110,11 +106,10 @@ class ActivityStatistics {
     }
     
     var nextDay:String {
-        guard let interval = activity.interval, let last = self.lastDate else {
-            return "Unknown"
+        guard let next = self.nextDate else {
+            return "--"
         }
-        let nextDate = interval.getNextDate(since: last)
-        return dateFormatter.string(from: nextDate)
+        return dateFormatter.string(from: next)
         
         
        // return dateFormatter.string(from: nextDate)

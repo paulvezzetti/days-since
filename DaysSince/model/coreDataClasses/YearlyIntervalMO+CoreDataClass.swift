@@ -13,7 +13,7 @@ import CoreData
 @objc(YearlyIntervalMO)
 public class YearlyIntervalMO: IntervalMO {
 
-    override func getNextDate(since lastDate: Date) -> Date {
+    override func getNextDate(since lastDate: Date) -> Date? {
         // Construct a new date based on the previous.
         // TODO: Need to consider how close we are to the expected date to know if we need to push to
         // the next year.
@@ -21,7 +21,7 @@ public class YearlyIntervalMO: IntervalMO {
         let nextYearDayDateComponent = DateComponents(month: Int(self.month), day: Int(self.day))
         let nextDate = calendar.nextDate(after: lastDate, matching: nextYearDayDateComponent, matchingPolicy: .nextTime)
         
-        return nextDate ?? Date()
+        return nextDate
     }
 
     

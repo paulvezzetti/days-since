@@ -40,11 +40,12 @@ class ActivitySummaryViewController: UIViewController {
             return
         }
         let stats:ActivityStatistics = ActivityStatistics(activity: act)
-        
+        let daysSince = stats.daySince
+        let daysUntil = stats.daysUntil
         expectedFrequencyLabel.text = ""
         numInstancesLabel.text = String(act.history?.count ?? 0)
-        daysSinceLabel.text = String(stats.daySince)
-        daysUntilLabel.text = String(stats.daysUntil)
+        daysSinceLabel.text = daysSince != nil ? String(stats.daySince!) : "--"
+        daysUntilLabel.text = daysUntil != nil ? String(stats.daysUntil!) : "--"
         
         let dateFormatter = DateFormatter()
         dateFormatter.dateStyle = DateFormatter.Style.medium
