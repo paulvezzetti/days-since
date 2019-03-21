@@ -6,7 +6,6 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
-        <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="Stack View standard spacing" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -37,9 +36,9 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacingType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="sdQ-Kb-W5y">
-                                <rect key="frame" x="12" y="72" width="351" height="554"/>
+                                <rect key="frame" x="12" y="72" width="351" height="560"/>
                                 <subviews>
-                                    <label clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" text="Activity" textAlignment="center" lineBreakMode="tailTruncation" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="0XM-y9-sOw">
+                                    <label clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" text="Activity" lineBreakMode="tailTruncation" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="0XM-y9-sOw">
                                         <rect key="frame" x="0.0" y="0.0" width="351" height="35"/>
                                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <constraints>
@@ -49,25 +48,14 @@
                                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="8Pc-4D-X98">
-                                        <rect key="frame" x="0.0" y="43" width="351" height="37"/>
-                                        <subviews>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="J4j-nQ-u2s">
-                                                <rect key="frame" x="94" y="0.0" width="163" height="37"/>
-                                                <color key="backgroundColor" name="Medium Green"/>
-                                                <fontDescription key="fontDescription" name="AvenirNext-DemiBold" family="Avenir Next" pointSize="18"/>
-                                                <inset key="contentEdgeInsets" minX="35" minY="6" maxX="35" maxY="6"/>
-                                                <state key="normal" title="Mark Done">
-                                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                </state>
-                                                <connections>
-                                                    <segue destination="QAF-Vz-Un3" kind="presentation" identifier="markDoneSegue" id="80N-xI-HWw"/>
-                                                </connections>
-                                            </button>
-                                        </subviews>
-                                    </stackView>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fg5-Ws-4Qw">
+                                        <rect key="frame" x="0.0" y="43" width="351" height="20.5"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
                                     <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="UYh-Ao-TeW">
-                                        <rect key="frame" x="0.0" y="88" width="351" height="29"/>
+                                        <rect key="frame" x="0.0" y="71.5" width="351" height="29"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="28" id="4q2-xa-CLu"/>
                                         </constraints>
@@ -77,23 +65,18 @@
                                         </segments>
                                     </segmentedControl>
                                     <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kC3-vI-ZNJ">
-                                        <rect key="frame" x="0.0" y="124" width="351" height="430"/>
+                                        <rect key="frame" x="0.0" y="107.5" width="351" height="452.5"/>
                                         <connections>
                                             <segue destination="kQJ-1U-pUL" kind="embed" identifier="embedSummary" id="lmQ-oL-0iR"/>
                                         </connections>
                                     </containerView>
                                 </subviews>
                                 <constraints>
-                                    <constraint firstAttribute="trailing" secondItem="8Pc-4D-X98" secondAttribute="trailing" id="84S-Qk-uVz"/>
-                                    <constraint firstItem="UYh-Ao-TeW" firstAttribute="top" secondItem="8Pc-4D-X98" secondAttribute="bottom" constant="8" id="85F-Ee-moR"/>
-                                    <constraint firstItem="UYh-Ao-TeW" firstAttribute="top" secondItem="8Pc-4D-X98" secondAttribute="bottom" constant="8" id="QAE-kZ-wMm"/>
                                     <constraint firstItem="kC3-vI-ZNJ" firstAttribute="top" secondItem="UYh-Ao-TeW" secondAttribute="bottom" constant="8" id="Xn2-SU-Bza"/>
-                                    <constraint firstItem="8Pc-4D-X98" firstAttribute="leading" secondItem="sdQ-Kb-W5y" secondAttribute="leading" id="mmq-sR-kVa"/>
-                                    <constraint firstItem="8Pc-4D-X98" firstAttribute="top" secondItem="0XM-y9-sOw" secondAttribute="bottom" constant="8" id="ys5-8Z-IPw"/>
                                 </constraints>
                             </stackView>
                             <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="YhQ-0z-CW9">
-                                <rect key="frame" x="0.0" y="632" width="375" height="35"/>
+                                <rect key="frame" x="0.0" y="638" width="375" height="29"/>
                                 <items>
                                     <barButtonItem title="Delete" id="iUL-1y-6Ht">
                                         <connections>
@@ -122,11 +105,18 @@
                         <viewLayoutGuide key="safeArea" id="VUw-jc-0yf"/>
                     </view>
                     <toolbarItems/>
-                    <navigationItem key="navigationItem" title="Activity" id="mOI-FS-AaM"/>
+                    <navigationItem key="navigationItem" title="Activity" id="mOI-FS-AaM">
+                        <barButtonItem key="rightBarButtonItem" title="Mark Done" id="fph-rS-Be6">
+                            <connections>
+                                <action selector="showMarkDoneDialog:" destination="JEX-9P-axG" id="Nxe-ny-s4j"/>
+                                <segue destination="QAF-Vz-Un3" kind="presentation" identifier="markDoneSegue" id="bI4-A5-LC3"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="alternatingView" destination="kC3-vI-ZNJ" id="EZY-gs-2Dh"/>
                         <outlet property="detailDescriptionLabel" destination="0XM-y9-sOw" id="deQ-Na-JPF"/>
-                        <outlet property="markDoneButton" destination="J4j-nQ-u2s" id="aQY-eR-CfB"/>
+                        <outlet property="intervalLabel" destination="fg5-Ws-4Qw" id="CLK-Jd-Lml"/>
                         <outlet property="segmentedControl" destination="UYh-Ao-TeW" id="Kns-bE-B65"/>
                     </connections>
                 </viewController>
@@ -977,7 +967,7 @@
                                 <action selector="cancel:" destination="fgC-Cp-I9B" id="GJJ-Ex-3zo"/>
                             </connections>
                         </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" title="Mark Done" id="dLi-PU-3wn">
+                        <barButtonItem key="rightBarButtonItem" title="Save" id="dLi-PU-3wn">
                             <connections>
                                 <action selector="markDone:" destination="fgC-Cp-I9B" id="fTn-cf-6Bx"/>
                             </connections>
@@ -1014,7 +1004,7 @@
             <objects>
                 <viewController id="kQJ-1U-pUL" customClass="ActivitySummaryViewController" customModule="DaysSince" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Enz-jz-um3">
-                        <rect key="frame" x="0.0" y="0.0" width="351" height="430"/>
+                        <rect key="frame" x="0.0" y="0.0" width="351" height="452.5"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacingType="standard" baselineRelativeArrangement="YES" translatesAutoresizingMaskIntoConstraints="NO" id="EvL-cv-n9k">
@@ -1384,9 +1374,6 @@
         <image name="BlueArrow" width="333" height="41"/>
         <image name="Divider" width="45" height="300"/>
         <image name="IntervalGradient" width="750" height="25"/>
-        <namedColor name="Medium Green">
-            <color red="0.0" green="0.67699998617172241" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </namedColor>
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="BMi-sG-zyJ"/>

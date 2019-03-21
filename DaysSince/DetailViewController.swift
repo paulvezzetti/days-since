@@ -11,12 +11,9 @@ import UIKit
 class DetailViewController: UIViewController {
 
     @IBOutlet weak var detailDescriptionLabel: UILabel!
-
     @IBOutlet var alternatingView: UIView!
-    
+    @IBOutlet var intervalLabel: UILabel!
     @IBOutlet var segmentedControl: UISegmentedControl!
-    
-    @IBOutlet var markDoneButton: UIButton!
     
     var dataManager: DataModelManager? = nil
     
@@ -41,6 +38,12 @@ class DetailViewController: UIViewController {
             if let label = detailDescriptionLabel {
                 label.text = detail.name
             }
+            
+            if let interval = detail.interval {
+                if let label = intervalLabel {
+                    label.text = interval.toPrettyString()
+                }
+            }
         }
     }
 
@@ -50,6 +53,7 @@ class DetailViewController: UIViewController {
         // Do any additional setup after loading the view, typically from a nib.
         configureView()
         
+//        self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Mark Done", style: .plain, target: self, action: #selector(onMarkDone(sender:)))
         segmentedControl.addTarget(self, action: #selector(selectionDidChange(_:)), for: .valueChanged)
     }
     
@@ -62,7 +66,14 @@ class DetailViewController: UIViewController {
             // TODO: Alert of save failure
         }
     }
+    @IBAction func showMarkDoneDialog(_ sender: Any) {
+        self.performSegue(withIdentifier: "markDoneSegue", sender: self)
+    }
     
+//    @objc
+//    func onMarkDone(sender: UIBarButtonItem) {
+//        self.performSegue(withIdentifier: "markDoneSegue", sender: self)
+//    }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "embedSummary" {
@@ -178,7 +189,8 @@ class DetailViewController: UIViewController {
 extension DetailViewController : MarkDoneDelegate {
     
     func complete(sender: UIViewController) {
-        sender.dismiss(animated: true, completion: nil)
+        sender.dismiss(animated: false, completion: nil)
+        sender.navigationController!.popViewController(animated: false)
     }
 
 }
