@@ -10,15 +10,18 @@ import UIKit
 
 class ActivitySummaryViewController: UIViewController {
 
-//    @IBOutlet var daysSinceLabel: UILabel!
-//    @IBOutlet var daysUntilLabel: UILabel!
-//    @IBOutlet var dueNextLabel: UILabel!
-//    @IBOutlet var expectedFrequencyLabel: UILabel!
-//    @IBOutlet var avgIntervalLabel: UILabel!
-//    @IBOutlet var maxIntervalLabel: UILabel!
-//    @IBOutlet var minIntervalLabel: UILabel!
-//    @IBOutlet var numInstancesLabel: UILabel!
-//    @IBOutlet var firstInstanceLabel: UILabel!
+    
+    @IBOutlet var daysSinceLabel: UILabel!
+    @IBOutlet var daysUntilLabel: UILabel!
+    @IBOutlet var previousDateLabel: UILabel!
+    @IBOutlet var nextDateLabel: UILabel!
+    @IBOutlet var minIntervalLabel: UILabel!
+    @IBOutlet var avgIntervalLabel: UILabel!
+    @IBOutlet var maxIntervalLabel: UILabel!
+    @IBOutlet var numberOfEventsLabel: UILabel!
+    @IBOutlet var firstEventDateLabel: UILabel!
+    
+    @IBOutlet var nextDateImage: UIImageView!
     
     var activity:ActivityMO? {
         didSet {
@@ -36,14 +39,35 @@ class ActivitySummaryViewController: UIViewController {
     }
     
     func configureView() {
-//        guard let act = activity else {
-//            return
-//        }
+        guard let act = activity else {
+            return
+        }
         
         
-//        let stats:ActivityStatistics = ActivityStatistics(activity: act)
-//        let daysSince = stats.daySince
-//        let daysUntil = stats.daysUntil
+        let stats:ActivityStatistics = ActivityStatistics(activity: act)
+        let daysSince = stats.daySince
+        daysSinceLabel.text = daysSince != nil ? String(stats.daySince!) : "--"
+        
+        let daysUntil = stats.daysUntil
+        daysUntilLabel.text = daysUntil != nil ? String(abs(stats.daysUntil!)) : "--"
+        
+        let lastDate = stats.lastDate
+        previousDateLabel.text = lastDate != nil ? lastDate!.getFormattedDate() : "None"
+        
+        let nextDate = stats.nextDate
+        nextDateLabel.text = nextDate != nil ? nextDate!.getFormattedDate() : "None"
+        
+        minIntervalLabel.text = String(stats.minDays)
+        avgIntervalLabel.text = String(stats.avgDays)
+        maxIntervalLabel.text = String(stats.maxDays)
+        
+        numberOfEventsLabel.text = String(activity?.history?.count ?? 0)
+        
+        firstEventDateLabel.text = stats.firstDay
+        
+        if nextDate != nil && nextDate! < Date() {
+            nextDateImage.image = UIImage(named: "RedArrow")
+        }
 //        expectedFrequencyLabel.text = ""
 //        numInstancesLabel.text = String(act.history?.count ?? 0)
 //        daysSinceLabel.text = daysSince != nil ? String(stats.daySince!) : "--"

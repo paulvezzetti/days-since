@@ -1018,20 +1018,20 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacingType="standard" baselineRelativeArrangement="YES" translatesAutoresizingMaskIntoConstraints="NO" id="EvL-cv-n9k">
-                                <rect key="frame" x="8" y="16" width="335" height="345.5"/>
+                                <rect key="frame" x="8" y="16" width="335" height="351.5"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" spacingType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="AhT-1S-w4C">
                                         <rect key="frame" x="0.0" y="0.0" width="335" height="20.5"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Last:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XS1-hr-A0Q">
-                                                <rect key="frame" x="0.0" y="0.0" width="161" height="20.5"/>
-                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="161.5" height="20.5"/>
+                                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="17"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Next:" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IkS-Pg-glq">
-                                                <rect key="frame" x="169" y="0.0" width="166" height="20.5"/>
-                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <rect key="frame" x="169.5" y="0.0" width="165.5" height="20.5"/>
+                                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="17"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
@@ -1101,7 +1101,7 @@
                                     </view>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Interval:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AqD-RK-1rQ">
                                         <rect key="frame" x="0.0" y="135.5" width="335" height="20.5"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="17"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
@@ -1172,8 +1172,8 @@
                                         </subviews>
                                     </stackView>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="249" text="Oct 15, 2018" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qLQ-a2-CbG">
-                                        <rect key="frame" x="0.0" y="325" width="335" height="20.5"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <rect key="frame" x="0.0" y="326" width="335" height="25.5"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="21"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
@@ -1196,6 +1196,18 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="I2p-X7-NBj"/>
                     </view>
+                    <connections>
+                        <outlet property="avgIntervalLabel" destination="BgD-B3-xBT" id="7Ui-Q5-1bP"/>
+                        <outlet property="daysSinceLabel" destination="kkP-a7-tg7" id="4Fs-zG-DER"/>
+                        <outlet property="daysUntilLabel" destination="OQO-qm-nMF" id="hdj-Fd-kU6"/>
+                        <outlet property="firstEventDateLabel" destination="qLQ-a2-CbG" id="za1-Kd-RAv"/>
+                        <outlet property="maxIntervalLabel" destination="R1W-BS-6IJ" id="wFa-e1-gPy"/>
+                        <outlet property="minIntervalLabel" destination="Kja-Nr-eHE" id="NnO-Hi-wNn"/>
+                        <outlet property="nextDateImage" destination="lYT-AW-iSh" id="D4b-BJ-u2V"/>
+                        <outlet property="nextDateLabel" destination="fvT-D9-hCW" id="qX8-Vs-fr3"/>
+                        <outlet property="numberOfEventsLabel" destination="oXg-sU-O7E" id="2OF-aJ-Wde"/>
+                        <outlet property="previousDateLabel" destination="3Rn-up-cma" id="LuV-VP-JAv"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="XkK-jL-Ek1" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
