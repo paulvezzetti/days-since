@@ -21,7 +21,8 @@ class ActivitySummaryViewController: UIViewController {
     @IBOutlet var numberOfEventsLabel: UILabel!
     @IBOutlet var firstEventDateLabel: UILabel!
     
-    @IBOutlet var nextDateImage: UIImageView!
+    @IBOutlet var daysUntilLabelLabel: UILabel!
+    @IBOutlet var eventTimelineImage: UIImageView!
     
     var activity:ActivityMO? {
         didSet {
@@ -66,7 +67,11 @@ class ActivitySummaryViewController: UIViewController {
         firstEventDateLabel.text = stats.firstDay
         
         if nextDate != nil && nextDate! < Date() {
-            nextDateImage.image = UIImage(named: "RedArrow")
+            eventTimelineImage.image = UIImage(named: "OverdueArrow")
+            daysUntilLabelLabel.text = "Days Overdue:"
+        } else {
+            eventTimelineImage.image = UIImage(named: "OnTimeArrow")
+            daysUntilLabelLabel.text = "Days Until:"
         }
 //        expectedFrequencyLabel.text = ""
 //        numInstancesLabel.text = String(act.history?.count ?? 0)
