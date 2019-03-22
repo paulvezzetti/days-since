@@ -11,6 +11,7 @@ import UIKit
 class ActivitySummaryViewController: UIViewController {
 
     
+    @IBOutlet var intervalLabel: UILabel!
     @IBOutlet var daysSinceLabel: UILabel!
     @IBOutlet var daysUntilLabel: UILabel!
     @IBOutlet var previousDateLabel: UILabel!
@@ -43,20 +44,20 @@ class ActivitySummaryViewController: UIViewController {
         guard let act = activity else {
             return
         }
-        
+        intervalLabel.text = "Due: " + (act.interval?.toPrettyString() ?? "")
         
         let stats:ActivityStatistics = ActivityStatistics(activity: act)
         let daysSince = stats.daySince
         daysSinceLabel.text = daysSince != nil ? String(stats.daySince!) : "--"
         
         let daysUntil = stats.daysUntil
-        daysUntilLabel.text = daysUntil != nil ? String(abs(stats.daysUntil!)) : "--"
+        daysUntilLabel.text = daysUntil != nil ? String(abs(stats.daysUntil!)) : ""
         
         let lastDate = stats.lastDate
         previousDateLabel.text = lastDate != nil ? lastDate!.getFormattedDate() : "None"
         
         let nextDate = stats.nextDate
-        nextDateLabel.text = nextDate != nil ? nextDate!.getFormattedDate() : "None"
+        nextDateLabel.text = nextDate != nil ? nextDate!.getFormattedDate() : ""
         
         minIntervalLabel.text = String(stats.minDays)
         avgIntervalLabel.text = String(stats.avgDays)
@@ -73,8 +74,14 @@ class ActivitySummaryViewController: UIViewController {
             eventTimelineImage.image = UIImage(named: "OnTimeArrow")
             daysUntilLabelLabel.text = "Days Until:"
         }
-//        expectedFrequencyLabel.text = ""
-//        numInstancesLabel.text = String(act.history?.count ?? 0)
+
+        let isUnlimited = act.interval is UnlimitedIntervalMO
+        daysUntilLabelLabel.isHidden = isUnlimited
+        //daysUntilLabel.isHidden = isUnlimited
+
+        
+//       expectedFrequencyLabel.text = ""
+//        numInstancesLabel.text = String(act.history?.counctt ?? 0)
 //        daysSinceLabel.text = daysSince != nil ? String(stats.daySince!) : "--"
 //        daysUntilLabel.text = daysUntil != nil ? String(stats.daysUntil!) : "--"
 //

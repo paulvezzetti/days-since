@@ -12,7 +12,6 @@ class DetailViewController: UIViewController {
 
     @IBOutlet weak var detailDescriptionLabel: UILabel!
     @IBOutlet var alternatingView: UIView!
-    @IBOutlet var intervalLabel: UILabel!
     @IBOutlet var segmentedControl: UISegmentedControl!
     
     var dataManager: DataModelManager? = nil
@@ -39,11 +38,11 @@ class DetailViewController: UIViewController {
                 label.text = detail.name
             }
             
-            if let interval = detail.interval {
-                if let label = intervalLabel {
-                    label.text = interval.toPrettyString()
-                }
-            }
+//            if let interval = detail.interval {
+//                if let label = intervalLabel {
+//                    label.text = interval.toPrettyString()
+//                }
+//            }
         }
     }
 
