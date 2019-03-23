@@ -67,7 +67,10 @@ class ActivitySummaryViewController: UIViewController {
         
         firstEventDateLabel.text = stats.firstDay
         
-        if nextDate != nil && nextDate! < Date() {
+        if act.interval is UnlimitedIntervalMO {
+            eventTimelineImage.image = UIImage(named: "UnlimitedArrow")
+
+        } else if nextDate != nil && nextDate! < Date() {
             eventTimelineImage.image = UIImage(named: "OverdueArrow")
             daysUntilLabelLabel.text = "Days Overdue:"
         } else {

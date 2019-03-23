@@ -50,31 +50,48 @@ public class ActivityMO: NSManagedObject {
         return activity
     }
     
-
-//    enum SectionIndex: Int {
-//        case onTime = 0, soon, overdue
-//    }
-//
-//    var status:String {
-//        return isOverdue ? "Overdue" : "On time"
-//    }
     
-    enum ActivityStatus: Int {
-        case OverDue = 0, Soon, OnTime
+    enum ActivityState: CaseIterable {
+        case VeryOld,
+        LastMonth,
+        LastWeek,
+        Yesterday,
+        Today,
+        Tomorrow,
+        NextWeek,
+        NextMonth,
+        Future,
+        Whenever
     }
     
-    var status:ActivityStatus {
-        // TODO: Add soon ?
-        return isOverdue ? ActivityStatus.OverDue : ActivityStatus.OnTime
-    }
-    
-    
-    var isOverdue: Bool {
+    var state:ActivityState {
         guard let lastDate = lastEvent?.timestamp, let nextDate = self.interval?.getNextDate(since: lastDate) else {
-            return false
+            return .Whenever
         }
-        return nextDate < Date()
+        let calendar = Calendar.current
+        let today = Date.normalize(date: Date())
+        let daysToNext = calendar.dateComponents([.day], from: today, to: nextDate)
+        
+        if daysToNext.day == 0 {
+            return .Today
+        } else if daysToNext.day == 1 {
+            return .Tomorrow
+        } else if daysToNext.day == -1 {
+            return .Yesterday
+        } else if daysToNext.day! > 1 && daysToNext.day! <= 7 { // TODO: Should this be week specific Sun-Sat?
+            return .NextWeek
+        } else if daysToNext.day! > 7 && daysToNext.day! <= 31 { // Should this only include this month
+            return .NextMonth
+        } else if daysToNext.day! > 31 {
+            return .Future
+        } else if daysToNext.day! < -1 && daysToNext.day! >= -7 {
+            return .LastWeek
+        } else if daysToNext.day! < -7 && daysToNext.day! >= 31 {
+            return .LastMonth
+        }
+        return .VeryOld
     }
+    
     
     var sortedHistory: [EventMO] {
         return history?.sortedArray(using: [NSSortDescriptor(key: "timestamp", ascending: true)]) as! [EventMO]

@@ -13,8 +13,9 @@ class MasterViewController: UITableViewController {
 
     var detailViewController: DetailViewController? = nil
     var dataManager: DataModelManager? = nil
-    var activityDict: [ActivityMO.ActivityStatus : [ActivityMO] ] = [:]
-    var sectionIndices: [Int : ActivityMO.ActivityStatus] = [:]
+    var activityDict: [ActivityMO.ActivityState : [ActivityMO] ] = [:]
+    var sectionIndices: [Int : ActivityMO.ActivityState] = [:]
+    var collapsedState: [ActivityMO.ActivityState : Bool] = [:] 
 
     //private var markDoneIndexPath:IndexPath?
 
@@ -26,7 +27,16 @@ class MasterViewController: UITableViewController {
         tableView.rowHeight = UITableView.automaticDimension
         tableView.estimatedRowHeight = 140
         
-        rebuildDataStructures()
+        let headerNib = UINib.init(nibName: "ActivityTableHeaderView", bundle: nil)
+        tableView.register(headerNib, forHeaderFooterViewReuseIdentifier: "ActivityTableHeaderView")
+        
+        
+        for possibleState in ActivityMO.ActivityState.allCases {
+            collapsedState[possibleState] = false
+        }
+
+        //rebuildDataStructures()
+        buildTableDataStructure()
 
         // Remove any current observers
         NotificationCenter.default.removeObserver(self)
@@ -52,12 +62,14 @@ class MasterViewController: UITableViewController {
     
     @objc
     func managedObjectContextObjectsDidChange(notification: NSNotification) {
-        rebuildDataStructures()
+        buildTableDataStructure()
+//        rebuildDataStructures()
         tableView.reloadData()
     }
     
     @objc func onAnyActivityChanged(notification: Notification) {
-        rebuildDataStructures()
+        buildTableDataStructure()
+//        rebuildDataStructures()
         tableView.reloadData()
     }
 
@@ -72,57 +84,53 @@ class MasterViewController: UITableViewController {
         
     }
     
-    func rebuildDataStructures() {
-        var overdue: [ActivityMO] = []
-        var ontime: [ActivityMO] = []
-        var soon: [ActivityMO] = []
-        // Fetch the data
+    func buildTableDataStructure() {
+        
+        var activityMap: [ActivityMO.ActivityState : [ActivityMO] ] = [:]
+        
+        func addToMap(state:ActivityMO.ActivityState, activity:ActivityMO) {
+            if var activityValues = activityMap[state] {
+                // Array of activities already exists, just add to it.
+                activityValues.append(activity)
+            } else {
+                // Create a new array
+                let activityValues = [activity]
+                activityMap[state] = activityValues
+            }
+        }
+        
         if let dm = dataManager {
             do {
                 let fetchedActivities = try dm.getActivities()
                 for activity in fetchedActivities {
-                    switch activity.status {
-                    case ActivityMO.ActivityStatus.OverDue:
-                        overdue.append(activity)
-                    case ActivityMO.ActivityStatus.Soon:
-                        soon.append(activity)
-                    case ActivityMO.ActivityStatus.OnTime:
-                        ontime.append(activity)
-                    }
+                    addToMap(state: activity.state, activity: activity)
                 }
-                func sortByName(_ act1: ActivityMO, _ act2: ActivityMO) -> Bool {
-                    return act1.name! < act2.name! // TODO: Handle nil for name better
-                }
-                overdue.sort(by: sortByName)
-                ontime.sort(by: sortByName)
-                soon.sort(by: sortByName)
-                
             } catch {
                 // TODO: Handle error
             }
         }
-        activityDict.removeAll()
+        // Sort all of the arrays in the map
+        func sortByName(_ act1: ActivityMO, _ act2: ActivityMO) -> Bool {
+            return act1.name! < act2.name! // TODO: Handle nil for name better
+        }
+        for (state, activityValues) in activityMap {
+            let sortedActivities = activityValues.sorted(by: sortByName)
+            activityMap[state] = sortedActivities
+        }
+        self.activityDict = activityMap
+        // Get the section indices
         var sectionIndex = 0
-        sectionIndices.removeAll()
-        if !overdue.isEmpty {
-            activityDict[ActivityMO.ActivityStatus.OverDue] = overdue
-            sectionIndices[sectionIndex] = ActivityMO.ActivityStatus.OverDue
-            sectionIndex += 1
-        }
-        if !soon.isEmpty {
-            activityDict[ActivityMO.ActivityStatus.Soon] = soon
-            sectionIndices[sectionIndex] = ActivityMO.ActivityStatus.Soon
-            sectionIndex += 1
-        }
-        if !ontime.isEmpty {
-            activityDict[ActivityMO.ActivityStatus.OnTime] = ontime
-            sectionIndices[sectionIndex] = ActivityMO.ActivityStatus.OnTime
-            sectionIndex += 1
+        for possibleState in ActivityMO.ActivityState.allCases {
+            if let _ = activityMap[possibleState] {
+                sectionIndices[sectionIndex] = possibleState
+                sectionIndex += 1
+            }
         }
     }
     
-    func sectionToStatus(section index:Int) -> ActivityMO.ActivityStatus {
-        return sectionIndices[index] ?? ActivityMO.ActivityStatus.OnTime // TODO
+    
+    func sectionToStatus(section index:Int) -> ActivityMO.ActivityState {
+        return sectionIndices[index] ?? ActivityMO.ActivityState.Whenever // TODO
     }
     
 
@@ -178,22 +186,125 @@ class MasterViewController: UITableViewController {
 //        return sectionInfo.numberOfObjects
         
         // Get the section
-        let activities = activityDict[sectionToStatus(section: section)] ?? []
+        let state = sectionToStatus(section: section)
+        if collapsedState[state]! {
+            return 0
+        }
+        let activities = activityDict[state] ?? []
         return activities.count
     }
     
-    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        let status = sectionToStatus(section: section)
-        switch status {
-        case ActivityMO.ActivityStatus.OverDue:
-            return "Over Due"
-        case ActivityMO.ActivityStatus.OnTime:
-            return "On Time"
-        case ActivityMO.ActivityStatus.Soon:
-            return "Soon"
-        }
+    override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let headerView = tableView.dequeueReusableHeaderFooterView(withIdentifier: "ActivityTableHeaderView") as! ActivityTableHeaderView
         
+        headerView.section = section
+        headerView.delegate = self
+        
+        let greenView = UIView(frame: headerView.frame)
+        greenView.backgroundColor = UIColor(named:"Medium Green")
+        headerView.backgroundView = greenView
+        
+        let redView = UIView(frame: headerView.frame)
+        redView.backgroundColor = UIColor(named: "Alert Red")
+        
+        let state = sectionToStatus(section: section)
+        switch state {
+        case ActivityMO.ActivityState.Future:
+            headerView.headerTitleLabel.text = "Distant Future"
+        case ActivityMO.ActivityState.LastMonth:
+            headerView.headerTitleLabel.text = "Overdue - Last Month"
+            headerView.backgroundView = redView
+        case ActivityMO.ActivityState.LastWeek:
+            headerView.headerTitleLabel.text = "Overdue - Last Week"
+            headerView.backgroundView = redView
+        case ActivityMO.ActivityState.NextMonth:
+            headerView.headerTitleLabel.text = "Next Month"
+        case ActivityMO.ActivityState.NextWeek:
+            headerView.headerTitleLabel.text = "Next Week"
+        case ActivityMO.ActivityState.Today:
+            headerView.headerTitleLabel.text = "Today"
+        case ActivityMO.ActivityState.Tomorrow:
+            headerView.headerTitleLabel.text = "Tomorrow"
+        case ActivityMO.ActivityState.VeryOld:
+            headerView.headerTitleLabel.text = "Overdue - More than a month"
+            headerView.backgroundView = redView
+        case ActivityMO.ActivityState.Whenever:
+            headerView.headerTitleLabel.text = "No due date"
+        case ActivityMO.ActivityState.Yesterday:
+            headerView.headerTitleLabel.text = "Overdue - Yesterday"
+            headerView.backgroundView = redView
+        }
+
+        headerView.setCollapsed(collapsed: collapsedState[state]!)
+        
+        return headerView
     }
+    
+//    override func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
+//        guard let headerView = view as? ActivityTableHeaderView else {
+//            return
+//        }
+//        let greenView = UIView(frame: headerView.frame)
+//        greenView.backgroundColor = UIColor.green
+//
+//        let state = sectionToStatus(section: section)
+//        switch state {
+//        case ActivityMO.ActivityState.Future:
+//            headerView.subView.backgroundColor = UIColor(named: "green")
+//        case ActivityMO.ActivityState.LastMonth:
+//            headerView.subView.backgroundColor = UIColor(named: "red")
+//        case ActivityMO.ActivityState.LastWeek:
+//            headerView.subView.backgroundColor = UIColor(named: "red")
+//        case ActivityMO.ActivityState.NextMonth:
+//            headerView.subView.backgroundColor = UIColor(named: "green")
+//        case ActivityMO.ActivityState.NextWeek:
+//            headerView.subView.backgroundColor = UIColor(named: "green")
+//        case ActivityMO.ActivityState.Today:
+//            headerView.subView.backgroundColor = UIColor(named: "green")
+//        case ActivityMO.ActivityState.Tomorrow:
+//            //headerView.subView.backgroundColor = UIColor(named: "green")
+//            //headerView.backgroundColor = UIColor(named: "green")
+//            headerView.backgroundView = greenView
+//        case ActivityMO.ActivityState.VeryOld:
+//            headerView.subView.backgroundColor = UIColor(named: "red")
+//        case ActivityMO.ActivityState.Whenever:
+//            headerView.subView.backgroundColor = UIColor(named: "green")
+//        case ActivityMO.ActivityState.Yesterday:
+//            headerView.subView.backgroundColor = UIColor(named: "red")
+//        }
+//
+//    }
+    
+    override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return 35
+    }
+    
+//    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+//        let state = sectionToStatus(section: section)
+//        switch state {
+//        case ActivityMO.ActivityState.Future:
+//            return "Distant Future"
+//        case ActivityMO.ActivityState.LastMonth:
+//            return "Overdue - Last Month"
+//        case ActivityMO.ActivityState.LastWeek:
+//            return "Overdue - Last Week"
+//        case ActivityMO.ActivityState.NextMonth:
+//            return "Next Month"
+//        case ActivityMO.ActivityState.NextWeek:
+//            return "Next Week"
+//        case ActivityMO.ActivityState.Today:
+//            return "Today"
+//        case ActivityMO.ActivityState.Tomorrow:
+//            return "Tomorrow"
+//        case ActivityMO.ActivityState.VeryOld:
+//            return "Overdue - More than a month"
+//        case ActivityMO.ActivityState.Whenever:
+//            return "No due date"
+//        case ActivityMO.ActivityState.Yesterday:
+//            return "Overdue - Yesterday"
+//        }
+//
+//    }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "masterCell", for: indexPath) as! MasterTableViewCell
@@ -210,6 +321,11 @@ class MasterViewController: UITableViewController {
         let edit = editAction(at: indexPath)
         let delete = deleteAction(at: indexPath)
         return UISwipeActionsConfiguration(actions: [edit, delete, done])
+    }
+    
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        let state = sectionToStatus(section: indexPath.section)
+        return collapsedState[state]! ? 0 : UITableView.automaticDimension
     }
 
     func editAction(at indexPath: IndexPath) -> UIContextualAction {
@@ -297,4 +413,19 @@ extension MasterViewController : MarkDoneDelegate {
     
 }
 
+extension MasterViewController: CollapsibleTableViewHeaderDelegate {
+    
+    
+    func toggleSection(header: ActivityTableHeaderView, section: Int) {
+        let status = sectionToStatus(section: section)
+        let collapsed = !collapsedState[status]!
+        collapsedState[status] = collapsed
+        
+        header.setCollapsed(collapsed: collapsed)
+        
+        tableView.reloadSections([section], with: .automatic)
+    }
+    
 
+
+}

@@ -46,6 +46,9 @@
 		FAB23B74223AC332004C6252 /* NotificationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAB23B73223AC332004C6252 /* NotificationManager.swift */; };
 		FAB23B7B223F2436004C6252 /* ReminderMO+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAB23B77223F2436004C6252 /* ReminderMO+CoreDataClass.swift */; };
 		FAB23B822241A152004C6252 /* NumberFormatterOrdinal.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAB23B812241A152004C6252 /* NumberFormatterOrdinal.swift */; };
+		FAE2F69422455301009B0DCB /* ActivityTableHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAE2F69322455301009B0DCB /* ActivityTableHeaderView.swift */; };
+		FAE2F69622455421009B0DCB /* ActivityTableHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = FAE2F69522455421009B0DCB /* ActivityTableHeaderView.xib */; };
+		FAE2F69822456DEC009B0DCB /* CollapsibleTableViewHeaderDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAE2F69722456DEC009B0DCB /* CollapsibleTableViewHeaderDelegate.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -90,6 +93,9 @@
 		FAB23B73223AC332004C6252 /* NotificationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationManager.swift; sourceTree = "<group>"; };
 		FAB23B77223F2436004C6252 /* ReminderMO+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ReminderMO+CoreDataClass.swift"; sourceTree = "<group>"; };
 		FAB23B812241A152004C6252 /* NumberFormatterOrdinal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NumberFormatterOrdinal.swift; sourceTree = "<group>"; };
+		FAE2F69322455301009B0DCB /* ActivityTableHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityTableHeaderView.swift; sourceTree = "<group>"; };
+		FAE2F69522455421009B0DCB /* ActivityTableHeaderView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ActivityTableHeaderView.xib; sourceTree = "<group>"; };
+		FAE2F69722456DEC009B0DCB /* CollapsibleTableViewHeaderDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollapsibleTableViewHeaderDelegate.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -204,6 +210,9 @@
 			children = (
 				FA1D72E0221F82A300D8EBF7 /* MasterTableViewCell.swift */,
 				FA1D734A22303F4600D8EBF7 /* HistoryTableViewCell.swift */,
+				FAE2F69322455301009B0DCB /* ActivityTableHeaderView.swift */,
+				FAE2F69522455421009B0DCB /* ActivityTableHeaderView.xib */,
+				FAE2F69722456DEC009B0DCB /* CollapsibleTableViewHeaderDelegate.swift */,
 			);
 			path = components;
 			sourceTree = "<group>";
@@ -289,6 +298,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				FA3CEF58220E0F2600634DD7 /* LaunchScreen.storyboard in Resources */,
+				FAE2F69622455421009B0DCB /* ActivityTableHeaderView.xib in Resources */,
 				FA3CEF55220E0F2600634DD7 /* Assets.xcassets in Resources */,
 				FA3CEF53220E0F2500634DD7 /* Main.storyboard in Resources */,
 			);
@@ -301,6 +311,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FAE2F69822456DEC009B0DCB /* CollapsibleTableViewHeaderDelegate.swift in Sources */,
 				FA1D7340222DB9DB00D8EBF7 /* Months.swift in Sources */,
 				FAB23B7B223F2436004C6252 /* ReminderMO+CoreDataClass.swift in Sources */,
 				FA3CEF49220E0F2500634DD7 /* AppDelegate.swift in Sources */,
@@ -311,6 +322,7 @@
 				FA1D72EA2220784900D8EBF7 /* ActivityMO+CoreDataClass.swift in Sources */,
 				FAA6AF1E2211C1E700346CCB /* AddActivityTableViewController.swift in Sources */,
 				FAB23B74223AC332004C6252 /* NotificationManager.swift in Sources */,
+				FAE2F69422455301009B0DCB /* ActivityTableHeaderView.swift in Sources */,
 				FA1D732D2228C60E00D8EBF7 /* IntervalMO+CoreDataClass.swift in Sources */,
 				FA1D72EC2220784900D8EBF7 /* EventMO+CoreDataClass.swift in Sources */,
 				FA1D72DB221E2D2B00D8EBF7 /* ActivityStatistics.swift in Sources */,

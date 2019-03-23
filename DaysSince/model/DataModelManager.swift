@@ -202,19 +202,6 @@ class DataModelManager {
         return nil
     }
     
-    func getOverdueActivities() throws -> [ActivityMO] {
-        let allActivities = try getActivities()
-        var overdue:[ActivityMO] = []
-        
-        for activity in allActivities {
-            if activity.isOverdue {
-                overdue.append(activity)
-            }
-        }
-        return overdue
-    }
-    
-    
     
     func newChildManagedObjectContext() throws -> NSManagedObjectContext {
         let childMOC = NSManagedObjectContext(concurrencyType: .mainQueueConcurrencyType)
