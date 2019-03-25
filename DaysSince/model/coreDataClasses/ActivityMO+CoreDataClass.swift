@@ -145,6 +145,15 @@ public class ActivityMO: NSManagedObject {
         sortDates[0].timestamp = date
     }
     
+    func previousEvent(event:EventMO) -> EventMO? {
+        let sorted = sortedHistory
+        
+        guard let eventIndex = sorted.firstIndex(of: event), eventIndex > 0 else {
+            return nil
+        }
+        return sorted[eventIndex - 1]
+    }
+    
     func daysSincePreviousEvent(event:EventMO)->Int {
         let sorted = sortedHistory
         

@@ -31,11 +31,14 @@ class EventDetailsViewController: UIViewController {
         if let currentEvent = event {
             dateLabel.text = currentEvent.getFormattedDate(style: .long)
             if currentEvent.activity != nil {
-                let numDays = currentEvent.activity!.daysSincePreviousEvent(event: currentEvent)
-                if numDays < 0 {
+                let previousEvent = currentEvent.activity!.previousEvent(event: currentEvent)
+                if previousEvent == nil {
                     intervalLabel.text = "First event"
                 } else {
-                    intervalLabel.text = String(numDays) + " days between events"
+                    let days = Calendar.current.dateComponents([.day], from: previousEvent!.timestamp!, to: currentEvent.timestamp!)
+                    let body = days.day == 1 ? " day since " : " days since "
+                    intervalLabel.text = String(days.day!) + body + previousEvent!.formattedDate()
+                    
                 }
             }
             detailTextView.text = currentEvent.details

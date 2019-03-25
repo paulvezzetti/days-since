@@ -106,8 +106,9 @@ class NotificationManager : NSObject {
         // attachments : Maybe include an icon
         
         let stats:ActivityStatistics = ActivityStatistics(activity: activity)
-        content.title = activity.name ?? "Activity"
-        content.subtitle = "Subtitle"
+        let activityName = activity.name ?? "An Activity"
+        content.title = activityName
+        content.subtitle = activityName + " is coming up on " + stats.nextDay
         content.body = "Next due date: " + stats.nextDay
         
         content.userInfo = ["UUID": uuid]
