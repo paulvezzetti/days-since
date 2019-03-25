@@ -15,8 +15,9 @@ class MasterViewController: UITableViewController {
     var dataManager: DataModelManager? = nil
     var activityDict: [ActivityMO.ActivityState : [ActivityMO] ] = [:]
     var sectionIndices: [Int : ActivityMO.ActivityState] = [:]
-    var collapsedState: [ActivityMO.ActivityState : Bool] = [:] 
+    var collapsedState: [ActivityMO.ActivityState : Bool] = [:]
 
+    @IBOutlet var navigationTitle: UINavigationItem!
     //private var markDoneIndexPath:IndexPath?
 
     override func viewDidLoad() {
@@ -201,38 +202,41 @@ class MasterViewController: UITableViewController {
         headerView.delegate = self
         
         let greenView = UIView(frame: headerView.frame)
-        greenView.backgroundColor = UIColor(named:"Medium Green")
+        greenView.backgroundColor = UIColor(named:"Header")
         headerView.backgroundView = greenView
         
-        let redView = UIView(frame: headerView.frame)
-        redView.backgroundColor = UIColor(named: "Alert Red")
+//        let redView = UIView(frame: headerView.frame)
+//        redView.backgroundColor = UIColor(named: "Alert Red")
         
         let state = sectionToStatus(section: section)
+        headerView.headerTitleLabel.text = state.asString()
+        
         switch state {
-        case ActivityMO.ActivityState.Future:
-            headerView.headerTitleLabel.text = "Distant Future"
-        case ActivityMO.ActivityState.LastMonth:
-            headerView.headerTitleLabel.text = "Overdue - Last Month"
-            headerView.backgroundView = redView
-        case ActivityMO.ActivityState.LastWeek:
-            headerView.headerTitleLabel.text = "Overdue - Last Week"
-            headerView.backgroundView = redView
-        case ActivityMO.ActivityState.NextMonth:
-            headerView.headerTitleLabel.text = "Next Month"
-        case ActivityMO.ActivityState.NextWeek:
-            headerView.headerTitleLabel.text = "Next Week"
+//        case ActivityMO.ActivityState.Future:
+//            headerView.headerTitleLabel.text = "Distant Future"
+//        case ActivityMO.ActivityState.LastMonth:
+//            headerView.headerTitleLabel.text = "Overdue - Last Month"
+//            headerView.backgroundView = redView
+//        case ActivityMO.ActivityState.LastWeek:
+//            headerView.headerTitleLabel.text = "Overdue - Last Week"
+//            headerView.backgroundView = redView
+        case .NextMonth, .NextWeek, .Tomorrow, .Future:
+            headerView.statusImage.image = UIImage(named: "CompleteIcon")
         case ActivityMO.ActivityState.Today:
-            headerView.headerTitleLabel.text = "Today"
-        case ActivityMO.ActivityState.Tomorrow:
-            headerView.headerTitleLabel.text = "Tomorrow"
-        case ActivityMO.ActivityState.VeryOld:
-            headerView.headerTitleLabel.text = "Overdue - More than a month"
-            headerView.backgroundView = redView
-        case ActivityMO.ActivityState.Whenever:
-            headerView.headerTitleLabel.text = "No due date"
-        case ActivityMO.ActivityState.Yesterday:
-            headerView.headerTitleLabel.text = "Overdue - Yesterday"
-            headerView.backgroundView = redView
+            headerView.statusImage.image = UIImage(named: "TodayIcon")
+//        case ActivityMO.ActivityState.Tomorrow:
+//            headerView.headerTitleLabel.text = "Tomorrow"
+//        case ActivityMO.ActivityState.VeryOld:
+//            headerView.headerTitleLabel.text = "Overdue - More than a month"
+//            headerView.backgroundView = redView
+        case .Whenever:
+            headerView.statusImage.image = UIImage(named: "UnlimitedStatusIcon")
+//            headerView.headerTitleLabel.text = "No due date"
+//        case ActivityMO.ActivityState.Yesterday:
+//            headerView.headerTitleLabel.text = "Overdue - Yesterday"
+//            headerView.backgroundView = redView
+        default:
+            break
         }
 
         headerView.setCollapsed(collapsed: collapsedState[state]!)

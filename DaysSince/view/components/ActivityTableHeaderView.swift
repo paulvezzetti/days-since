@@ -12,9 +12,9 @@ class ActivityTableHeaderView: UITableViewHeaderFooterView {
 
     
     @IBOutlet var headerTitleLabel: UILabel!
-    
     @IBOutlet var chevronImage: UIImageView!
-
+    @IBOutlet var statusImage: UIImageView!
+    
     var delegate: CollapsibleTableViewHeaderDelegate?
     var section: Int = 0
     

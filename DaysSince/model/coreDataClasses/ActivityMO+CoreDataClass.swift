@@ -62,6 +62,31 @@ public class ActivityMO: NSManagedObject {
         NextMonth,
         Future,
         Whenever
+        
+        func asString() -> String {
+            switch self {
+            case .VeryOld:
+                return "MORE THAN A MONTH OVERDUE"
+            case .LastMonth:
+                return "DUE LAST MONTH"
+            case .LastWeek:
+                return "DUE LAST WEEK"
+            case .Yesterday:
+                return "YESTERDAY"
+            case .Today:
+                return "TODAY"
+            case .Tomorrow:
+                return "TOMORROW"
+            case .NextWeek:
+                return "NEXT WEEK"
+            case .NextMonth:
+                return "NEXT MONTH"
+            case .Future:
+                return "FUTURE"
+            case . Whenever:
+                return "ANY TIME"
+            }
+        }
     }
     
     var state:ActivityState {

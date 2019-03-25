@@ -2,17 +2,17 @@
   "images" : [
     {
       "idiom" : "universal",
-      "filename" : "UnlimitedSmall.png",
+      "filename" : "minus-1-month.png",
       "scale" : "1x"
     },
     {
       "idiom" : "universal",
-      "filename" : "UnlimitedSmall-1.png",
+      "filename" : "minus-1-month-1.png",
       "scale" : "2x"
     },
     {
       "idiom" : "universal",
-      "filename" : "UnlimitedSmall-2.png",
+      "filename" : "minus-1-month-2.png",
       "scale" : "3x"
     }
   ],
