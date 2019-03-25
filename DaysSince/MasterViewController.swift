@@ -93,6 +93,7 @@ class MasterViewController: UITableViewController {
             if var activityValues = activityMap[state] {
                 // Array of activities already exists, just add to it.
                 activityValues.append(activity)
+                activityMap[state] = activityValues
             } else {
                 // Create a new array
                 let activityValues = [activity]
@@ -214,7 +215,8 @@ class MasterViewController: UITableViewController {
         switch state {
 //        case ActivityMO.ActivityState.Future:
 //            headerView.headerTitleLabel.text = "Distant Future"
-//        case ActivityMO.ActivityState.LastMonth:
+        case .LastMonth, .LastWeek, .VeryOld, .Yesterday:
+            headerView.statusImage.image = UIImage(named: "LateIcon")
 //            headerView.headerTitleLabel.text = "Overdue - Last Month"
 //            headerView.backgroundView = redView
 //        case ActivityMO.ActivityState.LastWeek:

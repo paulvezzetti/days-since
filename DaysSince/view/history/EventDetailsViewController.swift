@@ -33,7 +33,7 @@ class EventDetailsViewController: UIViewController {
             if currentEvent.activity != nil {
                 let numDays = currentEvent.activity!.daysSincePreviousEvent(event: currentEvent)
                 if numDays < 0 {
-                    intervalLabel.text = "No previous event"
+                    intervalLabel.text = "First event"
                 } else {
                     intervalLabel.text = String(numDays) + " days between events"
                 }
