@@ -77,6 +77,7 @@ class AddActivityTableViewController: UITableViewController, UITextFieldDelegate
         }
         
         titleField.delegate = self
+        snoozeTextField.delegate = self
         
         // Copy the settings to the temp activity
         if let activityToEdit = editActivity {
@@ -177,7 +178,11 @@ class AddActivityTableViewController: UITableViewController, UITextFieldDelegate
         activity.reminder?.enabled = enableRemindersSwitch.isOn
         activity.reminder?.allowSnooze = snoozeSwitch.isOn
         activity.reminder?.daysBefore = Int16(remindTextField.text ?? "0") ?? 0
-        activity.reminder?.snooze = Int16(snoozeTextField.text ?? "1") ?? 1
+        var snooze = Int(snoozeTextField.text ?? "1")
+        if snooze == nil || snooze! < 1 {
+            snooze = 1
+        }
+        activity.reminder?.snooze = Int16(snooze!)
         
         // TODO: Update activity and save
         if let activityToUpdate = editActivity {
@@ -225,6 +230,7 @@ class AddActivityTableViewController: UITableViewController, UITextFieldDelegate
         titleField.text = activity.name
         intervalLabel.text = activity.interval!.toPrettyString()
         startDateLabel.text = dateFormatter.string(from: activity.firstDate)
+        startDatePicker.date = activity.firstDate
         
         let title = titleField.text ?? ""
         saveButton.isEnabled = !title.isEmpty
@@ -315,6 +321,11 @@ class AddActivityTableViewController: UITableViewController, UITextFieldDelegate
             saveButton.isEnabled = !title.isEmpty
             navigationItem.title = title
             tempActivity?.name = title
+        } else if textField === snoozeTextField {
+            let snoozeDays = Int(snoozeTextField.text ?? "")
+            if snoozeDays == nil || snoozeDays! < 1 {
+                snoozeTextField.text = "1"
+            }
         }
     }
 }

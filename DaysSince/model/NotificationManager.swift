@@ -70,6 +70,7 @@ class NotificationManager : NSObject {
         }
         removeAllPendingNotifications(for: activity)
         scheduleReminderNotification(for: activity)
+        restoreSnoozeReminders(for: activity)
         checkApplicationBadge()
     }
 
@@ -112,21 +113,8 @@ class NotificationManager : NSObject {
         let daysBefore = activity.reminder?.daysBefore ?? 0
         
         let notificationDate = calendar.date(byAdding: .day, value: Int(-1 * daysBefore), to: nextDate)
-        guard let triggerDate = notificationDate, triggerDate > Date() else { return }
+        postNotificationRequest(identifier: uuid, content: content, when: notificationDate)
 
-        print("at: \(triggerDate.getFullString())")
-        let dateComps = calendar.dateComponents(in: calendar.timeZone, from: triggerDate)
-        let trigger = UNCalendarNotificationTrigger(dateMatching: dateComps, repeats: false)
-        //let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 15, repeats: false)
-        // Create the request
-        let request = UNNotificationRequest(identifier: uuid, content: content, trigger: trigger)
-        
-        notificationCenter.add(request) {
-            (error) in
-            if error != nil {
-                print("Unable to add notification request" + error!.localizedDescription)
-            }
-        }
     }
     
     func scheduleSnoozeReminder(for activity:ActivityMO) {
@@ -137,22 +125,57 @@ class NotificationManager : NSObject {
             notificationCenter.removePendingNotificationRequests(withIdentifiers: [uuid])
             return
         }
-        print("Scheduling snnoze for activity: \(activity.name ?? "") with uuid: \(uuid) ")
+        print("Scheduling snooze for activity: \(activity.name ?? "") with uuid: \(uuid) ")
         let content = buildContentForActivityNotification(activity)
-        // Set up the trigger.
-        // TODO: This should be a UNCalendarNotificationTrigger which is based off of the next notification date
-        let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 15, repeats: false)
-        // Create the request
-        let request = UNNotificationRequest(identifier: uuid, content: content, trigger: trigger)
+        // Set up the trigger. It's today + snoozeDays
+        let calendar = Calendar.current
+        let now = Date()
+        guard let snoozeUntil = calendar.date(byAdding: .day, value: Int(activity.reminder!.snooze), to: now) else { return }
+        // Remember when the last snooze was set
+        activity.reminder?.lastSnooze = now
         
-        notificationCenter.add(request) {
-            (error) in
-            if error != nil {
-                print("Unable to add notification request" + error!.localizedDescription)
+        postNotificationRequest(identifier: uuid, content: content, when: snoozeUntil)
+    }
+    
+    func restoreSnoozeReminders(for activity:ActivityMO) {
+        let uuid = activity.id!.uuidString
+        guard let remind = activity.reminder, let lastSnooze = remind.lastSnooze, remind.allowSnooze && remind.enabled else {
+            return
+        }
+        print("Scheduling snooze for activity: \(activity.name ?? "") with uuid: \(uuid) ")
+        let content = buildContentForActivityNotification(activity)
+        // Set up the trigger. It's lastSnooze + snoozeDays
+        let calendar = Calendar.current
+        let snoozeUntil = calendar.date(byAdding: .day, value: Int(remind.snooze), to: lastSnooze)
+        
+        postNotificationRequest(identifier: uuid, content: content, when: snoozeUntil)
+        
+    }
+    
+    func postNotificationRequest(identifier:String, content: UNNotificationContent, when:Date?) {
+        guard let notificationDate = when, notificationDate > Date() else { return }
+        
+        print("Posting notification at: \(notificationDate.getFullString())")
+        
+        notificationCenter.getNotificationSettings { (settings) in
+            guard settings.authorizationStatus == .authorized else { return }
+            
+            if settings.alertSetting == .enabled {
+                let calendar = Calendar.current
+                let trigger = UNCalendarNotificationTrigger(dateMatching: calendar.dateComponents(in: calendar.timeZone, from: notificationDate), repeats: false)
+                // Create the request
+                let request = UNNotificationRequest(identifier: identifier, content: content, trigger: trigger)
+                
+                self.notificationCenter.add(request) {
+                    (error) in
+                    if error != nil {
+                        print("Unable to add notification request" + error!.localizedDescription)
+                    }
+                }
             }
         }
-
     }
+    
     
     func buildContentForActivityNotification(_ activity:ActivityMO) -> UNMutableNotificationContent {
         let content = UNMutableNotificationContent()

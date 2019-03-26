@@ -131,7 +131,7 @@ class DataModelManager {
                 if let activity = update as? ActivityMO {
                     NotificationCenter.default.post(name: Notification.Name.activityChanged, object: activity)
                 } else if let event = update as? EventMO {
-                    NotificationCenter.default.post(name: Notification.Name.eventChanged, object: event)
+                    NotificationCenter.default.post(name: Notification.Name.eventChanged, object: event.activity)
                 } else if let reminder = update as? ReminderMO {
                     NotificationCenter.default.post(name: Notification.Name.reminderChanged, object: reminder.activity)
                 }
@@ -175,6 +175,10 @@ class DataModelManager {
     
     func markActivityDone(activity:ActivityMO, at date:Date? = nil, with details:String? = nil) throws {
         let context = try getManagedObjectContext()
+
+        // If we marked this done, reset the last snooze date.
+        activity.reminder?.lastSnooze = nil
+
         let event = EventMO(context: context)
         event.timestamp = Date.normalize(date: date ?? Date())
         if details != nil {

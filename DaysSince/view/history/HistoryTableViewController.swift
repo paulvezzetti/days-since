@@ -16,7 +16,7 @@ class HistoryTableViewController: UITableViewController {
             NotificationCenter.default.removeObserver(self)
             // Add new observers
             DataModelManager.registerForNamedNotifications(self, selector: #selector(onActivityChanged(notification:)), names: [.activityChanged, .eventAdded, .eventRemoved], object: activity)
-            NotificationCenter.default.addObserver(self, selector: #selector(onEventChanged(notification:)), name: Notification.Name.eventChanged, object: nil)
+            NotificationCenter.default.addObserver(self, selector: #selector(onEventChanged(notification:)), name: Notification.Name.eventChanged, object: activity)
 
             if let act = activity {
                 sortedHistory = act.history?.sortedArray(using: [NSSortDescriptor(key: "timestamp", ascending: true)]) as! [EventMO]

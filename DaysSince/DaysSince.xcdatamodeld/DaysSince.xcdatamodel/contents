@@ -30,6 +30,7 @@
         <attribute name="allowSnooze" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="daysBefore" attributeType="Integer 16" minValueString="0" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="enabled" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="lastSnooze" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
         <attribute name="snooze" attributeType="Integer 16" minValueString="1" defaultValueString="1" usesScalarValueType="YES" syncable="YES"/>
         <relationship name="activity" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Activity" inverseName="reminder" inverseEntity="Activity" syncable="YES"/>
     </entity>
@@ -47,7 +48,7 @@
         <element name="Event" positionX="-74.6171875" positionY="192.96484375" width="128" height="60"/>
         <element name="Interval" positionX="209.41015625" positionY="183.20703125" width="128" height="60"/>
         <element name="MonthlyInterval" positionX="77.70703125" positionY="311.53125" width="128" height="60"/>
-        <element name="Reminder" positionX="158.08984375" positionY="-19.03125" width="128" height="120"/>
+        <element name="Reminder" positionX="158.08984375" positionY="-19.03125" width="128" height="135"/>
         <element name="UnlimitedInterval" positionX="503.921875" positionY="314.13671875" width="128" height="45"/>
         <element name="WeeklyInterval" positionX="219.46875" positionY="311.5234375" width="128" height="60"/>
         <element name="YearlyInterval" positionX="362.30859375" positionY="311.28515625" width="128" height="75"/>
