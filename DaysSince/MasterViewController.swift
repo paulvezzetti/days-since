@@ -237,8 +237,6 @@ class MasterViewController: UITableViewController {
 //        case ActivityMO.ActivityState.Yesterday:
 //            headerView.headerTitleLabel.text = "Overdue - Yesterday"
 //            headerView.backgroundView = redView
-        default:
-            break
         }
 
         headerView.setCollapsed(collapsed: collapsedState[state]!)

@@ -76,11 +76,16 @@ class AddActivityTableViewController: UITableViewController, UITextFieldDelegate
             return
         }
         
+        titleField.delegate = self
         
         // Copy the settings to the temp activity
         if let activityToEdit = editActivity {
             // If we are editing an existing activity, clone it with just the first event history
             tempActivity = activityToEdit.clone(context: context, eventCloneOptions: .First)
+            
+            // Fill in the initial values
+            configureViewForActivity()
+
         } else {
             // Otherwise, initialize a new one
             self.tempActivity = ActivityMO(context: context)
@@ -92,12 +97,24 @@ class AddActivityTableViewController: UITableViewController, UITextFieldDelegate
             //print("Event timestamp: \(firstEvent.timestamp!.getLongString())")
 
             self.tempActivity?.addToHistory(firstEvent)
+            // If we are granted access for notifications, then enable reminders by default
+            let notificationCenter = UNUserNotificationCenter.current()
+            
+            notificationCenter.getNotificationSettings { (settings) in
+                // Do not enable reminders if not authorized.
+                guard settings.authorizationStatus == .authorized else {return}
+                
+                if settings.alertSetting == .enabled {
+                    // Enable the reminders by default. Don't do this when editing an activity
+                    self.tempActivity?.reminder?.enabled = true
+                    self.tempActivity?.reminder?.allowSnooze = true
+                    DispatchQueue.main.async {
+                        self.configureViewForActivity()
+                    }
+                }
+            }
         }
         
-        titleField.delegate = self
-
-        // Fill in the initial values
-        configureViewForActivity()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -224,7 +241,6 @@ class AddActivityTableViewController: UITableViewController, UITextFieldDelegate
 
     }
     
-    
     @IBAction func enableReminderChanged(_ sender: Any) {
         let enableReminders = enableRemindersSwitch.isOn
         if enableReminders {
@@ -248,6 +264,24 @@ class AddActivityTableViewController: UITableViewController, UITextFieldDelegate
         
     }
     
+    func onPermissionForPushNotificationDenied() {
+        let alert = UIAlertController(title: "Authorization Required", message: "Push notifications have been disabled for this application. Go to Settings and enable notifications in order to receive reminders.", preferredStyle: UIAlertController.Style.alert)
+        alert.addAction(UIAlertAction(title: "Settings", style: UIAlertAction.Style.default) { (alert) in
+            UIApplication.shared.open(URL(string: UIApplication.openSettingsURLString)!)
+        })
+        alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
+        self.present(alert, animated: true, completion: nil)
+
+    
+        self.tempActivity?.reminder?.enabled = false
+        self.tempActivity?.reminder?.allowSnooze = false
+        
+        enableRemindersSwitch.setOn(false, animated: false)
+        remindTextField.isEnabled = false
+        snoozeSwitch.setOn(false, animated: false)
+
+    }
+    
     
     
     // TODO: This needs to move to some type of Notification Manager for the app
@@ -255,7 +289,11 @@ class AddActivityTableViewController: UITableViewController, UITextFieldDelegate
         UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound, .badge]) {
             granted, error in
             print("Permission granted: \(granted)")
-            
+            if !granted {
+                DispatchQueue.main.async {
+                    self.onPermissionForPushNotificationDenied()
+                }
+            }
         }
     }
 
