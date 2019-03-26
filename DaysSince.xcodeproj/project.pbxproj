@@ -46,6 +46,7 @@
 		FAB23B74223AC332004C6252 /* NotificationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAB23B73223AC332004C6252 /* NotificationManager.swift */; };
 		FAB23B7B223F2436004C6252 /* ReminderMO+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAB23B77223F2436004C6252 /* ReminderMO+CoreDataClass.swift */; };
 		FAB23B822241A152004C6252 /* NumberFormatterOrdinal.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAB23B812241A152004C6252 /* NumberFormatterOrdinal.swift */; };
+		FADE9AC1224A8A260055DA64 /* NotificationExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = FADE9AC0224A8A260055DA64 /* NotificationExtension.swift */; };
 		FAE2F69422455301009B0DCB /* ActivityTableHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAE2F69322455301009B0DCB /* ActivityTableHeaderView.swift */; };
 		FAE2F69622455421009B0DCB /* ActivityTableHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = FAE2F69522455421009B0DCB /* ActivityTableHeaderView.xib */; };
 		FAE2F69822456DEC009B0DCB /* CollapsibleTableViewHeaderDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAE2F69722456DEC009B0DCB /* CollapsibleTableViewHeaderDelegate.swift */; };
@@ -93,6 +94,7 @@
 		FAB23B73223AC332004C6252 /* NotificationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationManager.swift; sourceTree = "<group>"; };
 		FAB23B77223F2436004C6252 /* ReminderMO+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ReminderMO+CoreDataClass.swift"; sourceTree = "<group>"; };
 		FAB23B812241A152004C6252 /* NumberFormatterOrdinal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NumberFormatterOrdinal.swift; sourceTree = "<group>"; };
+		FADE9AC0224A8A260055DA64 /* NotificationExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationExtension.swift; sourceTree = "<group>"; };
 		FAE2F69322455301009B0DCB /* ActivityTableHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityTableHeaderView.swift; sourceTree = "<group>"; };
 		FAE2F69522455421009B0DCB /* ActivityTableHeaderView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ActivityTableHeaderView.xib; sourceTree = "<group>"; };
 		FAE2F69722456DEC009B0DCB /* CollapsibleTableViewHeaderDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollapsibleTableViewHeaderDelegate.swift; sourceTree = "<group>"; };
@@ -235,6 +237,7 @@
 				FA1D72DA221E2D2B00D8EBF7 /* ActivityStatistics.swift */,
 				FA1D72E42220675F00D8EBF7 /* TimeConstants.swift */,
 				FAB23B73223AC332004C6252 /* NotificationManager.swift */,
+				FADE9AC0224A8A260055DA64 /* NotificationExtension.swift */,
 			);
 			path = model;
 			sourceTree = "<group>";
@@ -341,6 +344,7 @@
 				FA1D73312228C60E00D8EBF7 /* ConstantIntervalMO+CoreDataClass.swift in Sources */,
 				FA1D72E1221F82A300D8EBF7 /* MasterTableViewCell.swift in Sources */,
 				FAA6AF242213684800346CCB /* HistoryTableViewController.swift in Sources */,
+				FADE9AC1224A8A260055DA64 /* NotificationExtension.swift in Sources */,
 				FA1D72FB222854E600D8EBF7 /* WeekDayPickerDelegate.swift in Sources */,
 				FA1D72FF22286A8800D8EBF7 /* YearDayPickerDelegate.swift in Sources */,
 				FA1D72EF2226CA7800D8EBF7 /* ChooseIntervalTableViewController.swift in Sources */,

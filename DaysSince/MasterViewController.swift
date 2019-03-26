@@ -16,6 +16,7 @@ class MasterViewController: UITableViewController {
     var activityDict: [ActivityMO.ActivityState : [ActivityMO] ] = [:]
     var sectionIndices: [Int : ActivityMO.ActivityState] = [:]
     var collapsedState: [ActivityMO.ActivityState : Bool] = [:]
+    var pendingActivityToShow: String? = nil
 
     @IBOutlet var navigationTitle: UINavigationItem!
     //private var markDoneIndexPath:IndexPath?
@@ -44,6 +45,8 @@ class MasterViewController: UITableViewController {
         // Add new observers
         DataModelManager.registerForAnyActivityChangeNotification(self, selector: #selector(onAnyActivityChanged(notification:)), activity: nil)
         DataModelManager.registerForActivityListChangeNotification(self, selector: #selector(onAnyActivityChanged(notification:)))
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(showActivityRequest(notification:)), name: Notification.Name.showActivity, object: nil)
 
         if let split = splitViewController {
             let controllers = split.viewControllers
@@ -72,6 +75,13 @@ class MasterViewController: UITableViewController {
         buildTableDataStructure()
 //        rebuildDataStructures()
         tableView.reloadData()
+    }
+    
+    @objc func showActivityRequest(notification:Notification) {
+        pendingActivityToShow = notification.object as? String
+        if self.isViewLoaded {
+            self.performSegue(withIdentifier: "showDetail", sender: self)
+        }
     }
 
     @objc
@@ -140,9 +150,16 @@ class MasterViewController: UITableViewController {
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "showDetail" {
-            if let indexPath = tableView.indexPathForSelectedRow {
+            var activity: ActivityMO? = nil
+            if pendingActivityToShow != nil {
+                activity = self.dataManager?.getActivityByID(uuid: pendingActivityToShow!)
+                pendingActivityToShow = nil
+            }
+             else if let indexPath = tableView.indexPathForSelectedRow {
                 let sectionActivities = activityDict[sectionToStatus(section: indexPath.section)] ?? []
-                let activity = sectionActivities[indexPath.row] // TODO: Array size check
+                activity = sectionActivities[indexPath.row] // TODO: Array size check
+            }
+            if activity != nil {
                 let controller = (segue.destination as! UINavigationController).topViewController as! DetailViewController
                 controller.detailItem = activity //object
                 controller.navigationItem.leftBarButtonItem = splitViewController?.displayModeButtonItem
@@ -244,71 +261,11 @@ class MasterViewController: UITableViewController {
         return headerView
     }
     
-//    override func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
-//        guard let headerView = view as? ActivityTableHeaderView else {
-//            return
-//        }
-//        let greenView = UIView(frame: headerView.frame)
-//        greenView.backgroundColor = UIColor.green
-//
-//        let state = sectionToStatus(section: section)
-//        switch state {
-//        case ActivityMO.ActivityState.Future:
-//            headerView.subView.backgroundColor = UIColor(named: "green")
-//        case ActivityMO.ActivityState.LastMonth:
-//            headerView.subView.backgroundColor = UIColor(named: "red")
-//        case ActivityMO.ActivityState.LastWeek:
-//            headerView.subView.backgroundColor = UIColor(named: "red")
-//        case ActivityMO.ActivityState.NextMonth:
-//            headerView.subView.backgroundColor = UIColor(named: "green")
-//        case ActivityMO.ActivityState.NextWeek:
-//            headerView.subView.backgroundColor = UIColor(named: "green")
-//        case ActivityMO.ActivityState.Today:
-//            headerView.subView.backgroundColor = UIColor(named: "green")
-//        case ActivityMO.ActivityState.Tomorrow:
-//            //headerView.subView.backgroundColor = UIColor(named: "green")
-//            //headerView.backgroundColor = UIColor(named: "green")
-//            headerView.backgroundView = greenView
-//        case ActivityMO.ActivityState.VeryOld:
-//            headerView.subView.backgroundColor = UIColor(named: "red")
-//        case ActivityMO.ActivityState.Whenever:
-//            headerView.subView.backgroundColor = UIColor(named: "green")
-//        case ActivityMO.ActivityState.Yesterday:
-//            headerView.subView.backgroundColor = UIColor(named: "red")
-//        }
-//
-//    }
     
     override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return 35
     }
     
-//    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-//        let state = sectionToStatus(section: section)
-//        switch state {
-//        case ActivityMO.ActivityState.Future:
-//            return "Distant Future"
-//        case ActivityMO.ActivityState.LastMonth:
-//            return "Overdue - Last Month"
-//        case ActivityMO.ActivityState.LastWeek:
-//            return "Overdue - Last Week"
-//        case ActivityMO.ActivityState.NextMonth:
-//            return "Next Month"
-//        case ActivityMO.ActivityState.NextWeek:
-//            return "Next Week"
-//        case ActivityMO.ActivityState.Today:
-//            return "Today"
-//        case ActivityMO.ActivityState.Tomorrow:
-//            return "Tomorrow"
-//        case ActivityMO.ActivityState.VeryOld:
-//            return "Overdue - More than a month"
-//        case ActivityMO.ActivityState.Whenever:
-//            return "No due date"
-//        case ActivityMO.ActivityState.Yesterday:
-//            return "Overdue - Yesterday"
-//        }
-//
-//    }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "masterCell", for: indexPath) as! MasterTableViewCell

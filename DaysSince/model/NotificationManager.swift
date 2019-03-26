@@ -102,28 +102,7 @@ class NotificationManager : NSObject {
             return
         }
         print("Scheduling reminder for activity: \(activity.name ?? "") with uuid: \(uuid) ")
-        let content = UNMutableNotificationContent()
-        // TODO: Need to figure out the content to display
-        // title = Activity Name
-        // subtitle = Status of activity (ex: Activity is 10 days overdue or Activity is due tomorrow.
-        // body = Longer description of the activity status (e.g. Last completed, Next due, Frequency, Avg interval, etc.
-        // badge = Total number of activities that are overdue
-        // userInfo : Probably need to include at least the activity uuid
-        // attachments : Maybe include an icon
-        
-        let stats:ActivityStatistics = ActivityStatistics(activity: activity)
-        let activityName = activity.name ?? "An Activity"
-        content.title = activityName
-        content.subtitle = activityName + " is coming up on " + stats.nextDay
-        content.body = "Next due date: " + stats.nextDay
-        
-        content.userInfo = ["UUID": uuid]
-        
-        // Set the category identifier
-        content.categoryIdentifier = (activity.reminder?.allowSnooze)! ? DONE_AND_SNOOZE_CATEGORY_ID : DONE_ONLY_CATEGORY_ID
-        // Set the thread identifier to the UUID of the Activity so they are grouped together
-        content.threadIdentifier = uuid
-        
+        let content = buildContentForActivityNotification(activity)
         // Set up the trigger.
         // TODO: This should be a UNCalendarNotificationTrigger which is based off of the next notification date
         let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 15, repeats: false)
@@ -147,27 +126,7 @@ class NotificationManager : NSObject {
             return
         }
         print("Scheduling snnoze for activity: \(activity.name ?? "") with uuid: \(uuid) ")
-        let content = UNMutableNotificationContent()
-        // TODO: Need to figure out the content to display
-        // title = Activity Name
-        // subtitle = Status of activity (ex: Activity is 10 days overdue or Activity is due tomorrow.
-        // body = Longer description of the activity status (e.g. Last completed, Next due, Frequency, Avg interval, etc.
-        // badge = Total number of activities that are overdue
-        // userInfo : Probably need to include at least the activity uuid
-        // attachments : Maybe include an icon
-        
-        let stats:ActivityStatistics = ActivityStatistics(activity: activity)
-        content.title = activity.name ?? "Activity"
-        content.subtitle = "You snooze, you lose."
-        content.body = "Next due date: " + stats.nextDay
-        
-        content.userInfo = ["UUID": uuid]
-        
-        // Set the category identifier
-        content.categoryIdentifier = (activity.reminder?.allowSnooze)! ? DONE_AND_SNOOZE_CATEGORY_ID : DONE_ONLY_CATEGORY_ID
-        // Set the thread identifier to the UUID of the Activity so they are grouped together
-        content.threadIdentifier = uuid
-        
+        let content = buildContentForActivityNotification(activity)
         // Set up the trigger.
         // TODO: This should be a UNCalendarNotificationTrigger which is based off of the next notification date
         let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 15, repeats: false)
@@ -181,6 +140,44 @@ class NotificationManager : NSObject {
             }
         }
 
+    }
+    
+    func buildContentForActivityNotification(_ activity:ActivityMO) -> UNMutableNotificationContent {
+        let content = UNMutableNotificationContent()
+        
+        let stats:ActivityStatistics = ActivityStatistics(activity: activity)
+        let nextDate = stats.nextDate
+        let today = Date.normalize(date: Date())
+        
+        let activityName = activity.name ?? "An Activity"
+        content.title = activityName
+        if nextDate != nil {
+            if nextDate! < today {
+                content.subtitle = "Late: Due on " + nextDate!.getFullString()
+            } else {
+                content.subtitle = "Due on " + nextDate!.getFullString()
+            }
+
+        }
+        let lastDate = stats.lastDate
+        let daysSince = stats.daySince
+        if lastDate != nil  && daysSince != nil {
+            if daysSince! == 1 {
+                content.body = "It has been " + String(stats.daySince!) + " day since it was last completed on " + stats.lastDate!.getFullString()
+
+            } else {
+                content.body = "It has been " + String(stats.daySince!) + " days since it was last completed on " + stats.lastDate!.getFullString()
+            }
+        }
+        let uuid = activity.id!.uuidString
+        content.userInfo = ["UUID": uuid]
+        
+        // Set the category identifier
+        content.categoryIdentifier = (activity.reminder?.allowSnooze)! ? DONE_AND_SNOOZE_CATEGORY_ID : DONE_ONLY_CATEGORY_ID
+        // Set the thread identifier to the UUID of the Activity so they are grouped together
+        content.threadIdentifier = uuid
+
+        return content
     }
     
     func removeAllPendingNotifications(for activity:ActivityMO) {
@@ -239,20 +236,15 @@ extension NotificationManager : UNUserNotificationCenterDelegate {
         
         switch (response.actionIdentifier) {
         case NotificationActions.MARK_DONE.rawValue:
-            print("TODO: Mark done for \(request.identifier)")
             do {
                 try dataManager.markActivityDone(activity: activity)
             } catch {
                 // TODO: Alert the user?
             }
         case NotificationActions.SNOOZE.rawValue:
-            print("TODO: Snooze for \(request.identifier)")
             scheduleSnoozeReminder(for: activity)
         case UNNotificationDefaultActionIdentifier:
-            print("TODO: User pressed open")
-        // TODO: We should navigate to the activity
-        case UNNotificationDefaultActionIdentifier:
-            print("TODO: User dismissed")
+            NotificationCenter.default.post(name: Notification.Name.showActivity, object: activityUUID)
         default:
             print("TODO: Unknown action identifier")
         }

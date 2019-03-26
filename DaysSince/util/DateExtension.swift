@@ -22,10 +22,10 @@ extension Date {
         return calendar.startOfDay(for:date)
     }
     
-    func getLongString() -> String {
+    func getFullString() -> String {
         let formatter = DateFormatter()
         formatter.dateStyle = .full
-        formatter.timeStyle = .full
+        //formatter.timeStyle = .full
         
         return formatter.string(from: self)
     }
