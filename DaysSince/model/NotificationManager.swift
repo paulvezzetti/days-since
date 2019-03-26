@@ -101,11 +101,23 @@ class NotificationManager : NSObject {
             notificationCenter.removePendingNotificationRequests(withIdentifiers: [uuid])
             return
         }
+        
+        let stats = ActivityStatistics(activity: activity)
+        guard let nextDate = stats.nextDate else { return }
+
         print("Scheduling reminder for activity: \(activity.name ?? "") with uuid: \(uuid) ")
         let content = buildContentForActivityNotification(activity)
         // Set up the trigger.
-        // TODO: This should be a UNCalendarNotificationTrigger which is based off of the next notification date
-        let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 15, repeats: false)
+        let calendar = Calendar.current
+        let daysBefore = activity.reminder?.daysBefore ?? 0
+        
+        let notificationDate = calendar.date(byAdding: .day, value: Int(-1 * daysBefore), to: nextDate)
+        guard let triggerDate = notificationDate, triggerDate > Date() else { return }
+
+        print("at: \(triggerDate.getFullString())")
+        let dateComps = calendar.dateComponents(in: calendar.timeZone, from: triggerDate)
+        let trigger = UNCalendarNotificationTrigger(dateMatching: dateComps, repeats: false)
+        //let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 15, repeats: false)
         // Create the request
         let request = UNNotificationRequest(identifier: uuid, content: content, trigger: trigger)
         
