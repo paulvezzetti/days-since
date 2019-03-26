@@ -176,7 +176,7 @@ class AddActivityTableViewController: UITableViewController, UITextFieldDelegate
         activity.name = titleField.text!
         activity.reminder?.enabled = enableRemindersSwitch.isOn
         activity.reminder?.allowSnooze = snoozeSwitch.isOn
-        activity.reminder?.daysBefore = Int16(remindTextField.text ?? "1") ?? 1
+        activity.reminder?.daysBefore = Int16(remindTextField.text ?? "0") ?? 0
         activity.reminder?.snooze = Int16(snoozeTextField.text ?? "1") ?? 1
         
         // TODO: Update activity and save
@@ -286,7 +286,7 @@ class AddActivityTableViewController: UITableViewController, UITextFieldDelegate
     
     // TODO: This needs to move to some type of Notification Manager for the app
     func requestPermissionForPushNotifications() {
-        UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound, .badge]) {
+        UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .badge]) {
             granted, error in
             print("Permission granted: \(granted)")
             if !granted {

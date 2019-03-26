@@ -8,6 +8,7 @@
 import CoreData
 import Foundation
 import UserNotifications
+import UIKit
 
 class NotificationManager : NSObject {
     
@@ -42,6 +43,8 @@ class NotificationManager : NSObject {
         NotificationCenter.default.addObserver(self, selector: #selector(activityRemoved(notification:)), name: Notification.Name.activityRemoved, object: nil)
         
         DataModelManager.registerForAnyActivityChangeNotification(self, selector:  #selector(activityChanged(notification:)), activity: nil)
+        
+        checkApplicationBadge()
 
     }
     
@@ -50,6 +53,7 @@ class NotificationManager : NSObject {
             return
         }
         scheduleReminderNotification(for: activity)
+        checkApplicationBadge()
     }
 
     @objc func activityRemoved(notification: Notification ) {
@@ -57,6 +61,7 @@ class NotificationManager : NSObject {
             return
         }
         removeAllPendingNotifications(for: activity)
+        checkApplicationBadge()
     }
 
     @objc func activityChanged(notification: Notification ) {
@@ -65,6 +70,7 @@ class NotificationManager : NSObject {
         }
         removeAllPendingNotifications(for: activity)
         scheduleReminderNotification(for: activity)
+        checkApplicationBadge()
     }
 
     /* ----------------------------------------------------------
@@ -134,7 +140,7 @@ class NotificationManager : NSObject {
     
     func scheduleSnoozeReminder(for activity:ActivityMO) {
         let uuid = activity.id!.uuidString
-        guard activity.reminder!.allowSnooze else {
+        guard activity.reminder!.allowSnooze && activity.reminder!.enabled else {
             // If this activity is not enabled for snooze, then yank any pending notifications from
             // the notification center. User could have turned off snooze before the notification arrived.
             notificationCenter.removePendingNotificationRequests(withIdentifiers: [uuid])
@@ -183,7 +189,33 @@ class NotificationManager : NSObject {
         notificationCenter.removePendingNotificationRequests(withIdentifiers: [uuid])
     }
     
+    func checkApplicationBadge() {
+        
+        notificationCenter.getNotificationSettings { (settings) in
+            guard settings.authorizationStatus == .authorized else { return }
+            
+            if settings.badgeSetting == .enabled {
+                DispatchQueue.main.async {
+                    self.updateApplicationBadgeCount()
+                }
+            }
+        }
+    }
     
+    func updateApplicationBadgeCount() {
+        do {
+            let activities = try self.dataManager.getActivities()
+            var overdueCount = 0
+            for activity in activities {
+                if activity.isOverdue {
+                    overdueCount += 1
+                }
+            }
+            UIApplication.shared.applicationIconBadgeNumber = overdueCount
+        } catch {
+            
+        }
+    }
 }
 
 extension NotificationManager : UNUserNotificationCenterDelegate {

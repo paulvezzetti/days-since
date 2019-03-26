@@ -117,7 +117,14 @@ public class ActivityMO: NSManagedObject {
         return .VeryOld
     }
     
-    
+    var isOverdue: Bool {
+        switch self.state {
+        case .Yesterday, .LastWeek, .LastMonth, .VeryOld:
+            return true
+        default:
+            return false
+        }
+    }
     var sortedHistory: [EventMO] {
         return history?.sortedArray(using: [NSSortDescriptor(key: "timestamp", ascending: true)]) as! [EventMO]
     }
