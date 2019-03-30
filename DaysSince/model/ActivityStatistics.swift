@@ -138,8 +138,8 @@ class ActivityStatistics {
         return Int(floor(minInterval / TimeConstants.SECONDS_PER_DAY ))
     }
     
-    var avgDays:Int {
-        return Int(floor(avgInterval / TimeConstants.SECONDS_PER_DAY))
+    var avgDays:Double {
+        return avgInterval / TimeConstants.SECONDS_PER_DAY
     }
     
     var firstEvent:Date? {

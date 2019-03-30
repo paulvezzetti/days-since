@@ -65,14 +65,11 @@ class DetailViewController: UIViewController {
             // TODO: Alert of save failure
         }
     }
-    @IBAction func showMarkDoneDialog(_ sender: Any) {
+
+    @IBAction func markDoneFromToolbar(_ sender: Any) {
         self.performSegue(withIdentifier: "markDoneSegue", sender: self)
     }
     
-//    @objc
-//    func onMarkDone(sender: UIBarButtonItem) {
-//        self.performSegue(withIdentifier: "markDoneSegue", sender: self)
-//    }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "embedSummary" {

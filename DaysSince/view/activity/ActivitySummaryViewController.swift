@@ -59,8 +59,10 @@ class ActivitySummaryViewController: UIViewController {
         let nextDate = stats.nextDate
         nextDateLabel.text = nextDate != nil ? nextDate!.getFormattedDate() : ""
         
+        let numberFormatter = NumberFormatter()
+        numberFormatter.maximumFractionDigits = 1
         minIntervalLabel.text = String(stats.minDays)
-        avgIntervalLabel.text = String(stats.avgDays)
+        avgIntervalLabel.text = numberFormatter.string(for: stats.avgDays)
         maxIntervalLabel.text = String(stats.maxDays)
         
         numberOfEventsLabel.text = String(activity?.history?.count ?? 0)
