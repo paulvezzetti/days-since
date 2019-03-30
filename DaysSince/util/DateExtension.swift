@@ -38,5 +38,12 @@ extension Date {
         return formatter.string(from: self)
     }
     
+    func getDateTimeString() -> String {
+        let formatter = DateFormatter()
+        formatter.dateStyle = .full
+        formatter.timeStyle = .full
+        
+        return formatter.string(from: self)
+    }
     
 }

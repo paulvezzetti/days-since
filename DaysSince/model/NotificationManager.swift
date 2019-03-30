@@ -155,14 +155,18 @@ class NotificationManager : NSObject {
     func postNotificationRequest(identifier:String, content: UNNotificationContent, when:Date?) {
         guard let notificationDate = when, notificationDate > Date() else { return }
         
-        print("Posting notification at: \(notificationDate.getFullString())")
         
         notificationCenter.getNotificationSettings { (settings) in
             guard settings.authorizationStatus == .authorized else { return }
             
             if settings.alertSetting == .enabled {
                 let calendar = Calendar.current
-                let trigger = UNCalendarNotificationTrigger(dateMatching: calendar.dateComponents(in: calendar.timeZone, from: notificationDate), repeats: false)
+                // There appears to be a bug when getting the DateComponents using the in:from: where it either overspecifies the date or uses an incorrect quarter (==0).
+                // Therefore, I will form a simpler one.
+                let dateComps = calendar.dateComponents(in: calendar.timeZone, from: notificationDate)
+                let triggerDateComps = DateComponents(calendar: calendar, timeZone: dateComps.timeZone, year: dateComps.year, month: dateComps.month, day: dateComps.day, hour: dateComps.hour, minute: dateComps.minute, second: dateComps.second)
+                let trigger = UNCalendarNotificationTrigger(dateMatching: triggerDateComps, repeats: false)
+                print("Trigger: \(trigger.nextTriggerDate()!.getDateTimeString())")
                 // Create the request
                 let request = UNNotificationRequest(identifier: identifier, content: content, trigger: trigger)
                 
@@ -170,6 +174,8 @@ class NotificationManager : NSObject {
                     (error) in
                     if error != nil {
                         print("Unable to add notification request" + error!.localizedDescription)
+                    } else {
+                        print("Posting notification at: \(notificationDate.getDateTimeString())")
                     }
                 }
             }
