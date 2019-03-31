@@ -70,6 +70,11 @@ class DetailViewController: UIViewController {
         self.performSegue(withIdentifier: "markDoneSegue", sender: self)
     }
     
+    @IBAction func snoozeFromToolbar(_ sender: Any) {
+        
+        
+        
+    }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "embedSummary" {
