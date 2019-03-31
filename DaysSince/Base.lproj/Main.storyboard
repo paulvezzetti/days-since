@@ -40,7 +40,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacingType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="sdQ-Kb-W5y">
-                                <rect key="frame" x="12" y="72" width="351" height="545"/>
+                                <rect key="frame" x="12" y="72" width="351" height="541"/>
                                 <subviews>
                                     <label clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" text="Activity" lineBreakMode="tailTruncation" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="0XM-y9-sOw">
                                         <rect key="frame" x="0.0" y="0.0" width="351" height="35"/>
@@ -63,7 +63,7 @@
                                         </segments>
                                     </segmentedControl>
                                     <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kC3-vI-ZNJ">
-                                        <rect key="frame" x="0.0" y="79" width="351" height="466"/>
+                                        <rect key="frame" x="0.0" y="79" width="351" height="462"/>
                                         <connections>
                                             <segue destination="kQJ-1U-pUL" kind="embed" identifier="embedSummary" id="lmQ-oL-0iR"/>
                                         </connections>
@@ -74,7 +74,7 @@
                                 </constraints>
                             </stackView>
                             <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="YhQ-0z-CW9">
-                                <rect key="frame" x="0.0" y="623" width="375" height="44"/>
+                                <rect key="frame" x="0.0" y="619" width="375" height="48"/>
                                 <items>
                                     <barButtonItem title="Delete" image="TrashIcon" id="iUL-1y-6Ht">
                                         <connections>
@@ -1012,11 +1012,11 @@
             <objects>
                 <viewController id="kQJ-1U-pUL" customClass="ActivitySummaryViewController" customModule="DaysSince" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Enz-jz-um3">
-                        <rect key="frame" x="0.0" y="0.0" width="351" height="466"/>
+                        <rect key="frame" x="0.0" y="0.0" width="351" height="462"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacingType="standard" baselineRelativeArrangement="YES" translatesAutoresizingMaskIntoConstraints="NO" id="EvL-cv-n9k">
-                                <rect key="frame" x="8" y="0.0" width="335" height="455"/>
+                                <rect key="frame" x="8" y="0.0" width="335" height="451"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="250" text="Interval String" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="p94-1H-plE">
                                         <rect key="frame" x="0.0" y="0.0" width="335" height="23.5"/>
@@ -1113,7 +1113,7 @@
                                             </label>
                                         </subviews>
                                     </stackView>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" image="IntervalGradient" translatesAutoresizingMaskIntoConstraints="NO" id="2yC-nH-iGR">
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" image="IntervalImage" translatesAutoresizingMaskIntoConstraints="NO" id="2yC-nH-iGR">
                                         <rect key="frame" x="0.0" y="209" width="335" height="20"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="20" id="BmT-jT-Aow"/>
@@ -1143,22 +1143,22 @@
                                         </subviews>
                                     </stackView>
                                     <stackView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="249" spacingType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="eTD-AO-Lgx">
-                                        <rect key="frame" x="0.0" y="265.5" width="335" height="189.5"/>
+                                        <rect key="frame" x="0.0" y="265.5" width="335" height="185.5"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="249" text="7" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oXg-sU-O7E">
-                                                <rect key="frame" x="0.0" y="0.0" width="21" height="189.5"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="21" height="185.5"/>
                                                 <fontDescription key="fontDescription" name="Avenir-Heavy" family="Avenir" pointSize="35"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="249" text="times since" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LFX-me-Dz2">
-                                                <rect key="frame" x="29" y="0.0" width="86.5" height="189.5"/>
+                                                <rect key="frame" x="29" y="0.0" width="86.5" height="185.5"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="249" verticalHuggingPriority="249" text="Oct 15, 2018" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qLQ-a2-CbG">
-                                                <rect key="frame" x="123.5" y="0.0" width="211.5" height="189.5"/>
+                                                <rect key="frame" x="123.5" y="0.0" width="211.5" height="185.5"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="21"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
@@ -1369,12 +1369,12 @@
         </scene>
     </scenes>
     <resources>
-        <image name="EditIcon" width="24" height="24"/>
-        <image name="IntervalGradient" width="750" height="25"/>
-        <image name="MarkDoneIcon" width="24" height="24"/>
+        <image name="EditIcon" width="48" height="48"/>
+        <image name="IntervalImage" width="720" height="36"/>
+        <image name="MarkDoneIcon" width="48" height="48"/>
         <image name="OnTimeArrow" width="875" height="77"/>
-        <image name="SnoozeIcon" width="24" height="24"/>
-        <image name="TrashIcon" width="24" height="24"/>
+        <image name="SnoozeIcon" width="48" height="48"/>
+        <image name="TrashIcon" width="48" height="48"/>
         <namedColor name="Header">
             <color red="0.94117647058823528" green="0.94117647058823528" blue="0.94117647058823528" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
@@ -1384,6 +1384,6 @@
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="BMi-sG-zyJ"/>
-        <segue reference="m8M-iz-Q6X"/>
+        <segue reference="vV1-vt-UA0"/>
     </inferredMetricsTieBreakers>
 </document>
