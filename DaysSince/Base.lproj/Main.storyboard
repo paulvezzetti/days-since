@@ -410,8 +410,9 @@
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="138"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <datePicker contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="date" minuteInterval="1" translatesAutoresizingMaskIntoConstraints="NO" id="xHf-6D-XnB">
-                                                    <rect key="frame" x="8" y="7" width="359" height="124"/>
+                                                <datePicker contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="date" minuteInterval="1" translatesAutoresizingMaskIntoConstraints="NO" id="xHf-6D-XnB">
+                                                    <rect key="frame" x="4" y="0.0" width="366" height="138"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <date key="date" timeIntervalSinceReferenceDate="573180247.02352595">
                                                         <!--2019-03-02 00:44:07 +0000-->
                                                     </date>
@@ -420,12 +421,6 @@
                                                     </connections>
                                                 </datePicker>
                                             </subviews>
-                                            <constraints>
-                                                <constraint firstItem="xHf-6D-XnB" firstAttribute="top" secondItem="Y6G-46-N8O" secondAttribute="top" constant="7" id="IUc-Ud-ldS"/>
-                                                <constraint firstAttribute="bottom" secondItem="xHf-6D-XnB" secondAttribute="bottom" constant="7" id="Jpj-Jq-QI3"/>
-                                                <constraint firstItem="xHf-6D-XnB" firstAttribute="leading" secondItem="Y6G-46-N8O" secondAttribute="leading" constant="8" id="czI-yN-59B"/>
-                                                <constraint firstAttribute="trailing" secondItem="xHf-6D-XnB" secondAttribute="trailing" constant="8" id="rHl-w0-6ap"/>
-                                            </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" id="KmU-Ae-PnN">
@@ -1372,7 +1367,7 @@
         <image name="EditIcon" width="48" height="48"/>
         <image name="IntervalImage" width="720" height="36"/>
         <image name="MarkDoneIcon" width="48" height="48"/>
-        <image name="OnTimeArrow" width="875" height="77"/>
+        <image name="OnTimeArrow" width="720" height="36"/>
         <image name="SnoozeIcon" width="48" height="48"/>
         <image name="TrashIcon" width="48" height="48"/>
         <namedColor name="Header">
