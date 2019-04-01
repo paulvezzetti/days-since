@@ -75,6 +75,17 @@ class ChooseIntervalTableViewController: UITableViewController, UITextFieldDeleg
         
         // Set up by-day text field
         byDayTextField.delegate = self
+        let calendar = Calendar.current
+        let todayAsDateComponents = calendar.dateComponents([ .day, .month, .weekday], from: Date())
+        
+        weekdayPickerController?.setWeekday(to: todayAsDateComponents.weekday ?? 0)
+        weeklyLabel.text = Weekdays.day(for: todayAsDateComponents.weekday ?? 0)
+        
+        monthDayPickerController?.setDay(todayAsDateComponents.day ?? 1)
+        monthlyLabel.text = NumberFormatterOrdinal.string(todayAsDateComponents.day ?? 1)
+        
+        yearDayPickerController?.setYearDay(month: todayAsDateComponents.month ?? 1, day: todayAsDateComponents.day ?? 1)
+        yearlyLabel.text = Months.month(for: todayAsDateComponents.month ?? 0) + " " + String(todayAsDateComponents.day ?? 1)
         
         // Configure the UI based on the activity, if any
         if let interval = activity?.interval {
@@ -99,7 +110,7 @@ class ChooseIntervalTableViewController: UITableViewController, UITextFieldDeleg
             case let yearlyInterval as YearlyIntervalMO:
                 yearlyTableViewCell.accessoryType = .checkmark
                 yearDayPickerController?.setYearDay(month: Int(yearlyInterval.month), day: Int(yearlyInterval.day))
-                yearlyLabel.text = Months.month(for: yearDayPickerController?.getMonth() ?? 0) + " " + String(yearDayPickerController?.getDay() ?? 4)
+                yearlyLabel.text = Months.month(for: yearDayPickerController?.getMonth() ?? 0) + " " + String(yearDayPickerController?.getDay() ?? 1)
                 currentSelectedRow = .Yearly
             default:
                 wheneverTableViewCell.accessoryType = .checkmark
@@ -109,12 +120,6 @@ class ChooseIntervalTableViewController: UITableViewController, UITextFieldDeleg
 
         } else {
             wheneverTableViewCell.accessoryType = .checkmark
-            
-            // TODO: Configure other pickers to match the current date
-            // E.g: Week day should have current weekday
-            //      Month day should have current date
-            //      Year day should have current date
-            
         }
     }
     
