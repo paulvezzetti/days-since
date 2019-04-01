@@ -109,6 +109,12 @@ class ChooseIntervalTableViewController: UITableViewController, UITextFieldDeleg
 
         } else {
             wheneverTableViewCell.accessoryType = .checkmark
+            
+            // TODO: Configure other pickers to match the current date
+            // E.g: Week day should have current weekday
+            //      Month day should have current date
+            //      Year day should have current date
+            
         }
     }
     
