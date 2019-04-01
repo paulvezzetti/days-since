@@ -744,16 +744,11 @@
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="119.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <pickerView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="957-fl-07M">
-                                                    <rect key="frame" x="16" y="11" width="343" height="98"/>
+                                                <pickerView contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="957-fl-07M">
+                                                    <rect key="frame" x="16" y="0.0" width="349" height="120"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 </pickerView>
                                             </subviews>
-                                            <constraints>
-                                                <constraint firstAttribute="trailingMargin" secondItem="957-fl-07M" secondAttribute="trailing" id="6yo-PY-D53"/>
-                                                <constraint firstItem="957-fl-07M" firstAttribute="top" secondItem="1cZ-G4-v0L" secondAttribute="topMargin" id="Zed-yy-IHd"/>
-                                                <constraint firstAttribute="bottomMargin" secondItem="957-fl-07M" secondAttribute="bottom" id="cad-Lu-va5"/>
-                                                <constraint firstItem="957-fl-07M" firstAttribute="leading" secondItem="1cZ-G4-v0L" secondAttribute="leadingMargin" id="jSB-lA-mA2"/>
-                                            </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" id="l0W-wS-WjI">
@@ -796,16 +791,11 @@
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="119.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <pickerView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hR1-MB-ec2">
-                                                    <rect key="frame" x="16" y="11" width="343" height="98"/>
+                                                <pickerView contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="hR1-MB-ec2">
+                                                    <rect key="frame" x="16" y="10" width="343" height="99"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 </pickerView>
                                             </subviews>
-                                            <constraints>
-                                                <constraint firstAttribute="bottomMargin" secondItem="hR1-MB-ec2" secondAttribute="bottom" id="5if-MH-u2y"/>
-                                                <constraint firstAttribute="trailingMargin" secondItem="hR1-MB-ec2" secondAttribute="trailing" id="PIo-7O-Zd4"/>
-                                                <constraint firstItem="hR1-MB-ec2" firstAttribute="top" secondItem="rQK-1m-i19" secondAttribute="topMargin" id="eOg-Uu-4fO"/>
-                                                <constraint firstItem="hR1-MB-ec2" firstAttribute="leading" secondItem="rQK-1m-i19" secondAttribute="leadingMargin" id="iul-F4-bD5"/>
-                                            </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" id="f7F-5Q-A3u">
@@ -848,16 +838,11 @@
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="119.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <pickerView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ZE6-o4-rjH">
+                                                <pickerView contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ZE6-o4-rjH">
                                                     <rect key="frame" x="16" y="11" width="343" height="98"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 </pickerView>
                                             </subviews>
-                                            <constraints>
-                                                <constraint firstItem="ZE6-o4-rjH" firstAttribute="top" secondItem="V37-Ue-nJn" secondAttribute="topMargin" id="2SA-2e-N54"/>
-                                                <constraint firstAttribute="bottomMargin" secondItem="ZE6-o4-rjH" secondAttribute="bottom" id="NhK-5C-g7f"/>
-                                                <constraint firstAttribute="trailingMargin" secondItem="ZE6-o4-rjH" secondAttribute="trailing" id="h3Q-Yd-kUh"/>
-                                                <constraint firstItem="ZE6-o4-rjH" firstAttribute="leading" secondItem="V37-Ue-nJn" secondAttribute="leadingMargin" id="xks-YV-Mfh"/>
-                                            </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                 </cells>
