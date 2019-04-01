@@ -93,7 +93,7 @@ class DetailViewController: UIViewController {
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "embedSummary" {
-            summaryViewController = segue.destination as? ActivitySummaryViewController
+            summaryViewController = segue.destination as? ActivitySummaryTableViewController
             if let summaryVC = summaryViewController {
                 summaryVC.activity = detailItem
             }
@@ -187,7 +187,7 @@ class DetailViewController: UIViewController {
         }
     }
     
-    private var summaryViewController:ActivitySummaryViewController?
+    private var summaryViewController:ActivitySummaryTableViewController?
     
     private lazy var historyViewController: HistoryTableViewController = {
         
