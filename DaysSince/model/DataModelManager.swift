@@ -129,11 +129,11 @@ class DataModelManager {
                     continue
                 }
                 if let activity = update as? ActivityMO {
-                    NotificationCenter.default.post(name: Notification.Name.activityChanged, object: activity)
+                    NotificationCenter.default.post(name: Notification.Name.activityChanged, object: activity, userInfo: currentValues)
                 } else if let event = update as? EventMO {
-                    NotificationCenter.default.post(name: Notification.Name.eventChanged, object: event.activity)
+                    NotificationCenter.default.post(name: Notification.Name.eventChanged, object: event.activity, userInfo: currentValues)
                 } else if let reminder = update as? ReminderMO {
-                    NotificationCenter.default.post(name: Notification.Name.reminderChanged, object: reminder.activity)
+                    NotificationCenter.default.post(name: .reminderChanged, object: reminder.activity, userInfo: currentValues)
                 }
             }
         }

@@ -20,5 +20,6 @@ extension Notification.Name {
     static let reminderChanged = Notification.Name("reminderChanged")
 
     static let showActivity = Notification.Name("showActivity")
+    static let snoozeActivity = Notification.Name("snoozeActivity")
     
 }

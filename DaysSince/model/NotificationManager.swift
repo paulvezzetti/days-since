@@ -43,7 +43,9 @@ class NotificationManager : NSObject {
         NotificationCenter.default.addObserver(self, selector: #selector(activityRemoved(notification:)), name: Notification.Name.activityRemoved, object: nil)
         
         DataModelManager.registerForAnyActivityChangeNotification(self, selector:  #selector(activityChanged(notification:)), activity: nil)
-        
+
+        NotificationCenter.default.addObserver(self, selector: #selector(handleSnoozeActivity(notification:)), name: Notification.Name.snoozeActivity, object: nil)
+
         checkApplicationBadge()
 
     }
@@ -65,6 +67,10 @@ class NotificationManager : NSObject {
     }
 
     @objc func activityChanged(notification: Notification ) {
+        if notification.userInfo?["lastSnooze"] != nil {
+            // Ignore changes to the lastSnooze property
+            return
+        }
         guard let activity = notification.object as? ActivityMO else {
             return
         }
@@ -72,6 +78,15 @@ class NotificationManager : NSObject {
         scheduleReminderNotification(for: activity)
         restoreSnoozeReminders(for: activity)
         checkApplicationBadge()
+    }
+    
+    @objc func handleSnoozeActivity(notification: Notification) {
+        guard let activity = notification.object as? ActivityMO else {
+            return
+        }
+
+        removeAllPendingNotifications(for: activity)
+        scheduleSnoozeReminder(for: activity)
     }
 
     /* ----------------------------------------------------------

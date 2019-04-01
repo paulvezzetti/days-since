@@ -71,8 +71,23 @@ class DetailViewController: UIViewController {
     }
     
     @IBAction func snoozeFromToolbar(_ sender: Any) {
+        guard let reminder = detailItem?.reminder, reminder.allowSnooze else {
+
+            let alertNoSnooze = UIAlertController(title: "Snooze", message: "This activity is not enabled for snooze. You must edit this activity and enable snooze first.", preferredStyle: UIAlertController.Style.alert)
+            alertNoSnooze.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+            self.present(alertNoSnooze, animated: true, completion: nil)
+
+            return
+        }
         
-        
+        let alert = UIAlertController(title: "Snooze", message: "Do you want a reminder for this activity in " + String(Int(reminder.snooze)) + " days?", preferredStyle: UIAlertController.Style.alert)
+        alert.addAction(UIAlertAction(title: "Yes", style: .default) { (alert) in
+            //self.deleteActivity()
+            NotificationCenter.default.post(name: .snoozeActivity, object: self.detailItem)
+        })
+        alert.addAction(UIAlertAction(title: "No", style: .default, handler: nil))
+        self.present(alert, animated: true, completion: nil)
+
         
     }
     
