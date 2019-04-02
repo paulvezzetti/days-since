@@ -18,9 +18,7 @@ class HistoryTableViewController: UITableViewController {
             DataModelManager.registerForNamedNotifications(self, selector: #selector(onActivityChanged(notification:)), names: [.activityChanged, .eventAdded, .eventRemoved], object: activity)
             NotificationCenter.default.addObserver(self, selector: #selector(onEventChanged(notification:)), name: Notification.Name.eventChanged, object: activity)
 
-            if let act = activity {
-                sortedHistory = act.history?.sortedArray(using: [NSSortDescriptor(key: "timestamp", ascending: true)]) as! [EventMO]
-            }
+            sortHistory()
         }
     }
     var dataManager:DataModelManager?
@@ -93,17 +91,13 @@ class HistoryTableViewController: UITableViewController {
     }
 
     @objc func onActivityChanged(notification:Notification) {
-        if let act = activity {
-            sortedHistory = act.history?.sortedArray(using: [NSSortDescriptor(key: "timestamp", ascending: true)]) as! [EventMO]
-        }
+        sortHistory()
         tableView.reloadData()
     }
     
     @objc func onEventChanged(notification:Notification) {
         // TODO: This could be more granular
-        if let act = activity {
-            sortedHistory = act.history?.sortedArray(using: [NSSortDescriptor(key: "timestamp", ascending: true)]) as! [EventMO]
-        }
+        sortHistory()
         tableView.reloadData()
         
         // TODO: Do we need some central save controller logic
@@ -145,6 +139,11 @@ class HistoryTableViewController: UITableViewController {
     }
     */
 
+    private func sortHistory() {
+        if let act = activity {
+            sortedHistory = act.history?.sortedArray(using: [NSSortDescriptor(key: "timestamp", ascending: false)]) as! [EventMO]
+        }
+    }
     
     // MARK: - Navigation
 
