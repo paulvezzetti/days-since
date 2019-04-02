@@ -43,7 +43,6 @@
 		FAA6AF1E2211C1E700346CCB /* AddActivityTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAA6AF1D2211C1E700346CCB /* AddActivityTableViewController.swift */; };
 		FAA6AF222211E42700346CCB /* DataModelManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAA6AF212211E42700346CCB /* DataModelManager.swift */; };
 		FAA6AF242213684800346CCB /* HistoryTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAA6AF232213684800346CCB /* HistoryTableViewController.swift */; };
-		FAA6AF2622139F4A00346CCB /* ActivitySummaryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAA6AF2522139F4A00346CCB /* ActivitySummaryViewController.swift */; };
 		FAB23B74223AC332004C6252 /* NotificationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAB23B73223AC332004C6252 /* NotificationManager.swift */; };
 		FAB23B7B223F2436004C6252 /* ReminderMO+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAB23B77223F2436004C6252 /* ReminderMO+CoreDataClass.swift */; };
 		FAB23B822241A152004C6252 /* NumberFormatterOrdinal.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAB23B812241A152004C6252 /* NumberFormatterOrdinal.swift */; };
@@ -92,7 +91,6 @@
 		FAA6AF1D2211C1E700346CCB /* AddActivityTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddActivityTableViewController.swift; sourceTree = "<group>"; };
 		FAA6AF212211E42700346CCB /* DataModelManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataModelManager.swift; sourceTree = "<group>"; };
 		FAA6AF232213684800346CCB /* HistoryTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryTableViewController.swift; sourceTree = "<group>"; };
-		FAA6AF2522139F4A00346CCB /* ActivitySummaryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivitySummaryViewController.swift; sourceTree = "<group>"; };
 		FAB23B73223AC332004C6252 /* NotificationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationManager.swift; sourceTree = "<group>"; };
 		FAB23B77223F2436004C6252 /* ReminderMO+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ReminderMO+CoreDataClass.swift"; sourceTree = "<group>"; };
 		FAB23B812241A152004C6252 /* NumberFormatterOrdinal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NumberFormatterOrdinal.swift; sourceTree = "<group>"; };
@@ -224,7 +222,6 @@
 		FAA6AF1F2211D10800346CCB /* activity */ = {
 			isa = PBXGroup;
 			children = (
-				FAA6AF2522139F4A00346CCB /* ActivitySummaryViewController.swift */,
 				FAA6AF1D2211C1E700346CCB /* AddActivityTableViewController.swift */,
 				FA1D72EE2226CA7800D8EBF7 /* ChooseIntervalTableViewController.swift */,
 				FA2215AA2252A67000FDEB96 /* ActivitySummaryTableViewController.swift */,
@@ -339,7 +336,6 @@
 				FA1D73332228C60E00D8EBF7 /* MonthlyIntervalMO+CoreDataClass.swift in Sources */,
 				FA1D734D22307F9B00D8EBF7 /* EventDetailsViewController.swift in Sources */,
 				FA1D72E52220675F00D8EBF7 /* TimeConstants.swift in Sources */,
-				FAA6AF2622139F4A00346CCB /* ActivitySummaryViewController.swift in Sources */,
 				FA1D73292228C60E00D8EBF7 /* WeeklyIntervalMO+CoreDataClass.swift in Sources */,
 				FA3CEF4E220E0F2500634DD7 /* MasterViewController.swift in Sources */,
 				FA1D732F2228C60E00D8EBF7 /* UnlimitedIntervalMO+CoreDataClass.swift in Sources */,

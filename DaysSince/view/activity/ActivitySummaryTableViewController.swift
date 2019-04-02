@@ -11,6 +11,7 @@ import UIKit
 class ActivitySummaryTableViewController: UITableViewController {
     
     
+    @IBOutlet var intervalHeaderLabel: UILabel!
     @IBOutlet var daySinceValueLabel: UILabel!
     @IBOutlet var daysUntilValueLabel: UILabel!
     @IBOutlet var daysUntilLabelLabel: UILabel!
@@ -50,20 +51,20 @@ class ActivitySummaryTableViewController: UITableViewController {
 
     override func numberOfSections(in tableView: UITableView) -> Int {
         // #warning Incomplete implementation, return the number of sections
-        return 2
+        return 1
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return section == 0 ? 4 : 5
+        return 11 //section == 0 ? 4 : 5
     }
 
-    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        if section == 0 {
-            return activity?.interval?.toPrettyString()
-        }
-        return "Intervals"
-    }
+//    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+//        if section == 0 {
+//            return activity?.interval?.toPrettyString()
+//        }
+//        return "Intervals"
+//    }
 
     
     func configureView() {
@@ -72,6 +73,7 @@ class ActivitySummaryTableViewController: UITableViewController {
         }
         // TODO: Set the section header
         //intervalLabel.text = "Due: " + (act.interval?.toPrettyString() ?? "")
+        intervalHeaderLabel.text = "EXPECTED: " + (act.interval?.toPrettyString() ?? "")
         
         let stats:ActivityStatistics = ActivityStatistics(activity: act)
         let daysSince = stats.daySince
@@ -92,7 +94,7 @@ class ActivitySummaryTableViewController: UITableViewController {
         avgIntervalLabel.text = numberFormatter.string(for: stats.avgDays)
         maxIntervalLabel.text = String(stats.maxDays)
         
-        numberOfEventsLabel.text = String(activity?.history?.count ?? 0)
+        numberOfEventsLabel.text = String(act.history?.count ?? 0)
         
         firstEventDateLabel.text = stats.firstDay
         
