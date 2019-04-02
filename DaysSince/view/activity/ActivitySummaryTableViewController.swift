@@ -73,7 +73,7 @@ class ActivitySummaryTableViewController: UITableViewController {
         }
         // TODO: Set the section header
         //intervalLabel.text = "Due: " + (act.interval?.toPrettyString() ?? "")
-        intervalHeaderLabel.text = "EXPECTED: " + (act.interval?.toPrettyString() ?? "")
+        intervalHeaderLabel.text = (act.interval?.toPrettyString() ?? "")
         
         let stats:ActivityStatistics = ActivityStatistics(activity: act)
         let daysSince = stats.daySince

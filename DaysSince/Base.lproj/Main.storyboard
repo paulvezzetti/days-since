@@ -1008,11 +1008,10 @@
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Interval" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XdJ-uV-y9H">
                                                     <rect key="frame" x="2" y="2" width="347" height="40"/>
                                                     <fontDescription key="fontDescription" name="Avenir-Heavy" family="Avenir" pointSize="18"/>
-                                                    <color key="textColor" name="HeaderText"/>
+                                                    <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
-                                            <color key="backgroundColor" name="Header"/>
                                             <constraints>
                                                 <constraint firstItem="XdJ-uV-y9H" firstAttribute="top" secondItem="Doc-CD-hhH" secondAttribute="top" constant="2" id="9nX-hh-O5g"/>
                                                 <constraint firstItem="XdJ-uV-y9H" firstAttribute="leading" secondItem="Doc-CD-hhH" secondAttribute="leading" constant="2" id="BCM-ro-TS4"/>
@@ -1146,18 +1145,17 @@
                                             <rect key="frame" x="0.0" y="0.0" width="351" height="44"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="STATISTICS" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8aJ-bB-0pD">
-                                                    <rect key="frame" x="2" y="2" width="347" height="40"/>
-                                                    <color key="backgroundColor" name="Header"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="STATISTICS" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8aJ-bB-0pD">
+                                                    <rect key="frame" x="2" y="8" width="347" height="28"/>
                                                     <fontDescription key="fontDescription" name="Avenir-Heavy" family="Avenir" pointSize="18"/>
-                                                    <color key="textColor" name="HeaderText"/>
+                                                    <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
                                             <constraints>
                                                 <constraint firstAttribute="trailing" secondItem="8aJ-bB-0pD" secondAttribute="trailing" constant="2" id="5wx-0o-BWE"/>
-                                                <constraint firstItem="8aJ-bB-0pD" firstAttribute="top" secondItem="wre-7O-S3Q" secondAttribute="top" constant="2" id="Tgd-xV-Hfc"/>
-                                                <constraint firstAttribute="bottom" secondItem="8aJ-bB-0pD" secondAttribute="bottom" constant="2" id="XuE-ee-JeH"/>
+                                                <constraint firstItem="8aJ-bB-0pD" firstAttribute="top" secondItem="wre-7O-S3Q" secondAttribute="top" constant="8" id="Tgd-xV-Hfc"/>
+                                                <constraint firstAttribute="bottom" secondItem="8aJ-bB-0pD" secondAttribute="bottom" constant="8" id="XuE-ee-JeH"/>
                                                 <constraint firstItem="8aJ-bB-0pD" firstAttribute="leading" secondItem="wre-7O-S3Q" secondAttribute="leading" constant="2" id="kFA-4M-gcm"/>
                                             </constraints>
                                         </tableViewCellContentView>
