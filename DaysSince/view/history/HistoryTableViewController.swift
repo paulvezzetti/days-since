@@ -50,7 +50,16 @@ class HistoryTableViewController: UITableViewController {
         if indexPath.row < sortedHistory.count {
             let event:EventMO = self.sortedHistory[indexPath.row]
             cell.detailsLabel!.text = event.details
-            cell.intervalLabel!.text = ""
+            if event.daysSincePrevious >= 0 {
+                cell.intervalLabel!.text = String(event.daysSincePrevious)
+                if event.isOnTime {
+                    cell.intervalLabel!.textColor = UIColor.black
+                } else {
+                    cell.intervalLabel!.textColor = UIColor.red
+                }
+            } else {
+                cell.intervalLabel!.text = ""
+            }
             cell.dateLabel!.text = event.getFormattedDate(style: .long)
         }
 //        cell.textLabel!.text = "History"
@@ -142,6 +151,30 @@ class HistoryTableViewController: UITableViewController {
     private func sortHistory() {
         if let act = activity {
             sortedHistory = act.history?.sortedArray(using: [NSSortDescriptor(key: "timestamp", ascending: false)]) as! [EventMO]
+            
+            // Update transient values for interval and onTime status. Need to redo this since events can be inserted anywhere in the history
+            var previousEvent:EventMO? = nil
+            let calendar = Calendar.current
+            for event in sortedHistory.reversed() {
+                if previousEvent == nil {
+                    previousEvent = event
+                    previousEvent?.daysSincePrevious = -1
+                    continue;
+                }
+                let days = calendar.dateComponents([.day], from: previousEvent!.timestamp!, to: event.timestamp!)
+                event.daysSincePrevious = Int16(days.day ?? 0)
+                // TODO: Use days overdue instead of isOnTime. Put total days and days overdue on table cell
+                if let nextExpectedDate = act.interval?.getNextDate(since: previousEvent!.timestamp!) {
+                    event.isOnTime = (calendar.compare(event.timestamp!, to: nextExpectedDate, toGranularity: .day) != .orderedDescending)
+                    let daysOverdue = calendar.dateComponents([.day], from: nextExpectedDate, to: event.timestamp!)
+                    event.daysOverdue = Int16(daysOverdue.day ?? 0)
+                } else {
+                    event.isOnTime = true
+                    event.daysOverdue = 0
+                }
+                previousEvent = event
+            }
+            
         }
     }
     

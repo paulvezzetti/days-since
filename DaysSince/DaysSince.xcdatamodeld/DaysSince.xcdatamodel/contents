@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="14460.32" systemVersion="17G3025" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="14490.98" systemVersion="18D109" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
     <entity name="Activity" representedClassName="ActivityMO" syncable="YES" codeGenerationType="category">
         <attribute name="id" attributeType="UUID" usesScalarValueType="NO" syncable="YES"/>
         <attribute name="image" optional="YES" attributeType="String" syncable="YES"/>
@@ -12,8 +12,11 @@
         <attribute name="frequency" attributeType="Integer 16" minValueString="0" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
     </entity>
     <entity name="Event" representedClassName="EventMO" codeGenerationType="category">
+        <attribute name="daysOverdue" optional="YES" transient="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="daysSincePrevious" optional="YES" transient="YES" attributeType="Integer 16" defaultValueString="-1" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="details" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="image" optional="YES" attributeType="Binary" syncable="YES"/>
+        <attribute name="isOnTime" optional="YES" transient="YES" attributeType="Boolean" defaultValueString="YES" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="timestamp" attributeType="Date">
             <userInfo/>
         </attribute>
@@ -45,7 +48,7 @@
     <elements>
         <element name="Activity" positionX="-63.47265625" positionY="-8.6171875" width="128" height="135"/>
         <element name="ConstantInterval" positionX="-82.5859375" positionY="313.078125" width="128" height="60"/>
-        <element name="Event" positionX="-74.6171875" positionY="192.96484375" width="128" height="60"/>
+        <element name="Event" positionX="-74.6171875" positionY="192.96484375" width="128" height="150"/>
         <element name="Interval" positionX="209.41015625" positionY="183.20703125" width="128" height="60"/>
         <element name="MonthlyInterval" positionX="77.70703125" positionY="311.53125" width="128" height="60"/>
         <element name="Reminder" positionX="158.08984375" positionY="-19.03125" width="128" height="135"/>
