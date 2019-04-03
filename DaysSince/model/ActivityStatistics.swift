@@ -78,7 +78,7 @@ class ActivityStatistics {
         if activity.interval is UnlimitedIntervalMO {
             self.onTimePercent = 1
         } else {
-            self.onTimePercent = nOnTime / Double(sortedEvents.count - 1)
+            self.onTimePercent = sortedEvents.count <= 1 ? 1 : nOnTime / Double(sortedEvents.count - 1)
         }
     }
     
