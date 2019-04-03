@@ -19,6 +19,7 @@ class ActivitySummaryTableViewController: UITableViewController {
     @IBOutlet var eventTimelineImage: UIImageView!
     @IBOutlet var previousDateLabel: UILabel!
     @IBOutlet var nextDateLabel: UILabel!
+    @IBOutlet var onTimePercentLabel: UILabel!
     @IBOutlet var minIntervalLabel: UILabel!
     @IBOutlet var avgIntervalLabel: UILabel!
     @IBOutlet var maxIntervalLabel: UILabel!
@@ -56,7 +57,7 @@ class ActivitySummaryTableViewController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return 11 //section == 0 ? 4 : 5
+        return 12 //section == 0 ? 4 : 5
     }
 
 //    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
@@ -87,6 +88,11 @@ class ActivitySummaryTableViewController: UITableViewController {
         
         let nextDate = stats.nextDate
         nextDateLabel.text = nextDate != nil ? nextDate!.getFormattedDate() : ""
+        
+        let percentFormatter = NumberFormatter()
+        percentFormatter.numberStyle = .percent
+        percentFormatter.maximumFractionDigits = 1
+        onTimePercentLabel.text = percentFormatter.string(for: stats.onTimePercent)
         
         let numberFormatter = NumberFormatter()
         numberFormatter.maximumFractionDigits = 1

@@ -53,10 +53,11 @@ class HistoryTableViewController: UITableViewController {
             if event.daysSincePrevious >= 0 {
                 cell.intervalLabel!.text = String(event.daysSincePrevious)
                 if event.isOnTime {
-                    cell.intervalLabel!.textColor = UIColor.black
+                    //cell.intervalLabel!.textColor = UIColor.black
+                    cell.daysOverdueLabel.text = ""
                 } else {
-                    cell.intervalLabel!.textColor = UIColor.red
-                    cell.intervalLabel!.text = String(event.daysSincePrevious) + "(+" + String(event.daysOverdue) + ")"
+                    //cell.daysOverdueLabel!.textColor = UIColor.red
+                    cell.daysOverdueLabel!.text = String(event.daysOverdue)
                 }
             } else {
                 cell.intervalLabel!.text = ""

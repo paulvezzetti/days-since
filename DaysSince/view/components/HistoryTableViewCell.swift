@@ -17,6 +17,7 @@ class HistoryTableViewCell: UITableViewCell {
     @IBOutlet var detailsLabel: UILabel!
     
     @IBOutlet var intervalLabel: UILabel!
+    @IBOutlet var daysOverdueLabel: UILabel!
     //    override func awakeFromNib() {
 //        super.awakeFromNib()
 //        // Initialization code

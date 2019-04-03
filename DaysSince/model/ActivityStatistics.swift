@@ -19,6 +19,7 @@ class ActivityStatistics {
     let minInterval: TimeInterval
     let avgInterval: TimeInterval
     let dateFormatter: DateFormatter
+    let onTimePercent: Double 
     
     
     // TODO: Should all dates be normalized???
@@ -35,15 +36,23 @@ class ActivityStatistics {
         var intervalSum: TimeInterval = 0
         var min:TimeInterval = Double.infinity
         var max:TimeInterval = 0
+        var nOnTime:Double = 0
+        let calendar = Calendar.current
         
         for (index, history) in sortedEvents.enumerated() {
             if history == sortedEvents.last {
                 break
             }
-            let nextEvent = sortedEvents[index + 1]
-            let dateInterval = nextEvent.timestamp!.timeIntervalSince(history.timestamp!)
-            timeIntervals.append(dateInterval)
             
+            let nextEvent = sortedEvents[index + 1]
+            
+            guard let nextActualDate = nextEvent.timestamp, let currentActualDate = history.timestamp else {
+                continue
+            }
+            let dateInterval = nextActualDate.timeIntervalSince(currentActualDate)
+            timeIntervals.append(dateInterval)
+            dates.append(DateInterval(start: currentActualDate, end: nextActualDate))
+
             if dateInterval > max {
                 max = dateInterval
             }
@@ -52,7 +61,12 @@ class ActivityStatistics {
             }
             intervalSum += dateInterval
             
-            dates.append(DateInterval(start: history.timestamp!, end: nextEvent.timestamp!))
+            guard let nextExpectedDate = activity.interval?.getNextDate(since: currentActualDate) else {
+                continue
+            }
+            if calendar.compare(nextActualDate, to: nextExpectedDate, toGranularity: .day) != .orderedDescending {
+                nOnTime += 1 // This one is on-time
+            }
         }
         self.intervals = timeIntervals
         self.dateIntervals = dates
@@ -60,6 +74,12 @@ class ActivityStatistics {
         self.avgInterval = self.intervals.count > 0 ? intervalSum / Double(self.intervals.count) : 0
         self.maxInterval = max
         self.minInterval = min < Double.infinity ? min : 0
+        
+        if activity.interval is UnlimitedIntervalMO {
+            self.onTimePercent = 1
+        } else {
+            self.onTimePercent = nOnTime / Double(sortedEvents.count - 1)
+        }
     }
     
     var daySince:Int? {
