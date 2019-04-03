@@ -67,8 +67,11 @@ class NotificationManager : NSObject {
     }
 
     @objc func activityChanged(notification: Notification ) {
-        if notification.userInfo?["lastSnooze"] != nil {
-            // Ignore changes to the lastSnooze property
+        if notification.userInfo?["lastSnooze"] != nil ||
+            notification.userInfo?["daysOverdue"] != nil ||
+            notification.userInfo?["daysSincePrevious"] != nil ||
+            notification.userInfo?["isOnTime"] != nil{
+            // Ignore changes to the transient properties
             return
         }
         guard let activity = notification.object as? ActivityMO else {
