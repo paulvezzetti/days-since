@@ -1052,6 +1052,7 @@
                                                 <constraint firstItem="FEb-dj-iEn" firstAttribute="leading" secondItem="l5c-XX-Z1g" secondAttribute="leading" constant="2" id="yYN-oJ-J7H"/>
                                             </constraints>
                                         </tableViewCellContentView>
+                                        <color key="backgroundColor" name="Color1"/>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" id="Of4-Oa-aZf">
                                         <rect key="frame" x="0.0" y="88" width="351" height="44"/>
@@ -1085,6 +1086,7 @@
                                                 <constraint firstAttribute="trailing" secondItem="YMk-3f-SLt" secondAttribute="trailing" constant="8" id="qBH-eC-XwA"/>
                                             </constraints>
                                         </tableViewCellContentView>
+                                        <color key="backgroundColor" name="Color1"/>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="26" id="dQe-Wp-Egv">
                                         <rect key="frame" x="0.0" y="132" width="351" height="26"/>
@@ -1104,6 +1106,7 @@
                                                 <constraint firstItem="QP1-1a-Mk1" firstAttribute="top" secondItem="OZi-6e-Lmn" secondAttribute="top" constant="2" id="M6N-4b-Txd"/>
                                             </constraints>
                                         </tableViewCellContentView>
+                                        <color key="backgroundColor" name="Color1"/>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" id="KRK-UP-8cC">
                                         <rect key="frame" x="0.0" y="158" width="351" height="44"/>
@@ -1137,6 +1140,7 @@
                                                 <constraint firstAttribute="trailing" secondItem="ARp-xf-sjT" secondAttribute="trailing" constant="2" id="pbU-9a-X6B"/>
                                             </constraints>
                                         </tableViewCellContentView>
+                                        <color key="backgroundColor" name="Color1"/>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" id="3Qt-Ri-r43">
                                         <rect key="frame" x="0.0" y="202" width="351" height="44"/>
@@ -1168,16 +1172,16 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <stackView opaque="NO" contentMode="scaleToFill" spacingType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="WMV-hh-ABw">
-                                                    <rect key="frame" x="2" y="2" width="347" height="40"/>
+                                                    <rect key="frame" x="2" y="2" width="347" height="34"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="On Time Performance:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qpq-ig-bxo">
-                                                            <rect key="frame" x="0.0" y="0.0" width="220" height="40"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="220" height="34"/>
                                                             <fontDescription key="fontDescription" name="Avenir-Heavy" family="Avenir" pointSize="17"/>
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="PercentOnTime" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PQS-dd-cTb">
-                                                            <rect key="frame" x="228" y="0.0" width="119" height="40"/>
+                                                            <rect key="frame" x="228" y="0.0" width="119" height="34"/>
                                                             <fontDescription key="fontDescription" name="Avenir-Book" family="Avenir" pointSize="17"/>
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
@@ -1189,9 +1193,10 @@
                                                 <constraint firstItem="WMV-hh-ABw" firstAttribute="leading" secondItem="fzX-qG-7nb" secondAttribute="leading" constant="2" id="Arn-N5-eqr"/>
                                                 <constraint firstAttribute="trailing" secondItem="WMV-hh-ABw" secondAttribute="trailing" constant="2" id="Ba7-Ut-yXH"/>
                                                 <constraint firstItem="WMV-hh-ABw" firstAttribute="top" secondItem="fzX-qG-7nb" secondAttribute="top" constant="2" id="GGn-rs-y5Y"/>
-                                                <constraint firstAttribute="bottom" secondItem="WMV-hh-ABw" secondAttribute="bottom" constant="2" id="UW5-23-e7U"/>
+                                                <constraint firstAttribute="bottom" secondItem="WMV-hh-ABw" secondAttribute="bottom" constant="8" id="UW5-23-e7U"/>
                                             </constraints>
                                         </tableViewCellContentView>
+                                        <color key="backgroundColor" name="Color1"/>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" id="GBK-TG-D0e">
                                         <rect key="frame" x="0.0" y="290" width="351" height="44"/>
@@ -1231,6 +1236,7 @@
                                                 <constraint firstItem="ign-wL-p8i" firstAttribute="top" secondItem="8pK-J7-W5J" secondAttribute="top" constant="2" id="vyD-Ou-kGi"/>
                                             </constraints>
                                         </tableViewCellContentView>
+                                        <color key="backgroundColor" name="Color1"/>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="26" id="pL8-br-o7j">
                                         <rect key="frame" x="0.0" y="334" width="351" height="26"/>
@@ -1250,6 +1256,7 @@
                                                 <constraint firstItem="t83-Gl-phz" firstAttribute="leading" secondItem="70D-yB-OZu" secondAttribute="leading" constant="2" id="ind-El-4lY"/>
                                             </constraints>
                                         </tableViewCellContentView>
+                                        <color key="backgroundColor" name="Color1"/>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="27" id="7ut-P4-zxx">
                                         <rect key="frame" x="0.0" y="360" width="351" height="27"/>
@@ -1289,6 +1296,7 @@
                                                 <constraint firstItem="JDn-QH-tzJ" firstAttribute="leading" secondItem="3DF-Ti-4S3" secondAttribute="leading" constant="2" id="zPB-tm-luG"/>
                                             </constraints>
                                         </tableViewCellContentView>
+                                        <color key="backgroundColor" name="Color1"/>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="44" id="Xr2-hd-qgW">
                                         <rect key="frame" x="0.0" y="387" width="351" height="44"/>
@@ -1322,6 +1330,7 @@
                                                 <constraint firstAttribute="trailing" secondItem="Sbx-f1-48h" secondAttribute="trailing" constant="2" id="r6H-9J-PLJ"/>
                                             </constraints>
                                         </tableViewCellContentView>
+                                        <color key="backgroundColor" name="Color1"/>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="44" id="0tP-2d-amb">
                                         <rect key="frame" x="0.0" y="431" width="351" height="44"/>
@@ -1349,6 +1358,7 @@
                                                 <constraint firstAttribute="trailing" secondItem="ORC-0a-LtB" secondAttribute="trailing" constant="2" id="ug0-5k-bym"/>
                                             </constraints>
                                         </tableViewCellContentView>
+                                        <color key="backgroundColor" name="Color1"/>
                                     </tableViewCell>
                                 </cells>
                             </tableViewSection>
@@ -1566,6 +1576,9 @@
         <image name="TrashIcon" width="48" height="48"/>
         <namedColor name="Alert Red">
             <color red="0.61900001764297485" green="0.0" blue="0.0" alpha="0.75700002908706665" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="Color1">
+            <color red="0.78823529411764703" green="0.87450980392156863" blue="0.93725490196078431" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <namedColor name="Header">
             <color red="0.94117647058823528" green="0.94117647058823528" blue="0.94117647058823528" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
