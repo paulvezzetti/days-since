@@ -56,11 +56,12 @@ class HistoryTableViewController: UITableViewController {
                     cell.intervalLabel!.textColor = UIColor.black
                 } else {
                     cell.intervalLabel!.textColor = UIColor.red
+                    cell.intervalLabel!.text = String(event.daysSincePrevious) + "(+" + String(event.daysOverdue) + ")"
                 }
             } else {
                 cell.intervalLabel!.text = ""
             }
-            cell.dateLabel!.text = event.getFormattedDate(style: .long)
+            cell.dateLabel!.text = event.getFormattedDate(style: .medium)
         }
 //        cell.textLabel!.text = "History"
         return cell
