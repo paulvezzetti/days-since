@@ -11,7 +11,20 @@ import Foundation
 import CoreData
 
 @objc(WeekOffsetIntervalMO)
-public class WeekOffsetIntervalMO: IntervalMO {
+public class WeekOffsetIntervalMO: OffsetIntervalMO {
+
+    var weeks: Int16 {
+        get {
+            return self.offset
+        }
+        set(week) {
+            self.offset = week
+        }
+    }
+    
+    override func intervalType() -> OffsetIntervals {
+        return .Week
+    }
 
     override func getNextDate(since lastDate: Date) -> Date? {
         return Calendar.current.date(byAdding: .day, value: Int(self.weeks) * 7, to: lastDate)
@@ -28,12 +41,4 @@ public class WeekOffsetIntervalMO: IntervalMO {
         
     }
     
-    override func isEquivalent(to other:IntervalMO) -> Bool {
-        if !(other is WeekOffsetIntervalMO) {
-            return false
-        }
-        let weekOffsetInterval = other as! WeekOffsetIntervalMO
-        return self.weeks == weekOffsetInterval.weeks
-    }
-
 }

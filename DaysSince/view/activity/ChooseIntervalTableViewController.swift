@@ -120,21 +120,21 @@ class ChooseIntervalTableViewController: UITableViewController, UITextFieldDeleg
                 yearDayPickerController?.setYearDay(month: Int(yearlyInterval.month), day: Int(yearlyInterval.day))
                 yearlyLabel.text = Months.month(for: yearDayPickerController?.getMonth() ?? 0) + " " + String(yearDayPickerController?.getDay() ?? 1)
                 currentSelectedRow = .Yearly
-            case let monthOffsetInterval as MonthOffsetIntervalMO:
+            case let offsetInterval as OffsetIntervalMO:
                 byDateComponentTableViewCell.accessoryType = .checkmark
-                byDateComponentPickerController?.setScaleDateComponent(component: .Month, scale: Int(monthOffsetInterval.months))
-                byDateComponentLabel.text = monthOffsetInterval.toPrettyString()
+                byDateComponentPickerController?.setScaleDateComponent(component: offsetInterval.intervalType(), scale: Int(offsetInterval.offset))
+                byDateComponentLabel.text = offsetInterval.toPrettyString()
                 currentSelectedRow = .ByDateComponent
-            case let weekOffsetInterval as WeekOffsetIntervalMO:
-                byDateComponentTableViewCell.accessoryType = .checkmark
-                byDateComponentPickerController?.setScaleDateComponent(component: .Week, scale: Int(weekOffsetInterval.weeks))
-                byDateComponentLabel.text = weekOffsetInterval.toPrettyString()
-                currentSelectedRow = .ByDateComponent
-            case let yearOffsetInterval as YearOffsetIntervalMO:
-                byDateComponentTableViewCell.accessoryType = .checkmark
-                byDateComponentPickerController?.setScaleDateComponent(component: .Year, scale: Int(yearOffsetInterval.years))
-                byDateComponentLabel.text = yearOffsetInterval.toPrettyString()
-                currentSelectedRow = .ByDateComponent
+//            case let weekOffsetInterval as WeekOffsetIntervalMO:
+//                byDateComponentTableViewCell.accessoryType = .checkmark
+//                byDateComponentPickerController?.setScaleDateComponent(component: .Week, scale: Int(weekOffsetInterval.weeks))
+//                byDateComponentLabel.text = weekOffsetInterval.toPrettyString()
+//                currentSelectedRow = .ByDateComponent
+//            case let yearOffsetInterval as YearOffsetIntervalMO:
+//                byDateComponentTableViewCell.accessoryType = .checkmark
+//                byDateComponentPickerController?.setScaleDateComponent(component: .Year, scale: Int(yearOffsetInterval.years))
+//                byDateComponentLabel.text = yearOffsetInterval.toPrettyString()
+//                currentSelectedRow = .ByDateComponent
             default:
                 wheneverTableViewCell.accessoryType = .checkmark
                 currentSelectedRow = .Whenever
@@ -287,20 +287,18 @@ class ChooseIntervalTableViewController: UITableViewController, UITextFieldDeleg
                     interval = WeekOffsetIntervalMO(context: moc)
                     act.interval = interval
                 }
-                (interval as! WeekOffsetIntervalMO).weeks = Int16(scale)
             case .Month:
                 if !(interval is MonthOffsetIntervalMO) {
                     interval = MonthOffsetIntervalMO(context: moc)
                     act.interval = interval
                 }
-                (interval as! MonthOffsetIntervalMO).months = Int16(scale)
             case .Year:
                 if !(interval is YearOffsetIntervalMO) {
                     interval = YearOffsetIntervalMO(context: moc)
                     act.interval = interval
                 }
-                (interval as! YearOffsetIntervalMO).years = Int16(scale)
             }
+            (interval as! OffsetIntervalMO).offset = Int16(scale)
             
         default:
             break
@@ -346,7 +344,7 @@ extension ChooseIntervalTableViewController : YearDayPickerDelegate {
 
 extension ChooseIntervalTableViewController : ScaleDateComponentPickerDelegate {
     
-    func scaleComponentsSet(component: ScaleDateComponentPickerController.Component, scale: Int) {
+    func scaleComponentsSet(component: OffsetIntervals, scale: Int) {
         // TODO:
         switch component {
         case .Week:

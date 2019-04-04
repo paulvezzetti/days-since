@@ -51,6 +51,8 @@
 		FAC1DEA52256772A00A211D6 /* WeekOffsetIntervalMO+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAC1DE9F2256772A00A211D6 /* WeekOffsetIntervalMO+CoreDataClass.swift */; };
 		FAC1DEA72256772A00A211D6 /* MonthOffsetIntervalMO+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAC1DEA12256772A00A211D6 /* MonthOffsetIntervalMO+CoreDataClass.swift */; };
 		FAC1DEA92256772A00A211D6 /* YearOffsetIntervalMO+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAC1DEA32256772A00A211D6 /* YearOffsetIntervalMO+CoreDataClass.swift */; };
+		FAC1DEAD22567F0300A211D6 /* OffsetIntervalMO+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAC1DEAB22567F0300A211D6 /* OffsetIntervalMO+CoreDataClass.swift */; };
+		FAC1DEB6225681D400A211D6 /* OffsetIntervals.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAC1DEB5225681D400A211D6 /* OffsetIntervals.swift */; };
 		FADE9AC1224A8A260055DA64 /* NotificationExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = FADE9AC0224A8A260055DA64 /* NotificationExtension.swift */; };
 		FAE2F69422455301009B0DCB /* ActivityTableHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAE2F69322455301009B0DCB /* ActivityTableHeaderView.swift */; };
 		FAE2F69622455421009B0DCB /* ActivityTableHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = FAE2F69522455421009B0DCB /* ActivityTableHeaderView.xib */; };
@@ -104,6 +106,8 @@
 		FAC1DE9F2256772A00A211D6 /* WeekOffsetIntervalMO+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "WeekOffsetIntervalMO+CoreDataClass.swift"; sourceTree = "<group>"; };
 		FAC1DEA12256772A00A211D6 /* MonthOffsetIntervalMO+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MonthOffsetIntervalMO+CoreDataClass.swift"; sourceTree = "<group>"; };
 		FAC1DEA32256772A00A211D6 /* YearOffsetIntervalMO+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "YearOffsetIntervalMO+CoreDataClass.swift"; sourceTree = "<group>"; };
+		FAC1DEAB22567F0300A211D6 /* OffsetIntervalMO+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "OffsetIntervalMO+CoreDataClass.swift"; sourceTree = "<group>"; };
+		FAC1DEB5225681D400A211D6 /* OffsetIntervals.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OffsetIntervals.swift; sourceTree = "<group>"; };
 		FADE9AC0224A8A260055DA64 /* NotificationExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationExtension.swift; sourceTree = "<group>"; };
 		FAE2F69322455301009B0DCB /* ActivityTableHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityTableHeaderView.swift; sourceTree = "<group>"; };
 		FAE2F69522455421009B0DCB /* ActivityTableHeaderView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ActivityTableHeaderView.xib; sourceTree = "<group>"; };
@@ -156,6 +160,7 @@
 				FA1D73212228C60E00D8EBF7 /* IntervalMO+CoreDataClass.swift */,
 				FA1D73272228C60E00D8EBF7 /* MonthlyIntervalMO+CoreDataClass.swift */,
 				FAC1DEA12256772A00A211D6 /* MonthOffsetIntervalMO+CoreDataClass.swift */,
+				FAC1DEAB22567F0300A211D6 /* OffsetIntervalMO+CoreDataClass.swift */,
 				FAB23B77223F2436004C6252 /* ReminderMO+CoreDataClass.swift */,
 				FA1D73232228C60E00D8EBF7 /* UnlimitedIntervalMO+CoreDataClass.swift */,
 				FA1D731D2228C60E00D8EBF7 /* WeeklyIntervalMO+CoreDataClass.swift */,
@@ -248,11 +253,12 @@
 			isa = PBXGroup;
 			children = (
 				FA1D731A2228C29A00D8EBF7 /* coreDataClasses */,
-				FAA6AF212211E42700346CCB /* DataModelManager.swift */,
 				FA1D72DA221E2D2B00D8EBF7 /* ActivityStatistics.swift */,
+				FAA6AF212211E42700346CCB /* DataModelManager.swift */,
 				FA1D72E42220675F00D8EBF7 /* TimeConstants.swift */,
 				FAB23B73223AC332004C6252 /* NotificationManager.swift */,
 				FADE9AC0224A8A260055DA64 /* NotificationExtension.swift */,
+				FAC1DEB5225681D400A211D6 /* OffsetIntervals.swift */,
 			);
 			path = model;
 			sourceTree = "<group>";
@@ -341,6 +347,7 @@
 				FA1D72EA2220784900D8EBF7 /* ActivityMO+CoreDataClass.swift in Sources */,
 				FAA6AF1E2211C1E700346CCB /* AddActivityTableViewController.swift in Sources */,
 				FAB23B74223AC332004C6252 /* NotificationManager.swift in Sources */,
+				FAC1DEAD22567F0300A211D6 /* OffsetIntervalMO+CoreDataClass.swift in Sources */,
 				FAE2F69422455301009B0DCB /* ActivityTableHeaderView.swift in Sources */,
 				FA1D732D2228C60E00D8EBF7 /* IntervalMO+CoreDataClass.swift in Sources */,
 				FA1D72EC2220784900D8EBF7 /* EventMO+CoreDataClass.swift in Sources */,
@@ -359,6 +366,7 @@
 				FA1D732F2228C60E00D8EBF7 /* UnlimitedIntervalMO+CoreDataClass.swift in Sources */,
 				FAC1DEA92256772A00A211D6 /* YearOffsetIntervalMO+CoreDataClass.swift in Sources */,
 				FA1D734922300A5000D8EBF7 /* MarkDoneDelegate.swift in Sources */,
+				FAC1DEB6225681D400A211D6 /* OffsetIntervals.swift in Sources */,
 				FA1D73312228C60E00D8EBF7 /* ConstantIntervalMO+CoreDataClass.swift in Sources */,
 				FA1D72E1221F82A300D8EBF7 /* MasterTableViewCell.swift in Sources */,
 				FA2215AB2252A67000FDEB96 /* ActivitySummaryTableViewController.swift in Sources */,

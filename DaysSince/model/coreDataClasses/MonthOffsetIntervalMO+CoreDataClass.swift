@@ -11,8 +11,20 @@ import Foundation
 import CoreData
 
 @objc(MonthOffsetIntervalMO)
-public class MonthOffsetIntervalMO: IntervalMO {
+public class MonthOffsetIntervalMO: OffsetIntervalMO {
 
+    var months:Int16 {
+        get {
+            return self.offset
+        }
+        set(month) {
+            self.offset = month
+        }
+    }
+    
+    override func intervalType() -> OffsetIntervals {
+        return .Month
+    }
     
     override func getNextDate(since lastDate: Date) -> Date? {
         return Calendar.current.date(byAdding: .month, value: Int(self.months), to: lastDate)
@@ -29,12 +41,5 @@ public class MonthOffsetIntervalMO: IntervalMO {
 
     }
     
-    override func isEquivalent(to other:IntervalMO) -> Bool {
-        if !(other is MonthOffsetIntervalMO) {
-            return false
-        }
-        let monthOffsetInterval = other as! MonthOffsetIntervalMO
-        return self.months == monthOffsetInterval.months
-    }
 
 }

@@ -11,6 +11,6 @@ import UIKit
 
 protocol ScaleDateComponentPickerDelegate : class {
     
-    func scaleComponentsSet(component: ScaleDateComponentPickerController.Component, scale:Int)
+    func scaleComponentsSet(component: OffsetIntervals, scale:Int)
 
 }
