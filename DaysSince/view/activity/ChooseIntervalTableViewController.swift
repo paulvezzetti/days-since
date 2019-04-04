@@ -14,6 +14,8 @@ class ChooseIntervalTableViewController: UITableViewController, UITextFieldDeleg
     enum TableRows:Int {
         case Whenever = 0,
         ByDay,
+        ByDateComponent,
+        ByDateComponentPicker,
         Weekly,
         WeekDayPicker,
         Monthly,
@@ -24,6 +26,8 @@ class ChooseIntervalTableViewController: UITableViewController, UITextFieldDeleg
     
     // MARK: Outlets
     @IBOutlet var byDayTableViewCell: UITableViewCell!
+    @IBOutlet var byDateComponentTableViewCell: UITableViewCell!
+    @IBOutlet var byDateComponentPickerTableViewCell: UITableViewCell!
     @IBOutlet var weeklyTableViewCell: UITableViewCell!
     @IBOutlet var weekDayPickerTableViewCell: UITableViewCell!
     @IBOutlet var monthlyTableViewCell: UITableViewCell!
@@ -33,9 +37,11 @@ class ChooseIntervalTableViewController: UITableViewController, UITextFieldDeleg
     @IBOutlet var wheneverTableViewCell: UITableViewCell!
     
     @IBOutlet var byDayTextField: UITextField!
+    @IBOutlet var byDateComponentLabel: UILabel!
     @IBOutlet var weeklyLabel: UILabel!
     @IBOutlet var monthlyLabel: UILabel!
     @IBOutlet var yearlyLabel: UILabel!
+    @IBOutlet var byDateComponentPicker: UIPickerView!
     @IBOutlet var weekDayPicker: UIPickerView!
     @IBOutlet var monthDayPicker: UIPickerView!
     @IBOutlet var yearDayPicker: UIPickerView!
@@ -46,6 +52,7 @@ class ChooseIntervalTableViewController: UITableViewController, UITextFieldDeleg
     
     // MARK: Private variables
     private var currentSelectedRow = TableRows.Whenever
+    private var byDateComponentPickerController:ScaleDateComponentPickerController?
     private var weekdayPickerController:WeekDayPickerController?
     private var monthDayPickerController: MonthDayPickerController?
     private var yearDayPickerController: YearDayPickerController?
@@ -69,6 +76,7 @@ class ChooseIntervalTableViewController: UITableViewController, UITextFieldDeleg
         tableView.tableFooterView = UIView(frame: .zero)
 
         // Set up the pickers
+        byDateComponentPickerController = ScaleDateComponentPickerController(picker: byDateComponentPicker, delegate: self)
         weekdayPickerController = WeekDayPickerController(picker: weekDayPicker, delegate: self)
         monthDayPickerController = MonthDayPickerController(picker:monthDayPicker, delegate: self)
         yearDayPickerController = YearDayPickerController(picker: yearDayPicker, delegate: self)
@@ -112,6 +120,21 @@ class ChooseIntervalTableViewController: UITableViewController, UITextFieldDeleg
                 yearDayPickerController?.setYearDay(month: Int(yearlyInterval.month), day: Int(yearlyInterval.day))
                 yearlyLabel.text = Months.month(for: yearDayPickerController?.getMonth() ?? 0) + " " + String(yearDayPickerController?.getDay() ?? 1)
                 currentSelectedRow = .Yearly
+            case let monthOffsetInterval as MonthOffsetIntervalMO:
+                byDateComponentTableViewCell.accessoryType = .checkmark
+                byDateComponentPickerController?.setScaleDateComponent(component: .Month, scale: Int(monthOffsetInterval.months))
+                byDateComponentLabel.text = monthOffsetInterval.toPrettyString()
+                currentSelectedRow = .ByDateComponent
+            case let weekOffsetInterval as WeekOffsetIntervalMO:
+                byDateComponentTableViewCell.accessoryType = .checkmark
+                byDateComponentPickerController?.setScaleDateComponent(component: .Week, scale: Int(weekOffsetInterval.weeks))
+                byDateComponentLabel.text = weekOffsetInterval.toPrettyString()
+                currentSelectedRow = .ByDateComponent
+            case let yearOffsetInterval as YearOffsetIntervalMO:
+                byDateComponentTableViewCell.accessoryType = .checkmark
+                byDateComponentPickerController?.setScaleDateComponent(component: .Year, scale: Int(yearOffsetInterval.years))
+                byDateComponentLabel.text = yearOffsetInterval.toPrettyString()
+                currentSelectedRow = .ByDateComponent
             default:
                 wheneverTableViewCell.accessoryType = .checkmark
                 currentSelectedRow = .Whenever
@@ -135,7 +158,7 @@ class ChooseIntervalTableViewController: UITableViewController, UITextFieldDeleg
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 8
+        return 10
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -153,6 +176,14 @@ class ChooseIntervalTableViewController: UITableViewController, UITextFieldDeleg
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         //print("Height for row: \(indexPath.row)")
+        if indexPath.row == TableRows.ByDateComponentPicker.rawValue {
+            if currentSelectedRow != TableRows.ByDateComponent {
+                return 0
+            } else {
+                return 120
+            }
+        }
+
         if indexPath.row == TableRows.MonthPicker.rawValue {
             if currentSelectedRow != TableRows.Monthly {
                 return 0
@@ -247,6 +278,30 @@ class ChooseIntervalTableViewController: UITableViewController, UITextFieldDeleg
             }
             (interval as! YearlyIntervalMO).month = Int16(yearDayPickerController?.getMonth() ?? 2)
             (interval as! YearlyIntervalMO).day = Int16(yearDayPickerController?.getDay() ?? 10)
+        case .ByDateComponent:
+            let component = byDateComponentPickerController?.getComponent() ?? .Week
+            let scale = byDateComponentPickerController?.getScale() ?? 1
+            switch component {
+            case .Week:
+                if !(interval is WeekOffsetIntervalMO) {
+                    interval = WeekOffsetIntervalMO(context: moc)
+                    act.interval = interval
+                }
+                (interval as! WeekOffsetIntervalMO).weeks = Int16(scale)
+            case .Month:
+                if !(interval is MonthOffsetIntervalMO) {
+                    interval = MonthOffsetIntervalMO(context: moc)
+                    act.interval = interval
+                }
+                (interval as! MonthOffsetIntervalMO).months = Int16(scale)
+            case .Year:
+                if !(interval is YearOffsetIntervalMO) {
+                    interval = YearOffsetIntervalMO(context: moc)
+                    act.interval = interval
+                }
+                (interval as! YearOffsetIntervalMO).years = Int16(scale)
+            }
+            
         default:
             break
         }
@@ -287,6 +342,23 @@ extension ChooseIntervalTableViewController : YearDayPickerDelegate {
         byYearDayLabel.text = monthSymbol + " " + String(day) // TODO: Update the interval
     }
 
+}
+
+extension ChooseIntervalTableViewController : ScaleDateComponentPickerDelegate {
+    
+    func scaleComponentsSet(component: ScaleDateComponentPickerController.Component, scale: Int) {
+        // TODO:
+        switch component {
+        case .Week:
+            byDateComponentLabel.text = (scale == 1) ? "Week" : String(scale) + " Weeks"
+        case .Month:
+            byDateComponentLabel.text = (scale == 1) ? "Month" : String(scale) + " Months"
+        case .Year:
+            byDateComponentLabel.text = (scale == 1) ? "Year" : String(scale) + " Years"
+        }
+
+    }
+    
 }
 
 // MARK: Private functions

@@ -46,6 +46,11 @@
 		FAB23B74223AC332004C6252 /* NotificationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAB23B73223AC332004C6252 /* NotificationManager.swift */; };
 		FAB23B7B223F2436004C6252 /* ReminderMO+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAB23B77223F2436004C6252 /* ReminderMO+CoreDataClass.swift */; };
 		FAB23B822241A152004C6252 /* NumberFormatterOrdinal.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAB23B812241A152004C6252 /* NumberFormatterOrdinal.swift */; };
+		FAC1DE9C22562D7700A211D6 /* ScaleDateComponentPickerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAC1DE9B22562D7700A211D6 /* ScaleDateComponentPickerController.swift */; };
+		FAC1DE9E22562DC100A211D6 /* ScaleDateComponentPickerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAC1DE9D22562DC100A211D6 /* ScaleDateComponentPickerDelegate.swift */; };
+		FAC1DEA52256772A00A211D6 /* WeekOffsetIntervalMO+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAC1DE9F2256772A00A211D6 /* WeekOffsetIntervalMO+CoreDataClass.swift */; };
+		FAC1DEA72256772A00A211D6 /* MonthOffsetIntervalMO+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAC1DEA12256772A00A211D6 /* MonthOffsetIntervalMO+CoreDataClass.swift */; };
+		FAC1DEA92256772A00A211D6 /* YearOffsetIntervalMO+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAC1DEA32256772A00A211D6 /* YearOffsetIntervalMO+CoreDataClass.swift */; };
 		FADE9AC1224A8A260055DA64 /* NotificationExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = FADE9AC0224A8A260055DA64 /* NotificationExtension.swift */; };
 		FAE2F69422455301009B0DCB /* ActivityTableHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAE2F69322455301009B0DCB /* ActivityTableHeaderView.swift */; };
 		FAE2F69622455421009B0DCB /* ActivityTableHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = FAE2F69522455421009B0DCB /* ActivityTableHeaderView.xib */; };
@@ -94,6 +99,11 @@
 		FAB23B73223AC332004C6252 /* NotificationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationManager.swift; sourceTree = "<group>"; };
 		FAB23B77223F2436004C6252 /* ReminderMO+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ReminderMO+CoreDataClass.swift"; sourceTree = "<group>"; };
 		FAB23B812241A152004C6252 /* NumberFormatterOrdinal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NumberFormatterOrdinal.swift; sourceTree = "<group>"; };
+		FAC1DE9B22562D7700A211D6 /* ScaleDateComponentPickerController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScaleDateComponentPickerController.swift; sourceTree = "<group>"; };
+		FAC1DE9D22562DC100A211D6 /* ScaleDateComponentPickerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScaleDateComponentPickerDelegate.swift; sourceTree = "<group>"; };
+		FAC1DE9F2256772A00A211D6 /* WeekOffsetIntervalMO+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "WeekOffsetIntervalMO+CoreDataClass.swift"; sourceTree = "<group>"; };
+		FAC1DEA12256772A00A211D6 /* MonthOffsetIntervalMO+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MonthOffsetIntervalMO+CoreDataClass.swift"; sourceTree = "<group>"; };
+		FAC1DEA32256772A00A211D6 /* YearOffsetIntervalMO+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "YearOffsetIntervalMO+CoreDataClass.swift"; sourceTree = "<group>"; };
 		FADE9AC0224A8A260055DA64 /* NotificationExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationExtension.swift; sourceTree = "<group>"; };
 		FAE2F69322455301009B0DCB /* ActivityTableHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityTableHeaderView.swift; sourceTree = "<group>"; };
 		FAE2F69522455421009B0DCB /* ActivityTableHeaderView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ActivityTableHeaderView.xib; sourceTree = "<group>"; };
@@ -120,6 +130,8 @@
 				FA1D72FA222854E600D8EBF7 /* WeekDayPickerDelegate.swift */,
 				FA1D72F522272BBF00D8EBF7 /* YearDayPickerController.swift */,
 				FA1D72FE22286A8800D8EBF7 /* YearDayPickerDelegate.swift */,
+				FAC1DE9B22562D7700A211D6 /* ScaleDateComponentPickerController.swift */,
+				FAC1DE9D22562DC100A211D6 /* ScaleDateComponentPickerDelegate.swift */,
 			);
 			path = common;
 			sourceTree = "<group>";
@@ -143,10 +155,13 @@
 				FA1D72E82220784900D8EBF7 /* EventMO+CoreDataClass.swift */,
 				FA1D73212228C60E00D8EBF7 /* IntervalMO+CoreDataClass.swift */,
 				FA1D73272228C60E00D8EBF7 /* MonthlyIntervalMO+CoreDataClass.swift */,
+				FAC1DEA12256772A00A211D6 /* MonthOffsetIntervalMO+CoreDataClass.swift */,
 				FAB23B77223F2436004C6252 /* ReminderMO+CoreDataClass.swift */,
 				FA1D73232228C60E00D8EBF7 /* UnlimitedIntervalMO+CoreDataClass.swift */,
 				FA1D731D2228C60E00D8EBF7 /* WeeklyIntervalMO+CoreDataClass.swift */,
+				FAC1DE9F2256772A00A211D6 /* WeekOffsetIntervalMO+CoreDataClass.swift */,
 				FA1D731F2228C60E00D8EBF7 /* YearlyIntervalMO+CoreDataClass.swift */,
+				FAC1DEA32256772A00A211D6 /* YearOffsetIntervalMO+CoreDataClass.swift */,
 			);
 			path = coreDataClasses;
 			sourceTree = "<group>";
@@ -322,12 +337,14 @@
 				FA1D732B2228C60E00D8EBF7 /* YearlyIntervalMO+CoreDataClass.swift in Sources */,
 				FA1D72F622272BBF00D8EBF7 /* YearDayPickerController.swift in Sources */,
 				FA3CEF4C220E0F2500634DD7 /* DaysSince.xcdatamodeld in Sources */,
+				FAC1DE9C22562D7700A211D6 /* ScaleDateComponentPickerController.swift in Sources */,
 				FA1D72EA2220784900D8EBF7 /* ActivityMO+CoreDataClass.swift in Sources */,
 				FAA6AF1E2211C1E700346CCB /* AddActivityTableViewController.swift in Sources */,
 				FAB23B74223AC332004C6252 /* NotificationManager.swift in Sources */,
 				FAE2F69422455301009B0DCB /* ActivityTableHeaderView.swift in Sources */,
 				FA1D732D2228C60E00D8EBF7 /* IntervalMO+CoreDataClass.swift in Sources */,
 				FA1D72EC2220784900D8EBF7 /* EventMO+CoreDataClass.swift in Sources */,
+				FAC1DE9E22562DC100A211D6 /* ScaleDateComponentPickerDelegate.swift in Sources */,
 				FA1D72DB221E2D2B00D8EBF7 /* ActivityStatistics.swift in Sources */,
 				FA133A902231D6B600F363D1 /* DateExtension.swift in Sources */,
 				FA1D72F22226E18500D8EBF7 /* WeekDayPickerController.swift in Sources */,
@@ -337,8 +354,10 @@
 				FA1D734D22307F9B00D8EBF7 /* EventDetailsViewController.swift in Sources */,
 				FA1D72E52220675F00D8EBF7 /* TimeConstants.swift in Sources */,
 				FA1D73292228C60E00D8EBF7 /* WeeklyIntervalMO+CoreDataClass.swift in Sources */,
+				FAC1DEA52256772A00A211D6 /* WeekOffsetIntervalMO+CoreDataClass.swift in Sources */,
 				FA3CEF4E220E0F2500634DD7 /* MasterViewController.swift in Sources */,
 				FA1D732F2228C60E00D8EBF7 /* UnlimitedIntervalMO+CoreDataClass.swift in Sources */,
+				FAC1DEA92256772A00A211D6 /* YearOffsetIntervalMO+CoreDataClass.swift in Sources */,
 				FA1D734922300A5000D8EBF7 /* MarkDoneDelegate.swift in Sources */,
 				FA1D73312228C60E00D8EBF7 /* ConstantIntervalMO+CoreDataClass.swift in Sources */,
 				FA1D72E1221F82A300D8EBF7 /* MasterTableViewCell.swift in Sources */,
@@ -348,6 +367,7 @@
 				FA1D72FB222854E600D8EBF7 /* WeekDayPickerDelegate.swift in Sources */,
 				FA1D72FF22286A8800D8EBF7 /* YearDayPickerDelegate.swift in Sources */,
 				FA1D72EF2226CA7800D8EBF7 /* ChooseIntervalTableViewController.swift in Sources */,
+				FAC1DEA72256772A00A211D6 /* MonthOffsetIntervalMO+CoreDataClass.swift in Sources */,
 				FA3CEF50220E0F2500634DD7 /* DetailViewController.swift in Sources */,
 				FA1D734B22303F4600D8EBF7 /* HistoryTableViewCell.swift in Sources */,
 				FAB23B822241A152004C6252 /* NumberFormatterOrdinal.swift in Sources */,

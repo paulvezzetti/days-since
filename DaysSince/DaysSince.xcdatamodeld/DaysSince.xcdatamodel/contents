@@ -29,6 +29,9 @@
     <entity name="MonthlyInterval" representedClassName="MonthlyIntervalMO" parentEntity="Interval" syncable="YES" codeGenerationType="category">
         <attribute name="day" attributeType="Integer 16" minValueString="0" maxValueString="32" defaultValueString="1" usesScalarValueType="YES" syncable="YES"/>
     </entity>
+    <entity name="MonthOffsetInterval" representedClassName="MonthOffsetIntervalMO" parentEntity="Interval" syncable="YES" codeGenerationType="category">
+        <attribute name="months" attributeType="Integer 16" minValueString="1" defaultValueString="1" usesScalarValueType="YES" syncable="YES"/>
+    </entity>
     <entity name="Reminder" representedClassName="ReminderMO" syncable="YES" codeGenerationType="category">
         <attribute name="allowSnooze" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="daysBefore" attributeType="Integer 16" minValueString="0" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
@@ -41,9 +44,15 @@
     <entity name="WeeklyInterval" representedClassName="WeeklyIntervalMO" parentEntity="Interval" syncable="YES" codeGenerationType="category">
         <attribute name="day" attributeType="Integer 16" minValueString="1" maxValueString="7" defaultValueString="1" usesScalarValueType="YES" syncable="YES"/>
     </entity>
+    <entity name="WeekOffsetInterval" representedClassName="WeekOffsetIntervalMO" parentEntity="Interval" syncable="YES" codeGenerationType="category">
+        <attribute name="weeks" attributeType="Integer 16" minValueString="1" defaultValueString="1" usesScalarValueType="YES" syncable="YES"/>
+    </entity>
     <entity name="YearlyInterval" representedClassName="YearlyIntervalMO" parentEntity="Interval" syncable="YES" codeGenerationType="category">
         <attribute name="day" attributeType="Integer 16" minValueString="1" maxValueString="31" defaultValueString="1" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="month" attributeType="Integer 16" minValueString="1" maxValueString="12" defaultValueString="1" usesScalarValueType="YES" syncable="YES"/>
+    </entity>
+    <entity name="YearOffsetInterval" representedClassName="YearOffsetIntervalMO" parentEntity="Interval" syncable="YES" codeGenerationType="category">
+        <attribute name="years" attributeType="Integer 16" minValueString="1" defaultValueString="1" usesScalarValueType="YES" syncable="YES"/>
     </entity>
     <elements>
         <element name="Activity" positionX="-63.47265625" positionY="-8.6171875" width="128" height="135"/>
@@ -55,5 +64,8 @@
         <element name="UnlimitedInterval" positionX="503.921875" positionY="314.13671875" width="128" height="45"/>
         <element name="WeeklyInterval" positionX="219.46875" positionY="311.5234375" width="128" height="60"/>
         <element name="YearlyInterval" positionX="362.30859375" positionY="311.28515625" width="128" height="75"/>
+        <element name="WeekOffsetInterval" positionX="126" positionY="135" width="128" height="60"/>
+        <element name="MonthOffsetInterval" positionX="135" positionY="144" width="128" height="60"/>
+        <element name="YearOffsetInterval" positionX="144" positionY="153" width="128" height="60"/>
     </elements>
 </model>
