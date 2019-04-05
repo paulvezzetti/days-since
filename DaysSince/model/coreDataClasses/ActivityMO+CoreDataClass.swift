@@ -66,7 +66,7 @@ public class ActivityMO: NSManagedObject {
         func asString() -> String {
             switch self {
             case .VeryOld:
-                return "MORE THAN A MONTH OVERDUE"
+                return "MONTH+ OVERDUE"
             case .LastMonth:
                 return "DUE LAST MONTH"
             case .LastWeek:
