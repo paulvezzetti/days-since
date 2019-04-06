@@ -336,7 +336,7 @@ extension ChooseIntervalTableViewController : MonthDayPickerDelegate {
 // MARK: ByYearDayPickerDelegate
 extension ChooseIntervalTableViewController : YearDayPickerDelegate {
     
-    func yearDaySet(month: Int, monthSymbol:String, day: Int) {
+    func yearDaySet(picker:UIPickerView, month: Int, monthSymbol:String, day: Int) {
         byYearDayLabel.text = monthSymbol + " " + String(day) // TODO: Update the interval
     }
 

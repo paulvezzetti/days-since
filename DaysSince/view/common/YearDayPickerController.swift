@@ -78,7 +78,7 @@ extension YearDayPickerController : UIPickerViewDelegate {
             pickerView.reloadComponent(1)
         }
         let selectedMonth = pickerView.selectedRow(inComponent: 0) + 1
-        delegate?.yearDaySet(month: selectedMonth, monthSymbol: Months.month(for: selectedMonth), day: pickerView.selectedRow(inComponent: 1) + 1)
+        delegate?.yearDaySet(picker: pickerView, month: selectedMonth, monthSymbol: Months.month(for: selectedMonth), day: pickerView.selectedRow(inComponent: 1) + 1)
     }
 
 }

@@ -17,6 +17,7 @@ class AddActivityTableViewController: UITableViewController, UITextFieldDelegate
         TitleTextField,
         FrequencyLabel,
         FrequencyDescLabel,
+        ActiveRangeLabel,
         StartFromDateLabel,
         StartFromDatePicker,
         NotificationLabel,
@@ -106,9 +107,9 @@ class AddActivityTableViewController: UITableViewController, UITextFieldDelegate
                 guard settings.authorizationStatus == .authorized else {return}
                 
                 if settings.alertSetting == .enabled {
-                    // Enable the reminders by default. Don't do this when editing an activity
-                    self.tempActivity?.reminder?.enabled = true
-                    self.tempActivity?.reminder?.allowSnooze = true
+                    // Since the default interval is Unlimited there is no reason to turn on reminders by default
+                    self.tempActivity?.reminder?.enabled = false
+                    self.tempActivity?.reminder?.allowSnooze = false
                     DispatchQueue.main.async {
                         self.configureViewForActivity()
                     }
@@ -129,7 +130,7 @@ class AddActivityTableViewController: UITableViewController, UITextFieldDelegate
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 11
+        return 12
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -165,6 +166,13 @@ class AddActivityTableViewController: UITableViewController, UITextFieldDelegate
             controller.activity = tempActivity
             return
         }
+
+        if segue.identifier == "chooseDateRangeSeque" {
+            let controller = segue.destination as! ChooseActiveRangeTableViewController
+            controller.activity = tempActivity
+            return
+        }
+
         
         guard let button = sender as? UIBarButtonItem, button === saveButton else {
             return
@@ -236,7 +244,7 @@ class AddActivityTableViewController: UITableViewController, UITextFieldDelegate
         saveButton.isEnabled = !title.isEmpty
         
         let enableReminder = activity.reminder?.enabled ?? false
-        enableRemindersSwitch.isEnabled = true
+        enableRemindersSwitch.isEnabled = !(activity.interval is UnlimitedIntervalMO)
         enableRemindersSwitch.setOn(enableReminder, animated: false)
         remindTextField.isEnabled = enableReminder
         remindTextField.text = String(activity.reminder?.daysBefore ?? 1)
