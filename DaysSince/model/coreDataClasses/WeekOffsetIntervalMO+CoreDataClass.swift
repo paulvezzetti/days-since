@@ -26,7 +26,7 @@ public class WeekOffsetIntervalMO: OffsetIntervalMO {
         return .Week
     }
 
-    override func getNextDate(since lastDate: Date) -> Date? {
+    override func calculateNextDate(since lastDate: Date) -> Date? {
         return Calendar.current.date(byAdding: .day, value: Int(self.weeks) * 7, to: lastDate)
     }
     
@@ -34,7 +34,7 @@ public class WeekOffsetIntervalMO: OffsetIntervalMO {
         return self.weeks == 1 ? "Every Week" : "Every " + String(self.weeks) + " weeks"
     }
     
-    override func clone(context:NSManagedObjectContext) ->IntervalMO {
+    override func createClone(context:NSManagedObjectContext) ->IntervalMO {
         let theClone = WeekOffsetIntervalMO(context: context)
         theClone.weeks = self.weeks
         return theClone

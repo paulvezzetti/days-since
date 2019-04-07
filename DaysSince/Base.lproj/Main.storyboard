@@ -640,6 +640,7 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="activeRangeLabel" destination="QgC-ff-CQZ" id="SL7-h9-1sO"/>
                         <outlet property="enableRemindersSwitch" destination="3nk-fg-3Uq" id="pmN-WX-9EB"/>
                         <outlet property="intervalLabel" destination="3Wr-7w-0Y2" id="pOE-og-BzO"/>
                         <outlet property="remindTextField" destination="0dI-x1-jwH" id="OA2-to-REp"/>
@@ -1026,7 +1027,7 @@
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="119.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <stackView opaque="NO" contentMode="scaleToFill" alignment="top" spacing="14" translatesAutoresizingMaskIntoConstraints="NO" id="GmS-mh-46E">
+                                                <stackView opaque="NO" contentMode="scaleToFill" alignment="top" spacing="3" translatesAutoresizingMaskIntoConstraints="NO" id="GmS-mh-46E">
                                                     <rect key="frame" x="16" y="11" width="343" height="98"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Start:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VBY-bH-P81">
@@ -1036,16 +1037,16 @@
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <pickerView contentMode="scaleToFill" horizontalHuggingPriority="252" horizontalCompressionResistancePriority="749" translatesAutoresizingMaskIntoConstraints="NO" id="aE1-ed-d5D">
-                                                            <rect key="frame" x="57" y="0.0" width="286" height="98"/>
+                                                            <rect key="frame" x="45.5" y="0.0" width="297.5" height="98"/>
                                                         </pickerView>
                                                     </subviews>
                                                 </stackView>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstAttribute="trailingMargin" secondItem="GmS-mh-46E" secondAttribute="trailing" id="CwA-dV-DDP"/>
-                                                <constraint firstItem="GmS-mh-46E" firstAttribute="top" secondItem="FRn-ql-Hsp" secondAttribute="topMargin" id="Had-rC-cBT"/>
-                                                <constraint firstItem="GmS-mh-46E" firstAttribute="leading" secondItem="FRn-ql-Hsp" secondAttribute="leadingMargin" id="Oj9-Ph-Vtr"/>
-                                                <constraint firstAttribute="bottomMargin" secondItem="GmS-mh-46E" secondAttribute="bottom" id="d8x-OY-fbw"/>
+                                                <constraint firstItem="GmS-mh-46E" firstAttribute="leading" secondItem="FRn-ql-Hsp" secondAttribute="leadingMargin" id="HyJ-6W-POv"/>
+                                                <constraint firstAttribute="bottomMargin" secondItem="GmS-mh-46E" secondAttribute="bottom" id="cyG-PG-eBS"/>
+                                                <constraint firstAttribute="trailingMargin" secondItem="GmS-mh-46E" secondAttribute="trailing" id="lzS-mA-FjI"/>
+                                                <constraint firstItem="GmS-mh-46E" firstAttribute="top" secondItem="FRn-ql-Hsp" secondAttribute="topMargin" id="viy-Zt-jMO"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>
@@ -1089,14 +1090,16 @@
                     </tableView>
                     <navigationItem key="navigationItem" title="Active Dates" id="N4P-7t-N3C"/>
                     <connections>
+                        <outlet property="allYearTableViewCell" destination="F3e-cE-BKe" id="GLX-pk-vIP"/>
                         <outlet property="dateRangeLabel" destination="elW-gy-RFy" id="5zs-2m-16j"/>
+                        <outlet property="dateRangeTableViewCell" destination="eeR-az-XT2" id="hRH-pu-yVf"/>
                         <outlet property="endDatePickerView" destination="53U-bp-llq" id="54V-se-pBH"/>
                         <outlet property="startDatePickerView" destination="aE1-ed-d5D" id="AC0-LW-NHp"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="xc9-fC-dP6" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4017" y="-281"/>
+            <point key="canvasLocation" x="4016.8000000000002" y="-281.10944527736132"/>
         </scene>
         <!--Mark Done-->
         <scene sceneID="b7a-Rp-s6E">

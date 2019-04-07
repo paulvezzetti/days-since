@@ -246,6 +246,7 @@ class ChooseIntervalTableViewController: UITableViewController, UITextFieldDeleg
         
         // Create a new interval
         var interval:IntervalMO? = act.interval
+        let activeRange:ActiveRangeMO? = interval?.activeRange
         
         switch currentSelectedRow {
         case .Whenever:
@@ -303,6 +304,8 @@ class ChooseIntervalTableViewController: UITableViewController, UITextFieldDeleg
         default:
             break
         }
+        // Make sure we hold onto the existing range.
+        interval?.activeRange = activeRange
     }
     
     

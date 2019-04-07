@@ -18,7 +18,7 @@ public class OffsetIntervalMO: IntervalMO {
     }
     
     override func isEquivalent(to other:IntervalMO) -> Bool {
-        if !(other is OffsetIntervalMO) {
+        if !(other is OffsetIntervalMO) || !super.isEquivalent(to: other) {
             return false
         }
         let offsetInterval = other as! OffsetIntervalMO

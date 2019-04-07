@@ -13,7 +13,7 @@ import CoreData
 @objc(WeeklyIntervalMO)
 public class WeeklyIntervalMO: IntervalMO {
 
-    override func getNextDate(since lastDate: Date) -> Date? {
+    override func calculateNextDate(since lastDate: Date) -> Date? {
         // Construct a new date based on the previous week
         let calendar = Calendar.current
         // This seems to work well and relies on standard library code.
@@ -39,14 +39,14 @@ public class WeeklyIntervalMO: IntervalMO {
         return "Every week on " + Weekdays.day(for: Int(self.day))
     }
     
-    override func clone(context:NSManagedObjectContext) ->IntervalMO {
+    override func createClone(context:NSManagedObjectContext) ->IntervalMO {
         let theClone = WeeklyIntervalMO(context: context)
         theClone.day = self.day
         return theClone
     }
     
     override func isEquivalent(to other:IntervalMO) -> Bool {
-        if !(other is WeeklyIntervalMO) {
+        if !(other is WeeklyIntervalMO) || !super.isEquivalent(to: other) {
             return false
         }
         let weeklyInterval = other as! WeeklyIntervalMO

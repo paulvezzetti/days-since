@@ -13,7 +13,7 @@ import CoreData
 @objc(YearlyIntervalMO)
 public class YearlyIntervalMO: IntervalMO {
 
-    override func getNextDate(since lastDate: Date) -> Date? {
+    override func calculateNextDate(since lastDate: Date) -> Date? {
         // Construct a new date based on the previous.
         // TODO: Need to consider how close we are to the expected date to know if we need to push to
         // the next year.
@@ -38,7 +38,7 @@ public class YearlyIntervalMO: IntervalMO {
         return "Every year on " + Months.month(for: Int(self.month)) + " " + String(day)
     }
 
-    override func clone(context:NSManagedObjectContext) ->IntervalMO {
+    override func createClone(context:NSManagedObjectContext) ->IntervalMO {
         let theClone = YearlyIntervalMO(context: context)
         theClone.day = self.day
         theClone.month = self.month
@@ -46,7 +46,7 @@ public class YearlyIntervalMO: IntervalMO {
     }
 
     override func isEquivalent(to other:IntervalMO) -> Bool {
-        if !(other is YearlyIntervalMO) {
+        if !(other is YearlyIntervalMO) || !super.isEquivalent(to: other) {
             return false
         }
         let yearlyInterval = other as! YearlyIntervalMO

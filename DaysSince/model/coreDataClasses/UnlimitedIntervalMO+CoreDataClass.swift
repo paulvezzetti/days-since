@@ -13,7 +13,7 @@ import CoreData
 @objc(UnlimitedIntervalMO)
 public class UnlimitedIntervalMO: IntervalMO {
 
-    override func getNextDate(since lastDate: Date) -> Date? {
+    override func calculateNextDate(since lastDate: Date) -> Date? {
         return nil
     }
     
@@ -21,12 +21,12 @@ public class UnlimitedIntervalMO: IntervalMO {
         return "Whenever I feel like it"
     }
 
-    override func clone(context:NSManagedObjectContext) ->IntervalMO {
+    override func createClone(context:NSManagedObjectContext) ->IntervalMO {
         return UnlimitedIntervalMO(context: context)
     }
 
     override func isEquivalent(to other:IntervalMO) -> Bool {
-        return other is UnlimitedIntervalMO ? true : false
+        return other is UnlimitedIntervalMO ?  super.isEquivalent(to: other) : false
     }
 
 }

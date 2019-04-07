@@ -28,6 +28,7 @@ class AddActivityTableViewController: UITableViewController, UITextFieldDelegate
     @IBOutlet private var titleField: UITextField!
     @IBOutlet private var startDateLabel: UILabel!
     @IBOutlet private var intervalLabel: UILabel!
+    @IBOutlet weak var activeRangeLabel: UILabel!
     
     @IBOutlet private var startDatePicker: UIDatePicker!
     @IBOutlet private var saveButton: UIBarButtonItem!
@@ -239,6 +240,8 @@ class AddActivityTableViewController: UITableViewController, UITextFieldDelegate
         intervalLabel.text = activity.interval!.toPrettyString()
         startDateLabel.text = dateFormatter.string(from: activity.firstDate)
         startDatePicker.date = activity.firstDate
+        
+        activeRangeLabel.text = activity.interval?.activeRange != nil ? activity.interval?.activeRange?.toPrettyString() : ActiveRangeMO.getStringForNil()
         
         let title = titleField.text ?? ""
         saveButton.isEnabled = !title.isEmpty

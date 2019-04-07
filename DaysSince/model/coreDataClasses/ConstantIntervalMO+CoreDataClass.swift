@@ -13,7 +13,7 @@ import CoreData
 @objc(ConstantIntervalMO)
 public class ConstantIntervalMO: IntervalMO {
 
-    override func getNextDate(since lastDate: Date) -> Date? {
+    override func calculateNextDate(since lastDate: Date) -> Date? {
         let calendar = Calendar.current
         var nextDate = calendar.date(byAdding: DateComponents(day: Int(self.frequency)), to: lastDate)
         if nextDate != nil {
@@ -26,14 +26,14 @@ public class ConstantIntervalMO: IntervalMO {
         return "Every " + String(self.frequency) + " days"
     }
 
-    override func clone(context:NSManagedObjectContext) ->IntervalMO {
+    override func createClone(context:NSManagedObjectContext) ->IntervalMO {
         let theClone = ConstantIntervalMO(context: context)
         theClone.frequency = self.frequency
         return theClone
     }
 
     override func isEquivalent(to other:IntervalMO) -> Bool {
-        if !(other is ConstantIntervalMO) {
+        if !(other is ConstantIntervalMO) || !super.isEquivalent(to: other) {
             return false
         }
         let constantInterval = other as! ConstantIntervalMO

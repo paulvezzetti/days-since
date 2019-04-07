@@ -26,7 +26,7 @@ public class YearOffsetIntervalMO: OffsetIntervalMO {
         return .Year
     }
 
-    override func getNextDate(since lastDate: Date) -> Date? {
+    override func calculateNextDate(since lastDate: Date) -> Date? {
         return Calendar.current.date(byAdding: .year, value: Int(self.years), to: lastDate)
     }
     
@@ -34,7 +34,7 @@ public class YearOffsetIntervalMO: OffsetIntervalMO {
         return self.years == 1 ? "Every year" : "Every " + String(self.years) + " years"
     }
     
-    override func clone(context:NSManagedObjectContext) ->IntervalMO {
+    override func createClone(context:NSManagedObjectContext) -> IntervalMO {
         let theClone = YearOffsetIntervalMO(context: context)
         theClone.years = self.years
         return theClone

@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		DA0B1E272259412500992A42 /* ChooseActiveRangeTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA0B1E262259412500992A42 /* ChooseActiveRangeTableViewController.swift */; };
+		DA0B1E2C225950CD00992A42 /* ActiveRangeMO+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA0B1E29225950CD00992A42 /* ActiveRangeMO+CoreDataClass.swift */; };
 		FA133A902231D6B600F363D1 /* DateExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA133A8F2231D6B600F363D1 /* DateExtension.swift */; };
 		FA1D72DB221E2D2B00D8EBF7 /* ActivityStatistics.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA1D72DA221E2D2B00D8EBF7 /* ActivityStatistics.swift */; };
 		FA1D72E1221F82A300D8EBF7 /* MasterTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA1D72E0221F82A300D8EBF7 /* MasterTableViewCell.swift */; };
@@ -62,6 +63,7 @@
 
 /* Begin PBXFileReference section */
 		DA0B1E262259412500992A42 /* ChooseActiveRangeTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChooseActiveRangeTableViewController.swift; sourceTree = "<group>"; };
+		DA0B1E29225950CD00992A42 /* ActiveRangeMO+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ActiveRangeMO+CoreDataClass.swift"; sourceTree = "<group>"; };
 		FA133A8F2231D6B600F363D1 /* DateExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateExtension.swift; sourceTree = "<group>"; };
 		FA1D72DA221E2D2B00D8EBF7 /* ActivityStatistics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityStatistics.swift; sourceTree = "<group>"; };
 		FA1D72E0221F82A300D8EBF7 /* MasterTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MasterTableViewCell.swift; sourceTree = "<group>"; };
@@ -156,6 +158,7 @@
 		FA1D731A2228C29A00D8EBF7 /* coreDataClasses */ = {
 			isa = PBXGroup;
 			children = (
+				DA0B1E29225950CD00992A42 /* ActiveRangeMO+CoreDataClass.swift */,
 				FA1D72E62220784900D8EBF7 /* ActivityMO+CoreDataClass.swift */,
 				FA1D73252228C60E00D8EBF7 /* ConstantIntervalMO+CoreDataClass.swift */,
 				FA1D72E82220784900D8EBF7 /* EventMO+CoreDataClass.swift */,
@@ -354,6 +357,7 @@
 				FAE2F69422455301009B0DCB /* ActivityTableHeaderView.swift in Sources */,
 				FA1D732D2228C60E00D8EBF7 /* IntervalMO+CoreDataClass.swift in Sources */,
 				FA1D72EC2220784900D8EBF7 /* EventMO+CoreDataClass.swift in Sources */,
+				DA0B1E2C225950CD00992A42 /* ActiveRangeMO+CoreDataClass.swift in Sources */,
 				FAC1DE9E22562DC100A211D6 /* ScaleDateComponentPickerDelegate.swift in Sources */,
 				FA1D72DB221E2D2B00D8EBF7 /* ActivityStatistics.swift in Sources */,
 				FA133A902231D6B600F363D1 /* DateExtension.swift in Sources */,

@@ -26,7 +26,7 @@ public class MonthOffsetIntervalMO: OffsetIntervalMO {
         return .Month
     }
     
-    override func getNextDate(since lastDate: Date) -> Date? {
+    override func calculateNextDate(since lastDate: Date) -> Date? {
         return Calendar.current.date(byAdding: .month, value: Int(self.months), to: lastDate)
     }
     
@@ -34,11 +34,10 @@ public class MonthOffsetIntervalMO: OffsetIntervalMO {
         return self.months == 1 ? "Every Month" : "Every " + String(self.months) + " months"
     }
     
-    override func clone(context:NSManagedObjectContext) ->IntervalMO {
+    override func createClone(context: NSManagedObjectContext) -> IntervalMO {
         let theClone = MonthOffsetIntervalMO(context: context)
         theClone.months = self.months
         return theClone
-
     }
     
 

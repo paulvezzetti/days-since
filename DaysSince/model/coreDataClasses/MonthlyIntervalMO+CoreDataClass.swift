@@ -13,7 +13,7 @@ import CoreData
 @objc(MonthlyIntervalMO)
 public class MonthlyIntervalMO: IntervalMO {
 
-    override func getNextDate(since lastDate: Date) -> Date? {
+    override func calculateNextDate(since lastDate: Date) -> Date? {
         // Construct a new date based on the previous month
         let calendar = Calendar.current
         let nextMonthdayDateComponent = DateComponents(day: Int(self.day))
@@ -33,14 +33,14 @@ public class MonthlyIntervalMO: IntervalMO {
         return "Every month on the " + NumberFormatterOrdinal.string(Int(self.day))
     }
 
-    override func clone(context:NSManagedObjectContext) ->IntervalMO {
+    override func createClone(context:NSManagedObjectContext) ->IntervalMO {
         let theClone = MonthlyIntervalMO(context: context)
         theClone.day = self.day
         return theClone
     }
     
     override func isEquivalent(to other:IntervalMO) -> Bool {
-        if !(other is MonthlyIntervalMO) {
+        if !(other is MonthlyIntervalMO) || !super.isEquivalent(to: other) {
             return false
         }
         let monthlyInterval = other as! MonthlyIntervalMO

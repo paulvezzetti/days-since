@@ -21,6 +21,10 @@ class ChooseActiveRangeTableViewController: UITableViewController {
     @IBOutlet weak var startDatePickerView: UIPickerView!
     @IBOutlet weak var endDatePickerView: UIPickerView!
     
+    @IBOutlet weak var allYearTableViewCell: UITableViewCell!
+    @IBOutlet weak var dateRangeTableViewCell: UITableViewCell!
+    
+    
     // MARK: Private variables
     private var currentSelectedRow = TableRows.AllYear
     private var startDayPickerController: YearDayPickerController?
@@ -40,10 +44,29 @@ class ChooseActiveRangeTableViewController: UITableViewController {
         startDayPickerController = YearDayPickerController(picker: startDatePickerView, delegate: self)
         endDayPickerController = YearDayPickerController(picker: endDatePickerView, delegate: self)
 
-        startDayPickerController?.setYearDay(month: 1, day: 1)
-        endDayPickerController?.setYearDay(month: 12, day: 31)
+        if let activeRange = activity?.interval?.activeRange {
+            dateRangeTableViewCell.accessoryType = .checkmark
+            currentSelectedRow = .DateRangeLabel
+
+            startDayPickerController?.setYearDay(month: Int(activeRange.startMonth), day: Int(activeRange.startDay))
+            endDayPickerController?.setYearDay(month: Int(activeRange.endMonth), day: Int(activeRange.endDay))
+
+        } else {
+            allYearTableViewCell.accessoryType = .checkmark
+            currentSelectedRow = .AllYear
+            
+            startDayPickerController?.setYearDay(month: 1, day: 1)
+            endDayPickerController?.setYearDay(month: 12, day: 31)
+        }
 
     }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        updateInterval()
+    }
+
 
     // MARK: - Table view data source
 
@@ -105,6 +128,28 @@ class ChooseActiveRangeTableViewController: UITableViewController {
         
         currentSelectedRow = row
         return true
+    }
+    
+    func updateInterval() {
+        guard let act = activity, let interval = act.interval, let moc = act.managedObjectContext else {
+            return
+        }
+
+        if currentSelectedRow == .AllYear && interval.activeRange != nil {
+            interval.activeRange = nil
+        } else if currentSelectedRow == .DateRangeLabel {
+            var range = interval.activeRange
+            if range == nil {
+                range = ActiveRangeMO(context: moc)
+                interval.activeRange = range
+            }
+            range?.startDay = Int16(startDayPickerController?.getDay() ?? 1)
+            range?.startMonth = Int16(startDayPickerController?.getMonth() ?? 1)
+            range?.endDay = Int16(endDayPickerController?.getDay() ?? 31)
+            range?.endMonth = Int16(endDayPickerController?.getMonth() ?? 12)
+            
+        }
+                
     }
 
     
