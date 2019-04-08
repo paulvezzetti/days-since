@@ -26,7 +26,7 @@ public class MonthOffsetIntervalMO: OffsetIntervalMO {
         return .Month
     }
     
-    override func calculateNextDate(since lastDate: Date) -> Date? {
+    override func calculateNextDate(since lastDate: Date, asap: Bool) -> Date? {
         return Calendar.current.date(byAdding: .month, value: Int(self.months), to: lastDate)
     }
     

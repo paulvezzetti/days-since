@@ -26,7 +26,7 @@ public class YearOffsetIntervalMO: OffsetIntervalMO {
         return .Year
     }
 
-    override func calculateNextDate(since lastDate: Date) -> Date? {
+    override func calculateNextDate(since lastDate: Date, asap: Bool) -> Date? {
         return Calendar.current.date(byAdding: .year, value: Int(self.years), to: lastDate)
     }
     

@@ -14,7 +14,7 @@ import CoreData
 public class IntervalMO: NSManagedObject {
     
     final func getNextDate(since lastDate: Date) -> Date? {
-        guard let nextDate = calculateNextDate(since: lastDate) else {
+        guard let nextDate = calculateNextDate(since: lastDate, asap: false) else {
             return nil
         }
         if isDateInActiveRange(nextDate) {
@@ -34,24 +34,27 @@ public class IntervalMO: NSManagedObject {
 
         let calendar = Calendar.current
         let startDateComponents = DateComponents(calendar: calendar, timeZone: calendar.timeZone, month: Int(range.startMonth), day: Int(range.startDay))
-        guard let activeRangeStartDate = calendar.nextDate(after: nextDate, matching: startDateComponents, matchingPolicy: .nextTimePreservingSmallerComponents, repeatedTimePolicy: .first, direction: .forward) else {
+        guard let activeRangeFirstDate = calendar.nextDate(after: nextDate, matching: startDateComponents, matchingPolicy: .nextTimePreservingSmallerComponents, repeatedTimePolicy: .first, direction: .forward) else {
             return nextDate
         }
-
+        // Move start date back one day so that the search can potentially identify the first day of the range.
+        guard let activeRangeStartDate = calendar.date(byAdding: .day, value: -1, to: activeRangeFirstDate) else {
+            return nextDate
+        }
         // Don't call getNextDate since that could recurse.
-        guard let nextDateAfterNextRangeStart = calculateNextDate(since: activeRangeStartDate) else {
+        guard let nextDateAfterNextRangeStart = calculateNextDate(since: activeRangeStartDate, asap: true) else {
             return nil
         }
         
         return isDateInActiveRange(nextDateAfterNextRangeStart) ? nextDateAfterNextRangeStart : nil
     }
     
-    func calculateNextDate(since lastDate: Date) -> Date? {
+    func calculateNextDate(since lastDate: Date, asap: Bool) -> Date? {
         return nil
     }
     
     func toPrettyString() -> String {
-        return "Abstact IntervalMO"
+        return "Abstract IntervalMO"
     }
     
     final func clone(context:NSManagedObjectContext) ->IntervalMO {

@@ -13,7 +13,7 @@ import CoreData
 @objc(YearlyIntervalMO)
 public class YearlyIntervalMO: IntervalMO {
 
-    override func calculateNextDate(since lastDate: Date) -> Date? {
+    override func calculateNextDate(since lastDate: Date, asap: Bool) -> Date? {
         // Construct a new date based on the previous.
         // TODO: Need to consider how close we are to the expected date to know if we need to push to
         // the next year.
@@ -22,13 +22,14 @@ public class YearlyIntervalMO: IntervalMO {
         var nextDate = calendar.nextDate(after: lastDate, matching: nextYearDayDateComponent, matchingPolicy: .nextTimePreservingSmallerComponents)
         if nextDate != nil {
             nextDate!.normalize()
-            // Allow for a 90 day grace period for early events
+            // Allow for a 90 day grace period for early events but only if it is not a request for the earliest possible date.
             // TODO: Add these grace period numbers to a global settings
-            let daysComponent = calendar.dateComponents([.day], from: lastDate, to: nextDate!)
-            if daysComponent.day! <= 90 {
-                nextDate = calendar.nextDate(after: nextDate!, matching: nextYearDayDateComponent, matchingPolicy: .nextTime)
+            if !asap {
+                let daysComponent = calendar.dateComponents([.day], from: lastDate, to: nextDate!)
+                if daysComponent.day! <= 90 {
+                    nextDate = calendar.nextDate(after: nextDate!, matching: nextYearDayDateComponent, matchingPolicy: .nextTime)
+                }
             }
-
         }
         return nextDate
     }

@@ -13,7 +13,7 @@ import CoreData
 @objc(ConstantIntervalMO)
 public class ConstantIntervalMO: IntervalMO {
 
-    override func calculateNextDate(since lastDate: Date) -> Date? {
+    override func calculateNextDate(since lastDate: Date, asap: Bool) -> Date? {
         let calendar = Calendar.current
         var nextDate = calendar.date(byAdding: DateComponents(day: Int(self.frequency)), to: lastDate)
         if nextDate != nil {

@@ -26,7 +26,7 @@ public class WeekOffsetIntervalMO: OffsetIntervalMO {
         return .Week
     }
 
-    override func calculateNextDate(since lastDate: Date) -> Date? {
+    override func calculateNextDate(since lastDate: Date, asap: Bool) -> Date? {
         return Calendar.current.date(byAdding: .day, value: Int(self.weeks) * 7, to: lastDate)
     }
     

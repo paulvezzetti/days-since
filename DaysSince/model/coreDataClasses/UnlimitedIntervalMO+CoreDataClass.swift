@@ -13,7 +13,7 @@ import CoreData
 @objc(UnlimitedIntervalMO)
 public class UnlimitedIntervalMO: IntervalMO {
 
-    override func calculateNextDate(since lastDate: Date) -> Date? {
+    override func calculateNextDate(since lastDate: Date, asap: Bool) -> Date? {
         return nil
     }
     

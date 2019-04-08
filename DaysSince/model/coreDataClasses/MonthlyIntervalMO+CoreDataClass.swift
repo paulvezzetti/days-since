@@ -13,7 +13,7 @@ import CoreData
 @objc(MonthlyIntervalMO)
 public class MonthlyIntervalMO: IntervalMO {
 
-    override func calculateNextDate(since lastDate: Date) -> Date? {
+    override func calculateNextDate(since lastDate: Date, asap: Bool) -> Date? {
         // Construct a new date based on the previous month
         let calendar = Calendar.current
         let nextMonthdayDateComponent = DateComponents(day: Int(self.day))
@@ -21,9 +21,11 @@ public class MonthlyIntervalMO: IntervalMO {
         if nextDate != nil {
             nextDate!.normalize()
             // Allow for a 10 day grace period for early events
-            let daysComponent = calendar.dateComponents([.day], from: lastDate, to: nextDate!)
-            if daysComponent.day! <= 10 {
-                nextDate = calendar.nextDate(after: nextDate!, matching: nextMonthdayDateComponent, matchingPolicy: .previousTimePreservingSmallerComponents)
+            if !asap {
+                let daysComponent = calendar.dateComponents([.day], from: lastDate, to: nextDate!)
+                if daysComponent.day! <= 10 {
+                    nextDate = calendar.nextDate(after: nextDate!, matching: nextMonthdayDateComponent, matchingPolicy: .previousTimePreservingSmallerComponents)
+                }
             }
         }
         return nextDate
