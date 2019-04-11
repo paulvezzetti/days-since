@@ -55,6 +55,7 @@
 		FAC1DEA92256772A00A211D6 /* YearOffsetIntervalMO+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAC1DEA32256772A00A211D6 /* YearOffsetIntervalMO+CoreDataClass.swift */; };
 		FAC1DEAD22567F0300A211D6 /* OffsetIntervalMO+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAC1DEAB22567F0300A211D6 /* OffsetIntervalMO+CoreDataClass.swift */; };
 		FAC1DEB6225681D400A211D6 /* OffsetIntervals.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAC1DEB5225681D400A211D6 /* OffsetIntervals.swift */; };
+		FAC1DEBE225E3C5600A211D6 /* ActivityInfoTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAC1DEBD225E3C5600A211D6 /* ActivityInfoTableViewController.swift */; };
 		FADE9AC1224A8A260055DA64 /* NotificationExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = FADE9AC0224A8A260055DA64 /* NotificationExtension.swift */; };
 		FAE2F69422455301009B0DCB /* ActivityTableHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAE2F69322455301009B0DCB /* ActivityTableHeaderView.swift */; };
 		FAE2F69622455421009B0DCB /* ActivityTableHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = FAE2F69522455421009B0DCB /* ActivityTableHeaderView.xib */; };
@@ -112,6 +113,7 @@
 		FAC1DEA32256772A00A211D6 /* YearOffsetIntervalMO+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "YearOffsetIntervalMO+CoreDataClass.swift"; sourceTree = "<group>"; };
 		FAC1DEAB22567F0300A211D6 /* OffsetIntervalMO+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "OffsetIntervalMO+CoreDataClass.swift"; sourceTree = "<group>"; };
 		FAC1DEB5225681D400A211D6 /* OffsetIntervals.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OffsetIntervals.swift; sourceTree = "<group>"; };
+		FAC1DEBD225E3C5600A211D6 /* ActivityInfoTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityInfoTableViewController.swift; sourceTree = "<group>"; };
 		FADE9AC0224A8A260055DA64 /* NotificationExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationExtension.swift; sourceTree = "<group>"; };
 		FAE2F69322455301009B0DCB /* ActivityTableHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityTableHeaderView.swift; sourceTree = "<group>"; };
 		FAE2F69522455421009B0DCB /* ActivityTableHeaderView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ActivityTableHeaderView.xib; sourceTree = "<group>"; };
@@ -251,6 +253,7 @@
 				FA1D72EE2226CA7800D8EBF7 /* ChooseIntervalTableViewController.swift */,
 				FA2215AA2252A67000FDEB96 /* ActivitySummaryTableViewController.swift */,
 				DA0B1E262259412500992A42 /* ChooseActiveRangeTableViewController.swift */,
+				FAC1DEBD225E3C5600A211D6 /* ActivityInfoTableViewController.swift */,
 			);
 			path = activity;
 			sourceTree = "<group>";
@@ -349,6 +352,7 @@
 				FA1D732B2228C60E00D8EBF7 /* YearlyIntervalMO+CoreDataClass.swift in Sources */,
 				FA1D72F622272BBF00D8EBF7 /* YearDayPickerController.swift in Sources */,
 				FA3CEF4C220E0F2500634DD7 /* DaysSince.xcdatamodeld in Sources */,
+				FAC1DEBE225E3C5600A211D6 /* ActivityInfoTableViewController.swift in Sources */,
 				FAC1DE9C22562D7700A211D6 /* ScaleDateComponentPickerController.swift in Sources */,
 				FA1D72EA2220784900D8EBF7 /* ActivityMO+CoreDataClass.swift in Sources */,
 				FAA6AF1E2211C1E700346CCB /* AddActivityTableViewController.swift in Sources */,

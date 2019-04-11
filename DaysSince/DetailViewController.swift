@@ -14,6 +14,7 @@ class DetailViewController: UIViewController {
     @IBOutlet var alternatingView: UIView!
     @IBOutlet var segmentedControl: UISegmentedControl!
     
+    var activeSubViewController: UITableViewController?
     var dataManager: DataModelManager? = nil
     
     var detailItem: ActivityMO? {
@@ -49,6 +50,7 @@ class DetailViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        activeSubViewController = summaryViewController
         // Do any additional setup after loading the view, typically from a nib.
         configureView()
         
@@ -156,11 +158,18 @@ class DetailViewController: UIViewController {
 
     @objc
     func selectionDidChange(_ sender: UISegmentedControl) {
-        if segmentedControl.selectedSegmentIndex == 0 {
+        if let activeViewController = self.activeSubViewController {
             // Remove the history
-            historyViewController.willMove(toParent: nil)
-            historyViewController.view.removeFromSuperview()
-            historyViewController.removeFromParent()
+            activeViewController.willMove(toParent: nil)
+            activeViewController.view.removeFromSuperview()
+            activeViewController.removeFromParent()
+
+        }
+        if segmentedControl.selectedSegmentIndex == 0 {
+//            // Remove the history
+//            historyViewController.willMove(toParent: nil)
+//            historyViewController.view.removeFromSuperview()
+//            historyViewController.removeFromParent()
             // Restore the summary
             if let summaryVC = summaryViewController {
                 addChild(summaryVC)
@@ -171,19 +180,25 @@ class DetailViewController: UIViewController {
             }
             
             
-        } else {
+        } else if segmentedControl.selectedSegmentIndex == 1 {
            // Remove the summary
-            if let summaryVC = summaryViewController {
-                summaryVC.willMove(toParent: nil)
-                summaryVC.view.removeFromSuperview()
-                summaryVC.removeFromParent()
-            }
+//            if let summaryVC = summaryViewController {
+//                summaryVC.willMove(toParent: nil)
+//                summaryVC.view.removeFromSuperview()
+//                summaryVC.removeFromParent()
+//            }
             //Restore the history
             addChild(historyViewController)
             alternatingView.addSubview(historyViewController.view)
             historyViewController.view.frame = alternatingView.bounds
             historyViewController.view.autoresizingMask = [.flexibleWidth, .flexibleHeight]
             historyViewController.didMove(toParent: self)
+        } else if segmentedControl.selectedSegmentIndex == 2 {
+            addChild(settingsViewController)
+            alternatingView.addSubview(settingsViewController.view)
+            settingsViewController.view.frame = alternatingView.bounds
+            settingsViewController.view.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+            settingsViewController.didMove(toParent: self)
         }
     }
     
@@ -200,6 +215,20 @@ class DetailViewController: UIViewController {
         self.addChild(viewController)
         return viewController
     }()
+    
+    
+    private lazy var settingsViewController: ActivityInfoTableViewController = {
+        
+        let storyboard = UIStoryboard(name: "Main", bundle: Bundle.main)
+        
+        var viewController = storyboard.instantiateViewController(withIdentifier: "ActivityInfoTableViewController") as! ActivityInfoTableViewController
+        viewController.activity = detailItem
+       // viewController.dataManager = dataManager
+        
+        self.addChild(viewController)
+        return viewController
+    }()
+
 }
 
 extension DetailViewController : MarkDoneDelegate {
