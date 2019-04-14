@@ -10,6 +10,16 @@ import UIKit
 
 class ActivityInfoTableViewController: UITableViewController {
 
+    enum TableRows:Int {
+        case Due = 0,
+        Range,
+        ReminderEnabled,
+        ReminderBefore,
+        SnoozeEnabled,
+        SnoozeFor,
+        LastSnooze
+    }
+
     @IBOutlet var dueLabel: UILabel!
     @IBOutlet var activeRangeLabel: UILabel!
     @IBOutlet var remindersStatusLabel: UILabel!
@@ -82,6 +92,22 @@ class ActivityInfoTableViewController: UITableViewController {
         }
     }
     
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        //print("Height for row: \(indexPath.row)")
+        guard let act = activity, let reminder = act.reminder else {
+            return super.tableView(tableView, heightForRowAt: indexPath)
+        }
+        
+        if indexPath.row == TableRows.ReminderBefore.rawValue && !reminder.enabled {
+            return 0
+        }
+        
+        if (indexPath.row == TableRows.SnoozeFor.rawValue || indexPath.row == TableRows.LastSnooze.rawValue) && !reminder.allowSnooze {
+            return 0
+        }
+        return super.tableView(tableView, heightForRowAt: indexPath)
+    }
+
     
     @objc func onActivityChanged(notification:Notification) {
         configureView()
