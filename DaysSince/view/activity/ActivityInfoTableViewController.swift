@@ -93,7 +93,6 @@ class ActivityInfoTableViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        //print("Height for row: \(indexPath.row)")
         guard let act = activity, let reminder = act.reminder else {
             return super.tableView(tableView, heightForRowAt: indexPath)
         }
