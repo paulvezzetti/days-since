@@ -1,0 +1,9 @@
+/* 
+  Localizable.strings
+  DaysSince
+
+  Created by Paul Vezzetti on 4/24/19.
+  Copyright © 2019 Paul Vezzetti. All rights reserved.
+*/
+"Edit" = "Edit";
+"deleteActivity.title" = "Delete this activity?";

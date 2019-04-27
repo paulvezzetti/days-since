@@ -291,7 +291,7 @@ class MasterViewController: UITableViewController {
 
     func editAction(at indexPath: IndexPath) -> UIContextualAction {
         
-        let action = UIContextualAction(style: .normal, title: "Edit") {[unowned self] (action, view, completion) in
+        let action = UIContextualAction(style: .normal, title: NSLocalizedString("edit", value: "Edit", comment: "")) {[unowned self] (action, view, completion) in
             self.performSegue(withIdentifier: "presentAddActivity", sender: self.getActivity(at: indexPath))
             completion(true)
         }
@@ -302,7 +302,7 @@ class MasterViewController: UITableViewController {
 
     func doneAction(at indexPath: IndexPath) -> UIContextualAction {
         
-        let action = UIContextualAction(style: .normal, title: "Done") {[unowned self] (action, view, completion) in
+        let action = UIContextualAction(style: .normal, title: NSLocalizedString("done", value: "Done", comment: "")) {[unowned self] (action, view, completion) in
             if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "markDoneNavigationController") as? MarkDoneTableViewController
             {
                 vc.doneDelegate = self
@@ -319,12 +319,13 @@ class MasterViewController: UITableViewController {
 
     func deleteAction(at indexPath: IndexPath) -> UIContextualAction {
         
-        let action = UIContextualAction(style: .normal, title: "Delete") { (action, view, completion) in
-            let alert = UIAlertController(title: "Delete this activity?", message: "This will permanently delete this activity and all of its history.", preferredStyle: UIAlertController.Style.alert)
-            alert.addAction(UIAlertAction(title: "Yes", style: .destructive) { (alert) in
+        let action = UIContextualAction(style: .normal, title: NSLocalizedString("delete", value: "Delete", comment: "")) { (action, view, completion) in
+            let alert = UIAlertController(title: NSLocalizedString("deleteActivity.title", value: "Delete this activity?", comment: "Title used for prompt when deleting activity") ,
+                                          message: NSLocalizedString("deleteActivity.msg", value: "This will permanently delete this activity and all of its history.", comment: "Message used for prompt when deleting activity"), preferredStyle: UIAlertController.Style.alert)
+            alert.addAction(UIAlertAction(title: NSLocalizedString("yes", value: "Yes", comment: ""), style: .destructive) { (alert) in
                 self.deleteActivity(at: indexPath)
             })
-            alert.addAction(UIAlertAction(title: "No", style: .default, handler: nil))
+            alert.addAction(UIAlertAction(title: NSLocalizedString("no", value: "No", comment: ""), style: .default, handler: nil))
             self.present(alert, animated: true, completion: nil)
             completion(true)
         }

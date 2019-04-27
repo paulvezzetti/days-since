@@ -75,19 +75,19 @@ class DetailViewController: UIViewController {
     @IBAction func snoozeFromToolbar(_ sender: Any) {
         guard let reminder = detailItem?.reminder, reminder.allowSnooze else {
 
-            let alertNoSnooze = UIAlertController(title: "Snooze", message: "This activity is not enabled for snooze. You must edit this activity and enable snooze first.", preferredStyle: UIAlertController.Style.alert)
-            alertNoSnooze.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+            let alertNoSnooze = UIAlertController(title: NSLocalizedString("snooze", value: "Snooze", comment: ""), message: NSLocalizedString("snoozeNotEnabled.msg", value: "This activity is not enabled for snooze. You must edit this activity and enable snooze first.", comment: ""), preferredStyle: UIAlertController.Style.alert)
+            alertNoSnooze.addAction(UIAlertAction(title: NSLocalizedString("ok", value: "OK", comment: ""), style: .default, handler: nil))
             self.present(alertNoSnooze, animated: true, completion: nil)
 
             return
         }
         
-        let alert = UIAlertController(title: "Snooze", message: "Do you want a reminder for this activity in " + String(Int(reminder.snooze)) + " days?", preferredStyle: UIAlertController.Style.alert)
-        alert.addAction(UIAlertAction(title: "Yes", style: .default) { (alert) in
+        let alert = UIAlertController(title: NSLocalizedString("snooze", value: "Snooze", comment: ""), message: "Do you want a reminder for this activity in " + String(Int(reminder.snooze)) + " days?", preferredStyle: UIAlertController.Style.alert)
+        alert.addAction(UIAlertAction(title: NSLocalizedString("yes", value: "Yes", comment: ""), style: .default) { (alert) in
             //self.deleteActivity()
             NotificationCenter.default.post(name: .snoozeActivity, object: self.detailItem)
         })
-        alert.addAction(UIAlertAction(title: "No", style: .default, handler: nil))
+        alert.addAction(UIAlertAction(title: NSLocalizedString("no", value: "No", comment: ""), style: .default, handler: nil))
         self.present(alert, animated: true, completion: nil)
 
         
@@ -125,11 +125,12 @@ class DetailViewController: UIViewController {
     }
     
     @IBAction func onDelete(_ sender: Any) {
-        let alert = UIAlertController(title: "Delete this activity?", message: "This will permanently delete this activity and all of its history.", preferredStyle: UIAlertController.Style.alert)
-        alert.addAction(UIAlertAction(title: "Yes", style: .destructive) { (alert) in
+        let alert = UIAlertController(title: NSLocalizedString("deleteActivity.title", value: "Delete this activity?", comment: "Title used for prompt when deleting activity"),
+                                      message: NSLocalizedString("deleteActivity.msg", value: "This will permanently delete this activity and all of its history.", comment: "Message used for prompt when deleting activity"), preferredStyle: UIAlertController.Style.alert)
+        alert.addAction(UIAlertAction(title: NSLocalizedString("yes", value: "Yes", comment: ""), style: .destructive) { (alert) in
             self.deleteActivity()
         })
-        alert.addAction(UIAlertAction(title: "No", style: .default, handler: nil))
+        alert.addAction(UIAlertAction(title: NSLocalizedString("no", value: "No", comment: ""), style: .default, handler: nil))
         self.present(alert, animated: true, completion: nil)
     }
     

@@ -40,11 +40,6 @@ class ActivityInfoTableViewController: UITableViewController {
         super.viewDidLoad()
 
         configureView();
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem
     }
 
     // MARK: - Table view data source
@@ -57,7 +52,32 @@ class ActivityInfoTableViewController: UITableViewController {
         return 7
     }
 
-    func configureView() {
+    
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        guard let act = activity, let reminder = act.reminder else {
+            return super.tableView(tableView, heightForRowAt: indexPath)
+        }
+        
+        if indexPath.row == TableRows.ReminderBefore.rawValue && !reminder.enabled {
+            return 0
+        }
+        
+        if (indexPath.row == TableRows.SnoozeFor.rawValue || indexPath.row == TableRows.LastSnooze.rawValue) && !reminder.allowSnooze {
+            return 0
+        }
+        return super.tableView(tableView, heightForRowAt: indexPath)
+    }
+
+    
+    @objc func onActivityChanged(notification:Notification) {
+        configureView()
+    }
+
+}
+
+extension ActivityInfoTableViewController {
+    
+    private func configureView() {
         guard let act = activity else {
             return
         }
@@ -90,26 +110,6 @@ class ActivityInfoTableViewController: UITableViewController {
             remindersStatusLabel.text = "OFF"
             reminderSettingsLabel.text = ""
         }
-    }
-    
-    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        guard let act = activity, let reminder = act.reminder else {
-            return super.tableView(tableView, heightForRowAt: indexPath)
-        }
-        
-        if indexPath.row == TableRows.ReminderBefore.rawValue && !reminder.enabled {
-            return 0
-        }
-        
-        if (indexPath.row == TableRows.SnoozeFor.rawValue || indexPath.row == TableRows.LastSnooze.rawValue) && !reminder.allowSnooze {
-            return 0
-        }
-        return super.tableView(tableView, heightForRowAt: indexPath)
-    }
-
-    
-    @objc func onActivityChanged(notification:Notification) {
-        configureView()
     }
 
 }
