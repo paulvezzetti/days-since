@@ -348,7 +348,7 @@ extension ChooseIntervalTableViewController : YearDayPickerDelegate {
 extension ChooseIntervalTableViewController : ScaleDateComponentPickerDelegate {
     
     func scaleComponentsSet(component: OffsetIntervals, scale: Int) {
-        // TODO:
+        // TODO: This needs a stringdict for pluralization
         switch component {
         case .Week:
             byDateComponentLabel.text = (scale == 1) ? "Week" : String(scale) + " Weeks"

@@ -15,9 +15,7 @@ public class ActiveRangeMO: NSManagedObject {
 
     
     func toPrettyString() -> String {
-        return "From " + Months.month(for: Int(startMonth)) + " " + String(Int(startDay)) +
-        " to " +
-            Months.month(for: Int(endMonth)) + " " + String(Int(endDay))
+        return ActiveRangeMO.formatAsRange(startMonth: Int(startMonth), startDay: Int(startDay), endMonth: Int(endMonth), endDay: Int(endDay))
     }
     
     func clone(context:NSManagedObjectContext) -> ActiveRangeMO {
@@ -36,6 +34,10 @@ public class ActiveRangeMO: NSManagedObject {
 
     
     static func getStringForNil() -> String {
-        return "All Year"
+        return NSLocalizedString("allYear", value: "All Year", comment: "")
+    }
+    
+    static func formatAsRange(startMonth: Int, startDay:Int, endMonth: Int, endDay: Int) -> String {
+        return String.localizedStringWithFormat(NSLocalizedString("dateRange.label", value: "From %@ %d to %@ %d", comment: "Labels a date range. Ex: From Jan 5 to Feb 15"), Months.month(for: startMonth), startDay, Months.month(for: endMonth), endDay)
     }
 }

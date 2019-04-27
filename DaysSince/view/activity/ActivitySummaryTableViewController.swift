@@ -84,7 +84,7 @@ class ActivitySummaryTableViewController: UITableViewController {
         daysUntilValueLabel.text = daysUntil != nil ? String(abs(stats.daysUntil!)) : ""
         
         let lastDate = stats.lastDate
-        previousDateLabel.text = lastDate != nil ? lastDate!.getFormattedDate() : "None"
+        previousDateLabel.text = lastDate != nil ? lastDate!.getFormattedDate() : NSLocalizedString("none", value: "None", comment: "")
         
         let nextDate = stats.nextDate
         nextDateLabel.text = nextDate != nil ? nextDate!.getFormattedDate() : ""
@@ -109,10 +109,10 @@ class ActivitySummaryTableViewController: UITableViewController {
             
         } else if nextDate != nil && nextDate! < Date() {
             eventTimelineImage.image = UIImage(named: "OverdueArrow")
-            daysUntilLabelLabel.text = "Days Overdue:"
+            daysUntilLabelLabel.text = NSLocalizedString("daysOverdue.prompt", value: "Days Overdue:", comment: "")
         } else {
             eventTimelineImage.image = UIImage(named: "OnTimeArrow")
-            daysUntilLabelLabel.text = "Days Until:"
+            daysUntilLabelLabel.text = NSLocalizedString("daysUntil.prompt", value: "Days Until:", comment: "")
         }
         
         let isUnlimited = act.interval is UnlimitedIntervalMO

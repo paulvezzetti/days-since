@@ -282,11 +282,12 @@ class AddActivityTableViewController: UITableViewController, UITextFieldDelegate
     }
     
     func onPermissionForPushNotificationDenied() {
-        let alert = UIAlertController(title: "Authorization Required", message: "Push notifications have been disabled for this application. Go to Settings and enable notifications in order to receive reminders.", preferredStyle: UIAlertController.Style.alert)
-        alert.addAction(UIAlertAction(title: "Settings", style: UIAlertAction.Style.default) { (alert) in
+        let alert = UIAlertController(title: NSLocalizedString("authorizationRequired.title", value: "Authorization Required", comment: ""), message:
+            NSLocalizedString("pushNotificationsDisabled.msg", value: "Push notifications have been disabled for this application. Go to Settings and enable notifications in order to receive reminders.", comment: ""), preferredStyle: UIAlertController.Style.alert)
+        alert.addAction(UIAlertAction(title: NSLocalizedString("settings.title", value: "Settings", comment: ""), style: UIAlertAction.Style.default) { (alert) in
             UIApplication.shared.open(URL(string: UIApplication.openSettingsURLString)!)
         })
-        alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
+        alert.addAction(UIAlertAction(title: NSLocalizedString("ok", value: "OK", comment: ""), style: .default, handler: nil))
         self.present(alert, animated: true, completion: nil)
 
     

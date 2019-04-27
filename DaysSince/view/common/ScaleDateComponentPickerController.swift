@@ -76,11 +76,11 @@ extension ScaleDateComponentPickerController : UIPickerViewDelegate {
         if component == 1 {
             switch row {
             case 0:
-                return "Weeks"
+                return NSLocalizedString("weeks", value: "Weeks", comment: "")
             case 1:
-                return "Months"
+                return NSLocalizedString("months", value: "Months", comment: "")
             default:
-                return "Years"
+                return NSLocalizedString("years", value: "Years", comment: "")
             }
         }
         

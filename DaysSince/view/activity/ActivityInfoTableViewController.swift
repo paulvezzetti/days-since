@@ -85,7 +85,7 @@ extension ActivityInfoTableViewController {
         if let activeRange = act.interval?.activeRange {
             activeRangeLabel.text = activeRange.toPrettyString()
         } else {
-            activeRangeLabel.text = NSLocalizedString("allYear", value: "All Year", comment: "")
+            activeRangeLabel.text = ActiveRangeMO.getStringForNil()
         }
         if let reminder = act.reminder {
             remindersStatusLabel.text = reminder.enabled ? NSLocalizedString("on", value: "ON", comment: "") : NSLocalizedString("off", value: "OFF", comment: "")

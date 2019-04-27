@@ -172,7 +172,7 @@ extension ChooseActiveRangeTableViewController : YearDayPickerDelegate {
         guard let startMonth = startDayPickerController?.getMonth(), let startDay = startDayPickerController?.getDay(), let endMonth = endDayPickerController?.getMonth(), let endDay = endDayPickerController?.getDay() else {
             return
         }
-        dateRangeLabel.text = String.localizedStringWithFormat(NSLocalizedString("dateRange.label", value: "From %@ %d to %@ %d", comment: "Labels a date range. Ex: From Jan 5 to Feb 15"), Months.month(for: startMonth), startDay, Months.month(for: endMonth), endDay)
+        dateRangeLabel.text = ActiveRangeMO.formatAsRange(startMonth: startMonth, startDay: startDay, endMonth: endMonth, endDay: endDay)
     }
     
 }
