@@ -81,7 +81,7 @@ class DetailViewController: UIViewController {
 
             return
         }
-        
+        // TODO: This needs a string dict for pluralization of days.
         let alert = UIAlertController(title: NSLocalizedString("snooze", value: "Snooze", comment: ""), message: "Do you want a reminder for this activity in " + String(Int(reminder.snooze)) + " days?", preferredStyle: UIAlertController.Style.alert)
         alert.addAction(UIAlertAction(title: NSLocalizedString("yes", value: "Yes", comment: ""), style: .default) { (alert) in
             //self.deleteActivity()

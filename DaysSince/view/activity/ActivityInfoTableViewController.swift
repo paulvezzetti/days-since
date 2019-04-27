@@ -85,20 +85,22 @@ extension ActivityInfoTableViewController {
         if let activeRange = act.interval?.activeRange {
             activeRangeLabel.text = activeRange.toPrettyString()
         } else {
-            activeRangeLabel.text = "All Year"
+            activeRangeLabel.text = NSLocalizedString("allYear", value: "All Year", comment: "")
         }
         if let reminder = act.reminder {
-            remindersStatusLabel.text = reminder.enabled ? "ON" : "OFF"
+            remindersStatusLabel.text = reminder.enabled ? NSLocalizedString("on", value: "ON", comment: "") : NSLocalizedString("off", value: "OFF", comment: "")
             if reminder.enabled {
+                // TODO: Needs string dict for pluralization of days
                 reminderSettingsLabel.text = reminder.daysBefore == 1 ? "1 day before" : String(reminder.daysBefore) + " days before"
             } else {
                 reminderSettingsLabel.text = ""
             }
-            snoozeEnabledLabel.text = reminder.allowSnooze ? "ON" : "OFF"
+            snoozeEnabledLabel.text = reminder.allowSnooze ? NSLocalizedString("on", value: "ON", comment: "") : NSLocalizedString("off", value: "OFF", comment: "")
             if reminder.allowSnooze {
+                // TODO: Needs string dict for pluralization of days
                 snoozeIntervalLabel.text = reminder.snooze == 1 ? "For 1 day" : "For " + String(reminder.snooze) + " days"
                 if let lastSnooze = reminder.lastSnooze {
-                    lastSnoozeLabel.text = "Last snooze on " + lastSnooze.getFormattedDate()
+                    lastSnoozeLabel.text = String.localizedStringWithFormat(NSLocalizedString("lastSnoozeOn.msg", value: "Last snooze on %@", comment: ""), lastSnooze.getFormattedDate());
                 } else {
                     lastSnoozeLabel.text = ""
                 }
@@ -107,7 +109,7 @@ extension ActivityInfoTableViewController {
                 lastSnoozeLabel.text = ""
             }
         } else {
-            remindersStatusLabel.text = "OFF"
+            remindersStatusLabel.text = NSLocalizedString("off", value: "OFF", comment: "")
             reminderSettingsLabel.text = ""
         }
     }
