@@ -30,8 +30,8 @@ class NotificationManager : NSObject {
         // Register as a delegate
         notificationCenter.delegate = self
         // Register the notification actions for 'mark done' and 'snooze'
-        let markDoneAction = UNNotificationAction(identifier: NotificationActions.MARK_DONE.rawValue, title: "Mark Done", options: UNNotificationActionOptions(rawValue: 0))
-        let snoozeAction = UNNotificationAction(identifier: NotificationActions.SNOOZE.rawValue, title: "Snooze", options: UNNotificationActionOptions(rawValue: 0))
+        let markDoneAction = UNNotificationAction(identifier: NotificationActions.MARK_DONE.rawValue, title: NSLocalizedString("markDone", value: "Mark Done", comment: ""), options: UNNotificationActionOptions(rawValue: 0))
+        let snoozeAction = UNNotificationAction(identifier: NotificationActions.SNOOZE.rawValue, title: NSLocalizedString("snooze", value: "Snooze", comment: ""), options: UNNotificationActionOptions(rawValue: 0))
         let doneCategory = UNNotificationCategory(identifier: DONE_ONLY_CATEGORY_ID, actions: [markDoneAction], intentIdentifiers: [], hiddenPreviewsBodyPlaceholder: "", options: UNNotificationCategoryOptions(rawValue: 0))
         let doneAndSnoozeCategory = UNNotificationCategory(identifier: DONE_AND_SNOOZE_CATEGORY_ID, actions: [markDoneAction, snoozeAction], intentIdentifiers: [], hiddenPreviewsBodyPlaceholder: "", options: UNNotificationCategoryOptions(rawValue: 0))
         // Set the notification category
@@ -208,19 +208,20 @@ class NotificationManager : NSObject {
         let nextDate = stats.nextDate
         let today = Date.normalize(date: Date())
         
-        let activityName = activity.name ?? "An Activity"
+        let activityName = activity.name ?? NSLocalizedString("notification.generic.title", value: "An Activity", comment: "")
         content.title = activityName
         if nextDate != nil {
             if nextDate! < today {
-                content.subtitle = "Late: Due on " + nextDate!.getFullString()
+                content.subtitle = String.localizedStringWithFormat(NSLocalizedString("late.notification.subtitle", value: "Late: Due on %@", comment: ""), nextDate!.getFullString())
             } else {
-                content.subtitle = "Due on " + nextDate!.getFullString()
+                content.subtitle = String.localizedStringWithFormat(NSLocalizedString("due.notification.subtitle", value: "Due on %@", comment: ""), nextDate!.getFullString())
             }
 
         }
         let lastDate = stats.lastDate
         let daysSince = stats.daySince
         if lastDate != nil  && daysSince != nil {
+            // TODO: This requires a stringdict to handle pluralizations
             if daysSince! == 1 {
                 content.body = "It has been " + String(stats.daySince!) + " day since it was last completed on " + stats.lastDate!.getFullString()
 

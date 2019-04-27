@@ -31,6 +31,7 @@ public class YearOffsetIntervalMO: OffsetIntervalMO {
     }
     
     override func toPrettyString() -> String {
+        // TODO: Needs stringdict to handle pluralization
         return self.years == 1 ? "Every year" : "Every " + String(self.years) + " years"
     }
     
