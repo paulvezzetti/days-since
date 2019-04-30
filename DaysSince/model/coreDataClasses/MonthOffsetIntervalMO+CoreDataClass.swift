@@ -31,8 +31,9 @@ public class MonthOffsetIntervalMO: OffsetIntervalMO {
     }
     
     override func toPrettyString() -> String {
+        return String.localizedStringWithFormat(NSLocalizedString("monthOffset.string", comment: ""), Int(self.months))
         // TODO: Needs stringdict for pluralization of month
-        return self.months == 1 ? "Every Month" : "Every " + String(self.months) + " months"
+      //  return self.months == 1 ? "Every Month" : "Every " + String(self.months) + " months"
     }
     
     override func createClone(context: NSManagedObjectContext) -> IntervalMO {
