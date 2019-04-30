@@ -38,7 +38,7 @@ public class WeeklyIntervalMO: IntervalMO {
 
     
     override func toPrettyString() -> String {
-        return "Every week on " + Weekdays.day(for: Int(self.day))
+        return String.localizedStringWithFormat(NSLocalizedString("weeklyInterval.string", value: "Every week on %@", comment: "Ex: Every week on Tuesday"), Weekdays.day(for: Int(self.day)))
     }
     
     override func createClone(context:NSManagedObjectContext) ->IntervalMO {

@@ -23,7 +23,7 @@ public class ConstantIntervalMO: IntervalMO {
     }
 
     override func toPrettyString() -> String {
-        return "Every " + String(self.frequency) + " days"
+        return String.localizedStringWithFormat(NSLocalizedString("constantInterval.string", value: "Every %d days", comment: "Ex: Every 5 days"), self.frequency)
     }
 
     override func createClone(context:NSManagedObjectContext) ->IntervalMO {

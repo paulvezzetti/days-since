@@ -31,6 +31,7 @@ public class MonthOffsetIntervalMO: OffsetIntervalMO {
     }
     
     override func toPrettyString() -> String {
+        // TODO: Needs stringdict for pluralization of month
         return self.months == 1 ? "Every Month" : "Every " + String(self.months) + " months"
     }
     

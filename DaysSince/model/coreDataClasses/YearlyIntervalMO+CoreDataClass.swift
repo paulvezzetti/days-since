@@ -36,7 +36,7 @@ public class YearlyIntervalMO: IntervalMO {
 
     
     override func toPrettyString() -> String {
-        return "Every year on " + Months.month(for: Int(self.month)) + " " + String(day)
+        return String.localizedStringWithFormat(NSLocalizedString("yearlyInterval.string", value: "Every year on %@ %d", comment: "Ex: Every year on Jan 15"), Months.month(for: Int(self.month)), day)
     }
 
     override func createClone(context:NSManagedObjectContext) ->IntervalMO {

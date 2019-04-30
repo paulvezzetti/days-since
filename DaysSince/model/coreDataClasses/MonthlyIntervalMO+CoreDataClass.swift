@@ -32,7 +32,7 @@ public class MonthlyIntervalMO: IntervalMO {
     }
 
     override func toPrettyString() -> String {
-        return "Every month on the " + NumberFormatterOrdinal.string(Int(self.day))
+        return String.localizedStringWithFormat(NSLocalizedString("monthlyInterval.string", value: "Every month on the %@", comment: "Ex: Every month on the 12th"), NumberFormatterOrdinal.string(Int(self.day)))
     }
 
     override func createClone(context:NSManagedObjectContext) ->IntervalMO {

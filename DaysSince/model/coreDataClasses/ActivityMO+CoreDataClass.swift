@@ -66,25 +66,25 @@ public class ActivityMO: NSManagedObject {
         func asString() -> String {
             switch self {
             case .VeryOld:
-                return "MONTH+ OVERDUE"
+                return NSLocalizedString("activity.state.veryOld", value: "MONTH+ OVERDUE", comment: "")
             case .LastMonth:
-                return "DUE LAST MONTH"
+                return NSLocalizedString("activity.state.lastMonth", value: "DUE LAST MONTH", comment: "")
             case .LastWeek:
-                return "DUE LAST WEEK"
+                return NSLocalizedString("activity.state.lastWeek", value: "DUE LAST WEEK", comment: "")
             case .Yesterday:
-                return "YESTERDAY"
+                return NSLocalizedString("activity.state.yesterday", value: "YESTERDAY", comment: "")
             case .Today:
-                return "TODAY"
+                return NSLocalizedString("activity.state.today", value: "TODAY", comment: "")
             case .Tomorrow:
-                return "TOMORROW"
+                return NSLocalizedString("activity.state.tomorrow", value: "TOMORROW", comment: "")
             case .NextWeek:
-                return "NEXT WEEK"
+                return NSLocalizedString("activity.state.nextWeek", value: "NEXT WEEK", comment: "")
             case .NextMonth:
-                return "NEXT MONTH"
+                return NSLocalizedString("activity.state.nextMonth", value: "NEXT MONTH", comment: "")
             case .Future:
-                return "FUTURE"
-            case . Whenever:
-                return "ANY TIME"
+                return NSLocalizedString("activity.state.future", value: "FUTURE", comment: "")
+            case .Whenever:
+                return NSLocalizedString("activity.state.whenever", value: "ANY TIME", comment: "")
             }
         }
     }

@@ -18,7 +18,7 @@ public class UnlimitedIntervalMO: IntervalMO {
     }
     
     override func toPrettyString() -> String {
-        return "Whenever I feel like it"
+        return NSLocalizedString("unlimitedInterval.string", value: "Whenever I feel like it", comment: "") 
     }
 
     override func createClone(context:NSManagedObjectContext) ->IntervalMO {
