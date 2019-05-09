@@ -2,6 +2,60 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>notification.body</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@dayssince@</string>
+		<key>dayssince</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>other</key>
+			<string>It has been %d days since it was last completed on %@</string>
+			<key>zero</key>
+			<string>It has been %d days since it was last completed on %@</string>
+			<key>one</key>
+			<string>It has been %d day since it was last completed on %@</string>
+		</dict>
+	</dict>
+	<key>yearOffset.string</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@years@</string>
+		<key>years</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>other</key>
+			<string>Every %d Years</string>
+			<key>zero</key>
+			<string>Never</string>
+			<key>one</key>
+			<string>Every Year</string>
+		</dict>
+	</dict>
+	<key>weekOffset.string</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@weeks@</string>
+		<key>weeks</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>other</key>
+			<string>Every %d Weeks</string>
+			<key>zero</key>
+			<string>Never</string>
+			<key>one</key>
+			<string>Every Week</string>
+		</dict>
+	</dict>
 	<key>monthOffset.string</key>
 	<dict>
 		<key>NSStringLocalizedFormatKey</key>
@@ -16,12 +70,6 @@
 			<string>Never</string>
 			<key>one</key>
 			<string>Every Month</string>
-			<key>two</key>
-			<string></string>
-			<key>few</key>
-			<string></string>
-			<key>many</key>
-			<string></string>
 			<key>other</key>
 			<string>Every %d Months</string>
 		</dict>

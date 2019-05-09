@@ -31,8 +31,7 @@ public class YearOffsetIntervalMO: OffsetIntervalMO {
     }
     
     override func toPrettyString() -> String {
-        // TODO: Needs stringdict to handle pluralization
-        return self.years == 1 ? "Every year" : "Every " + String(self.years) + " years"
+        return String.localizedStringWithFormat(NSLocalizedString("yearOffset.string", comment: ""), Int(self.years))
     }
     
     override func createClone(context:NSManagedObjectContext) -> IntervalMO {

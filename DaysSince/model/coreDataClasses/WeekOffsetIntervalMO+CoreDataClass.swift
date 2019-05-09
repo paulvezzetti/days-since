@@ -31,8 +31,7 @@ public class WeekOffsetIntervalMO: OffsetIntervalMO {
     }
     
     override func toPrettyString() -> String {
-        // TODO: Needs stringdict for pluralization of weeks
-        return self.weeks == 1 ? "Every Week" : "Every " + String(self.weeks) + " weeks"
+        return String.localizedStringWithFormat(NSLocalizedString("weekOffset.string", comment: ""), Int(self.weeks))
     }
     
     override func createClone(context:NSManagedObjectContext) ->IntervalMO {

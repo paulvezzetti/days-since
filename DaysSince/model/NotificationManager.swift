@@ -222,12 +222,16 @@ class NotificationManager : NSObject {
         let daysSince = stats.daySince
         if lastDate != nil  && daysSince != nil {
             // TODO: This requires a stringdict to handle pluralizations
-            if daysSince! == 1 {
-                content.body = "It has been " + String(stats.daySince!) + " day since it was last completed on " + stats.lastDate!.getFullString()
-
-            } else {
-                content.body = "It has been " + String(stats.daySince!) + " days since it was last completed on " + stats.lastDate!.getFullString()
-            }
+            let body = String.localizedStringWithFormat(NSLocalizedString("notification.body", comment: ""), daysSince!, lastDate!.getFullString())
+            print(body)
+            content.body = body
+            
+//            if daysSince! == 1 {
+//                content.body = "It has been " + String(stats.daySince!) + " day since it was last completed on " + stats.lastDate!.getFullString()
+//
+//            } else {
+//                content.body = "It has been " + String(stats.daySince!) + " days since it was last completed on " + stats.lastDate!.getFullString()
+//            }
         }
         let uuid = activity.id!.uuidString
         content.userInfo = ["UUID": uuid]
