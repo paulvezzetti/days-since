@@ -90,15 +90,13 @@ extension ActivityInfoTableViewController {
         if let reminder = act.reminder {
             remindersStatusLabel.text = reminder.enabled ? NSLocalizedString("on", value: "ON", comment: "") : NSLocalizedString("off", value: "OFF", comment: "")
             if reminder.enabled {
-                // TODO: Needs string dict for pluralization of days
-                reminderSettingsLabel.text = reminder.daysBefore == 1 ? "1 day before" : String(reminder.daysBefore) + " days before"
+                reminderSettingsLabel.text = String.localizedStringWithFormat(NSLocalizedString("reminder.label.string", comment: ""), reminder.daysBefore)
             } else {
                 reminderSettingsLabel.text = ""
             }
             snoozeEnabledLabel.text = reminder.allowSnooze ? NSLocalizedString("on", value: "ON", comment: "") : NSLocalizedString("off", value: "OFF", comment: "")
             if reminder.allowSnooze {
-                // TODO: Needs string dict for pluralization of days
-                snoozeIntervalLabel.text = reminder.snooze == 1 ? "For 1 day" : "For " + String(reminder.snooze) + " days"
+                snoozeIntervalLabel.text = String.localizedStringWithFormat(NSLocalizedString("snooze.label.string", comment: ""), reminder.snooze)
                 if let lastSnooze = reminder.lastSnooze {
                     lastSnoozeLabel.text = String.localizedStringWithFormat(NSLocalizedString("lastSnoozeOn.msg", value: "Last snooze on %@", comment: ""), lastSnooze.getFormattedDate());
                 } else {
