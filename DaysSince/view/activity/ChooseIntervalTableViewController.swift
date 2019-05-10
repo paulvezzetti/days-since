@@ -38,9 +38,6 @@ class ChooseIntervalTableViewController: UITableViewController, UITextFieldDeleg
     
     @IBOutlet var byDayTextField: UITextField!
     @IBOutlet var byDateComponentLabel: UILabel!
-    @IBOutlet var weeklyLabel: UILabel!
-    @IBOutlet var monthlyLabel: UILabel!
-    @IBOutlet var yearlyLabel: UILabel!
     @IBOutlet var byDateComponentPicker: UIPickerView!
     @IBOutlet var weekDayPicker: UIPickerView!
     @IBOutlet var monthDayPicker: UIPickerView!
@@ -87,13 +84,14 @@ class ChooseIntervalTableViewController: UITableViewController, UITextFieldDeleg
         let todayAsDateComponents = calendar.dateComponents([ .day, .month, .weekday], from: Date())
         
         weekdayPickerController?.setWeekday(to: todayAsDateComponents.weekday ?? 0)
-        weeklyLabel.text = Weekdays.day(for: todayAsDateComponents.weekday ?? 0)
+        byWeekdayLabel.text = String.localizedStringWithFormat(NSLocalizedString("weeklyInterval.string", value: "Every week on %@", comment: "Ex: Every week on Tuesday"), Weekdays.day(for: todayAsDateComponents.weekday ?? 0))
         
         monthDayPickerController?.setDay(todayAsDateComponents.day ?? 1)
-        monthlyLabel.text = NumberFormatterOrdinal.string(todayAsDateComponents.day ?? 1)
+        byMonthDayLabel.text = String.localizedStringWithFormat(NSLocalizedString("monthlyInterval.string", value: "Every month on the %@", comment: "Ex: Every month on the 12th"), NumberFormatterOrdinal.string(todayAsDateComponents.day ?? 1))
         
         yearDayPickerController?.setYearDay(month: todayAsDateComponents.month ?? 1, day: todayAsDateComponents.day ?? 1)
-        yearlyLabel.text = Months.month(for: todayAsDateComponents.month ?? 0) + " " + String(todayAsDateComponents.day ?? 1)
+        byYearDayLabel.text = String.localizedStringWithFormat(NSLocalizedString("yearlyInterval.string", value: "Every year on %@ %d", comment: "Ex: Every year on Jan 15"), Months.month(for: todayAsDateComponents.month ?? 0), todayAsDateComponents.day ?? 1)
+
         
         // Configure the UI based on the activity, if any
         if let interval = activity?.interval {
@@ -108,17 +106,17 @@ class ChooseIntervalTableViewController: UITableViewController, UITextFieldDeleg
             case let weeklyInterval as WeeklyIntervalMO:
                 weeklyTableViewCell.accessoryType = .checkmark
                 weekdayPickerController?.setWeekday(to: Int(weeklyInterval.day))
-                weeklyLabel.text = Weekdays.day(for: weekdayPickerController?.getWeekday() ?? 0)
+                byWeekdayLabel.text = weeklyInterval.toPrettyString() // Weekdays.day(for: weekdayPickerController?.getWeekday() ?? 0)
                 currentSelectedRow = .Weekly
             case let monthlyInterval as MonthlyIntervalMO:
                 monthlyTableViewCell.accessoryType = .checkmark
                 monthDayPickerController?.setDay(Int(monthlyInterval.day))
-                monthlyLabel.text = NumberFormatterOrdinal.string(monthDayPickerController?.getDay() ?? 1)
+                byMonthDayLabel.text = monthlyInterval.toPrettyString()
                 currentSelectedRow = .Monthly
             case let yearlyInterval as YearlyIntervalMO:
                 yearlyTableViewCell.accessoryType = .checkmark
                 yearDayPickerController?.setYearDay(month: Int(yearlyInterval.month), day: Int(yearlyInterval.day))
-                yearlyLabel.text = Months.month(for: yearDayPickerController?.getMonth() ?? 0) + " " + String(yearDayPickerController?.getDay() ?? 1)
+                byYearDayLabel.text = yearlyInterval.toPrettyString()
                 currentSelectedRow = .Yearly
             case let offsetInterval as OffsetIntervalMO:
                 byDateComponentTableViewCell.accessoryType = .checkmark
@@ -324,7 +322,7 @@ class ChooseIntervalTableViewController: UITableViewController, UITextFieldDeleg
 extension ChooseIntervalTableViewController : WeekDayPickerDelegate {
     
     func weekdaySet(day:Int, symbol:String) {
-        byWeekdayLabel.text! = symbol // TODO: Update the interval
+        byWeekdayLabel.text! = String.localizedStringWithFormat(NSLocalizedString("weeklyInterval.string", value: "Every week on %@", comment: "Ex: Every week on Tuesday"), symbol)
     }
     
 }
@@ -332,7 +330,7 @@ extension ChooseIntervalTableViewController : WeekDayPickerDelegate {
 extension ChooseIntervalTableViewController : MonthDayPickerDelegate {
     
     func monthDaySet(_ day: Int, formattedValue: String) {
-        byMonthDayLabel.text! = formattedValue
+        byMonthDayLabel.text! = String.localizedStringWithFormat(NSLocalizedString("monthlyInterval.string", value: "Every month on the %@", comment: "Ex: Every month on the 12th"), formattedValue)
     }
 
 }
@@ -340,7 +338,7 @@ extension ChooseIntervalTableViewController : MonthDayPickerDelegate {
 extension ChooseIntervalTableViewController : YearDayPickerDelegate {
     
     func yearDaySet(picker:UIPickerView, month: Int, monthSymbol:String, day: Int) {
-        byYearDayLabel.text = monthSymbol + " " + String(day) // TODO: Update the interval
+        byYearDayLabel.text = String.localizedStringWithFormat(NSLocalizedString("yearlyInterval.string", value: "Every year on %@ %d", comment: "Ex: Every year on Jan 15"), Months.month(for: month), day)
     }
 
 }
@@ -348,14 +346,13 @@ extension ChooseIntervalTableViewController : YearDayPickerDelegate {
 extension ChooseIntervalTableViewController : ScaleDateComponentPickerDelegate {
     
     func scaleComponentsSet(component: OffsetIntervals, scale: Int) {
-        // TODO: This needs a stringdict for pluralization
         switch component {
         case .Week:
-            byDateComponentLabel.text = (scale == 1) ? "Week" : String(scale) + " Weeks"
+            byDateComponentLabel.text = String.localizedStringWithFormat(NSLocalizedString("weekOffset.string", comment: ""), scale)
         case .Month:
-            byDateComponentLabel.text = (scale == 1) ? "Month" : String(scale) + " Months"
+            byDateComponentLabel.text = String.localizedStringWithFormat(NSLocalizedString("monthOffset.string", comment: ""), scale)
         case .Year:
-            byDateComponentLabel.text = (scale == 1) ? "Year" : String(scale) + " Years"
+            byDateComponentLabel.text = String.localizedStringWithFormat(NSLocalizedString("yearOffset.string", comment: ""), scale)
         }
 
     }

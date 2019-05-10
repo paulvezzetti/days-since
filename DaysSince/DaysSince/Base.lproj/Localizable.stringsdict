@@ -31,11 +31,11 @@
 			<key>NSStringFormatValueTypeKey</key>
 			<string>d</string>
 			<key>other</key>
-			<string>Every %d Years</string>
+			<string>Every %d years</string>
 			<key>zero</key>
 			<string>Never</string>
 			<key>one</key>
-			<string>Every Year</string>
+			<string>Every year</string>
 		</dict>
 	</dict>
 	<key>weekOffset.string</key>
@@ -49,11 +49,11 @@
 			<key>NSStringFormatValueTypeKey</key>
 			<string>d</string>
 			<key>other</key>
-			<string>Every %d Weeks</string>
+			<string>Every %d weeks</string>
 			<key>zero</key>
 			<string>Never</string>
 			<key>one</key>
-			<string>Every Week</string>
+			<string>Every week</string>
 		</dict>
 	</dict>
 	<key>monthOffset.string</key>
@@ -69,9 +69,9 @@
 			<key>zero</key>
 			<string>Never</string>
 			<key>one</key>
-			<string>Every Month</string>
+			<string>Every month</string>
 			<key>other</key>
-			<string>Every %d Months</string>
+			<string>Every %d months</string>
 		</dict>
 	</dict>
 </dict>
