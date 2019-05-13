@@ -234,8 +234,6 @@
 				FAA6AF202211D23600346CCB /* model */,
 				FA5596B32210FDFD00113AE1 /* view */,
 				FA3CEF48220E0F2500634DD7 /* AppDelegate.swift */,
-				FA3CEF4D220E0F2500634DD7 /* MasterViewController.swift */,
-				FA3CEF4F220E0F2500634DD7 /* DetailViewController.swift */,
 				FA3CEF54220E0F2600634DD7 /* Assets.xcassets */,
 				DABE10DF22713B0E00AFDBAF /* Localizable.strings */,
 				FABBCA7D2278DFEE0034CB78 /* Localizable.stringsdict */,
@@ -249,6 +247,8 @@
 		FA5596B32210FDFD00113AE1 /* view */ = {
 			isa = PBXGroup;
 			children = (
+				FA3CEF4D220E0F2500634DD7 /* MasterViewController.swift */,
+				FA3CEF4F220E0F2500634DD7 /* DetailViewController.swift */,
 				FA1D7345222F54EC00D8EBF7 /* history */,
 				FA1D72F02226E16600D8EBF7 /* common */,
 				FAA6AF1F2211D10800346CCB /* activity */,
