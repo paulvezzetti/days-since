@@ -12,6 +12,9 @@ import CoreData
 
 @objc(ReminderMO)
 public class ReminderMO: NSManagedObject {
+    
+    static let REMIND_DAYS_BEFORE_DEFAULT:Int = 0
+    static let SNOOZE_FOR_DAYS_DEFAULT:Int = 1
 
     func clone(context:NSManagedObjectContext) ->ReminderMO {
         let reminder = ReminderMO(context: context)

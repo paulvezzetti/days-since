@@ -55,14 +55,6 @@ class AddActivityTableViewController: UITableViewController, UITextFieldDelegate
         return formatter
     }()
         
-//    deinit {
-//        print("Destroying the AddActivityTableViewController")
-//    }
-    
-//    required init?(coder aDecoder: NSCoder) {
-//        super.init(coder: aDecoder)
-//        print("Creating a AddActivityTableViewController")
-//    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -184,16 +176,17 @@ class AddActivityTableViewController: UITableViewController, UITextFieldDelegate
         }
         
         activity.name = titleField.text!
-        activity.reminder?.enabled = enableRemindersSwitch.isOn
-        activity.reminder?.allowSnooze = snoozeSwitch.isOn
-        activity.reminder?.daysBefore = Int16(remindTextField.text ?? "0") ?? 0
-        var snooze = Int(snoozeTextField.text ?? "1")
-        if snooze == nil || snooze! < 1 {
-            snooze = 1
-        }
-        activity.reminder?.snooze = Int16(snooze!)
+        let enableReminders = enableRemindersSwitch.isOn
+        activity.reminder?.enabled = enableReminders
+        let remindDaysBefore = UITextFieldUtility.getAsInt(textField: remindTextField, defaultValue: ReminderMO.REMIND_DAYS_BEFORE_DEFAULT, minimumValue: ReminderMO.REMIND_DAYS_BEFORE_DEFAULT)
+        activity.reminder?.daysBefore = Int16(remindDaysBefore)
+
+        let allowSnooze = enableReminders && snoozeSwitch.isOn
+        activity.reminder?.allowSnooze = allowSnooze
         
-        // TODO: Update activity and save
+        let snooze = UITextFieldUtility.getAsInt(textField: snoozeTextField, defaultValue: ReminderMO.SNOOZE_FOR_DAYS_DEFAULT, minimumValue: ReminderMO.SNOOZE_FOR_DAYS_DEFAULT)
+        activity.reminder?.snooze = Int16(snooze)
+        
         if let activityToUpdate = editActivity {
             if activity.name != activityToUpdate.name {
                 activityToUpdate.name = activity.name
@@ -211,8 +204,8 @@ class AddActivityTableViewController: UITableViewController, UITextFieldDelegate
             if !(activity.reminder!.isEquivalent(to: activityToUpdate.reminder!)) {
                 activityToUpdate.reminder?.enabled = activity.reminder?.enabled ?? false
                 activityToUpdate.reminder?.allowSnooze = activity.reminder?.allowSnooze ?? false
-                activityToUpdate.reminder?.daysBefore = activity.reminder?.daysBefore ?? 1
-                activityToUpdate.reminder?.snooze = activity.reminder?.snooze ?? 1
+                activityToUpdate.reminder?.daysBefore = activity.reminder?.daysBefore ?? Int16(ReminderMO.REMIND_DAYS_BEFORE_DEFAULT)
+                activityToUpdate.reminder?.snooze = activity.reminder?.snooze ?? Int16(ReminderMO.SNOOZE_FOR_DAYS_DEFAULT)
             }
         } else {
             // Save the context
@@ -250,11 +243,12 @@ class AddActivityTableViewController: UITableViewController, UITextFieldDelegate
         enableRemindersSwitch.isEnabled = !(activity.interval is UnlimitedIntervalMO)
         enableRemindersSwitch.setOn(enableReminder, animated: false)
         remindTextField.isEnabled = enableReminder
-        remindTextField.text = String(activity.reminder?.daysBefore ?? 1)
-        snoozeSwitch.setOn(enableReminder, animated: false)
-        snoozeSwitch.isSelected = activity.reminder?.allowSnooze ?? false
-        snoozeTextField.isEnabled = enableReminder
-        snoozeTextField.text = String(activity.reminder?.snooze ?? 1)
+        remindTextField.text = String(activity.reminder?.daysBefore ?? Int16(ReminderMO.REMIND_DAYS_BEFORE_DEFAULT))
+        let enableSnooze = activity.reminder?.allowSnooze ?? false
+        snoozeSwitch.setOn(enableSnooze, animated: false)
+        snoozeSwitch.isEnabled = enableReminder
+        snoozeTextField.isEnabled = enableSnooze
+        snoozeTextField.text = String(activity.reminder?.snooze ?? Int16(ReminderMO.SNOOZE_FOR_DAYS_DEFAULT))
 
     }
     
@@ -267,7 +261,17 @@ class AddActivityTableViewController: UITableViewController, UITextFieldDelegate
         tempActivity?.reminder?.enabled = enableReminders
         remindTextField.isEnabled = enableReminders
         snoozeSwitch.isEnabled = enableReminders
-        snoozeTextField.isEnabled = enableReminders
+        if !enableReminders {
+            snoozeSwitch.isOn = false
+            remindTextField.text = String(ReminderMO.REMIND_DAYS_BEFORE_DEFAULT)
+        }
+        snoozeTextField.isEnabled = snoozeSwitch.isOn
+        if !snoozeSwitch.isOn {
+            snoozeTextField.text = String(ReminderMO.SNOOZE_FOR_DAYS_DEFAULT)
+        }
+    }
+    @IBAction func enableSnoozeChanged(_ sender: Any) {
+        snoozeTextField.isEnabled = snoozeSwitch.isOn
     }
     
     @IBAction func startDateValueChanged(_ sender: Any) {
@@ -336,7 +340,7 @@ class AddActivityTableViewController: UITableViewController, UITextFieldDelegate
         } else if textField === snoozeTextField {
             let snoozeDays = Int(snoozeTextField.text ?? "")
             if snoozeDays == nil || snoozeDays! < 1 {
-                snoozeTextField.text = "1"
+                snoozeTextField.text = String(ReminderMO.SNOOZE_FOR_DAYS_DEFAULT)
             }
         }
     }

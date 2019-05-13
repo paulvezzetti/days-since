@@ -566,6 +566,9 @@
                                                         </label>
                                                         <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="qUe-6a-55a">
                                                             <rect key="frame" x="294" y="0.0" width="51" height="30"/>
+                                                            <connections>
+                                                                <action selector="enableSnoozeChanged:" destination="0zy-ap-i7T" eventType="valueChanged" id="OWB-9Z-6pX"/>
+                                                            </connections>
                                                         </switch>
                                                     </subviews>
                                                 </stackView>
