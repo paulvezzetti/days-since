@@ -229,11 +229,8 @@
 		FA3CEF47220E0F2500634DD7 /* DaysSince */ = {
 			isa = PBXGroup;
 			children = (
+				FA63B0362289FABE00710E74 /* src */,
 				FA3197782289F63400FECBE9 /* storyboards */,
-				FA1D72F72228507C00D8EBF7 /* util */,
-				FAA6AF202211D23600346CCB /* model */,
-				FA5596B32210FDFD00113AE1 /* view */,
-				FA3CEF48220E0F2500634DD7 /* AppDelegate.swift */,
 				FA3CEF54220E0F2600634DD7 /* Assets.xcassets */,
 				DABE10DF22713B0E00AFDBAF /* Localizable.strings */,
 				FABBCA7D2278DFEE0034CB78 /* Localizable.stringsdict */,
@@ -267,6 +264,17 @@
 				FAE2F69722456DEC009B0DCB /* CollapsibleTableViewHeaderDelegate.swift */,
 			);
 			path = components;
+			sourceTree = "<group>";
+		};
+		FA63B0362289FABE00710E74 /* src */ = {
+			isa = PBXGroup;
+			children = (
+				FA3CEF48220E0F2500634DD7 /* AppDelegate.swift */,
+				FAA6AF202211D23600346CCB /* model */,
+				FA1D72F72228507C00D8EBF7 /* util */,
+				FA5596B32210FDFD00113AE1 /* view */,
+			);
+			path = src;
 			sourceTree = "<group>";
 		};
 		FAA6AF1F2211D10800346CCB /* activity */ = {
