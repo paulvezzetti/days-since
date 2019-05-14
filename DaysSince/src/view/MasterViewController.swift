@@ -19,8 +19,7 @@ class MasterViewController: UITableViewController {
     var pendingActivityToShow: String? = nil
 
     @IBOutlet var navigationTitle: UINavigationItem!
-    //private var markDoneIndexPath:IndexPath?
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
@@ -32,12 +31,10 @@ class MasterViewController: UITableViewController {
         let headerNib = UINib.init(nibName: "ActivityTableHeaderView", bundle: nil)
         tableView.register(headerNib, forHeaderFooterViewReuseIdentifier: "ActivityTableHeaderView")
         
-        
         for possibleState in ActivityMO.ActivityState.allCases {
             collapsedState[possibleState] = false
         }
 
-        //rebuildDataStructures()
         buildTableDataStructure()
 
         // Remove any current observers
@@ -63,17 +60,14 @@ class MasterViewController: UITableViewController {
         
     }
 
-    
     @objc
     func managedObjectContextObjectsDidChange(notification: NSNotification) {
         buildTableDataStructure()
-//        rebuildDataStructures()
         tableView.reloadData()
     }
     
     @objc func onAnyActivityChanged(notification: Notification) {
         buildTableDataStructure()
-//        rebuildDataStructures()
         tableView.reloadData()
     }
     
@@ -168,7 +162,6 @@ class MasterViewController: UITableViewController {
             }
         }
         else if segue.identifier == "presentAddActivity" {
-//            let controller = (segue.destination as! UINavigationController).topViewController as! AddActivityTableViewController
             let controller = segue.destination as! AddActivityTableViewController
             controller.dataManager = dataManager
             if let activity = sender as? ActivityMO {
@@ -178,12 +171,6 @@ class MasterViewController: UITableViewController {
     }
     
     @IBAction func unwindSaveActivity(segue: UIStoryboardSegue) {
-//        let controller = segue.source as! AddActivityTableViewController
-//
-//        controller.saveActivity()
-//        controller.dismiss(animated: true, completion: nil)
-        
-        // TODO: Save the context
         do {
             try dataManager?.saveContext()
         } catch {
@@ -201,9 +188,6 @@ class MasterViewController: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-//        let sectionInfo = fetchedResultsController.sections![section]
-//        return sectionInfo.numberOfObjects
-        
         // Get the section
         let state = sectionToStatus(section: section)
         if collapsedState[state]! {
@@ -223,37 +207,18 @@ class MasterViewController: UITableViewController {
         greenView.backgroundColor = UIColor(named:"Header")
         headerView.backgroundView = greenView
         
-//        let redView = UIView(frame: headerView.frame)
-//        redView.backgroundColor = UIColor(named: "Alert Red")
-        
         let state = sectionToStatus(section: section)
         headerView.headerTitleLabel.text = state.asString()
         
         switch state {
-//        case ActivityMO.ActivityState.Future:
-//            headerView.headerTitleLabel.text = "Distant Future"
         case .LastMonth, .LastWeek, .VeryOld, .Yesterday:
             headerView.statusImage.image = UIImage(named: "LateIcon")
-//            headerView.headerTitleLabel.text = "Overdue - Last Month"
-//            headerView.backgroundView = redView
-//        case ActivityMO.ActivityState.LastWeek:
-//            headerView.headerTitleLabel.text = "Overdue - Last Week"
-//            headerView.backgroundView = redView
         case .NextMonth, .NextWeek, .Tomorrow, .Future:
             headerView.statusImage.image = UIImage(named: "CompleteIcon")
         case ActivityMO.ActivityState.Today:
             headerView.statusImage.image = UIImage(named: "TodayIcon")
-//        case ActivityMO.ActivityState.Tomorrow:
-//            headerView.headerTitleLabel.text = "Tomorrow"
-//        case ActivityMO.ActivityState.VeryOld:
-//            headerView.headerTitleLabel.text = "Overdue - More than a month"
-//            headerView.backgroundView = redView
         case .Whenever:
             headerView.statusImage.image = UIImage(named: "UnlimitedStatusIcon")
-//            headerView.headerTitleLabel.text = "No due date"
-//        case ActivityMO.ActivityState.Yesterday:
-//            headerView.headerTitleLabel.text = "Overdue - Yesterday"
-//            headerView.backgroundView = redView
         }
 
         headerView.setCollapsed(collapsed: collapsedState[state]!)
@@ -272,7 +237,6 @@ class MasterViewController: UITableViewController {
         let sectionActivities = activityDict[sectionToStatus(section: indexPath.section)] ?? []
         let activity = sectionActivities[indexPath.row] // TODO: Array size check
 
-//        let event = fetchedResultsController.object(at: indexPath)
         configureCell(cell, withActivity: activity)
         return cell
     }
@@ -296,7 +260,6 @@ class MasterViewController: UITableViewController {
             completion(true)
         }
         action.image = UIImage(named: "edit")
-        //action.backgroundColor = UIColor(named: "Medium Green")
         return action
     }
 
@@ -343,8 +306,11 @@ class MasterViewController: UITableViewController {
         let daysSince = stats.daySince
         masterCell.nameLabel!.text = activity.name
         masterCell.freqLabel!.text = daysSince != nil ? String(stats.daySince!) : "--"
+        masterCell.nextLabel!.text = NSLocalizedString("next", value: "Next:", comment: "")
         masterCell.nextDateLabel!.text = stats.nextDay
+        masterCell.lastLabel!.text = NSLocalizedString("last", value: "Last:", comment: "")
         masterCell.lastDateLabel!.text = stats.lastDay
+        masterCell.daysLabel!.text = NSLocalizedString("days", value: "days", comment: "")
     }
     
     func deleteActivity(at indexPath:IndexPath) {

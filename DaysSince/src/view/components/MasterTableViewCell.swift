@@ -18,4 +18,9 @@ class MasterTableViewCell: UITableViewCell {
     
     @IBOutlet var lastDateLabel: UILabel!
 
+    @IBOutlet var nextLabel: UILabel!
+    
+    @IBOutlet var lastLabel: UILabel!
+    
+    @IBOutlet var daysLabel: UILabel!
 }
