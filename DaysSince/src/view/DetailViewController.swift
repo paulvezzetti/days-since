@@ -38,12 +38,6 @@ class DetailViewController: UIViewController {
             if let label = detailDescriptionLabel {
                 label.text = detail.name
             }
-            
-//            if let interval = detail.interval {
-//                if let label = intervalLabel {
-//                    label.text = interval.toPrettyString()
-//                }
-//            }
         }
     }
 
@@ -53,8 +47,6 @@ class DetailViewController: UIViewController {
         activeSubViewController = summaryViewController
         // Do any additional setup after loading the view, typically from a nib.
         configureView()
-        
-//        self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Mark Done", style: .plain, target: self, action: #selector(onMarkDone(sender:)))
         segmentedControl.addTarget(self, action: #selector(selectionDidChange(_:)), for: .valueChanged)
     }
     
@@ -81,7 +73,6 @@ class DetailViewController: UIViewController {
 
             return
         }
-        // TODO: This needs a string dict for pluralization of days.
         let alert = UIAlertController(title: NSLocalizedString("snooze", value: "Snooze", comment: ""), message: String.localizedStringWithFormat(NSLocalizedString("snooze.alert.string", comment: ""), Int(reminder.snooze)), preferredStyle: UIAlertController.Style.alert)
         alert.addAction(UIAlertAction(title: NSLocalizedString("yes", value: "Yes", comment: ""), style: .default) { (alert) in
             NotificationCenter.default.post(name: .snoozeActivity, object: self.detailItem)
@@ -128,6 +119,7 @@ class DetailViewController: UIViewController {
                                       message: NSLocalizedString("deleteActivity.msg", value: "This will permanently delete this activity and all of its history.", comment: "Message used for prompt when deleting activity"), preferredStyle: UIAlertController.Style.alert)
         alert.addAction(UIAlertAction(title: NSLocalizedString("yes", value: "Yes", comment: ""), style: .destructive) { (alert) in
             self.deleteActivity()
+            self.navigationController?.navigationController?.popToRootViewController(animated: false)
         })
         alert.addAction(UIAlertAction(title: NSLocalizedString("no", value: "No", comment: ""), style: .default, handler: nil))
         self.present(alert, animated: true, completion: nil)
@@ -166,10 +158,6 @@ class DetailViewController: UIViewController {
 
         }
         if segmentedControl.selectedSegmentIndex == 0 {
-//            // Remove the history
-//            historyViewController.willMove(toParent: nil)
-//            historyViewController.view.removeFromSuperview()
-//            historyViewController.removeFromParent()
             // Restore the summary
             if let summaryVC = summaryViewController {
                 addChild(summaryVC)
@@ -181,12 +169,6 @@ class DetailViewController: UIViewController {
             
             
         } else if segmentedControl.selectedSegmentIndex == 1 {
-           // Remove the summary
-//            if let summaryVC = summaryViewController {
-//                summaryVC.willMove(toParent: nil)
-//                summaryVC.view.removeFromSuperview()
-//                summaryVC.removeFromParent()
-//            }
             //Restore the history
             addChild(historyViewController)
             alternatingView.addSubview(historyViewController.view)
