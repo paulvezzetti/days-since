@@ -46,10 +46,10 @@ import CoreGraphics
         let paddedRect = padRect(rect)
         // Drawing code
         
-//        let background = UIBezierPath(roundedRect: rect, cornerRadius: 12)
-//        let backColor = UIColor(named: "Header")
-//        backColor?.setFill()
-//        background.fill()
+        let background = UIBezierPath(roundedRect: rect, cornerRadius: 12)
+        let backColor = UIColor(named: "Header")
+        backColor?.setFill()
+        background.fill()
         
         let minMaxAvg = calculateMinMaxAvg()
         if minMaxAvg.0 == 0.0 && minMaxAvg.1 == 0.0 && minMaxAvg.2 == 0 {
@@ -90,6 +90,40 @@ import CoreGraphics
             let path = UIBezierPath(ovalIn: pointRect)
             UIColor.blue.setFill()
             path.fill()
+            
+            let numberFormatter = NumberFormatter()
+            numberFormatter.maximumFractionDigits = 1
+            
+            let minValueText = numberFormatter.string(for: (minMaxAvg.0 / TimeConstants.SECONDS_PER_DAY))
+            let systemFont = UIFont.systemFont(ofSize: 12)
+            let attributes = [NSAttributedString.Key.font: systemFont]
+            let minSize = NSString(string: minValueText!).size(withAttributes: attributes)
+            
+            let minLabel = UILabel(frame: CGRect(x: paddedRect.midX - (minSize.width / 2.0), y: paddedRect.maxY - minSize.height, width: minSize.width, height: minSize.height))
+            minLabel.text = minValueText //numberFormatter.string(for: (minMaxAvg.0 / TimeConstants.SECONDS_PER_DAY))
+            minLabel.font = systemFont
+            minLabel.textColor = UIColor.blue
+            addSubview(minLabel)
+            
+            let avgLabel = UILabel(frame: CGRect(x: paddedRect.midX - (minSize.width / 2.0), y: 0, width: minSize.width, height: minSize.height))
+            avgLabel.text = minValueText
+            avgLabel.font = UIFont.systemFont(ofSize: 12)
+            avgLabel.textColor = UIColor.red
+            addSubview(avgLabel)
+
+            
+            // Avg triangle
+            let trianglePath = CGMutablePath()
+            trianglePath.move(to: CGPoint(x: paddedRect.midX - Constants.triangleWidth, y: minSize.height + 2) )
+            trianglePath.addLine(to: CGPoint(x: paddedRect.midX + Constants.triangleWidth, y: minSize.height + 2) )
+            trianglePath.addLine(to: CGPoint(x: paddedRect.midX, y: minSize.height + Constants.triangleHeight) )
+            trianglePath.closeSubpath()
+            
+            let triangle = UIBezierPath(cgPath: trianglePath)
+            UIColor.red.setFill()
+            triangle.fill()
+
+
         } else {
             let availableWidth = paddedRect.width
             let usableWidth = availableWidth // - 10.0 // add some space for margin
