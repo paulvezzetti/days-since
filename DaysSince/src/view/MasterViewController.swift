@@ -50,14 +50,11 @@ class MasterViewController: UITableViewController {
             detailViewController = (controllers[controllers.count-1] as! UINavigationController).topViewController as? DetailViewController
             detailViewController?.dataManager = dataManager
         }
-        
-
     }
 
     override func viewWillAppear(_ animated: Bool) {
         clearsSelectionOnViewWillAppear = splitViewController!.isCollapsed
         super.viewWillAppear(animated)
-        
     }
 
     @objc
@@ -86,7 +83,6 @@ class MasterViewController: UITableViewController {
             vc.dataManager = dataManager
             present(vc, animated: true, completion: nil)
         }
-        
     }
     
     func buildTableDataStructure() {

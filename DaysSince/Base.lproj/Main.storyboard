@@ -505,8 +505,28 @@
                                             </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="60" id="891-8V-abM">
+                                        <rect key="frame" x="0.0" y="290" width="351" height="60"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="891-8V-abM" id="3Tx-7e-1Rv">
+                                            <rect key="frame" x="0.0" y="0.0" width="351" height="60"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="giJ-sn-vRw" customClass="IntervalDotPlotView" customModule="DaysSince" customModuleProvider="target">
+                                                    <rect key="frame" x="0.0" y="0.0" width="351" height="60"/>
+                                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                </view>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="giJ-sn-vRw" firstAttribute="leading" secondItem="3Tx-7e-1Rv" secondAttribute="leading" id="4ti-W5-3DL"/>
+                                                <constraint firstAttribute="trailing" secondItem="giJ-sn-vRw" secondAttribute="trailing" id="VdK-72-cgg"/>
+                                                <constraint firstAttribute="bottom" secondItem="giJ-sn-vRw" secondAttribute="bottom" id="Z5c-Yj-Fso"/>
+                                                <constraint firstItem="giJ-sn-vRw" firstAttribute="top" secondItem="3Tx-7e-1Rv" secondAttribute="top" id="cBG-qw-1uf"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" id="GBK-TG-D0e">
-                                        <rect key="frame" x="0.0" y="290" width="351" height="44"/>
+                                        <rect key="frame" x="0.0" y="350" width="351" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="GBK-TG-D0e" id="8pK-J7-W5J">
                                             <rect key="frame" x="0.0" y="0.0" width="351" height="44"/>
@@ -546,7 +566,7 @@
                                         <color key="backgroundColor" name="Header"/>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="26" id="pL8-br-o7j">
-                                        <rect key="frame" x="0.0" y="334" width="351" height="26"/>
+                                        <rect key="frame" x="0.0" y="394" width="351" height="26"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="pL8-br-o7j" id="70D-yB-OZu">
                                             <rect key="frame" x="0.0" y="0.0" width="351" height="26"/>
@@ -566,7 +586,7 @@
                                         <color key="backgroundColor" name="Header"/>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="27" id="7ut-P4-zxx">
-                                        <rect key="frame" x="0.0" y="360" width="351" height="27"/>
+                                        <rect key="frame" x="0.0" y="420" width="351" height="27"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="7ut-P4-zxx" id="3DF-Ti-4S3">
                                             <rect key="frame" x="0.0" y="0.0" width="351" height="27"/>
@@ -606,7 +626,7 @@
                                         <color key="backgroundColor" name="Header"/>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="44" id="Xr2-hd-qgW">
-                                        <rect key="frame" x="0.0" y="387" width="351" height="44"/>
+                                        <rect key="frame" x="0.0" y="447" width="351" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Xr2-hd-qgW" id="krh-PC-HLI">
                                             <rect key="frame" x="0.0" y="0.0" width="351" height="44"/>
@@ -660,6 +680,7 @@
                         <outlet property="daysUntilValueLabel" destination="JZx-Ru-COT" id="pIJ-0P-SNb"/>
                         <outlet property="eventTimelineImage" destination="QP1-1a-Mk1" id="W30-Mq-A0P"/>
                         <outlet property="firstEventDateLabel" destination="1Vf-Mr-99x" id="Vjq-VA-6ZS"/>
+                        <outlet property="intervalDotPlot" destination="giJ-sn-vRw" id="IeE-o8-vGc"/>
                         <outlet property="intervalHeaderLabel" destination="XdJ-uV-y9H" id="hwk-5l-ta5"/>
                         <outlet property="maxIntervalLabel" destination="CFi-g4-K1A" id="8gW-bZ-BC2"/>
                         <outlet property="minIntervalLabel" destination="gkQ-eB-Yob" id="FAX-V6-PgF"/>

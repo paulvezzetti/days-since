@@ -27,6 +27,9 @@ class ActivitySummaryTableViewController: UITableViewController {
     @IBOutlet var firstEventDateLabel: UILabel!
     
     
+    @IBOutlet var intervalDotPlot: IntervalDotPlotView!
+    
+    
     var activity:ActivityMO? {
         didSet {
             NotificationCenter.default.removeObserver(self)
@@ -57,7 +60,7 @@ class ActivitySummaryTableViewController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return 11 //section == 0 ? 4 : 5
+        return 12 //section == 0 ? 4 : 5
     }
 
 //    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
@@ -117,6 +120,9 @@ class ActivitySummaryTableViewController: UITableViewController {
         
         let isUnlimited = act.interval is UnlimitedIntervalMO
         daysUntilLabelLabel.isHidden = isUnlimited
+        
+        
+        intervalDotPlot.intervals = stats.intervals
     }
 
     
