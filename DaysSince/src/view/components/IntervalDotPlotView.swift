@@ -15,6 +15,9 @@ import CoreGraphics
         static let leftRightPadding: CGFloat = 10.0
         static let topBottomPadding: CGFloat = 3.0
         static let pointRadius: CGFloat = 4.0
+        static let pointDiameter: CGFloat = Constants.pointRadius * 2.0
+        static let triangleHeight: CGFloat = 6.0
+        static let triangleWidth: CGFloat = 4.0
     }
     
     var intervals:[Double]?
@@ -43,10 +46,10 @@ import CoreGraphics
         let paddedRect = padRect(rect)
         // Drawing code
         
-        let background = UIBezierPath(roundedRect: rect, cornerRadius: 12)
-        let backColor = UIColor(named: "Header")
-        backColor?.setFill()
-        background.fill()
+//        let background = UIBezierPath(roundedRect: rect, cornerRadius: 12)
+//        let backColor = UIColor(named: "Header")
+//        backColor?.setFill()
+//        background.fill()
         
         let minMaxAvg = calculateMinMaxAvg()
         if minMaxAvg.0 == 0.0 && minMaxAvg.1 == 0.0 && minMaxAvg.2 == 0 {
@@ -54,10 +57,10 @@ import CoreGraphics
             // Draw a single dot in the center with text below stating
             // that there a no points
             // TODO: Check that point isn't bigger than 'rect'
-            let pointRect = CGRect(x: paddedRect.midX - 4, y: paddedRect.midY - 4, width: 8, height: 8)
-            let path = UIBezierPath(ovalIn: pointRect)
-            UIColor.blue.setFill()
-            path.fill()
+//            let pointRect = CGRect(x: paddedRect.midX - Constants.pointRadius, y: paddedRect.midY - Constants.pointRadius, width: Constants.pointDiameter, height: Constants.pointDiameter)
+//            let path = UIBezierPath(ovalIn: pointRect)
+//            UIColor.blue.setFill()
+//            path.fill()
             
 //            let textLayer = CATextLayer()
 //            textLayer.frame = CGRect(x: rect.maxX - 40, y: 0, width: 100, height: rect.height)
@@ -67,16 +70,23 @@ import CoreGraphics
 //            textLayer.contentsScale = UIScreen.main.scale
 //            self.layer.addSublayer(textLayer)
             
-            let label = UILabel(frame: CGRect(x: paddedRect.minX + 5, y: paddedRect.maxY - 20, width: paddedRect.width - 5, height: 10))
-            label.text = "min"
-            label.font = UIFont.systemFont(ofSize: 12)
+            let labelText = "No interval data available."
+            let systemFont = UIFont.systemFont(ofSize: 16)
+            let attributes = [NSAttributedString.Key.font: systemFont]
+            let labelSize = NSString(string: labelText).size(withAttributes: attributes)
+
+            
+            let label = UILabel(frame: CGRect(x: paddedRect.minX, y: paddedRect.midY - (labelSize.height / 2.0), width: paddedRect.width, height: labelSize.height))
+            label.text = labelText
+            label.font = UIFont.systemFont(ofSize: 16)
             label.textColor = UIColor.blue
+            label.textAlignment = NSTextAlignment.center
             addSubview(label)
 
         } else if minMaxAvg.0 == minMaxAvg.1 && minMaxAvg.1 == minMaxAvg.2 {
             // In this case, there is data, but they are all the same, non-zero value
             // Draw a single dot, with the value below it.
-            let pointRect = CGRect(x: paddedRect.midX - 4, y: paddedRect.midY - 4, width: 8, height: 8)
+            let pointRect = CGRect(x: paddedRect.midX - Constants.pointRadius, y: paddedRect.midY - Constants.pointRadius, width: Constants.pointDiameter, height: Constants.pointDiameter)
             let path = UIBezierPath(ovalIn: pointRect)
             UIColor.blue.setFill()
             path.fill()
@@ -96,7 +106,7 @@ import CoreGraphics
             
             for intervalValue in intervals! {
                 let x = Constants.leftRightPadding + CGFloat(intervalValue - minMaxAvg.0) * ptPerPixel
-                let pointRect = CGRect(x: x - 4, y: paddedRect.midY - 4, width: 8, height: 8)
+                let pointRect = CGRect(x: x - Constants.pointRadius, y: paddedRect.midY - Constants.pointRadius, width: Constants.pointDiameter, height: Constants.pointDiameter)
                 let path = UIBezierPath(ovalIn: pointRect)
                 UIColor.blue.setFill()
                 path.fill(with: .normal, alpha: alpha)
@@ -145,9 +155,9 @@ import CoreGraphics
             
             // Avg triangle
             let path = CGMutablePath()
-            path.move(to: CGPoint(x: avgX - 4, y: avgSize.height + 2) )
-            path.addLine(to: CGPoint(x: avgX + 4, y: avgSize.height + 2) )
-            path.addLine(to: CGPoint(x: avgX, y: avgSize.height + 6) )
+            path.move(to: CGPoint(x: avgX - Constants.triangleWidth, y: avgSize.height + 2) )
+            path.addLine(to: CGPoint(x: avgX + Constants.triangleWidth, y: avgSize.height + 2) )
+            path.addLine(to: CGPoint(x: avgX, y: avgSize.height + Constants.triangleHeight) )
             path.closeSubpath()
             
             let triangle = UIBezierPath(cgPath: path)
