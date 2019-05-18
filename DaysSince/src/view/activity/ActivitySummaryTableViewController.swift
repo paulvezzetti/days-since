@@ -20,9 +20,6 @@ class ActivitySummaryTableViewController: UITableViewController {
     @IBOutlet var previousDateLabel: UILabel!
     @IBOutlet var nextDateLabel: UILabel!
     @IBOutlet var onTimePercentLabel: UILabel!
-    @IBOutlet var minIntervalLabel: UILabel!
-    @IBOutlet var avgIntervalLabel: UILabel!
-    @IBOutlet var maxIntervalLabel: UILabel!
     @IBOutlet var numberOfEventsLabel: UILabel!
     @IBOutlet var firstEventDateLabel: UILabel!
     
@@ -60,7 +57,7 @@ class ActivitySummaryTableViewController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return 12 //section == 0 ? 4 : 5
+        return 9 //section == 0 ? 4 : 5
     }
 
 //    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
@@ -97,11 +94,11 @@ class ActivitySummaryTableViewController: UITableViewController {
         percentFormatter.maximumFractionDigits = 1
         onTimePercentLabel.text = percentFormatter.string(for: stats.onTimePercent)
         
-        let numberFormatter = NumberFormatter()
-        numberFormatter.maximumFractionDigits = 1
-        minIntervalLabel.text = String(stats.minDays)
-        avgIntervalLabel.text = numberFormatter.string(for: stats.avgDays)
-        maxIntervalLabel.text = String(stats.maxDays)
+//        let numberFormatter = NumberFormatter()
+//        numberFormatter.maximumFractionDigits = 1
+//        minIntervalLabel.text = String(stats.minDays)
+//        avgIntervalLabel.text = numberFormatter.string(for: stats.avgDays)
+//        maxIntervalLabel.text = String(stats.maxDays)
         
         numberOfEventsLabel.text = String(act.history?.count ?? 0)
         
