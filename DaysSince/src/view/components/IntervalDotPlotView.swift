@@ -22,6 +22,7 @@ import CoreGraphics
         static let pointDiameter: CGFloat = Constants.pointRadius * 2.0
         static let triangleHeight: CGFloat = 7.0
         static let triangleWidth: CGFloat = 5.0
+        static let pointsBoxHeight: CGFloat = Constants.pointDiameter + 4.0
     }
     
     var intervals:[Double]? {
@@ -64,7 +65,7 @@ import CoreGraphics
         background.fill()
         
         let minMaxAvg = calculateMinMaxAvg()
-        if minMaxAvg.min == 0.0 && minMaxAvg.max == 0.0 && minMaxAvg.2 == 0 {
+        if minMaxAvg.min == 0.0 && minMaxAvg.max == 0.0 && minMaxAvg.avg == 0 {
             // Special case for no data. Just show a label with an error message
             placeLabel("No interval data available", x: paddedRect.midX, y: paddedRect.midY, textAnchor: .MiddleCenter, fontSize: 16.0, textColor: UIColor.blue, textAlignment: NSTextAlignment.center)
         } else if minMaxAvg.min == minMaxAvg.max && minMaxAvg.max == minMaxAvg.avg {
@@ -75,6 +76,8 @@ import CoreGraphics
             UIColor.blue.setFill()
             path.fill()
             
+            drawBox(x: paddedRect.minX + 10, y: paddedRect.midY - Constants.pointsBoxHeight / 2.0, width: paddedRect.width - 20, height: Constants.pointsBoxHeight)
+            
             let numberFormatter = NumberFormatter()
             numberFormatter.maximumFractionDigits = 1
             
@@ -83,16 +86,7 @@ import CoreGraphics
             placeLabel(minValueText!, x: paddedRect.midX, y: paddedRect.midY - Constants.pointRadius - Constants.triangleHeight - 4, textAnchor: .BottomCenter, fontSize: 16, textColor: UIColor.red, textAlignment: NSTextAlignment.center)
 
             // Avg triangle
-            let trianglePath = CGMutablePath()
-            trianglePath.move(to: CGPoint(x: paddedRect.midX - Constants.triangleWidth, y: paddedRect.midY - Constants.pointRadius - Constants.triangleHeight - 4) )
-            trianglePath.addLine(to: CGPoint(x: paddedRect.midX + Constants.triangleWidth, y: paddedRect.midY - Constants.triangleHeight - Constants.pointRadius - 4) )
-            trianglePath.addLine(to: CGPoint(x: paddedRect.midX, y: paddedRect.midY - Constants.pointRadius - 4) )
-            trianglePath.closeSubpath()
-
-            let triangle = UIBezierPath(cgPath: trianglePath)
-            UIColor.red.setFill()
-            triangle.fill()
-
+            drawTriangle(x: paddedRect.midX, y: paddedRect.midY - Constants.pointRadius - 4)
 
         } else {
             
@@ -112,11 +106,7 @@ import CoreGraphics
             let intervalRange = minMaxAvg.max - minMaxAvg.min
             let ptPerPixel = usableWidth / CGFloat(intervalRange)
             
-            let dotBorder = CGRect(x: Constants.leftRightPadding + (minLabelRect.width / 2.0) - 6, y: paddedRect.midY - 6, width: usableWidth + 12, height: 12)
-            let dotBorderCurve = UIBezierPath(rect: dotBorder)
-            dotBorderCurve.lineWidth = 1.0
-            UIColor.blue.setStroke()
-            dotBorderCurve.stroke()
+            drawBox(x: Constants.leftRightPadding + (minLabelRect.width / 2.0) - Constants.pointsBoxHeight / 2.0, y: paddedRect.midY - Constants.pointsBoxHeight / 2.0, width: usableWidth + 12, height: Constants.pointsBoxHeight)
             
             // Assume this is oldest to newest. // TODO: Verify
             // Last one should be full
@@ -138,16 +128,7 @@ import CoreGraphics
             placeLabel(avgValueText!, x: avgX, y: paddedRect.midY - Constants.pointRadius - Constants.triangleHeight - 4, textAnchor: .BottomCenter, fontSize: 16, textColor: UIColor.red, textAlignment: NSTextAlignment.center)
             
             // Avg triangle
-            let path = CGMutablePath()
-            path.move(to: CGPoint(x: avgX - Constants.triangleWidth, y: paddedRect.midY - Constants.pointRadius - Constants.triangleHeight - 4) )
-            path.addLine(to: CGPoint(x: avgX + Constants.triangleWidth, y: paddedRect.midY - Constants.pointRadius - Constants.triangleHeight - 4) )
-            path.addLine(to: CGPoint(x: avgX, y: paddedRect.midY - Constants.pointRadius - 4) )
-            path.closeSubpath()
-
-            let triangle = UIBezierPath(cgPath: path)
-            UIColor.red.setFill()
-            triangle.fill()
-
+            drawTriangle(x: avgX, y: paddedRect.midY - Constants.pointRadius - 4)
         }
         
     }
@@ -170,6 +151,26 @@ import CoreGraphics
         return CGRect(x: location.xPos, y: location.yPos, width: textSize.width, height: textSize.height)
     }
     
+    private func drawTriangle(x:CGFloat, y: CGFloat) {
+        let path = CGMutablePath()
+        path.move(to: CGPoint(x: x - Constants.triangleWidth, y: y - Constants.triangleHeight) )
+        path.addLine(to: CGPoint(x: x + Constants.triangleWidth, y: y - Constants.triangleHeight ) )
+        path.addLine(to: CGPoint(x: x, y: y) )
+        path.closeSubpath()
+        
+        let triangle = UIBezierPath(cgPath: path)
+        UIColor.red.setFill()
+        triangle.fill()
+
+    }
+    
+    private func drawBox(x:CGFloat, y: CGFloat, width: CGFloat, height: CGFloat) {
+        let dotBorder = CGRect(x: x, y: y, width: width, height: height)
+        let dotBorderCurve = UIBezierPath(rect: dotBorder)
+        dotBorderCurve.lineWidth = 1.0
+        UIColor.blue.setStroke()
+        dotBorderCurve.stroke()
+    }
     
     private func calculateXY(x:CGFloat, y: CGFloat, size:CGSize, textAnchor:TextAnchor) -> (xPos: CGFloat, yPos: CGFloat) {
         var xPos = x
