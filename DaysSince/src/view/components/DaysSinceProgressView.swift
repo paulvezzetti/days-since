@@ -13,6 +13,17 @@ import CoreGraphics
 
     var daysSince: Int?
     var daysUntil: Int?
+//    let daysSinceLabel: UILabel
+//    
+//    override init(frame: CGRect) {
+//        
+//        super.init(frame: frame)
+//    }
+//    
+//    required init?(coder aDecoder: NSCoder) {
+//        
+//        super.init(coder: aDecoder)
+//    }
     
     override func draw(_ rect: CGRect) {
 
@@ -55,17 +66,20 @@ import CoreGraphics
 
         if daysUntil != nil {
             // Draw a progression around
+            var percentComplete = 0.0
             if daysUntil! >= 0 {
-                let percentComplete = Double(days) / Double(days + daysUntil! + 1)
-                let radians = percentComplete * ((2.0 * Double.pi) - (Double.pi / 3.0))
-                
-                let completedPath = UIBezierPath(arcCenter: CGPoint(x: rect.midX, y: rect.midY), radius: sideLen / 2.0 - 5.0, startAngle: startAngle, endAngle: startAngle + CGFloat(radians), clockwise: true)
-                completedPath.lineWidth = 10.0
-                UIColor.blue.setStroke()
-                completedPath.stroke()
+                percentComplete = Double(days) / Double(days + daysUntil! + 1)
+            } else {
+                let daysOverdue = abs(daysUntil!)
+                percentComplete = Double(days - daysOverdue) / Double(days)
             }
+            let radians = percentComplete * ((2.0 * Double.pi) - (Double.pi / 3.0))
+            
+            let completedPath = UIBezierPath(arcCenter: CGPoint(x: rect.midX, y: rect.midY), radius: sideLen / 2.0 - 5.0, startAngle: startAngle, endAngle: startAngle + CGFloat(radians), clockwise: true)
+            completedPath.lineWidth = 10.0
+            UIColor.blue.setStroke()
+            completedPath.stroke()
         }
-        
     }
     
     func calculateFontSize(labelText:String, availableWidth:CGFloat) -> (fontSize:CGFloat, measuredWidth:CGFloat, measuredHeight: CGFloat) {
@@ -79,7 +93,7 @@ import CoreGraphics
             let measuredTextSize = NSString(string: labelText).size(withAttributes: attributes)
             width = measuredTextSize.width
             height = measuredTextSize.height
-            fontSize -= 2
+            fontSize -= 2.0
             
         } while (width > availableWidth)
         
