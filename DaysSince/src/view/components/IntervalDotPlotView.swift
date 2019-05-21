@@ -31,6 +31,10 @@ import CoreGraphics
         }
     }
     
+    var minValueLabel:UILabel?
+    var maxValueLabel:UILabel?
+    var avgValueLabel:UILabel?
+    
     
     private func calculateMinMaxAvg() -> (min: Double, max: Double, avg: Double) {
         guard let intervalValues = intervals else {
@@ -55,9 +59,9 @@ import CoreGraphics
         let paddedRect = padRect(rect)
         // Drawing code
         
-        for subview in self.subviews {
-            subview.removeFromSuperview()
-        }
+//        for subview in self.subviews {
+//            subview.removeFromSuperview()
+//        }
         
         let background = UIBezierPath(roundedRect: rect, cornerRadius: 12)
         let backColor = UIColor(named: "Header")
@@ -67,37 +71,60 @@ import CoreGraphics
         let minMaxAvg = calculateMinMaxAvg()
         if minMaxAvg.min == 0.0 && minMaxAvg.max == 0.0 && minMaxAvg.avg == 0 {
             // Special case for no data. Just show a label with an error message
-            placeLabel("No interval data available", x: paddedRect.midX, y: paddedRect.midY, textAnchor: .MiddleCenter, fontSize: 16.0, textColor: UIColor.black, textAlignment: NSTextAlignment.center)
+            clearLabel(maxValueLabel)
+            clearLabel(avgValueLabel)
+            if minValueLabel == nil {
+                minValueLabel = initLabel()
+            }
+            configureLabel(minValueLabel!, text: "No interval data available", x: paddedRect.midX, y: paddedRect.midY, textAnchor: .MiddleCenter, fontSize: 16.0, textColor: UIColor.black, textAlignment: NSTextAlignment.center)
         } else if minMaxAvg.min == minMaxAvg.max && minMaxAvg.max == minMaxAvg.avg {
             // In this case, there is data, but they are all the same, non-zero value
+
+            drawBox(x: paddedRect.minX + 10, y: paddedRect.midY - Constants.pointsBoxHeight / 2.0, width: paddedRect.width - 20, height: Constants.pointsBoxHeight)
+
             // Draw a single dot, with the value below it.
             let pointRect = CGRect(x: paddedRect.midX - Constants.pointRadius, y: paddedRect.midY - Constants.pointRadius, width: Constants.pointDiameter, height: Constants.pointDiameter)
             let path = UIBezierPath(ovalIn: pointRect)
             UIColor.blue.setFill()
             path.fill()
             
-            drawBox(x: paddedRect.minX + 10, y: paddedRect.midY - Constants.pointsBoxHeight / 2.0, width: paddedRect.width - 20, height: Constants.pointsBoxHeight)
-            
             let numberFormatter = NumberFormatter()
             numberFormatter.maximumFractionDigits = 1
             
+            clearLabel(maxValueLabel)
+            if minValueLabel == nil {
+                minValueLabel = initLabel()
+            }
+            if avgValueLabel == nil {
+                avgValueLabel = initLabel()
+            }
+            
             let minValueText = numberFormatter.string(for: (minMaxAvg.min / TimeConstants.SECONDS_PER_DAY))
-            placeLabel(minValueText!, x: paddedRect.midX, y: paddedRect.midY + Constants.pointRadius + 6, textAnchor: .TopCenter, fontSize: 16, textColor: UIColor.black, textAlignment: NSTextAlignment.center)
-            placeLabel(minValueText!, x: paddedRect.midX, y: paddedRect.midY - Constants.pointRadius - Constants.triangleHeight - 4, textAnchor: .BottomCenter, fontSize: 16, textColor: UIColor.blue, textAlignment: NSTextAlignment.center)
+            configureLabel(minValueLabel!, text: minValueText!, x: paddedRect.midX, y: paddedRect.midY + Constants.pointRadius + 6, textAnchor: .TopCenter, fontSize: 16, textColor: UIColor.black, textAlignment: NSTextAlignment.center)
+            configureLabel(avgValueLabel!, text: minValueText!, x: paddedRect.midX, y: paddedRect.midY - Constants.pointRadius - Constants.triangleHeight - 4, textAnchor: .BottomCenter, fontSize: 16, textColor: UIColor.blue, textAlignment: NSTextAlignment.center)
 
             // Avg triangle
             drawTriangle(x: paddedRect.midX, y: paddedRect.midY - Constants.pointRadius - 4)
 
         } else {
-            
+            if minValueLabel == nil {
+                minValueLabel = initLabel()
+            }
+            if maxValueLabel == nil {
+                maxValueLabel = initLabel()
+            }
+            if avgValueLabel == nil {
+                avgValueLabel = initLabel()
+            }
+
             let numberFormatter = NumberFormatter()
             numberFormatter.maximumFractionDigits = 1
             
             let minValueText = numberFormatter.string(for: (minMaxAvg.min / TimeConstants.SECONDS_PER_DAY))
-            let minLabelRect = placeLabel(minValueText!, x: paddedRect.minX, y: paddedRect.midY + Constants.pointRadius + 4, textAnchor: .TopLeft, fontSize: 16, textColor: UIColor.black, textAlignment: NSTextAlignment.left)
+            let minLabelRect = configureLabel(minValueLabel!, text: minValueText!, x: paddedRect.minX, y: paddedRect.midY + Constants.pointRadius + 4, textAnchor: .TopLeft, fontSize: 16, textColor: UIColor.black, textAlignment: NSTextAlignment.left)
             
             let maxValueText = numberFormatter.string(for: (minMaxAvg.max / TimeConstants.SECONDS_PER_DAY))
-            let maxLabelRect = placeLabel(maxValueText!, x: paddedRect.maxX, y: paddedRect.midY + Constants.pointRadius + 4, textAnchor: .TopRight, fontSize: 16, textColor: UIColor.black, textAlignment: NSTextAlignment.left)
+            let maxLabelRect = configureLabel(maxValueLabel!, text: maxValueText!, x: paddedRect.maxX, y: paddedRect.midY + Constants.pointRadius + 4, textAnchor: .TopRight, fontSize: 16, textColor: UIColor.black, textAlignment: NSTextAlignment.left)
             
             let availableWidth = paddedRect.width
             let usableWidth = availableWidth - (minLabelRect.width / 2.0) - (maxLabelRect.width / 2.0) // - 10.0 // add some space for margin
@@ -125,7 +152,7 @@ import CoreGraphics
             let avgValueText = numberFormatter.string(for: minMaxAvg.avg / TimeConstants.SECONDS_PER_DAY)
             let avgX = Constants.leftRightPadding + (minLabelRect.width / 2.0) + CGFloat(minMaxAvg.avg - minMaxAvg.min) * ptPerPixel
             
-            placeLabel(avgValueText!, x: avgX, y: paddedRect.midY - Constants.pointRadius - Constants.triangleHeight - 4, textAnchor: .BottomCenter, fontSize: 16, textColor: UIColor.blue, textAlignment: NSTextAlignment.center)
+            configureLabel(avgValueLabel!, text: avgValueText!, x: avgX, y: paddedRect.midY - Constants.pointRadius - Constants.triangleHeight - 4, textAnchor: .BottomCenter, fontSize: 16, textColor: UIColor.blue, textAlignment: NSTextAlignment.center)
             
             // Avg triangle
             drawTriangle(x: avgX, y: paddedRect.midY - Constants.pointRadius - 4)
@@ -133,20 +160,34 @@ import CoreGraphics
         
     }
     
+    private func initLabel() -> UILabel {
+        let label = UILabel(frame: CGRect(x: 0.0, y: 0.0, width: 0.0, height: 0.0))
+        addSubview(label)
+        return label
+    }
+    
+    private func clearLabel(_ label:UILabel?) {
+        guard let oldLabel = label else {
+            return
+        }
+        oldLabel.text = ""
+        oldLabel.frame = CGRect(x: 0.0, y: 0.0, width: 0.0, height: 0.0)
+    }
+    
     @discardableResult
-    private func placeLabel(_ text:String, x: CGFloat, y: CGFloat, textAnchor:TextAnchor = TextAnchor.BottomLeft, fontSize:CGFloat = 16.0, textColor:UIColor = UIColor.blue, textAlignment:NSTextAlignment = NSTextAlignment.left) -> CGRect {
+    private func configureLabel(_ label:UILabel, text:String, x: CGFloat, y: CGFloat, textAnchor:TextAnchor = TextAnchor.BottomLeft, fontSize:CGFloat = 16.0, textColor:UIColor = UIColor.blue, textAlignment:NSTextAlignment = NSTextAlignment.left) -> CGRect {
         let systemFont = UIFont.systemFont(ofSize: fontSize)
         let attributes = [NSAttributedString.Key.font: systemFont]
         let textSize = NSString(string: text).size(withAttributes: attributes)
         
         let location = calculateXY(x: x, y: y, size: textSize, textAnchor: textAnchor)
         
-        let label = UILabel(frame: CGRect(x: location.xPos, y: location.yPos, width: textSize.width, height: textSize.height))
+        label.frame = CGRect(x: location.xPos, y: location.yPos, width: textSize.width, height: textSize.height)
         label.text = text
         label.textAlignment = textAlignment
         label.font = systemFont
         label.textColor = textColor
-        addSubview(label)
+//        addSubview(label)
         
         return CGRect(x: location.xPos, y: location.yPos, width: textSize.width, height: textSize.height)
     }
@@ -169,7 +210,10 @@ import CoreGraphics
         let dotBorderCurve = UIBezierPath(rect: dotBorder)
         dotBorderCurve.lineWidth = 1.0
         UIColor.lightGray.setStroke()
+        let lightYellow = UIColor(red: 250.0/255.0, green: 212.0/255.0, blue: 142.0/255.0, alpha: 1.0)
+        lightYellow.setFill()
         dotBorderCurve.stroke()
+        dotBorderCurve.fill()
     }
     
     private func calculateXY(x:CGFloat, y: CGFloat, size:CGSize, textAnchor:TextAnchor) -> (xPos: CGFloat, yPos: CGFloat) {
