@@ -12,8 +12,6 @@ class MasterTableViewCell: UITableViewCell {
 
     @IBOutlet var nameLabel: UILabel!
 
-    @IBOutlet var freqLabel: UILabel!
-    
     @IBOutlet var nextDateLabel: UILabel!
     
     @IBOutlet var lastDateLabel: UILabel!
@@ -22,5 +20,5 @@ class MasterTableViewCell: UITableViewCell {
     
     @IBOutlet var lastLabel: UILabel!
     
-    @IBOutlet var daysLabel: UILabel!
+    @IBOutlet weak var progressView: DaysSinceProgressView!
 }

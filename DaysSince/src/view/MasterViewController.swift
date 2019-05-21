@@ -299,14 +299,17 @@ class MasterViewController: UITableViewController {
             return
         }
         let stats:ActivityStatistics = ActivityStatistics(activity: activity)
-        let daysSince = stats.daySince
+        //let daysSince = stats.daySince
         masterCell.nameLabel!.text = activity.name
-        masterCell.freqLabel!.text = daysSince != nil ? String(stats.daySince!) : "--"
         masterCell.nextLabel!.text = NSLocalizedString("next", value: "Next:", comment: "")
         masterCell.nextDateLabel!.text = stats.nextDay
         masterCell.lastLabel!.text = NSLocalizedString("last", value: "Last:", comment: "")
         masterCell.lastDateLabel!.text = stats.lastDay
-        masterCell.daysLabel!.text = NSLocalizedString("days", value: "days", comment: "")
+        
+        masterCell.progressView!.daysSince = stats.daySince
+        masterCell.progressView!.daysUntil = stats.daysUntil
+        
+        masterCell.progressView!.setNeedsDisplay()
     }
     
     func deleteActivity(at indexPath:IndexPath) {

@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		DA0B1E272259412500992A42 /* ChooseActiveRangeTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA0B1E262259412500992A42 /* ChooseActiveRangeTableViewController.swift */; };
 		DA0B1E2C225950CD00992A42 /* ActiveRangeMO+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA0B1E29225950CD00992A42 /* ActiveRangeMO+CoreDataClass.swift */; };
+		DA6AAD4C22934C8A00711533 /* DaysSinceProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA6AAD4B22934C8A00711533 /* DaysSinceProgressView.swift */; };
 		DABE10E122713B0E00AFDBAF /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = DABE10DF22713B0E00AFDBAF /* Localizable.strings */; };
 		FA133A902231D6B600F363D1 /* DateExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA133A8F2231D6B600F363D1 /* DateExtension.swift */; };
 		FA1D72DB221E2D2B00D8EBF7 /* ActivityStatistics.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA1D72DA221E2D2B00D8EBF7 /* ActivityStatistics.swift */; };
@@ -71,6 +72,7 @@
 /* Begin PBXFileReference section */
 		DA0B1E262259412500992A42 /* ChooseActiveRangeTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChooseActiveRangeTableViewController.swift; sourceTree = "<group>"; };
 		DA0B1E29225950CD00992A42 /* ActiveRangeMO+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ActiveRangeMO+CoreDataClass.swift"; sourceTree = "<group>"; };
+		DA6AAD4B22934C8A00711533 /* DaysSinceProgressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DaysSinceProgressView.swift; sourceTree = "<group>"; };
 		DABE10E022713B0E00AFDBAF /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = DaysSince/Base.lproj/Localizable.strings; sourceTree = "<group>"; };
 		FA133A8F2231D6B600F363D1 /* DateExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateExtension.swift; sourceTree = "<group>"; };
 		FA1D72DA221E2D2B00D8EBF7 /* ActivityStatistics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityStatistics.swift; sourceTree = "<group>"; };
@@ -265,6 +267,7 @@
 				FAE2F69522455421009B0DCB /* ActivityTableHeaderView.xib */,
 				FAE2F69722456DEC009B0DCB /* CollapsibleTableViewHeaderDelegate.swift */,
 				FAB8D058228F243E005138C3 /* IntervalDotPlotView.swift */,
+				DA6AAD4B22934C8A00711533 /* DaysSinceProgressView.swift */,
 			);
 			path = components;
 			sourceTree = "<group>";
@@ -419,6 +422,7 @@
 				FAC1DEA92256772A00A211D6 /* YearOffsetIntervalMO+CoreDataClass.swift in Sources */,
 				FA1D734922300A5000D8EBF7 /* MarkDoneDelegate.swift in Sources */,
 				FAC1DEB6225681D400A211D6 /* OffsetIntervals.swift in Sources */,
+				DA6AAD4C22934C8A00711533 /* DaysSinceProgressView.swift in Sources */,
 				FA1D73312228C60E00D8EBF7 /* ConstantIntervalMO+CoreDataClass.swift in Sources */,
 				FA1D72E1221F82A300D8EBF7 /* MasterTableViewCell.swift in Sources */,
 				FA2215AB2252A67000FDEB96 /* ActivitySummaryTableViewController.swift in Sources */,
