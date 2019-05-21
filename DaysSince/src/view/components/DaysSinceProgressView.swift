@@ -13,24 +13,28 @@ import CoreGraphics
 
     var daysSince: Int?
     var daysUntil: Int?
-//    let daysSinceLabel: UILabel
-//    
-//    override init(frame: CGRect) {
-//        
-//        super.init(frame: frame)
-//    }
-//    
-//    required init?(coder aDecoder: NSCoder) {
-//        
-//        super.init(coder: aDecoder)
-//    }
+    let daysSinceLabel: UILabel = {
+        let label = UILabel(frame: CGRect(x: 0.0, y: 0.0, width: 10.0, height: 10.0))
+        label.text = "0"
+        label.textAlignment = NSTextAlignment.center
+        label.font = UIFont.systemFont(ofSize: 12)
+        label.adjustsFontSizeToFitWidth = true
+        label.textColor = UIColor.black
+        
+        return label
+    }()
+    
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        addSubview(daysSinceLabel)
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+        addSubview(daysSinceLabel)
+    }
     
     override func draw(_ rect: CGRect) {
-
-        for subview in self.subviews {
-            subview.removeFromSuperview()
-        }
-
         let sideLen = min(rect.width, rect.height)
         
         let startAngle = daysUntil != nil ? CGFloat(2.0 * Double.pi / 3.0) : 0.0
@@ -40,12 +44,18 @@ import CoreGraphics
         backgroundPath.lineWidth = 10.0
         if daysUntil != nil {
             if (daysUntil! >= 0) {
-                UIColor.lightGray.setStroke()
+                let lightYellow = UIColor(red: 250.0/255.0, green: 212.0/255.0, blue: 142.0/255.0, alpha: 1.0)
+                lightYellow.setStroke()
+//                UIColor.lightGray.setStroke()
             } else {
-                UIColor.red.setStroke()
+                let vividAuburn = UIColor(red: 165.0/255.0, green: 36.0/255.0, blue: 36.0/255.0, alpha: 1.0)
+                vividAuburn.setStroke()
+                //UIColor.red.setStroke()
             }
         } else {
-            UIColor.blue.setStroke()
+            let lapisLazuli = UIColor(red: 36.0/255.0, green: 123.0/255.0, blue: 160.0/255.0, alpha: 1.0)
+            lapisLazuli.setStroke()
+//            UIColor.blue.setStroke()
         }
         backgroundPath.stroke()
         
@@ -56,13 +66,10 @@ import CoreGraphics
         let labelText = String(days)
         let fontSizeCalc = calculateFontSize(labelText: labelText, availableWidth: rect.width - 25.0)
         
-        let label = UILabel(frame: CGRect(x: rect.midX - fontSizeCalc.measuredWidth / 2.0, y: rect.midY - fontSizeCalc.measuredHeight / 2.0, width: fontSizeCalc.measuredWidth, height: fontSizeCalc.measuredHeight))
-        label.text = labelText
-        label.textAlignment = NSTextAlignment.center
-        label.font = UIFont.systemFont(ofSize: fontSizeCalc.fontSize)
-        label.adjustsFontSizeToFitWidth = true
-        label.textColor = UIColor.black
-        addSubview(label)
+        daysSinceLabel.frame = CGRect(x: rect.midX - fontSizeCalc.measuredWidth / 2.0, y: rect.midY - fontSizeCalc.measuredHeight / 2.0, width: fontSizeCalc.measuredWidth, height: fontSizeCalc.measuredHeight)
+        daysSinceLabel.text = labelText
+        daysSinceLabel.font = UIFont.systemFont(ofSize: fontSizeCalc.fontSize)
+        
 
         if daysUntil != nil {
             // Draw a progression around
@@ -77,7 +84,10 @@ import CoreGraphics
             
             let completedPath = UIBezierPath(arcCenter: CGPoint(x: rect.midX, y: rect.midY), radius: sideLen / 2.0 - 5.0, startAngle: startAngle, endAngle: startAngle + CGFloat(radians), clockwise: true)
             completedPath.lineWidth = 10.0
-            UIColor.blue.setStroke()
+            let lapisLazuli = UIColor(red: 36.0/255.0, green: 123.0/255.0, blue: 160.0/255.0, alpha: 1.0)
+            lapisLazuli.setStroke()
+
+//            UIColor.blue.setStroke()
             completedPath.stroke()
         }
     }
