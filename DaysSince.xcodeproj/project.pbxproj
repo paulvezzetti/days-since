@@ -64,6 +64,7 @@
 		FAC1DEAD22567F0300A211D6 /* OffsetIntervalMO+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAC1DEAB22567F0300A211D6 /* OffsetIntervalMO+CoreDataClass.swift */; };
 		FAC1DEB6225681D400A211D6 /* OffsetIntervals.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAC1DEB5225681D400A211D6 /* OffsetIntervals.swift */; };
 		FAC1DEBE225E3C5600A211D6 /* ActivityInfoTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAC1DEBD225E3C5600A211D6 /* ActivityInfoTableViewController.swift */; };
+		FADAA1872298737A0059015F /* UILabelExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = FADAA1862298737A0059015F /* UILabelExtension.swift */; };
 		FADE9AC1224A8A260055DA64 /* NotificationExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = FADE9AC0224A8A260055DA64 /* NotificationExtension.swift */; };
 		FAE2F69422455301009B0DCB /* ActivityTableHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAE2F69322455301009B0DCB /* ActivityTableHeaderView.swift */; };
 		FAE2F69622455421009B0DCB /* ActivityTableHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = FAE2F69522455421009B0DCB /* ActivityTableHeaderView.xib */; };
@@ -130,6 +131,7 @@
 		FAC1DEAB22567F0300A211D6 /* OffsetIntervalMO+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "OffsetIntervalMO+CoreDataClass.swift"; sourceTree = "<group>"; };
 		FAC1DEB5225681D400A211D6 /* OffsetIntervals.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OffsetIntervals.swift; sourceTree = "<group>"; };
 		FAC1DEBD225E3C5600A211D6 /* ActivityInfoTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityInfoTableViewController.swift; sourceTree = "<group>"; };
+		FADAA1862298737A0059015F /* UILabelExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UILabelExtension.swift; sourceTree = "<group>"; };
 		FADE9AC0224A8A260055DA64 /* NotificationExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationExtension.swift; sourceTree = "<group>"; };
 		FAE2F69322455301009B0DCB /* ActivityTableHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityTableHeaderView.swift; sourceTree = "<group>"; };
 		FAE2F69522455421009B0DCB /* ActivityTableHeaderView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ActivityTableHeaderView.xib; sourceTree = "<group>"; };
@@ -271,6 +273,7 @@
 				FAB8D058228F243E005138C3 /* IntervalDotPlotView.swift */,
 				DA6AAD4B22934C8A00711533 /* DaysSinceProgressView.swift */,
 				FAB8D05A2295A1FF005138C3 /* StatusIndicatorView.swift */,
+				FADAA1862298737A0059015F /* UILabelExtension.swift */,
 			);
 			path = components;
 			sourceTree = "<group>";
@@ -422,6 +425,7 @@
 				FA1D73292228C60E00D8EBF7 /* WeeklyIntervalMO+CoreDataClass.swift in Sources */,
 				FAC1DEA52256772A00A211D6 /* WeekOffsetIntervalMO+CoreDataClass.swift in Sources */,
 				FA3CEF4E220E0F2500634DD7 /* MasterViewController.swift in Sources */,
+				FADAA1872298737A0059015F /* UILabelExtension.swift in Sources */,
 				FA1D732F2228C60E00D8EBF7 /* UnlimitedIntervalMO+CoreDataClass.swift in Sources */,
 				FAC1DEA92256772A00A211D6 /* YearOffsetIntervalMO+CoreDataClass.swift in Sources */,
 				FA1D734922300A5000D8EBF7 /* MarkDoneDelegate.swift in Sources */,

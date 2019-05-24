@@ -330,12 +330,12 @@
                                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <userDefinedRuntimeAttributes>
                                                         <userDefinedRuntimeAttribute type="number" keyPath="daysSince">
-                                                            <integer key="value" value="44"/>
+                                                            <integer key="value" value="29"/>
                                                         </userDefinedRuntimeAttribute>
                                                         <userDefinedRuntimeAttribute type="string" keyPath="prevDate" value="Mar 18, 2019"/>
                                                         <userDefinedRuntimeAttribute type="string" keyPath="nextDate" value="Jan 15, 2019"/>
                                                         <userDefinedRuntimeAttribute type="number" keyPath="daysUntil">
-                                                            <integer key="value" value="-19"/>
+                                                            <integer key="value" value="-10"/>
                                                         </userDefinedRuntimeAttribute>
                                                     </userDefinedRuntimeAttributes>
                                                 </view>

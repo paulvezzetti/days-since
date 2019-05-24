@@ -24,6 +24,11 @@ import UIKit
         static let daysValueFontSize: CGFloat = 24.0
         
     }
+    
+    static let lightYellow:UIColor = UIColor(red: 250.0/255.0, green: 212.0/255.0, blue: 142.0/255.0, alpha: 1.0)
+    static let lapisLazuli:UIColor = UIColor(red: 36.0/255.0, green: 123.0/255.0, blue: 160.0/255.0, alpha: 1.0)
+    static let vividAuburn:UIColor = UIColor(red: 165.0/255.0, green: 36.0/255.0, blue: 36.0/255.0, alpha: 1.0)
+    
     private let daysSinceString:String = "Days Since:"
     private let daysUntilString:String = "Days Until:"
     private let overdueString:String = "Overdue for:"
@@ -177,30 +182,9 @@ import UIKit
             nextDateLabel.text = ""
 
             
-//            let daysSinceValueString = String(daysSince)
-//            let daysSinceValueStringSize = measureText(label: daysSinceValueString, fontSize: 24)
-//
-//            daysSinceValueLabel.frame = CGRect(x: rect.maxX - Constants.leftRightPadding - daysSinceValueStringSize.width, y: yPos, width: daysSinceValueStringSize.width, height: daysSinceValueStringSize.height)
-//            daysSinceValueLabel.text = daysSinceValueString
-//            yPos += daysSinceValueStringSize.height
-//            yPos += 2
-//            yPos += Constants.lineThickness / 2.0
-            
             yPos += Constants.lineThickness / 2.0
-            let linePath = CGMutablePath()
-            linePath.move(to: CGPoint(x: rect.minX + Constants.timelinePadding, y: yPos))
-            linePath.addLine(to: CGPoint(x: rect.maxX - Constants.timelinePadding - Constants.lineThickness / 2.0, y: yPos))
-            
-            let clipPath = UIBezierPath(rect: CGRect(x: rect.minX + Constants.timelinePadding, y: yPos - Constants.lineThickness / 2.0, width: rect.width - Constants.timelinePadding, height: Constants.lineThickness))
-            clipPath.addClip()
-            
-            let timeline = UIBezierPath(cgPath: linePath)
-            timeline.lineCapStyle = CGLineCap.round
-            timeline.lineWidth = Constants.lineThickness
-            let lapisLazuli = UIColor(red: 36.0/255.0, green: 123.0/255.0, blue: 160.0/255.0, alpha: 1.0)
-            lapisLazuli.setStroke()
 
-            timeline.stroke()
+            drawTimeline(from: rect.minX + Constants.timelinePadding, to: rect.maxX - Constants.timelinePadding - Constants.lineThickness / 2.0, y: yPos, width: Constants.lineThickness, color: StatusIndicatorView.lapisLazuli)
             
             let daysSinceValueString = String(daysSince)
             let daysSinceValueStringSize = measureText(label: daysSinceValueString, fontSize: Constants.daysValueFontSize)
@@ -208,12 +192,6 @@ import UIKit
             daysSinceValueLabel.frame = CGRect(x: rect.minX + Constants.timelinePadding + 5.0, y: yPos - Constants.lineThickness / 2.0, width: daysSinceValueStringSize.width, height: daysSinceValueStringSize.height)
             daysSinceValueLabel.text = daysSinceValueString
             daysSinceValueLabel.textColor = UIColor.white
-            //yPos += daysSinceValueStringSize.height
-            //yPos += 2
-            //yPos += Constants.lineThicknessWide / 2.0
-
-            
-            
         }
         else if daysUntil >= 0 {
             // This is on-time with a next date
@@ -254,10 +232,10 @@ import UIKit
             let daysUntilValueString = String(daysUntil)
             let daysUntilValueStringSize = measureText(label: daysUntilValueString, fontSize: Constants.daysValueFontSize)
             
-            var availableWidth = rect.width - (2 * Constants.timelinePadding)  //- Constants.lineThickness / 2.0
+            var availableWidth = rect.width - (2 * Constants.timelinePadding) //- Constants.lineThickness / 2.0
             let percentComplete = Double(daysSince) / Double(daysSince + daysUntil)
             
-            let daysSinceLength = availableWidth * CGFloat(percentComplete)
+            var daysSinceLength = (availableWidth - Constants.lineThickness / 2.0) * CGFloat(percentComplete)
             
             var isDaysSinceValueInside = true
             var timelineStartX = rect.minX + Constants.timelinePadding
@@ -282,35 +260,11 @@ import UIKit
             // Draw a background track
             yPos += Constants.lineThickness / 2.0
             
-            let backgroundPath = CGMutablePath()
-            backgroundPath.move(to: CGPoint(x: timelineStartX, y: yPos))
-            backgroundPath.addLine(to: CGPoint(x: timelineEndX, y: yPos))
+            drawTimelineBackground(from: timelineStartX, to: timelineEndX, y: yPos, width: Constants.lineThickness, color: StatusIndicatorView.lightYellow)
             
-            let background = UIBezierPath(cgPath: backgroundPath)
-            background.lineWidth = Constants.lineThickness
-            let lightYellow = UIColor(red: 250.0/255.0, green: 212.0/255.0, blue: 142.0/255.0, alpha: 1.0)
-            lightYellow.setStroke()
-            
-            background.stroke()
-
-            
-            let lineLength = (availableWidth * CGFloat(percentComplete)) - Constants.lineThickness / 2.0
-
-            let percentTimePath = CGMutablePath()
-            percentTimePath.move(to: CGPoint(x: timelineStartX, y: yPos))
-            percentTimePath.addLine(to: CGPoint(x: timelineStartX + lineLength, y: yPos))
-            
-            let percentTimeLine = UIBezierPath(cgPath: percentTimePath)
-            percentTimeLine.lineCapStyle = CGLineCap.round
-            
-            percentTimeLine.lineWidth = Constants.lineThickness
-            let lapisLazuli = UIColor(red: 36.0/255.0, green: 123.0/255.0, blue: 160.0/255.0, alpha: 1.0)
-            lapisLazuli.setStroke()
-            
-            let clipPath = UIBezierPath(rect: CGRect(x: timelineStartX, y: yPos - Constants.lineThickness / 2.0, width: timelineEndX - timelineStartX, height: Constants.lineThickness))
-            clipPath.addClip()
-            
-            percentTimeLine.stroke()
+            //let lineLength = (availableWidth * CGFloat(percentComplete))// - Constants.lineThickness / 2.0
+            daysSinceLength = (availableWidth - Constants.lineThickness / 2.0) * CGFloat(percentComplete)
+            drawTimeline(from: timelineStartX, to: timelineStartX + daysSinceLength, y: yPos, width: Constants.lineThickness, color: StatusIndicatorView.lapisLazuli)
             
             yPos -= Constants.lineThickness / 2.0
             let daysSinceX:CGFloat = (isDaysSinceValueInside) ? timelineStartX + 5.0 : Constants.leftRightPadding * 2.0
@@ -384,45 +338,16 @@ import UIKit
                 availableWidth = timelineEndX - timelineStartX
             }
 
-            let timelinePath = CGMutablePath()
+            //let timelinePath = CGMutablePath()
             let startX = timelineStartX // rect.minX + Constants.timelinePadding
             let minY = yPos
             let maxY = yPos + Constants.lineThickness
             let midY = yPos + Constants.lineThickness / 2.0
             let endX = timelineEndX - Constants.lineThickness / 2.0// rect.maxX - Constants.timelinePadding - Constants.lineThickness / 2.0
             
-            timelinePath.move(to: CGPoint(x: startX, y: minY))
-            timelinePath.addLine(to: CGPoint(x: startX, y: maxY))
-            timelinePath.addLine(to: CGPoint(x: endX, y: maxY))
-            timelinePath.addArc(center: CGPoint(x: endX, y: midY), radius: Constants.lineThickness / 2.0, startAngle: CGFloat(3.0 * Double.pi / 2.0) , endAngle: CGFloat(Double.pi / 2.0), clockwise: false)
-            timelinePath.addLine(to: CGPoint(x: endX, y: minY))
-            timelinePath.closeSubpath()
+            let colors = [StatusIndicatorView.lapisLazuli.cgColor, StatusIndicatorView.vividAuburn.cgColor]
 
-            let vividAuburn = UIColor(red: 165.0/255.0, green: 36.0/255.0, blue: 36.0/255.0, alpha: 1.0)
-//            vividAuburn.setFill()
-            let lapisLazuli = UIColor(red: 36.0/255.0, green: 123.0/255.0, blue: 160.0/255.0, alpha: 1.0)
-//            lapisLazuli.setStroke()
-
-            
-
-            if let context = UIGraphicsGetCurrentContext() {
-                context.saveGState()
-
-                let timeline = UIBezierPath(cgPath: timelinePath)
-                timeline.addClip()
-
-                let colors = [lapisLazuli.cgColor, vividAuburn.cgColor]
-                let colorSpace = CGColorSpaceCreateDeviceRGB()
-                
-                let gradStart = max(0.0, CGFloat(percentOnTime) - gradPercent / 2.0)
-                let gradEnd = min(1.0, CGFloat(percentOnTime) + gradPercent / 2.0)
-                
-                let colorLocations: [CGFloat] = [gradStart, gradEnd]
-                let gradient = CGGradient(colorsSpace: colorSpace, colors: colors as CFArray, locations: colorLocations)!
-                context.drawLinearGradient(gradient, start: CGPoint(x: startX, y: midY), end: CGPoint(x: endX + Constants.lineThickness / 2.0, y: midY), options: [])
-                
-                context.restoreGState()
-            }
+            drawTimeline(from: startX, to: endX, y: midY, width: Constants.lineThickness, colors: colors, inflectionPct: CGFloat(percentOnTime))
             
             let onTimeMarkerPath = CGMutablePath()
             onTimeMarkerPath.move(to: CGPoint(x: timelineStartX + (availableWidth * CGFloat(percentOnTime)), y: minY - 1.0))
@@ -434,10 +359,6 @@ import UIKit
             UIColor.black.setStroke()
             onTimeMarkerLine.stroke()
             
-            
-//            vividAuburn.setFill()
-//            timeline.fill()
-
             let daysSinceX:CGFloat = (isOnTimeValueInside) ? timelineStartX + 5.0 : Constants.leftRightPadding * 2.0
 
             daysSinceValueLabel.frame = CGRect(x: daysSinceX, y: midY - daysSinceValueStringSize.height / 2.0, width: daysSinceValueStringSize.width, height: daysSinceValueStringSize.height)
@@ -466,41 +387,6 @@ import UIKit
             }
 
             
-            // Draw a background track
-//            let backgroundPath = CGMutablePath()
-//            backgroundPath.move(to: CGPoint(x: rect.minX + Constants.timelinePadding, y: yPos + Constants.lineThickness / 2.0))
-//            backgroundPath.addLine(to: CGPoint(x: rect.maxX - Constants.timelinePadding - Constants.lineThickness / 2.0, y: yPos + Constants.lineThickness / 2.0))
-//
-//
-//
-//            let background = UIBezierPath(cgPath: backgroundPath)
-//            background.lineWidth = Constants.lineThickness
-//            background.lineCapStyle = CGLineCap.round
-//            let vividAuburn = UIColor(red: 165.0/255.0, green: 36.0/255.0, blue: 36.0/255.0, alpha: 1.0)
-//            vividAuburn.setStroke()
-//
-//            background.stroke()
-
-//            let availableWidth = rect.width - 2 * Constants.leftRightPadding
-//            let percentComplete = Double(daysSince - abs(daysUntil)) / Double(daysSince)
-//            let lineLength = (availableWidth * CGFloat(percentComplete)) - Constants.lineThickness / 2.0
-//            let percentTimePath = CGMutablePath()
-//            percentTimePath.move(to: CGPoint(x: rect.minX + Constants.leftRightPadding, y: rect.midY))
-//            percentTimePath.addLine(to: CGPoint(x: rect.minX + Constants.leftRightPadding + lineLength, y: rect.midY))
-//
-//            let percentTimeLine = UIBezierPath(cgPath: percentTimePath)
-//            percentTimeLine.lineCapStyle = CGLineCap.round
-//
-//            percentTimeLine.lineWidth = Constants.lineThickness
-//            let lapisLazuli = UIColor(red: 36.0/255.0, green: 123.0/255.0, blue: 160.0/255.0, alpha: 1.0)
-//            lapisLazuli.setStroke()
-//
-//            let clipPath = UIBezierPath(rect: CGRect(x: rect.minX + Constants.leftRightPadding, y: rect.midY - Constants.lineThickness / 2.0, width: rect.width - Constants.leftRightPadding, height: Constants.lineThickness))
-//            clipPath.addClip()
-//
-//            percentTimeLine.stroke()
-
-            
         }
     }
     
@@ -510,4 +396,77 @@ import UIKit
         return NSString(string: label).size(withAttributes: attributes)
     }
 
+    
+    private func drawTimelineBackground(from xStart:CGFloat, to xEnd:CGFloat, y: CGFloat, width: CGFloat, color: UIColor) {
+        let background = CGMutablePath()
+        let yLower: CGFloat = y - width / 2.0
+        let yUpper: CGFloat = y + width / 2.0
+        background.move(to: CGPoint(x: xStart, y: yLower))
+        background.addLine(to: CGPoint(x: xEnd, y: yLower))
+        background.addLine(to: CGPoint(x: xEnd, y: yUpper))
+        background.addLine(to: CGPoint(x: xStart, y: yUpper))
+        background.closeSubpath()
+        
+        let timeline = UIBezierPath(cgPath: background)
+        color.setFill()
+        timeline.fill()
+    }
+    
+    private func drawTimeline(from xStart:CGFloat, to xEnd:CGFloat, y: CGFloat, width: CGFloat, color: UIColor) {
+        let path = createTimelineProgressPath(from: xStart, to: xEnd, y: y, width: width)
+        
+        let timeline = UIBezierPath(cgPath: path)
+        color.setFill()
+        timeline.fill()
+    }
+    
+    private func drawTimeline(from xStart:CGFloat, to xEnd:CGFloat, y: CGFloat, width: CGFloat, colors: [CGColor], inflectionPct: CGFloat) {
+        guard let context = UIGraphicsGetCurrentContext() else {
+            return
+        }
+        context.saveGState()
+        let timelinePath = createTimelineProgressPath(from: xStart, to: xEnd, y: y, width: width)
+        let timeline = UIBezierPath(cgPath: timelinePath)
+        timeline.addClip()
+        
+        let colorSpace = CGColorSpaceCreateDeviceRGB()
+        
+        let gradStart = max(0.0, inflectionPct - 0.05)
+        let gradEnd = min(1.0, inflectionPct + 0.05)
+        
+        let colorLocations: [CGFloat] = [gradStart, gradEnd]
+        let gradient = CGGradient(colorsSpace: colorSpace, colors: colors as CFArray, locations: colorLocations)!
+        context.drawLinearGradient(gradient, start: CGPoint(x: xStart, y: y), end: CGPoint(x: xEnd + width / 2.0, y: y), options: [])
+        
+        context.restoreGState()
+    }
+    
+    /**
+     Creates a path to represent the timeline progress. This is a rectangle with a square left end and a round right end. The
+     round end is draw after the 'to' x value. In other words, the actual shape is width / 2 longer than the 'to' minus the 'from'.
+     
+     - Parameters:
+     - from : x value to start from
+     - to: x value to end the main part of the path. The rounded end will begin at this value.
+     - y: y value of the middle of the path
+     - width: width of path
+     
+     - Returns: CGPath for the progress path
+ 
+     */
+    private func createTimelineProgressPath(from xStart:CGFloat, to xEnd: CGFloat, y: CGFloat, width: CGFloat) -> CGMutablePath {
+        let timelinePath = CGMutablePath()
+        let yLower = y - width / 2.0
+        let yUpper = y + width / 2.0
+        
+        timelinePath.move(to: CGPoint(x: xStart, y: yLower))
+        timelinePath.addLine(to: CGPoint(x: xStart, y: yUpper))
+        timelinePath.addLine(to: CGPoint(x: xEnd, y: yUpper))
+        timelinePath.addArc(center: CGPoint(x: xEnd, y: y), radius: Constants.lineThickness / 2.0, startAngle: CGFloat(3.0 * Double.pi / 2.0) , endAngle: CGFloat(Double.pi / 2.0), clockwise: false)
+        timelinePath.addLine(to: CGPoint(x: xEnd, y: yLower))
+        timelinePath.closeSubpath()
+
+        return timelinePath
+    }
+    
 }
