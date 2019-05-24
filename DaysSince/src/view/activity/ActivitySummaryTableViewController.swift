@@ -25,7 +25,7 @@ class ActivitySummaryTableViewController: UITableViewController {
     
     
     @IBOutlet var intervalDotPlot: IntervalDotPlotView!
-    
+    @IBOutlet var statusIndicatorView: StatusIndicatorView!
     
     var activity:ActivityMO? {
         didSet {
@@ -57,7 +57,7 @@ class ActivitySummaryTableViewController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return 9 //section == 0 ? 4 : 5
+        return 10 //section == 0 ? 4 : 5
     }
 
 //    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
@@ -120,6 +120,11 @@ class ActivitySummaryTableViewController: UITableViewController {
         
         
         intervalDotPlot.intervals = stats.intervals
+        
+        statusIndicatorView.daysSince = stats.daySince ?? 0
+        statusIndicatorView.daysUntil = stats.daysUntil != nil ? stats.daysUntil! : Int.max
+        statusIndicatorView.nextDate = nextDate != nil ? nextDate!.getFormattedDate() : ""
+        statusIndicatorView.prevDate = lastDate != nil ? lastDate!.getFormattedDate() : ""
     }
 
     

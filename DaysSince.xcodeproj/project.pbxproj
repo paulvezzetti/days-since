@@ -54,6 +54,7 @@
 		FAB23B7B223F2436004C6252 /* ReminderMO+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAB23B77223F2436004C6252 /* ReminderMO+CoreDataClass.swift */; };
 		FAB23B822241A152004C6252 /* NumberFormatterOrdinal.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAB23B812241A152004C6252 /* NumberFormatterOrdinal.swift */; };
 		FAB8D059228F243E005138C3 /* IntervalDotPlotView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAB8D058228F243E005138C3 /* IntervalDotPlotView.swift */; };
+		FAB8D05B2295A1FF005138C3 /* StatusIndicatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAB8D05A2295A1FF005138C3 /* StatusIndicatorView.swift */; };
 		FABBCA7F2278DFEE0034CB78 /* Localizable.stringsdict in Resources */ = {isa = PBXBuildFile; fileRef = FABBCA7D2278DFEE0034CB78 /* Localizable.stringsdict */; };
 		FAC1DE9C22562D7700A211D6 /* ScaleDateComponentPickerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAC1DE9B22562D7700A211D6 /* ScaleDateComponentPickerController.swift */; };
 		FAC1DE9E22562DC100A211D6 /* ScaleDateComponentPickerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAC1DE9D22562DC100A211D6 /* ScaleDateComponentPickerDelegate.swift */; };
@@ -119,6 +120,7 @@
 		FAB23B77223F2436004C6252 /* ReminderMO+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ReminderMO+CoreDataClass.swift"; sourceTree = "<group>"; };
 		FAB23B812241A152004C6252 /* NumberFormatterOrdinal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NumberFormatterOrdinal.swift; sourceTree = "<group>"; };
 		FAB8D058228F243E005138C3 /* IntervalDotPlotView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntervalDotPlotView.swift; sourceTree = "<group>"; };
+		FAB8D05A2295A1FF005138C3 /* StatusIndicatorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusIndicatorView.swift; sourceTree = "<group>"; };
 		FABBCA7E2278DFEE0034CB78 /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.stringsdict; name = Base; path = DaysSince/Base.lproj/Localizable.stringsdict; sourceTree = "<group>"; };
 		FAC1DE9B22562D7700A211D6 /* ScaleDateComponentPickerController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScaleDateComponentPickerController.swift; sourceTree = "<group>"; };
 		FAC1DE9D22562DC100A211D6 /* ScaleDateComponentPickerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScaleDateComponentPickerDelegate.swift; sourceTree = "<group>"; };
@@ -268,6 +270,7 @@
 				FAE2F69722456DEC009B0DCB /* CollapsibleTableViewHeaderDelegate.swift */,
 				FAB8D058228F243E005138C3 /* IntervalDotPlotView.swift */,
 				DA6AAD4B22934C8A00711533 /* DaysSinceProgressView.swift */,
+				FAB8D05A2295A1FF005138C3 /* StatusIndicatorView.swift */,
 			);
 			path = components;
 			sourceTree = "<group>";
@@ -411,6 +414,7 @@
 				FA1D7347222F550D00D8EBF7 /* MarkDoneTableViewController.swift in Sources */,
 				FA1D72F42226F7DE00D8EBF7 /* MonthDayPickerController.swift in Sources */,
 				FA1D73332228C60E00D8EBF7 /* MonthlyIntervalMO+CoreDataClass.swift in Sources */,
+				FAB8D05B2295A1FF005138C3 /* StatusIndicatorView.swift in Sources */,
 				DA0B1E272259412500992A42 /* ChooseActiveRangeTableViewController.swift in Sources */,
 				FA3197742289EBA700FECBE9 /* UITextFieldUtility.swift in Sources */,
 				FA1D734D22307F9B00D8EBF7 /* EventDetailsViewController.swift in Sources */,

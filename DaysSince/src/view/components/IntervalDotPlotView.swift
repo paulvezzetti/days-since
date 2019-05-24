@@ -31,9 +31,9 @@ import CoreGraphics
         }
     }
     
-    var minValueLabel:UILabel?
-    var maxValueLabel:UILabel?
-    var avgValueLabel:UILabel?
+    private var minValueLabel:UILabel?
+    private var maxValueLabel:UILabel?
+    private var avgValueLabel:UILabel?
     
     
     private func calculateMinMaxAvg() -> (min: Double, max: Double, avg: Double) {
