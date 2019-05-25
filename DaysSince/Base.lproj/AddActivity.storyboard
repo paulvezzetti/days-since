@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Stack View standard spacing" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -237,6 +237,7 @@
                                                         </label>
                                                         <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="3nk-fg-3Uq">
                                                             <rect key="frame" x="294" y="0.0" width="51" height="30"/>
+                                                            <color key="onTintColor" name="LapisBlue"/>
                                                             <connections>
                                                                 <action selector="enableReminderChanged:" destination="0zy-ap-i7T" eventType="valueChanged" id="lc6-TI-vYZ"/>
                                                             </connections>
@@ -312,6 +313,7 @@
                                                         </label>
                                                         <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="qUe-6a-55a">
                                                             <rect key="frame" x="294" y="0.0" width="51" height="30"/>
+                                                            <color key="onTintColor" name="LapisBlue"/>
                                                             <connections>
                                                                 <action selector="enableSnoozeChanged:" destination="0zy-ap-i7T" eventType="valueChanged" id="OWB-9Z-6pX"/>
                                                             </connections>
@@ -831,6 +833,9 @@
         </namedColor>
         <namedColor name="HeaderText">
             <color red="0.54117647058823526" green="0.54117647058823526" blue="0.54117647058823526" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="LapisBlue">
+            <color red="0.14117647058823529" green="0.4823529411764706" blue="0.62745098039215685" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
     </resources>
 </document>

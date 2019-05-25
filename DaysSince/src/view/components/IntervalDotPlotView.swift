@@ -11,10 +11,6 @@ import CoreGraphics
 
 @IBDesignable class IntervalDotPlotView: UIView {
     
-//    private enum TextAnchor {
-//        case TopLeft, TopCenter, TopRight, MiddleLeft, MiddleCenter, MiddleRight, BottomLeft, BottomCenter, BottomRight
-//    }
-
     private struct Constants {
         static let leftRightPadding: CGFloat = 10.0
         static let topBottomPadding: CGFloat = 3.0
@@ -176,26 +172,8 @@ import CoreGraphics
     
     @discardableResult
     private func configureLabel(_ label:UILabel, text:String, x: CGFloat, y: CGFloat, textAnchor:UILabel.TextAnchor = .BottomLeft, fontSize:CGFloat = 16.0, textColor:UIColor = UIColor.blue, textAlignment:NSTextAlignment = NSTextAlignment.left) -> CGRect {
-//        let systemFont = UIFont.systemFont(ofSize: fontSize)
-//        let attributes = [NSAttributedString.Key.font: systemFont]
-//        let textSize = NSString(string: text).size(withAttributes: attributes)
-//
-//        let location = calculateXY(x: x, y: y, size: textSize, textAnchor: textAnchor)
-//
-//        label.frame = CGRect(x: location.xPos, y: location.yPos, width: textSize.width, height: textSize.height)
-//        label.text = text
-//        label.textAlignment = textAlignment
-//        label.font = systemFont
-//        label.textColor = textColor
-//
-//        return CGRect(x: location.xPos, y: location.yPos, width: textSize.width, height: textSize.height)
-        
         let systemFont = UIFont.systemFont(ofSize: fontSize)
-        label.text = text
-        label.textAlignment = textAlignment
-        label.font = systemFont
-        label.textColor = textColor
-
+        label.configure(text: text, font: systemFont, color: textColor, alignment: textAlignment)
         return label.updateFrame(x: x, y: y, textAnchor: textAnchor)
     }
     
@@ -223,35 +201,6 @@ import CoreGraphics
         dotBorderCurve.fill()
     }
     
-    private func calculateXY(x:CGFloat, y: CGFloat, size:CGSize, textAnchor:UILabel.TextAnchor) -> (xPos: CGFloat, yPos: CGFloat) {
-        var xPos = x
-        var yPos = y
-        switch textAnchor {
-        case .BottomCenter:
-            xPos = x - size.width / 2.0
-            yPos = y - size.height
-        case .TopLeft:
-            break
-        case .TopCenter:
-            xPos = x - size.width / 2.0
-        case .TopRight:
-            xPos = x - size.width
-        case .MiddleLeft:
-            yPos = y - size.height / 2.0
-        case .MiddleCenter:
-            yPos = y - size.height / 2.0
-            xPos = x - size.width / 2.0
-        case .MiddleRight:
-            yPos = y - size.height / 2.0
-            xPos = x - size.width
-        case .BottomLeft:
-            yPos = y - size.height
-        case .BottomRight:
-            xPos = x - size.width
-            yPos = y - size.height
-        }
-        return (xPos, yPos)
-    }
 
     
     private func padRect(_ rect:CGRect) -> CGRect {

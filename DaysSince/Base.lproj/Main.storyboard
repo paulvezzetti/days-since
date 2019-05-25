@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="H1p-Uh-vWS">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="H1p-Uh-vWS">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="Stack View standard spacing" minToolsVersion="9.0"/>
@@ -62,6 +62,7 @@
                                             <segment title="History"/>
                                             <segment title="Settings"/>
                                         </segments>
+                                        <color key="tintColor" name="LapisBlue"/>
                                     </segmentedControl>
                                     <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kC3-vI-ZNJ">
                                         <rect key="frame" x="0.0" y="79" width="351" height="462"/>
@@ -78,12 +79,14 @@
                                 <rect key="frame" x="0.0" y="619" width="375" height="48"/>
                                 <items>
                                     <barButtonItem title="Delete" image="TrashIcon" style="plain" id="iUL-1y-6Ht">
+                                        <color key="tintColor" name="LapisBlue"/>
                                         <connections>
                                             <action selector="onDelete:" destination="JEX-9P-axG" id="v37-jd-m3a"/>
                                         </connections>
                                     </barButtonItem>
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="OOo-4i-Bc6"/>
                                     <barButtonItem title="MarkDone" image="MarkDoneIcon" style="plain" id="mQL-7t-4nr">
+                                        <color key="tintColor" name="LapisBlue"/>
                                         <connections>
                                             <action selector="markDoneFromToolbar:" destination="JEX-9P-axG" id="rz9-g2-u9V"/>
                                             <segue destination="zDO-ED-ieY" kind="presentation" identifier="markDoneSegue" id="mLW-I0-Aln"/>
@@ -91,6 +94,7 @@
                                     </barButtonItem>
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="uhy-mh-WfN"/>
                                     <barButtonItem title="Snooze" image="SnoozeIcon" style="plain" id="xrX-bk-LMP">
+                                        <color key="tintColor" name="LapisBlue"/>
                                         <connections>
                                             <action selector="snoozeFromToolbar:" destination="JEX-9P-axG" id="tAi-XQ-Tg4"/>
                                         </connections>
@@ -98,6 +102,7 @@
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="56h-rw-AgD"/>
                                     <barButtonItem title="Edit" image="EditIcon" style="plain" id="iQb-z2-4uR">
                                         <inset key="largeContentSizeImageInsets" minX="0.0" minY="1" maxX="0.0" maxY="0.0"/>
+                                        <color key="tintColor" name="LapisBlue"/>
                                         <connections>
                                             <segue destination="AE5-9Y-827" kind="show" identifier="editActivity" id="vV1-vt-UA0"/>
                                         </connections>
@@ -245,6 +250,7 @@
                     </tableView>
                     <navigationItem key="navigationItem" title="Days Since" id="Zdf-7t-Un8">
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="XWs-O9-GAl">
+                            <color key="tintColor" name="LapisBlue"/>
                             <connections>
                                 <segue destination="AE5-9Y-827" kind="show" identifier="presentAddActivity" id="m8M-iz-Q6X"/>
                             </connections>
@@ -334,9 +340,6 @@
                                                         </userDefinedRuntimeAttribute>
                                                         <userDefinedRuntimeAttribute type="string" keyPath="prevDate" value="Mar 18, 2019"/>
                                                         <userDefinedRuntimeAttribute type="string" keyPath="nextDate" value="Jan 15, 2019"/>
-                                                        <userDefinedRuntimeAttribute type="number" keyPath="daysUntil">
-                                                            <integer key="value" value="-10"/>
-                                                        </userDefinedRuntimeAttribute>
                                                     </userDefinedRuntimeAttributes>
                                                 </view>
                                             </subviews>
@@ -604,6 +607,7 @@
                     <toolbarItems/>
                     <navigationItem key="navigationItem" title="Event" id="p3n-RQ-bMl">
                         <barButtonItem key="rightBarButtonItem" title="Update" id="WZe-m9-48d">
+                            <color key="tintColor" name="LapisBlue"/>
                             <connections>
                                 <action selector="updateEvent:" destination="3xV-HP-U3r" id="tII-4L-DNd"/>
                             </connections>
@@ -882,9 +886,13 @@
         <namedColor name="Alert Red">
             <color red="0.61900001764297485" green="0.0" blue="0.0" alpha="0.75700002908706665" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
+        <namedColor name="LapisBlue">
+            <color red="0.14117647058823529" green="0.4823529411764706" blue="0.62745098039215685" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="m8M-iz-Q6X"/>
+        <segue reference="vV1-vt-UA0"/>
         <segue reference="BMi-sG-zyJ"/>
     </inferredMetricsTieBreakers>
+    <color key="tintColor" name="LapisBlue"/>
 </document>

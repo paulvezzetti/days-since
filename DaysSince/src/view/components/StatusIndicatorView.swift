@@ -164,8 +164,11 @@ import UIKit
             overdueTitleLabel.text = ""
             overdueTitleLabel.frame = CGRect(x: 0.0, y: 0.0, width: 0.0, height: 0.0)
             var yPos:CGFloat = Constants.verticalGap
-            daysSinceTitleLabel.frame = CGRect(x: rect.minX + Constants.leftRightPadding, y: yPos, width: daysSinceTitleSize.width, height: daysSinceTitleSize.height)
-            yPos += daysSinceTitleSize.height
+            
+            let dsTitleSize = daysSinceTitleLabel.updateFrame(x: rect.minX + Constants.leftRightPadding, y: yPos, textAnchor: .TopLeft)
+            
+            //daysSinceTitleLabel.frame = CGRect(x: rect.minX + Constants.leftRightPadding, y: yPos, width: daysSinceTitleSize.width, height: daysSinceTitleSize.height)
+            yPos += dsTitleSize.height
             yPos += Constants.verticalGap
             
             if let prev = prevDate {
