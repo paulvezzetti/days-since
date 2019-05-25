@@ -16,117 +16,57 @@ import UIKit
     @IBInspectable var nextDate:String?
     
     private struct Constants {
-        static let lineThickness: CGFloat = 28.0
-        static let leftRightPadding: CGFloat = 5.0
-        static let verticalGap: CGFloat = 4.0
+        static let TimelineThickness: CGFloat = 28.0
+        static let HalfTimelineThickness: CGFloat = Constants.TimelineThickness / 2.0
+        static let TimelineIndent: CGFloat = 20.0
+        static let LeftRightPadding: CGFloat = 5.0
+        static let DateLeftRightPadding: CGFloat = 10.0
+        static let VerticalSpacing: CGFloat = 4.0
+        static let OutsideDaysLabelSpacing: CGFloat = 2.0
+        static let InsideDaysLabelPadding: CGFloat = 3.0
+        static let DateMarkerHeight: CGFloat = 3.0
+        static let DateMarkerLineWidth: CGFloat = 2.0
         
-        static let timelinePadding: CGFloat = 20.0
-        static let daysValueFontSize: CGFloat = 24.0
+        static let DaysValueFontSize: CGFloat = 24.0
+        static let DateLabelFontSize: CGFloat = 14.0
+        static let DaysLabelFontSize: CGFloat = 16.0
+        
+        static let GradientWidth: CGFloat = 0.1
         
     }
     
     static let lightYellow:UIColor = UIColor(red: 250.0/255.0, green: 212.0/255.0, blue: 142.0/255.0, alpha: 1.0)
     static let lapisLazuli:UIColor = UIColor(red: 36.0/255.0, green: 123.0/255.0, blue: 160.0/255.0, alpha: 1.0)
     static let vividAuburn:UIColor = UIColor(red: 165.0/255.0, green: 36.0/255.0, blue: 36.0/255.0, alpha: 1.0)
+    static let LightTimelineTextColor: UIColor = UIColor.white
+    static let DarkTimelineTextColor: UIColor = UIColor.black
     
-    private let daysSinceString:String = "Days Since:"
-    private let daysUntilString:String = "Days Until:"
-    private let overdueString:String = "Overdue for:"
+    private static let DaysSinceLocalized:String = NSLocalizedString("daysSince", value: "Days Since :", comment: "")
+    private static let DaysUntilLocalized:String = NSLocalizedString("daysUntil", value: "Days Until :", comment: "")
+    private static let OverdueForLocalized:String = NSLocalizedString("overdueFor", value: "Overdue For :", comment: "")
     
-    private lazy var daysSinceTitleSize:CGSize = {
-        let systemFont = UIFont.systemFont(ofSize: 16)
-        let attributes = [NSAttributedString.Key.font: systemFont]
-        return NSString(string: daysSinceString).size(withAttributes: attributes)
-    }()
-
-    private lazy var daysUntilTitleSize:CGSize = {
-        let systemFont = UIFont.systemFont(ofSize: 16)
-        let attributes = [NSAttributedString.Key.font: systemFont]
-        return NSString(string: daysUntilString).size(withAttributes: attributes)
-    }()
-
-    private lazy var overdueTitleSize:CGSize = {
-        let systemFont = UIFont.systemFont(ofSize: 16)
-        let attributes = [NSAttributedString.Key.font: systemFont]
-        return NSString(string: overdueString).size(withAttributes: attributes)
-    }()
-
     private lazy var daysSinceTitleLabel:UILabel = {
-        let measuredTextSize = self.daysSinceTitleSize
-
-        let label = UILabel(frame: CGRect(x: 0.0, y: 0.0, width: measuredTextSize.width, height: measuredTextSize.height))
-        label.text = daysSinceString
-        label.textAlignment = NSTextAlignment.left
-        label.font = UIFont.systemFont(ofSize: 16)
-        label.textColor = UIColor.black
-        
-        return label
+        return UILabel(frame: CGRect.zero)
     }()
 
     private lazy var daysUntilTitleLabel:UILabel = {
-        let measuredTextSize = self.daysUntilTitleSize
-        
-        let label = UILabel(frame: CGRect(x: 0.0, y: 0.0, width: measuredTextSize.width, height: measuredTextSize.height))
-        label.text = daysUntilString
-        label.textAlignment = NSTextAlignment.left
-        label.font = UIFont.systemFont(ofSize: 16)
-        label.textColor = UIColor.black
-        
-        return label
-    }()
-
-    private lazy var overdueTitleLabel:UILabel = {
-        let measuredTextSize = self.daysUntilTitleSize
-        
-        let label = UILabel(frame: CGRect(x: 0.0, y: 0.0, width: measuredTextSize.width, height: measuredTextSize.height))
-        label.text = overdueString
-        label.textAlignment = NSTextAlignment.left
-        label.font = UIFont.systemFont(ofSize: 16)
-        label.textColor = UIColor.black
-        
-        return label
+        return UILabel(frame: CGRect.zero)
     }()
 
     private lazy var daysSinceValueLabel:UILabel = {
-        let label = UILabel(frame: CGRect(x: 0.0, y: 0.0, width: 10.0, height: 10.0))
-        label.text = String(daysSince)
-        label.textAlignment = NSTextAlignment.left
-        label.font = UIFont.systemFont(ofSize: 24)
-        label.textColor = UIColor.black
-        
-        return label
-
+        return UILabel(frame: CGRect.zero)
     }()
 
     private lazy var daysUntilValueLabel:UILabel = {
-        let label = UILabel(frame: CGRect(x: 0.0, y: 0.0, width: 10.0, height: 10.0))
-        label.text = String(daysUntil)
-        label.textAlignment = NSTextAlignment.left
-        label.font = UIFont.systemFont(ofSize: 24)
-        label.textColor = UIColor.black
-        
-        return label
-        
+        return UILabel(frame: CGRect.zero)
     }()
 
     private lazy var lastDateLabel:UILabel = {
-        let label = UILabel(frame: CGRect(x: 0.0, y: 0.0, width: 0.0, height: 0.0))
-        label.text = ""
-        label.textAlignment = NSTextAlignment.left
-        label.font = UIFont.systemFont(ofSize: 12)
-        label.textColor = UIColor.black
-        
-        return label
+        return UILabel(frame: CGRect.zero)
     }()
 
     private lazy var nextDateLabel:UILabel = {
-        let label = UILabel(frame: CGRect(x: 0.0, y: 0.0, width: 0.0, height: 0.0))
-        label.text = ""
-        label.textAlignment = NSTextAlignment.left
-        label.font = UIFont.systemFont(ofSize: 12)
-        label.textColor = UIColor.black
-        
-        return label
+        return UILabel(frame: CGRect.zero)
     }()
 
     override init(frame: CGRect) {
@@ -135,263 +75,241 @@ import UIKit
         addSubview(daysSinceValueLabel)
         addSubview(daysUntilTitleLabel)
         addSubview(daysUntilValueLabel)
-        addSubview(overdueTitleLabel)
         addSubview(lastDateLabel)
         addSubview(nextDateLabel)
     }
-    
+
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         addSubview(daysSinceTitleLabel)
         addSubview(daysSinceValueLabel)
         addSubview(daysUntilTitleLabel)
         addSubview(daysUntilValueLabel)
-        addSubview(overdueTitleLabel)
         addSubview(lastDateLabel)
         addSubview(nextDateLabel)
     }
 
     
     override func draw(_ rect: CGRect) {
-        // Drawing code
-        
+        // Drawing is based on the status of the activity: Unlimited, on-time, overdue.
         if daysUntil == Int.max {
             // This is the case of an unlimited activity
-            daysUntilTitleLabel.text = ""
-            daysUntilTitleLabel.frame = CGRect(x: 0.0, y: 0.0, width: 0.0, height: 0.0)
-            daysUntilValueLabel.text = ""
-            daysUntilValueLabel.frame = CGRect(x: 0.0, y: 0.0, width: 0.0, height: 0.0)
-            overdueTitleLabel.text = ""
-            overdueTitleLabel.frame = CGRect(x: 0.0, y: 0.0, width: 0.0, height: 0.0)
-            var yPos:CGFloat = Constants.verticalGap
-            
-            let dsTitleSize = daysSinceTitleLabel.updateFrame(x: rect.minX + Constants.leftRightPadding, y: yPos, textAnchor: .TopLeft)
-            
-            //daysSinceTitleLabel.frame = CGRect(x: rect.minX + Constants.leftRightPadding, y: yPos, width: daysSinceTitleSize.width, height: daysSinceTitleSize.height)
-            yPos += dsTitleSize.height
-            yPos += Constants.verticalGap
-            
-            if let prev = prevDate {
-                // yPos += Constants.lineThickness / 2.0
-                // yPos += 2
-                lastDateLabel.text = prevDate
-                let lastDateLabelSize = measureText(label: prev, fontSize: 12.0)
-                lastDateLabel.frame = CGRect(x: rect.minX + Constants.leftRightPadding * 2.0, y: yPos, width: lastDateLabelSize.width, height: lastDateLabelSize.height)
-                
-                yPos += lastDateLabelSize.height
-                yPos += Constants.verticalGap
-                
-            }
-            nextDateLabel.text = ""
-
-            
-            yPos += Constants.lineThickness / 2.0
-
-            drawTimeline(from: rect.minX + Constants.timelinePadding, to: rect.maxX - Constants.timelinePadding - Constants.lineThickness / 2.0, y: yPos, width: Constants.lineThickness, color: StatusIndicatorView.lapisLazuli)
-            
-            let daysSinceValueString = String(daysSince)
-            let daysSinceValueStringSize = measureText(label: daysSinceValueString, fontSize: Constants.daysValueFontSize)
-            
-            daysSinceValueLabel.frame = CGRect(x: rect.minX + Constants.timelinePadding + 5.0, y: yPos - Constants.lineThickness / 2.0, width: daysSinceValueStringSize.width, height: daysSinceValueStringSize.height)
-            daysSinceValueLabel.text = daysSinceValueString
-            daysSinceValueLabel.textColor = UIColor.white
+            drawAsUnlimited(rect)
         }
         else if daysUntil >= 0 {
-            // This is on-time with a next date
-            overdueTitleLabel.text = ""
-            overdueTitleLabel.frame = CGRect(x: 0.0, y: 0.0, width: 0.0, height: 0.0)
-
-            
-            var yPos:CGFloat = Constants.verticalGap
-            // Place the labels for "Day Since" and "Days Until" in the same row.
-            daysSinceTitleLabel.frame = CGRect(x: rect.minX + Constants.leftRightPadding, y: yPos, width: daysSinceTitleSize.width, height: daysSinceTitleSize.height)
-            
-            daysUntilTitleLabel.frame = CGRect(x: rect.maxX - Constants.leftRightPadding - daysUntilTitleSize.width, y: yPos, width: daysUntilTitleSize.width, height: daysUntilTitleSize.height)
-            yPos += daysSinceTitleSize.height
-            yPos += Constants.verticalGap
-            
-            // Place the previous and next dates in the next row
-            var dateLabelHeight: CGFloat = 0.0
-            if let prev = prevDate {
-                lastDateLabel.text = prev
-                let lastDateLabelSize = measureText(label: prev, fontSize: 12.0)
-                lastDateLabel.frame = CGRect(x: rect.minX + Constants.leftRightPadding * 2.0, y: yPos, width: lastDateLabelSize.width, height: lastDateLabelSize.height)
-                dateLabelHeight = lastDateLabelSize.height
-            }
-            if let next = nextDate {
-                nextDateLabel.text = next
-                let nextDateLabelSize = measureText(label: next, fontSize: 12)
-                nextDateLabel.frame = CGRect(x: rect.maxX - Constants.leftRightPadding * 2.0 - nextDateLabelSize.width, y: yPos, width: nextDateLabelSize.width, height: nextDateLabelSize.height)
-                dateLabelHeight = max(dateLabelHeight, nextDateLabelSize.height)
-            }
-
-            yPos += dateLabelHeight
-            yPos += Constants.verticalGap
-            // Measure the size of the DaysSince and DaysUntil value labels. Need to decide if one of them needs to
-            // be placed outside of the timeline. If so, the timeline width will need to be adjusted.
-            let daysSinceValueString = String(daysSince)
-            let daysSinceValueStringSize = measureText(label: daysSinceValueString, fontSize: Constants.daysValueFontSize)
-
-            let daysUntilValueString = String(daysUntil)
-            let daysUntilValueStringSize = measureText(label: daysUntilValueString, fontSize: Constants.daysValueFontSize)
-            
-            var availableWidth = rect.width - (2 * Constants.timelinePadding) //- Constants.lineThickness / 2.0
-            let percentComplete = Double(daysSince) / Double(daysSince + daysUntil)
-            
-            var daysSinceLength = (availableWidth - Constants.lineThickness / 2.0) * CGFloat(percentComplete)
-            
-            var isDaysSinceValueInside = true
-            var timelineStartX = rect.minX + Constants.timelinePadding
-            var timelineEndX = timelineStartX + availableWidth
-            
-            if daysSinceLength < daysSinceValueStringSize.width + Constants.lineThickness / 2.0 {
-                // Not enough room to fit the days since text. Move it outside.
-                isDaysSinceValueInside = false
-                timelineStartX = rect.minX + (2.0 * Constants.leftRightPadding) + daysSinceValueStringSize.width + 2.0
-                availableWidth = timelineEndX - timelineStartX
-            }
-
-            var isDaysUntilValueInside = true
-            let daysUntilLength = availableWidth * (1.0 - CGFloat(percentComplete))
-            if daysUntilLength < daysUntilValueStringSize.width + Constants.lineThickness / 2.0 {
-                // Not enough room to fit the days until text. Move it outside.
-                isDaysUntilValueInside = false
-                timelineEndX = rect.maxX - (2.0 * Constants.leftRightPadding) - daysUntilValueStringSize.width - 2.0
-                availableWidth = timelineEndX - timelineStartX
-            }
-
-            // Draw a background track
-            yPos += Constants.lineThickness / 2.0
-            
-            drawTimelineBackground(from: timelineStartX, to: timelineEndX, y: yPos, width: Constants.lineThickness, color: StatusIndicatorView.lightYellow)
-            
-            //let lineLength = (availableWidth * CGFloat(percentComplete))// - Constants.lineThickness / 2.0
-            daysSinceLength = (availableWidth - Constants.lineThickness / 2.0) * CGFloat(percentComplete)
-            drawTimeline(from: timelineStartX, to: timelineStartX + daysSinceLength, y: yPos, width: Constants.lineThickness, color: StatusIndicatorView.lapisLazuli)
-            
-            yPos -= Constants.lineThickness / 2.0
-            let daysSinceX:CGFloat = (isDaysSinceValueInside) ? timelineStartX + 5.0 : Constants.leftRightPadding * 2.0
-            
-            daysSinceValueLabel.frame = CGRect(x: daysSinceX, y: yPos, width: daysSinceValueStringSize.width, height: daysSinceValueStringSize.height)
-            daysSinceValueLabel.text = daysSinceValueString
-            daysSinceValueLabel.textColor = isDaysSinceValueInside ? UIColor.white : UIColor.black
-            
-            let daysUntilX: CGFloat = isDaysUntilValueInside ? timelineEndX - daysUntilValueStringSize.width - 5.0 : rect.maxX - Constants.leftRightPadding * 2.0 - daysUntilValueStringSize.width
-            
-            daysUntilValueLabel.frame = CGRect(x: daysUntilX, y: yPos, width: daysUntilValueStringSize.width, height: daysUntilValueStringSize.height)
-            daysUntilValueLabel.text = daysUntilValueString
+            // In this case, the activity is on-time when X days since and Y days until.
+            drawAsOntime(rect)
         } else {
-            // This is overdue
-            daysUntilTitleLabel.text = ""
-            daysUntilTitleLabel.frame = CGRect(x: 0.0, y: 0.0, width: 0.0, height: 0.0)
-
-            var yPos:CGFloat = Constants.verticalGap
-            // Place the labels for "Day Since" and "Days Until" in the same row.
-            daysSinceTitleLabel.frame = CGRect(x: rect.minX + Constants.leftRightPadding, y: yPos, width: daysSinceTitleSize.width, height: daysSinceTitleSize.height)
-            
-            overdueTitleLabel.frame = CGRect(x: rect.maxX - Constants.timelinePadding - overdueTitleSize.width, y: yPos, width: overdueTitleSize.width, height: overdueTitleSize.height)
-            yPos += overdueTitleSize.height
-            yPos += Constants.verticalGap
-            
-            // Place the previous and next dates in the next row
-            var dateLabelHeight: CGFloat = 0.0
-            if let prev = prevDate {
-                lastDateLabel.text = prev
-                let lastDateLabelSize = measureText(label: prev, fontSize: 12.0)
-                lastDateLabel.frame = CGRect(x: rect.minX + Constants.leftRightPadding * 2.0, y: yPos, width: lastDateLabelSize.width, height: lastDateLabelSize.height)
-                dateLabelHeight = lastDateLabelSize.height
-            }
-            
-            yPos += dateLabelHeight
-            yPos += Constants.verticalGap
-
-            
-            let daysSinceValueString = String(daysSince)
-            let daysSinceValueStringSize = measureText(label: daysSinceValueString, fontSize: Constants.daysValueFontSize)
-            
-            let daysUntilValueString = String(abs(daysUntil))
-            let daysUntilValueStringSize = measureText(label: daysUntilValueString, fontSize: Constants.daysValueFontSize)
-
-            
-            var availableWidth = rect.width - (2 * Constants.timelinePadding)  //- Constants.lineThickness / 2.0
-            let percentOnTime = Double(daysSince - abs(daysUntil)) / Double(daysSince)
-            
-            let onTimeLength = availableWidth * CGFloat(percentOnTime)
-            
-            var isOnTimeValueInside = true
-            var timelineStartX = rect.minX + Constants.timelinePadding
-            var timelineEndX = timelineStartX + availableWidth
-            let gradPercent : CGFloat = 0.1
-            var gradDistance = gradPercent * availableWidth
-            
-            if onTimeLength - gradDistance < daysSinceValueStringSize.width {
-                // Not enough room to fit the days since text. Move it outside.
-                isOnTimeValueInside = false
-                timelineStartX = rect.minX + (2.0 * Constants.leftRightPadding) + daysSinceValueStringSize.width + 2.0
-                availableWidth = timelineEndX - timelineStartX
-                gradDistance = gradPercent * availableWidth
-            }
-            
-            var isOverdueValueInside = true
-            let overdueLength = availableWidth * (1.0 - CGFloat(percentOnTime))
-            if overdueLength - gradDistance < daysUntilValueStringSize.width {
-                // Not enough room to fit the days until text. Move it outside.
-                isOverdueValueInside = false
-                timelineEndX = rect.maxX - (2.0 * Constants.leftRightPadding) - daysUntilValueStringSize.width - 2.0
-                availableWidth = timelineEndX - timelineStartX
-            }
-
-            //let timelinePath = CGMutablePath()
-            let startX = timelineStartX // rect.minX + Constants.timelinePadding
-            let minY = yPos
-            let maxY = yPos + Constants.lineThickness
-            let midY = yPos + Constants.lineThickness / 2.0
-            let endX = timelineEndX - Constants.lineThickness / 2.0// rect.maxX - Constants.timelinePadding - Constants.lineThickness / 2.0
-            
-            let colors = [StatusIndicatorView.lapisLazuli.cgColor, StatusIndicatorView.vividAuburn.cgColor]
-
-            drawTimeline(from: startX, to: endX, y: midY, width: Constants.lineThickness, colors: colors, inflectionPct: CGFloat(percentOnTime))
-            
-            let onTimeMarkerPath = CGMutablePath()
-            onTimeMarkerPath.move(to: CGPoint(x: timelineStartX + (availableWidth * CGFloat(percentOnTime)), y: minY - 1.0))
-            onTimeMarkerPath.addLine(to: CGPoint(x: timelineStartX + (availableWidth * CGFloat(percentOnTime)), y: maxY + 3.0))
-            
-            let onTimeMarkerLine = UIBezierPath(cgPath: onTimeMarkerPath)
-            onTimeMarkerLine.lineWidth = 2.0
-            
-            UIColor.black.setStroke()
-            onTimeMarkerLine.stroke()
-            
-            let daysSinceX:CGFloat = (isOnTimeValueInside) ? timelineStartX + 5.0 : Constants.leftRightPadding * 2.0
-
-            daysSinceValueLabel.frame = CGRect(x: daysSinceX, y: midY - daysSinceValueStringSize.height / 2.0, width: daysSinceValueStringSize.width, height: daysSinceValueStringSize.height)
-            daysSinceValueLabel.text = daysSinceValueString
-            daysSinceValueLabel.textColor = isOnTimeValueInside ? UIColor.white : UIColor.black
-
-            let daysUntilX: CGFloat = isOverdueValueInside ? timelineEndX - daysUntilValueStringSize.width - 5.0 : rect.maxX - Constants.leftRightPadding * 2.0 - daysUntilValueStringSize.width
-
-            daysUntilValueLabel.frame = CGRect(x: daysUntilX, y: midY - daysUntilValueStringSize.height / 2.0, width: daysUntilValueStringSize.width, height: daysUntilValueStringSize.height)
-            daysUntilValueLabel.text = daysUntilValueString
-            daysUntilValueLabel.textColor = isOverdueValueInside ? UIColor.white : UIColor.black
-
-            
-            if let next = nextDate {
-                yPos = maxY + Constants.verticalGap
-                nextDateLabel.text = next
-                let nextDateLabelSize = measureText(label: next, fontSize: 12)
-                
-                var nextDateX = timelineStartX + (availableWidth * CGFloat(percentOnTime)) - nextDateLabelSize.width / 2.0
-                nextDateX = max(rect.minX + 5.0, nextDateX)
-                nextDateX = min(nextDateX, rect.maxX - nextDateLabelSize.width - 5.0)
-                
-                
-                nextDateLabel.frame = CGRect(x: nextDateX, y: yPos, width: nextDateLabelSize.width, height: nextDateLabelSize.height)
-                //dateLabelHeight = max(dateLabelHeight, nextDateLabelSize.height)
-            }
-
-            
+            // Overdue
+            drawAsOverdue(rect)
         }
     }
+    
+    private func drawAsUnlimited(_ rect: CGRect) {
+        // Hide unused labels
+        hideLabel(daysUntilTitleLabel)
+        hideLabel(daysUntilValueLabel)
+        hideLabel(nextDateLabel)
+        
+        var yPos:CGFloat = Constants.VerticalSpacing
+        // Set the Days Since label
+        let daysSinceTitleSize = configureLabel(daysSinceTitleLabel, text: StatusIndicatorView.DaysSinceLocalized, x: rect.minX + Constants.LeftRightPadding, y: yPos, textAnchor: .TopLeft, fontSize: Constants.DaysLabelFontSize)
+        
+        yPos += daysSinceTitleSize.height
+        yPos += Constants.VerticalSpacing
+        // Set the previous date label
+        if let prev = prevDate {
+            let lastDateLabelSize = configureLabel(lastDateLabel, text: prev, x: rect.minX + Constants.DateLeftRightPadding, y: yPos, textAnchor: .TopLeft, fontSize: Constants.DateLabelFontSize)
+            yPos += lastDateLabelSize.height
+            yPos += Constants.VerticalSpacing
+        }
+        // Draw the timeline
+        yPos += Constants.HalfTimelineThickness
+        drawTimeline(from: rect.minX + Constants.TimelineIndent, to: rect.maxX - Constants.TimelineIndent, y: yPos, width: Constants.TimelineThickness, color: StatusIndicatorView.lapisLazuli)
+        // Label the number of days since inside the timeline
+        configureLabel(daysSinceValueLabel, text: String(daysSince), x: rect.minX + Constants.TimelineIndent + Constants.LeftRightPadding, y: yPos - Constants.HalfTimelineThickness, textAnchor: .TopLeft, fontSize: Constants.DaysValueFontSize, textColor: StatusIndicatorView.LightTimelineTextColor)
+    }
+    
+    private func drawAsOntime(_ rect: CGRect) {
+        // This is on-time with a next date
+        var yPos:CGFloat = Constants.VerticalSpacing
+        // Place the labels for "Day Since" and "Days Until" in the same row.
+        let daysSinceSize = configureLabel(daysSinceTitleLabel, text: StatusIndicatorView.DaysSinceLocalized, x: rect.minX + Constants.LeftRightPadding, y: yPos, textAnchor: .TopLeft, fontSize: Constants.DaysLabelFontSize)
+        let daysUntilSize = configureLabel(daysUntilTitleLabel, text: StatusIndicatorView.DaysUntilLocalized, x: rect.maxX - Constants.LeftRightPadding, y: yPos, textAnchor: .TopRight, fontSize: Constants.DaysLabelFontSize)
+        
+        yPos += max(daysSinceSize.height, daysUntilSize.height)
+        yPos += Constants.VerticalSpacing
+        
+        // Place the previous and next dates in the next row
+        var dateLabelHeight: CGFloat = 0.0
+        if let prev = prevDate {
+            let lastDateSize = configureLabel(lastDateLabel, text: prev, x: rect.minX + Constants.DateLeftRightPadding, y: yPos, textAnchor: .TopLeft, fontSize: Constants.DateLabelFontSize)
+            dateLabelHeight = lastDateSize.height
+        }
+        if let next = nextDate {
+            let nextDateSize = configureLabel(nextDateLabel, text: next, x: rect.maxX - Constants.DateLeftRightPadding, y: yPos, textAnchor: .TopRight, fontSize: Constants.DateLabelFontSize)
+            dateLabelHeight = max(dateLabelHeight, nextDateSize.height)
+        }
+        
+        yPos += dateLabelHeight
+        yPos += Constants.VerticalSpacing
+        // Measure the size of the DaysSince and DaysUntil value labels. Need to decide if one of them needs to
+        // be placed outside of the timeline. If so, the timeline width will need to be adjusted.
+        let daysSinceValueString = String(daysSince)
+        let daysSinceValueStringSize = measureText(label: daysSinceValueString, fontSize: Constants.DaysValueFontSize)
+        
+        let daysUntilValueString = String(daysUntil)
+        let daysUntilValueStringSize = measureText(label: daysUntilValueString, fontSize: Constants.DaysValueFontSize)
+        
+        var availableWidth = rect.width - (2.0 * Constants.TimelineIndent) // Width is total width minus the indent value on right and left
+        let percentComplete: CGFloat = CGFloat( Double(daysSince) / Double(daysSince + daysUntil) )
+        
+        var percentLength = availableWidth * percentComplete
+        
+        var isDaysSinceValueInside = true
+        var timelineStartX = rect.minX + Constants.TimelineIndent
+        var timelineEndX = timelineStartX + availableWidth
+        
+        if percentLength < daysSinceValueStringSize.width + (2.0 * Constants.InsideDaysLabelPadding) { // Space to draw is less than the lenght of the string plus padding
+            // Not enough room to fit the days since text. Move it outside.
+            isDaysSinceValueInside = false
+            timelineStartX = rect.minX + Constants.DateLeftRightPadding + daysSinceValueStringSize.width + Constants.OutsideDaysLabelSpacing
+            availableWidth = timelineEndX - timelineStartX
+        }
+        
+        var isDaysUntilValueInside = true
+        let daysUntilLength = availableWidth * (1.0 - percentComplete)
+        if daysUntilLength < daysUntilValueStringSize.width + (2.0 * Constants.InsideDaysLabelPadding)  { // The actual available space for the label is less because of the rounded part of the timeline.
+            // Not enough room to fit the days until text. Move it outside.
+            isDaysUntilValueInside = false
+            timelineEndX = rect.maxX - (Constants.DateLeftRightPadding + daysUntilValueStringSize.width + Constants.OutsideDaysLabelSpacing)
+            availableWidth = timelineEndX - timelineStartX
+        }
+        
+        // Draw a background track
+        yPos += Constants.HalfTimelineThickness
+        
+        drawTimelineBackground(from: timelineStartX, to: timelineEndX, y: yPos, width: Constants.TimelineThickness, color: StatusIndicatorView.lightYellow)
+        // Recalculate the percentLength since the timeline length may have changed due to labels being moved outside.
+        percentLength = availableWidth * percentComplete
+        drawTimeline(from: timelineStartX, to: timelineStartX + percentLength, y: yPos, width: Constants.TimelineThickness, color: StatusIndicatorView.lapisLazuli)
+        
+        //yPos -= Constants.HalfTimelineThickness
+        let daysSinceX:CGFloat = (isDaysSinceValueInside) ? timelineStartX + Constants.InsideDaysLabelPadding : Constants.DateLeftRightPadding
+        configureLabel(daysSinceValueLabel, text: daysSinceValueString, x: daysSinceX, y: yPos, textAnchor: .MiddleLeft, fontSize: Constants.DaysValueFontSize, textColor: isDaysSinceValueInside ? UIColor.white : UIColor.black)
+        
+        let daysUntilX: CGFloat = isDaysUntilValueInside ? timelineEndX - Constants.InsideDaysLabelPadding : rect.maxX - Constants.DateLeftRightPadding
+        configureLabel(daysUntilValueLabel, text: daysUntilValueString, x: daysUntilX, y: yPos, textAnchor: .MiddleRight, fontSize: Constants.DaysValueFontSize)
+
+    }
+    
+    func drawAsOverdue(_ rect:CGRect) {
+        // This is overdue
+        var yPos:CGFloat = Constants.VerticalSpacing
+        // Place the labels for "Day Since" and "Days Until" in the same row.
+        let daysSinceTitleSize = configureLabel(daysSinceTitleLabel, text: StatusIndicatorView.DaysSinceLocalized, x: rect.minX + Constants.LeftRightPadding, y: yPos, textAnchor: .TopLeft, fontSize: Constants.DaysLabelFontSize)
+        let daysOverdueTitleSize = configureLabel(daysUntilTitleLabel, text: StatusIndicatorView.OverdueForLocalized, x: rect.maxX - Constants.TimelineIndent, y: yPos, textAnchor: .TopRight, fontSize: Constants.DaysLabelFontSize)
+        
+        yPos += max(daysSinceTitleSize.height, daysOverdueTitleSize.height)
+        yPos += Constants.VerticalSpacing
+        
+        // Place the previous and next dates in the next row
+        var dateLabelHeight: CGFloat = 0.0
+        if let prev = prevDate {
+            let lastDateSize = configureLabel(lastDateLabel, text: prev, x: rect.minX + Constants.DateLeftRightPadding, y: yPos, textAnchor: .TopLeft, fontSize: Constants.DateLabelFontSize)
+            dateLabelHeight = lastDateSize.height
+        }
+        
+        yPos += dateLabelHeight
+        yPos += Constants.VerticalSpacing
+        
+        let daysSinceValueString = String(daysSince)
+        let daysSinceValueStringSize = measureText(label: daysSinceValueString, fontSize: Constants.DaysValueFontSize)
+        
+        let daysUntilValueString = String(abs(daysUntil))
+        let daysUntilValueStringSize = measureText(label: daysUntilValueString, fontSize: Constants.DaysValueFontSize)
+        
+        var availableWidth = rect.width - (2 * Constants.TimelineIndent)
+        let percentOnTime = CGFloat(Double(daysSince - abs(daysUntil)) / Double(daysSince))
+        
+        let onTimeLength = availableWidth * percentOnTime
+        
+        var isOnTimeValueInside = true
+        var timelineStartX = rect.minX + Constants.TimelineIndent
+        var timelineEndX = timelineStartX + availableWidth
+        let gradPercent : CGFloat = Constants.GradientWidth
+        var gradDistance = gradPercent * availableWidth
+        
+        if onTimeLength - gradDistance < daysSinceValueStringSize.width + (Constants.InsideDaysLabelPadding * 2.0) {
+            // Not enough room to fit the days since text. Move it outside.
+            isOnTimeValueInside = false
+            timelineStartX = rect.minX + Constants.DateLeftRightPadding + daysSinceValueStringSize.width + Constants.OutsideDaysLabelSpacing
+            availableWidth = timelineEndX - timelineStartX
+            gradDistance = gradPercent * availableWidth
+        }
+        
+        var isOverdueValueInside = true
+        let overdueLength = availableWidth * (1.0 - percentOnTime)
+        if overdueLength - gradDistance < daysUntilValueStringSize.width + (Constants.InsideDaysLabelPadding * 2.0)  {
+            // Not enough room to fit the days until text. Move it outside.
+            isOverdueValueInside = false
+            timelineEndX = rect.maxX - (Constants.DateLeftRightPadding + daysUntilValueStringSize.width + Constants.OutsideDaysLabelSpacing)
+            availableWidth = timelineEndX - timelineStartX
+        }
+        
+        let startX = timelineStartX
+        let minY = yPos
+        let maxY = yPos + Constants.TimelineThickness
+        let midY = yPos + Constants.HalfTimelineThickness
+        let endX = timelineEndX
+        
+        let colors = [StatusIndicatorView.lapisLazuli.cgColor, StatusIndicatorView.vividAuburn.cgColor]
+        
+        drawTimeline(from: startX, to: endX, y: midY, width: Constants.TimelineThickness, colors: colors, inflectionPct: percentOnTime)
+        
+        let onTimeMarkerPath = CGMutablePath()
+        onTimeMarkerPath.move(to: CGPoint(x: timelineStartX + (availableWidth * percentOnTime), y: minY - Constants.DateMarkerHeight))
+        onTimeMarkerPath.addLine(to: CGPoint(x: timelineStartX + (availableWidth * percentOnTime), y: maxY + Constants.DateMarkerHeight))
+        
+        let onTimeMarkerLine = UIBezierPath(cgPath: onTimeMarkerPath)
+        onTimeMarkerLine.lineWidth = Constants.DateMarkerLineWidth
+        
+        UIColor.black.setStroke()
+        onTimeMarkerLine.stroke()
+        
+        let daysSinceX:CGFloat = (isOnTimeValueInside) ? timelineStartX + Constants.InsideDaysLabelPadding : Constants.DateLeftRightPadding
+        configureLabel(daysSinceValueLabel, text: daysSinceValueString, x: daysSinceX, y: midY, textAnchor: .MiddleLeft, fontSize: Constants.DaysValueFontSize, textColor: isOnTimeValueInside ? StatusIndicatorView.LightTimelineTextColor : StatusIndicatorView.DarkTimelineTextColor)
+        
+        let daysUntilX: CGFloat = isOverdueValueInside ? timelineEndX - Constants.InsideDaysLabelPadding : rect.maxX - Constants.DateLeftRightPadding
+        
+        configureLabel(daysUntilValueLabel, text: daysUntilValueString, x: daysUntilX, y: midY, textAnchor: .MiddleRight, fontSize: Constants.DaysValueFontSize, textColor: isOverdueValueInside ? StatusIndicatorView.LightTimelineTextColor : StatusIndicatorView.DarkTimelineTextColor)
+        
+        if let next = nextDate {
+            yPos = maxY + Constants.VerticalSpacing
+            
+            let nextDateLabelSize = measureText(label: next, fontSize: Constants.DateLabelFontSize)
+            var nextDateX = timelineStartX + (availableWidth * percentOnTime) - nextDateLabelSize.width / 2.0
+            nextDateX = max(rect.minX + Constants.LeftRightPadding, nextDateX)
+            nextDateX = min(nextDateX, rect.maxX - nextDateLabelSize.width - Constants.LeftRightPadding)
+            
+            configureLabel(nextDateLabel, text: next, x: nextDateX, y: yPos, textAnchor: .TopLeft, fontSize: Constants.DateLabelFontSize)
+        }
+    }
+    
+    @discardableResult
+    private func configureLabel(_ label:UILabel, text:String, x: CGFloat, y: CGFloat, textAnchor:UILabel.TextAnchor = .BottomLeft, fontSize:CGFloat = 16.0, textColor:UIColor = UIColor.black, textAlignment:NSTextAlignment = NSTextAlignment.left) -> CGRect {
+        let systemFont = UIFont.systemFont(ofSize: fontSize)
+        label.configure(text: text, font: systemFont, color: textColor, alignment: textAlignment)
+        return label.updateFrame(x: x, y: y, textAnchor: textAnchor)
+    }
+    
+    
+    private func hideLabel(_ label:UILabel) {
+        label.text = ""
+        label.frame = CGRect.zero
+    }
+    
+    
     
     private func measureText(label:String, fontSize: CGFloat) -> CGSize {
         let systemFont = UIFont.systemFont(ofSize: fontSize)
@@ -439,14 +357,15 @@ import UIKit
         
         let colorLocations: [CGFloat] = [gradStart, gradEnd]
         let gradient = CGGradient(colorsSpace: colorSpace, colors: colors as CFArray, locations: colorLocations)!
-        context.drawLinearGradient(gradient, start: CGPoint(x: xStart, y: y), end: CGPoint(x: xEnd + width / 2.0, y: y), options: [])
+        context.drawLinearGradient(gradient, start: CGPoint(x: xStart, y: y), end: CGPoint(x: xEnd, y: y), options: [])
         
         context.restoreGState()
     }
     
     /**
      Creates a path to represent the timeline progress. This is a rectangle with a square left end and a round right end. The
-     round end is draw after the 'to' x value. In other words, the actual shape is width / 2 longer than the 'to' minus the 'from'.
+     round end is draw such that it ends at the 'to' x value. In other words, the actual shape exactly the distance 'to' minus the 'from'
+     including the rounded end.
      
      - Parameters:
      - from : x value to start from
@@ -459,14 +378,16 @@ import UIKit
      */
     private func createTimelineProgressPath(from xStart:CGFloat, to xEnd: CGFloat, y: CGFloat, width: CGFloat) -> CGMutablePath {
         let timelinePath = CGMutablePath()
-        let yLower = y - width / 2.0
-        let yUpper = y + width / 2.0
+        let halfWidth = width / 2.0
+        let yLower = y - halfWidth
+        let yUpper = y + halfWidth
+        let xEndActual = max(xStart, xEnd - halfWidth)
         
         timelinePath.move(to: CGPoint(x: xStart, y: yLower))
         timelinePath.addLine(to: CGPoint(x: xStart, y: yUpper))
-        timelinePath.addLine(to: CGPoint(x: xEnd, y: yUpper))
-        timelinePath.addArc(center: CGPoint(x: xEnd, y: y), radius: Constants.lineThickness / 2.0, startAngle: CGFloat(3.0 * Double.pi / 2.0) , endAngle: CGFloat(Double.pi / 2.0), clockwise: false)
-        timelinePath.addLine(to: CGPoint(x: xEnd, y: yLower))
+        timelinePath.addLine(to: CGPoint(x: xEndActual, y: yUpper))
+        timelinePath.addArc(center: CGPoint(x: xEndActual, y: y), radius: halfWidth, startAngle: CGFloat(3.0 * Double.pi / 2.0) , endAngle: CGFloat(Double.pi / 2.0), clockwise: false)
+        timelinePath.addLine(to: CGPoint(x: xEndActual, y: yLower))
         timelinePath.closeSubpath()
 
         return timelinePath

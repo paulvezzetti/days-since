@@ -324,22 +324,25 @@
                                             </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="100" id="y7X-x4-528">
-                                        <rect key="frame" x="0.0" y="44" width="351" height="100"/>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="105" id="y7X-x4-528">
+                                        <rect key="frame" x="0.0" y="44" width="351" height="105"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="y7X-x4-528" id="axl-Jo-CvH">
-                                            <rect key="frame" x="0.0" y="0.0" width="351" height="100"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="351" height="105"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="t6l-Ag-AzJ" customClass="StatusIndicatorView" customModule="DaysSince" customModuleProvider="target">
-                                                    <rect key="frame" x="0.0" y="0.0" width="351" height="100"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="351" height="105"/>
                                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <userDefinedRuntimeAttributes>
                                                         <userDefinedRuntimeAttribute type="number" keyPath="daysSince">
-                                                            <integer key="value" value="29"/>
+                                                            <integer key="value" value="200"/>
                                                         </userDefinedRuntimeAttribute>
                                                         <userDefinedRuntimeAttribute type="string" keyPath="prevDate" value="Mar 18, 2019"/>
                                                         <userDefinedRuntimeAttribute type="string" keyPath="nextDate" value="Jan 15, 2019"/>
+                                                        <userDefinedRuntimeAttribute type="number" keyPath="daysUntil">
+                                                            <integer key="value" value="-62"/>
+                                                        </userDefinedRuntimeAttribute>
                                                     </userDefinedRuntimeAttributes>
                                                 </view>
                                             </subviews>
@@ -352,7 +355,7 @@
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" id="aE6-xL-tvR">
-                                        <rect key="frame" x="0.0" y="144" width="351" height="44"/>
+                                        <rect key="frame" x="0.0" y="149" width="351" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="aE6-xL-tvR" id="fzX-qG-7nb">
                                             <rect key="frame" x="0.0" y="0.0" width="351" height="44"/>
@@ -385,7 +388,7 @@
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="75" id="891-8V-abM">
-                                        <rect key="frame" x="0.0" y="188" width="351" height="75"/>
+                                        <rect key="frame" x="0.0" y="193" width="351" height="75"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="891-8V-abM" id="3Tx-7e-1Rv">
                                             <rect key="frame" x="0.0" y="0.0" width="351" height="75"/>
@@ -405,7 +408,7 @@
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="44" id="Xr2-hd-qgW">
-                                        <rect key="frame" x="0.0" y="263" width="351" height="44"/>
+                                        <rect key="frame" x="0.0" y="268" width="351" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Xr2-hd-qgW" id="krh-PC-HLI">
                                             <rect key="frame" x="0.0" y="0.0" width="351" height="44"/>
