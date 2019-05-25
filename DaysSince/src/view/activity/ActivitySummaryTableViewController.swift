@@ -17,7 +17,8 @@ class ActivitySummaryTableViewController: UITableViewController {
     @IBOutlet var firstEventDateLabel: UILabel!
     
     @IBOutlet var intervalDotPlot: IntervalDotPlotView!
-    @IBOutlet var statusIndicatorView: StatusIndicatorView!
+    
+    @IBOutlet weak var timelineView: TimelineView!
     
     var activity:ActivityMO? {
         didSet {
@@ -83,10 +84,10 @@ class ActivitySummaryTableViewController: UITableViewController {
         
         intervalDotPlot.intervals = stats.intervals
         
-        statusIndicatorView.daysSince = stats.daySince ?? 0
-        statusIndicatorView.daysUntil = stats.daysUntil != nil ? stats.daysUntil! : Int.max
-        statusIndicatorView.nextDate = nextDate != nil ? nextDate!.getFormattedDate() : ""
-        statusIndicatorView.prevDate = lastDate != nil ? lastDate!.getFormattedDate() : ""
+        timelineView.daysSince = stats.daySince ?? 0
+        timelineView.daysUntil = stats.daysUntil != nil ? stats.daysUntil! : Int.max
+        timelineView.nextDate = nextDate != nil ? nextDate!.getFormattedDate() : ""
+        timelineView.prevDate = lastDate != nil ? lastDate!.getFormattedDate() : ""
     }
 
     

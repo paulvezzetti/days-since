@@ -331,23 +331,26 @@
                                             <rect key="frame" x="0.0" y="0.0" width="351" height="105"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="t6l-Ag-AzJ" customClass="StatusIndicatorView" customModule="DaysSince" customModuleProvider="target">
+                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="lzZ-s9-XaI" customClass="TimelineView" customModule="DaysSince" customModuleProvider="target">
                                                     <rect key="frame" x="0.0" y="0.0" width="351" height="105"/>
                                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <userDefinedRuntimeAttributes>
                                                         <userDefinedRuntimeAttribute type="number" keyPath="daysSince">
-                                                            <integer key="value" value="200"/>
+                                                            <integer key="value" value="10"/>
                                                         </userDefinedRuntimeAttribute>
-                                                        <userDefinedRuntimeAttribute type="string" keyPath="prevDate" value="Mar 18, 2019"/>
-                                                        <userDefinedRuntimeAttribute type="string" keyPath="nextDate" value="Jan 15, 2019"/>
+                                                        <userDefinedRuntimeAttribute type="number" keyPath="daysUntil">
+                                                            <integer key="value" value="10"/>
+                                                        </userDefinedRuntimeAttribute>
+                                                        <userDefinedRuntimeAttribute type="string" keyPath="prevDate" value="January 1, 2019"/>
+                                                        <userDefinedRuntimeAttribute type="string" keyPath="nextDate" value="February 1, 2019"/>
                                                     </userDefinedRuntimeAttributes>
                                                 </view>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstAttribute="trailing" secondItem="t6l-Ag-AzJ" secondAttribute="trailing" id="5H0-w0-QWN"/>
-                                                <constraint firstItem="t6l-Ag-AzJ" firstAttribute="top" secondItem="axl-Jo-CvH" secondAttribute="top" id="ItP-bx-Dkf"/>
-                                                <constraint firstAttribute="bottom" secondItem="t6l-Ag-AzJ" secondAttribute="bottom" id="b4z-gE-7I4"/>
-                                                <constraint firstItem="t6l-Ag-AzJ" firstAttribute="leading" secondItem="axl-Jo-CvH" secondAttribute="leading" id="u1k-7x-R9I"/>
+                                                <constraint firstItem="lzZ-s9-XaI" firstAttribute="top" secondItem="axl-Jo-CvH" secondAttribute="top" id="efc-Qb-Qyg"/>
+                                                <constraint firstAttribute="trailing" secondItem="lzZ-s9-XaI" secondAttribute="trailing" id="g16-BT-gdq"/>
+                                                <constraint firstAttribute="bottom" secondItem="lzZ-s9-XaI" secondAttribute="bottom" id="j0R-pQ-W5R"/>
+                                                <constraint firstItem="lzZ-s9-XaI" firstAttribute="leading" secondItem="axl-Jo-CvH" secondAttribute="leading" id="rVl-id-wEc"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>
@@ -457,7 +460,7 @@
                         <outlet property="intervalHeaderLabel" destination="XdJ-uV-y9H" id="hwk-5l-ta5"/>
                         <outlet property="numberOfEventsLabel" destination="kJe-1t-i8H" id="JLT-Wb-cf3"/>
                         <outlet property="onTimePercentLabel" destination="PQS-dd-cTb" id="I9S-E3-3mE"/>
-                        <outlet property="statusIndicatorView" destination="t6l-Ag-AzJ" id="xrb-Cf-JJs"/>
+                        <outlet property="timelineView" destination="lzZ-s9-XaI" id="Z6H-M3-SAM"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="kkO-sI-ebC" userLabel="First Responder" sceneMemberID="firstResponder"/>

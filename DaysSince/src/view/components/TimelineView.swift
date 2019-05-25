@@ -8,7 +8,7 @@
 
 import UIKit
 
-@IBDesignable class StatusIndicatorView: UIView {
+@IBDesignable class TimelineView: UIView {
 
     @IBInspectable var daysSince: Int = 0
     @IBInspectable var daysUntil: Int = Int.max
@@ -113,7 +113,7 @@ import UIKit
         
         var yPos:CGFloat = Constants.VerticalSpacing
         // Set the Days Since label
-        let daysSinceTitleSize = configureLabel(daysSinceTitleLabel, text: StatusIndicatorView.DaysSinceLocalized, x: rect.minX + Constants.LeftRightPadding, y: yPos, textAnchor: .TopLeft, fontSize: Constants.DaysLabelFontSize, bold:
+        let daysSinceTitleSize = configureLabel(daysSinceTitleLabel, text: TimelineView.DaysSinceLocalized, x: rect.minX + Constants.LeftRightPadding, y: yPos, textAnchor: .TopLeft, fontSize: Constants.DaysLabelFontSize, bold:
             true)
         
         yPos += daysSinceTitleSize.height
@@ -126,18 +126,18 @@ import UIKit
         }
         // Draw the timeline
         yPos += Constants.HalfTimelineThickness
-        drawTimeline(from: rect.minX + Constants.TimelineIndent, to: rect.maxX - Constants.TimelineIndent, y: yPos, width: Constants.TimelineThickness, color: StatusIndicatorView.lapisLazuli)
+        drawTimeline(from: rect.minX + Constants.TimelineIndent, to: rect.maxX - Constants.TimelineIndent, y: yPos, width: Constants.TimelineThickness, color: TimelineView.lapisLazuli)
         // Label the number of days since inside the timeline
-        configureLabel(daysSinceValueLabel, text: String(daysSince), x: rect.minX + Constants.TimelineIndent + Constants.LeftRightPadding, y: yPos - Constants.HalfTimelineThickness, textAnchor: .TopLeft, fontSize: Constants.DaysValueFontSize, textColor: StatusIndicatorView.LightTimelineTextColor)
+        configureLabel(daysSinceValueLabel, text: String(daysSince), x: rect.minX + Constants.TimelineIndent + Constants.LeftRightPadding, y: yPos - Constants.HalfTimelineThickness, textAnchor: .TopLeft, fontSize: Constants.DaysValueFontSize, textColor: TimelineView.LightTimelineTextColor)
     }
     
     private func drawAsOntime(_ rect: CGRect) {
         // This is on-time with a next date
         var yPos:CGFloat = Constants.VerticalSpacing
         // Place the labels for "Day Since" and "Days Until" in the same row.
-        let daysSinceSize = configureLabel(daysSinceTitleLabel, text: StatusIndicatorView.DaysSinceLocalized, x: rect.minX + Constants.LeftRightPadding, y: yPos, textAnchor: .TopLeft, fontSize: Constants.DaysLabelFontSize)
+        let daysSinceSize = configureLabel(daysSinceTitleLabel, text: TimelineView.DaysSinceLocalized, x: rect.minX + Constants.LeftRightPadding, y: yPos, textAnchor: .TopLeft, fontSize: Constants.DaysLabelFontSize)
         
-        let daysUntilSize = configureLabel(daysUntilTitleLabel, text: StatusIndicatorView.DaysUntilLocalized, x: rect.maxX - Constants.LeftRightPadding, y: yPos, textAnchor: .TopRight, fontSize: Constants.DaysLabelFontSize)
+        let daysUntilSize = configureLabel(daysUntilTitleLabel, text: TimelineView.DaysUntilLocalized, x: rect.maxX - Constants.LeftRightPadding, y: yPos, textAnchor: .TopRight, fontSize: Constants.DaysLabelFontSize)
         
         yPos += max(daysSinceSize.height, daysUntilSize.height)
         yPos += Constants.VerticalSpacing
@@ -191,10 +191,10 @@ import UIKit
         // Draw a background track
         yPos += Constants.HalfTimelineThickness
         
-        drawTimelineBackground(from: timelineStartX, to: timelineEndX, y: yPos, width: Constants.TimelineThickness, color: StatusIndicatorView.lightYellow)
+        drawTimelineBackground(from: timelineStartX, to: timelineEndX, y: yPos, width: Constants.TimelineThickness, color: TimelineView.lightYellow)
         // Recalculate the percentLength since the timeline length may have changed due to labels being moved outside.
         percentLength = availableWidth * percentComplete
-        drawTimeline(from: timelineStartX, to: timelineStartX + percentLength, y: yPos, width: Constants.TimelineThickness, color: StatusIndicatorView.lapisLazuli)
+        drawTimeline(from: timelineStartX, to: timelineStartX + percentLength, y: yPos, width: Constants.TimelineThickness, color: TimelineView.lapisLazuli)
         
         //yPos -= Constants.HalfTimelineThickness
         let daysSinceX:CGFloat = (isDaysSinceValueInside) ? timelineStartX + Constants.InsideDaysLabelPadding : Constants.DateLeftRightPadding
@@ -209,8 +209,8 @@ import UIKit
         // This is overdue
         var yPos:CGFloat = Constants.VerticalSpacing
         // Place the labels for "Day Since" and "Days Until" in the same row.
-        let daysSinceTitleSize = configureLabel(daysSinceTitleLabel, text: StatusIndicatorView.DaysSinceLocalized, x: rect.minX + Constants.LeftRightPadding, y: yPos, textAnchor: .TopLeft, fontSize: Constants.DaysLabelFontSize)
-        let daysOverdueTitleSize = configureLabel(daysUntilTitleLabel, text: StatusIndicatorView.OverdueForLocalized, x: rect.maxX - Constants.TimelineIndent, y: yPos, textAnchor: .TopRight, fontSize: Constants.DaysLabelFontSize)
+        let daysSinceTitleSize = configureLabel(daysSinceTitleLabel, text: TimelineView.DaysSinceLocalized, x: rect.minX + Constants.LeftRightPadding, y: yPos, textAnchor: .TopLeft, fontSize: Constants.DaysLabelFontSize)
+        let daysOverdueTitleSize = configureLabel(daysUntilTitleLabel, text: TimelineView.OverdueForLocalized, x: rect.maxX - Constants.TimelineIndent, y: yPos, textAnchor: .TopRight, fontSize: Constants.DaysLabelFontSize)
         
         yPos += max(daysSinceTitleSize.height, daysOverdueTitleSize.height)
         yPos += Constants.VerticalSpacing
@@ -265,7 +265,7 @@ import UIKit
         let midY = yPos + Constants.HalfTimelineThickness
         let endX = timelineEndX
         
-        let colors = [StatusIndicatorView.lapisLazuli.cgColor, StatusIndicatorView.vividAuburn.cgColor]
+        let colors = [TimelineView.lapisLazuli.cgColor, TimelineView.vividAuburn.cgColor]
         
         drawTimeline(from: startX, to: endX, y: midY, width: Constants.TimelineThickness, colors: colors, inflectionPct: percentOnTime)
         
@@ -280,11 +280,11 @@ import UIKit
         onTimeMarkerLine.stroke()
         
         let daysSinceX:CGFloat = (isOnTimeValueInside) ? timelineStartX + Constants.InsideDaysLabelPadding : Constants.DateLeftRightPadding
-        configureLabel(daysSinceValueLabel, text: daysSinceValueString, x: daysSinceX, y: midY, textAnchor: .MiddleLeft, fontSize: Constants.DaysValueFontSize, textColor: isOnTimeValueInside ? StatusIndicatorView.LightTimelineTextColor : StatusIndicatorView.DarkTimelineTextColor)
+        configureLabel(daysSinceValueLabel, text: daysSinceValueString, x: daysSinceX, y: midY, textAnchor: .MiddleLeft, fontSize: Constants.DaysValueFontSize, textColor: isOnTimeValueInside ? TimelineView.LightTimelineTextColor : TimelineView.DarkTimelineTextColor)
         
         let daysUntilX: CGFloat = isOverdueValueInside ? timelineEndX - Constants.InsideDaysLabelPadding : rect.maxX - Constants.DateLeftRightPadding
         
-        configureLabel(daysUntilValueLabel, text: daysUntilValueString, x: daysUntilX, y: midY, textAnchor: .MiddleRight, fontSize: Constants.DaysValueFontSize, textColor: isOverdueValueInside ? StatusIndicatorView.LightTimelineTextColor : StatusIndicatorView.DarkTimelineTextColor)
+        configureLabel(daysUntilValueLabel, text: daysUntilValueString, x: daysUntilX, y: midY, textAnchor: .MiddleRight, fontSize: Constants.DaysValueFontSize, textColor: isOverdueValueInside ? TimelineView.LightTimelineTextColor : TimelineView.DarkTimelineTextColor)
         
         if let next = nextDate {
             yPos = maxY + Constants.VerticalSpacing
