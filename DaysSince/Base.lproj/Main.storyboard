@@ -340,9 +340,6 @@
                                                         </userDefinedRuntimeAttribute>
                                                         <userDefinedRuntimeAttribute type="string" keyPath="prevDate" value="Mar 18, 2019"/>
                                                         <userDefinedRuntimeAttribute type="string" keyPath="nextDate" value="Jan 15, 2019"/>
-                                                        <userDefinedRuntimeAttribute type="number" keyPath="daysUntil">
-                                                            <integer key="value" value="-62"/>
-                                                        </userDefinedRuntimeAttribute>
                                                     </userDefinedRuntimeAttributes>
                                                 </view>
                                             </subviews>

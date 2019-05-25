@@ -35,6 +35,7 @@ extension UILabel {
         self.frame = CGRect(x: location.xPos, y: location.yPos, width: textSize.width, height: textSize.height)
         return CGRect(x: location.xPos, y: location.yPos, width: textSize.width, height: textSize.height)
     }
+    
 
     private func calculateXY(x:CGFloat, y: CGFloat, size:CGSize, textAnchor:TextAnchor) -> (xPos: CGFloat, yPos: CGFloat) {
         var xPos = x

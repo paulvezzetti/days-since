@@ -41,9 +41,9 @@ import UIKit
     static let LightTimelineTextColor: UIColor = UIColor.white
     static let DarkTimelineTextColor: UIColor = UIColor.black
     
-    private static let DaysSinceLocalized:String = NSLocalizedString("daysSince", value: "Days Since :", comment: "")
-    private static let DaysUntilLocalized:String = NSLocalizedString("daysUntil", value: "Days Until :", comment: "")
-    private static let OverdueForLocalized:String = NSLocalizedString("overdueFor", value: "Overdue For :", comment: "")
+    private static let DaysSinceLocalized:String = NSLocalizedString("daysSince", value: "Days Since:", comment: "")
+    private static let DaysUntilLocalized:String = NSLocalizedString("daysUntil", value: "Days Until:", comment: "")
+    private static let OverdueForLocalized:String = NSLocalizedString("overdueFor", value: "Overdue For:", comment: "")
     
     private lazy var daysSinceTitleLabel:UILabel = {
         return UILabel(frame: CGRect.zero)
@@ -113,7 +113,8 @@ import UIKit
         
         var yPos:CGFloat = Constants.VerticalSpacing
         // Set the Days Since label
-        let daysSinceTitleSize = configureLabel(daysSinceTitleLabel, text: StatusIndicatorView.DaysSinceLocalized, x: rect.minX + Constants.LeftRightPadding, y: yPos, textAnchor: .TopLeft, fontSize: Constants.DaysLabelFontSize)
+        let daysSinceTitleSize = configureLabel(daysSinceTitleLabel, text: StatusIndicatorView.DaysSinceLocalized, x: rect.minX + Constants.LeftRightPadding, y: yPos, textAnchor: .TopLeft, fontSize: Constants.DaysLabelFontSize, bold:
+            true)
         
         yPos += daysSinceTitleSize.height
         yPos += Constants.VerticalSpacing
@@ -135,6 +136,7 @@ import UIKit
         var yPos:CGFloat = Constants.VerticalSpacing
         // Place the labels for "Day Since" and "Days Until" in the same row.
         let daysSinceSize = configureLabel(daysSinceTitleLabel, text: StatusIndicatorView.DaysSinceLocalized, x: rect.minX + Constants.LeftRightPadding, y: yPos, textAnchor: .TopLeft, fontSize: Constants.DaysLabelFontSize)
+        
         let daysUntilSize = configureLabel(daysUntilTitleLabel, text: StatusIndicatorView.DaysUntilLocalized, x: rect.maxX - Constants.LeftRightPadding, y: yPos, textAnchor: .TopRight, fontSize: Constants.DaysLabelFontSize)
         
         yPos += max(daysSinceSize.height, daysUntilSize.height)
@@ -297,9 +299,15 @@ import UIKit
     }
     
     @discardableResult
-    private func configureLabel(_ label:UILabel, text:String, x: CGFloat, y: CGFloat, textAnchor:UILabel.TextAnchor = .BottomLeft, fontSize:CGFloat = 16.0, textColor:UIColor = UIColor.black, textAlignment:NSTextAlignment = NSTextAlignment.left) -> CGRect {
-        let systemFont = UIFont.systemFont(ofSize: fontSize)
-        label.configure(text: text, font: systemFont, color: textColor, alignment: textAlignment)
+    private func configureLabel(_ label:UILabel, text:String, x: CGFloat, y: CGFloat, textAnchor:UILabel.TextAnchor = .BottomLeft, fontSize:CGFloat = 16.0, textColor:UIColor = UIColor.black, bold:Bool = false, textAlignment:NSTextAlignment = NSTextAlignment.left) -> CGRect {
+       // let systemFont = UIFont.systemFont(ofSize: fontSize)
+        var descriptor = UIFontDescriptor(name: "AvenirNext", size: fontSize)
+        if bold {
+            descriptor = descriptor.withSymbolicTraits(.traitBold) ?? descriptor
+        }
+        let font = UIFont(descriptor: descriptor, size: fontSize)
+        
+        label.configure(text: text, font: font, color: textColor, alignment: textAlignment)
         return label.updateFrame(x: x, y: y, textAnchor: textAnchor)
     }
     
