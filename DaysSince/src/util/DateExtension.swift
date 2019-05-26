@@ -38,6 +38,14 @@ extension Date {
         return formatter.string(from: self)
     }
     
+    func getShortFormattedDate() -> String {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "d MMM yyyy"
+//        formatter.dateStyle = .medium
+//        formatter.timeStyle = .none
+        return formatter.string(from: self)
+    }
+    
     func getDateTimeString() -> String {
         let formatter = DateFormatter()
         formatter.dateStyle = .full

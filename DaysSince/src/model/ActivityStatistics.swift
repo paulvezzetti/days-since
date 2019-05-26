@@ -27,8 +27,9 @@ class ActivityStatistics {
         self.activity = activity
         
         dateFormatter = DateFormatter()
-        dateFormatter.dateStyle = DateFormatter.Style.medium
-        dateFormatter.timeStyle = DateFormatter.Style.none
+        dateFormatter.dateFormat = "d MMM yyyy"
+//        dateFormatter.dateStyle = DateFormatter.Style.medium
+//        dateFormatter.timeStyle = DateFormatter.Style.none
         
         sortedEvents = activity.history?.sortedArray(using: [NSSortDescriptor(key: "timestamp", ascending: true)]) as! [EventMO]
         var timeIntervals:[TimeInterval] = []

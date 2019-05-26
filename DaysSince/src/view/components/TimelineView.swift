@@ -19,7 +19,7 @@ import UIKit
         static let TimelineThickness: CGFloat = 28.0
         static let HalfTimelineThickness: CGFloat = Constants.TimelineThickness / 2.0
         static let TimelineIndent: CGFloat = 20.0
-        static let LeftRightPadding: CGFloat = 5.0
+        static let LeftRightPadding: CGFloat = 2.0
         static let DateLeftRightPadding: CGFloat = 10.0
         static let VerticalSpacing: CGFloat = 4.0
         static let OutsideDaysLabelSpacing: CGFloat = 2.0
@@ -135,9 +135,9 @@ import UIKit
         // This is on-time with a next date
         var yPos:CGFloat = Constants.VerticalSpacing
         // Place the labels for "Day Since" and "Days Until" in the same row.
-        let daysSinceSize = configureLabel(daysSinceTitleLabel, text: TimelineView.DaysSinceLocalized, x: rect.minX + Constants.LeftRightPadding, y: yPos, textAnchor: .TopLeft, fontSize: Constants.DaysLabelFontSize)
+        let daysSinceSize = configureLabel(daysSinceTitleLabel, text: TimelineView.DaysSinceLocalized, x: rect.minX + Constants.LeftRightPadding, y: yPos, textAnchor: .TopLeft, fontSize: Constants.DaysLabelFontSize, bold: true)
         
-        let daysUntilSize = configureLabel(daysUntilTitleLabel, text: TimelineView.DaysUntilLocalized, x: rect.maxX - Constants.LeftRightPadding, y: yPos, textAnchor: .TopRight, fontSize: Constants.DaysLabelFontSize)
+        let daysUntilSize = configureLabel(daysUntilTitleLabel, text: TimelineView.DaysUntilLocalized, x: rect.maxX - Constants.LeftRightPadding, y: yPos, textAnchor: .TopRight, fontSize: Constants.DaysLabelFontSize, bold: true)
         
         yPos += max(daysSinceSize.height, daysUntilSize.height)
         yPos += Constants.VerticalSpacing
@@ -209,8 +209,8 @@ import UIKit
         // This is overdue
         var yPos:CGFloat = Constants.VerticalSpacing
         // Place the labels for "Day Since" and "Days Until" in the same row.
-        let daysSinceTitleSize = configureLabel(daysSinceTitleLabel, text: TimelineView.DaysSinceLocalized, x: rect.minX + Constants.LeftRightPadding, y: yPos, textAnchor: .TopLeft, fontSize: Constants.DaysLabelFontSize)
-        let daysOverdueTitleSize = configureLabel(daysUntilTitleLabel, text: TimelineView.OverdueForLocalized, x: rect.maxX - Constants.TimelineIndent, y: yPos, textAnchor: .TopRight, fontSize: Constants.DaysLabelFontSize)
+        let daysSinceTitleSize = configureLabel(daysSinceTitleLabel, text: TimelineView.DaysSinceLocalized, x: rect.minX + Constants.LeftRightPadding, y: yPos, textAnchor: .TopLeft, fontSize: Constants.DaysLabelFontSize, bold: true)
+        let daysOverdueTitleSize = configureLabel(daysUntilTitleLabel, text: TimelineView.OverdueForLocalized, x: rect.maxX - Constants.TimelineIndent, y: yPos, textAnchor: .TopRight, fontSize: Constants.DaysLabelFontSize, bold: true)
         
         yPos += max(daysSinceTitleSize.height, daysOverdueTitleSize.height)
         yPos += Constants.VerticalSpacing
@@ -300,12 +300,7 @@ import UIKit
     
     @discardableResult
     private func configureLabel(_ label:UILabel, text:String, x: CGFloat, y: CGFloat, textAnchor:UILabel.TextAnchor = .BottomLeft, fontSize:CGFloat = 16.0, textColor:UIColor = UIColor.black, bold:Bool = false, textAlignment:NSTextAlignment = NSTextAlignment.left) -> CGRect {
-       // let systemFont = UIFont.systemFont(ofSize: fontSize)
-        var descriptor = UIFontDescriptor(name: "AvenirNext", size: fontSize)
-        if bold {
-            descriptor = descriptor.withSymbolicTraits(.traitBold) ?? descriptor
-        }
-        let font = UIFont(descriptor: descriptor, size: fontSize)
+        let font = createFont(fontSize: fontSize, bold: bold)
         
         label.configure(text: text, font: font, color: textColor, alignment: textAlignment)
         return label.updateFrame(x: x, y: y, textAnchor: textAnchor)
@@ -319,10 +314,19 @@ import UIKit
     
     
     
-    private func measureText(label:String, fontSize: CGFloat) -> CGSize {
-        let systemFont = UIFont.systemFont(ofSize: fontSize)
+    private func measureText(label:String, fontSize: CGFloat, bold:Bool = false) -> CGSize {
+        let systemFont = createFont(fontSize: fontSize, bold: bold)
         let attributes = [NSAttributedString.Key.font: systemFont]
         return NSString(string: label).size(withAttributes: attributes)
+    }
+    
+    private func createFont(fontSize: CGFloat, bold:Bool) -> UIFont {
+        var descriptor = UIFontDescriptor(name: "Avenir", size: fontSize)
+        if bold {
+            descriptor = descriptor.withSymbolicTraits(.traitBold) ?? descriptor
+        }
+        return UIFont(descriptor: descriptor, size: fontSize)
+
     }
 
     

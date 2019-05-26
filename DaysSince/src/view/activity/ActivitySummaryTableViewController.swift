@@ -86,8 +86,8 @@ class ActivitySummaryTableViewController: UITableViewController {
         
         timelineView.daysSince = stats.daySince ?? 0
         timelineView.daysUntil = stats.daysUntil != nil ? stats.daysUntil! : Int.max
-        timelineView.nextDate = nextDate != nil ? nextDate!.getFormattedDate() : ""
-        timelineView.prevDate = lastDate != nil ? lastDate!.getFormattedDate() : ""
+        timelineView.nextDate = nextDate != nil ? nextDate!.getShortFormattedDate() : ""
+        timelineView.prevDate = lastDate != nil ? lastDate!.getShortFormattedDate() : ""
     }
 
     
