@@ -19,6 +19,8 @@ import CoreGraphics
         static let triangleHeight: CGFloat = 7.0
         static let triangleWidth: CGFloat = 5.0
         static let pointsBoxHeight: CGFloat = Constants.pointDiameter + 4.0
+        
+        static let numberFontSize: CGFloat = 20.0
     }
     
     var intervals:[Double]? {
@@ -72,7 +74,7 @@ import CoreGraphics
             if minValueLabel == nil {
                 minValueLabel = initLabel()
             }
-            configureLabel(minValueLabel!, text: "No interval data available", x: paddedRect.midX, y: paddedRect.midY, textAnchor: .MiddleCenter, fontSize: 16.0, textColor: UIColor.black, textAlignment: NSTextAlignment.center)
+            configureLabel(minValueLabel!, text: "No interval data available", x: paddedRect.midX, y: paddedRect.midY, textAnchor: .MiddleCenter, fontSize: Constants.numberFontSize, textColor: UIColor.black, textAlignment: NSTextAlignment.center)
         } else if minMaxAvg.min == minMaxAvg.max && minMaxAvg.max == minMaxAvg.avg {
             // In this case, there is data, but they are all the same, non-zero value
 
@@ -96,8 +98,8 @@ import CoreGraphics
             }
             
             let minValueText = numberFormatter.string(for: (minMaxAvg.min / TimeConstants.SECONDS_PER_DAY))
-            configureLabel(minValueLabel!, text: minValueText!, x: paddedRect.midX, y: paddedRect.midY + Constants.pointRadius + 6, textAnchor: .TopCenter, fontSize: 16, textColor: UIColor.black, textAlignment: NSTextAlignment.center)
-            configureLabel(avgValueLabel!, text: minValueText!, x: paddedRect.midX, y: paddedRect.midY - Constants.pointRadius - Constants.triangleHeight - 4, textAnchor: .BottomCenter, fontSize: 16, textColor: UIColor.blue, textAlignment: NSTextAlignment.center)
+            configureLabel(minValueLabel!, text: minValueText!, x: paddedRect.midX, y: paddedRect.midY + Constants.pointRadius + 6, textAnchor: .TopCenter, fontSize: Constants.numberFontSize, textColor: UIColor.black, textAlignment: NSTextAlignment.center)
+            configureLabel(avgValueLabel!, text: minValueText!, x: paddedRect.midX, y: paddedRect.midY - Constants.pointRadius - Constants.triangleHeight - 4, textAnchor: .BottomCenter, fontSize: Constants.numberFontSize, textColor: UIColor.blue, textAlignment: NSTextAlignment.center)
 
             // Avg triangle
             drawTriangle(x: paddedRect.midX, y: paddedRect.midY - Constants.pointRadius - 4)
@@ -117,10 +119,10 @@ import CoreGraphics
             numberFormatter.maximumFractionDigits = 1
             
             let minValueText = numberFormatter.string(for: (minMaxAvg.min / TimeConstants.SECONDS_PER_DAY))
-            let minLabelRect = configureLabel(minValueLabel!, text: minValueText!, x: paddedRect.minX, y: paddedRect.midY + Constants.pointRadius + 4, textAnchor: .TopLeft, fontSize: 16, textColor: UIColor.black, textAlignment: NSTextAlignment.left)
+            let minLabelRect = configureLabel(minValueLabel!, text: minValueText!, x: paddedRect.minX, y: paddedRect.midY + Constants.pointRadius + 4, textAnchor: .TopLeft, fontSize: Constants.numberFontSize, textColor: UIColor.black, textAlignment: NSTextAlignment.left)
             
             let maxValueText = numberFormatter.string(for: (minMaxAvg.max / TimeConstants.SECONDS_PER_DAY))
-            let maxLabelRect = configureLabel(maxValueLabel!, text: maxValueText!, x: paddedRect.maxX, y: paddedRect.midY + Constants.pointRadius + 4, textAnchor: .TopRight, fontSize: 16, textColor: UIColor.black, textAlignment: NSTextAlignment.left)
+            let maxLabelRect = configureLabel(maxValueLabel!, text: maxValueText!, x: paddedRect.maxX, y: paddedRect.midY + Constants.pointRadius + 4, textAnchor: .TopRight, fontSize: Constants.numberFontSize, textColor: UIColor.black, textAlignment: NSTextAlignment.left)
             
             let availableWidth = paddedRect.width
             let usableWidth = availableWidth - (minLabelRect.width / 2.0) - (maxLabelRect.width / 2.0) // - 10.0 // add some space for margin
@@ -148,7 +150,7 @@ import CoreGraphics
             let avgValueText = numberFormatter.string(for: minMaxAvg.avg / TimeConstants.SECONDS_PER_DAY)
             let avgX = Constants.leftRightPadding + (minLabelRect.width / 2.0) + CGFloat(minMaxAvg.avg - minMaxAvg.min) * ptPerPixel
             
-            configureLabel(avgValueLabel!, text: avgValueText!, x: avgX, y: paddedRect.midY - Constants.pointRadius - Constants.triangleHeight - 4, textAnchor: .BottomCenter, fontSize: 16, textColor: UIColor.blue, textAlignment: NSTextAlignment.center)
+            configureLabel(avgValueLabel!, text: avgValueText!, x: avgX, y: paddedRect.midY - Constants.pointRadius - Constants.triangleHeight - 4, textAnchor: .BottomCenter, fontSize: Constants.numberFontSize, textColor: UIColor.blue, textAlignment: NSTextAlignment.center)
             
             // Avg triangle
             drawTriangle(x: avgX, y: paddedRect.midY - Constants.pointRadius - 4)
@@ -172,7 +174,7 @@ import CoreGraphics
     
     @discardableResult
     private func configureLabel(_ label:UILabel, text:String, x: CGFloat, y: CGFloat, textAnchor:UILabel.TextAnchor = .BottomLeft, fontSize:CGFloat = 16.0, textColor:UIColor = UIColor.blue, textAlignment:NSTextAlignment = NSTextAlignment.left) -> CGRect {
-        let systemFont = UIFont.systemFont(ofSize: fontSize)
+        let systemFont = createFont(fontSize: fontSize, bold: false)
         label.configure(text: text, font: systemFont, color: textColor, alignment: textAlignment)
         return label.updateFrame(x: x, y: y, textAnchor: textAnchor)
     }
@@ -195,12 +197,19 @@ import CoreGraphics
         let dotBorderCurve = UIBezierPath(rect: dotBorder)
         dotBorderCurve.lineWidth = 1.0
         UIColor.lightGray.setStroke()
-        let lightYellow = UIColor(red: 250.0/255.0, green: 212.0/255.0, blue: 142.0/255.0, alpha: 1.0)
-        lightYellow.setFill()
+//        let lightYellow = UIColor(red: 250.0/255.0, green: 212.0/255.0, blue: 142.0/255.0, alpha: 1.0)
+//        lightYellow.setFill()
         dotBorderCurve.stroke()
-        dotBorderCurve.fill()
+//        dotBorderCurve.fill()
     }
     
+    private func createFont(fontSize: CGFloat, bold:Bool) -> UIFont {
+        var descriptor = UIFontDescriptor(name: "Avenir", size: fontSize)
+        if bold {
+            descriptor = descriptor.withSymbolicTraits(.traitBold) ?? descriptor
+        }
+        return UIFont(descriptor: descriptor, size: fontSize)
+    }
 
     
     private func padRect(_ rect:CGRect) -> CGRect {
