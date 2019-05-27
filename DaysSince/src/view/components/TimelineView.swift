@@ -128,7 +128,7 @@ import UIKit
         yPos += Constants.HalfTimelineThickness
         drawTimeline(from: rect.minX + Constants.TimelineIndent, to: rect.maxX - Constants.TimelineIndent, y: yPos, width: Constants.TimelineThickness, color: TimelineView.lapisLazuli)
         // Label the number of days since inside the timeline
-        configureLabel(daysSinceValueLabel, text: String(daysSince), x: rect.minX + Constants.TimelineIndent + Constants.LeftRightPadding, y: yPos - Constants.HalfTimelineThickness, textAnchor: .TopLeft, fontSize: Constants.DaysValueFontSize, textColor: TimelineView.LightTimelineTextColor)
+        configureLabel(daysSinceValueLabel, text: String(daysSince), x: rect.minX + Constants.TimelineIndent + Constants.LeftRightPadding, y: yPos, textAnchor: .MiddleLeft, fontSize: Constants.DaysValueFontSize, textColor: TimelineView.LightTimelineTextColor)
     }
     
     private func drawAsOntime(_ rect: CGRect) {

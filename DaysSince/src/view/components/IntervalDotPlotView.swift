@@ -14,14 +14,17 @@ import CoreGraphics
     private struct Constants {
         static let leftRightPadding: CGFloat = 10.0
         static let topBottomPadding: CGFloat = 3.0
-        static let pointRadius: CGFloat = 4.0
+        static let verticalSpacing: CGFloat = 2.0
+        static let pointRadius: CGFloat = 6.0
         static let pointDiameter: CGFloat = Constants.pointRadius * 2.0
-        static let triangleHeight: CGFloat = 7.0
-        static let triangleWidth: CGFloat = 5.0
+        static let triangleHeight: CGFloat = 9.0
+        static let triangleWidth: CGFloat = 6.0
         static let pointsBoxHeight: CGFloat = Constants.pointDiameter + 4.0
         
         static let numberFontSize: CGFloat = 20.0
     }
+    
+    static let lapisLazuli:UIColor = UIColor(red: 36.0/255.0, green: 123.0/255.0, blue: 160.0/255.0, alpha: 1.0)
     
     var intervals:[Double]? {
         didSet {
@@ -61,10 +64,10 @@ import CoreGraphics
 //            subview.removeFromSuperview()
 //        }
         
-        let background = UIBezierPath(roundedRect: rect, cornerRadius: 12)
-        let backColor = UIColor(named: "Header")
-        backColor?.setFill()
-        background.fill()
+//        let background = UIBezierPath(roundedRect: rect, cornerRadius: 12)
+//        let backColor = UIColor(named: "Header")
+//        backColor?.setFill()
+//        background.fill()
         
         let minMaxAvg = calculateMinMaxAvg()
         if minMaxAvg.min == 0.0 && minMaxAvg.max == 0.0 && minMaxAvg.avg == 0 {
@@ -77,32 +80,43 @@ import CoreGraphics
             configureLabel(minValueLabel!, text: "No interval data available", x: paddedRect.midX, y: paddedRect.midY, textAnchor: .MiddleCenter, fontSize: Constants.numberFontSize, textColor: UIColor.black, textAlignment: NSTextAlignment.center)
         } else if minMaxAvg.min == minMaxAvg.max && minMaxAvg.max == minMaxAvg.avg {
             // In this case, there is data, but they are all the same, non-zero value
-
-            drawBox(x: paddedRect.minX + 10, y: paddedRect.midY - Constants.pointsBoxHeight / 2.0, width: paddedRect.width - 20, height: Constants.pointsBoxHeight)
-
-            // Draw a single dot, with the value below it.
-            let pointRect = CGRect(x: paddedRect.midX - Constants.pointRadius, y: paddedRect.midY - Constants.pointRadius, width: Constants.pointDiameter, height: Constants.pointDiameter)
-            let path = UIBezierPath(ovalIn: pointRect)
-            UIColor.blue.setFill()
-            path.fill()
             
+            var yPos = Constants.topBottomPadding
+
             let numberFormatter = NumberFormatter()
             numberFormatter.maximumFractionDigits = 1
-            
+            let minValueText = numberFormatter.string(for: (minMaxAvg.min / TimeConstants.SECONDS_PER_DAY))
+
             clearLabel(maxValueLabel)
-            if minValueLabel == nil {
-                minValueLabel = initLabel()
-            }
             if avgValueLabel == nil {
                 avgValueLabel = initLabel()
             }
-            
-            let minValueText = numberFormatter.string(for: (minMaxAvg.min / TimeConstants.SECONDS_PER_DAY))
-            configureLabel(minValueLabel!, text: minValueText!, x: paddedRect.midX, y: paddedRect.midY + Constants.pointRadius + 6, textAnchor: .TopCenter, fontSize: Constants.numberFontSize, textColor: UIColor.black, textAlignment: NSTextAlignment.center)
-            configureLabel(avgValueLabel!, text: minValueText!, x: paddedRect.midX, y: paddedRect.midY - Constants.pointRadius - Constants.triangleHeight - 4, textAnchor: .BottomCenter, fontSize: Constants.numberFontSize, textColor: UIColor.blue, textAlignment: NSTextAlignment.center)
+            let avgLabelSize = configureLabel(avgValueLabel!, text: minValueText!, x: paddedRect.midX, y: yPos /*paddedRect.midY - Constants.pointRadius - Constants.triangleHeight - 4*/, textAnchor: .TopCenter, fontSize: Constants.numberFontSize, textColor: IntervalDotPlotView.lapisLazuli, textAlignment: NSTextAlignment.center)
 
+            yPos += avgLabelSize.height
+            //yPos += Constants.verticalSpacing
             // Avg triangle
-            drawTriangle(x: paddedRect.midX, y: paddedRect.midY - Constants.pointRadius - 4)
+            drawTriangle(x: paddedRect.midX, y: yPos)
+
+            yPos += Constants.triangleHeight
+            yPos += Constants.verticalSpacing
+            yPos += Constants.pointsBoxHeight / 2.0
+            drawBox(x: paddedRect.minX + 10, y: yPos, width: paddedRect.width - 20, height: Constants.pointsBoxHeight)
+
+            // Draw a single dot, with the value below it.
+            let pointRect = CGRect(x: paddedRect.midX - Constants.pointRadius, y: yPos - Constants.pointRadius, width: Constants.pointDiameter, height: Constants.pointDiameter)
+            let path = UIBezierPath(ovalIn: pointRect)
+//            UIColor.blue.setFill()
+            IntervalDotPlotView.lapisLazuli.setFill()
+            path.fill()
+            
+            yPos += Constants.pointsBoxHeight / 2.0 + Constants.verticalSpacing
+            if minValueLabel == nil {
+                minValueLabel = initLabel()
+            }
+
+            configureLabel(minValueLabel!, text: minValueText!, x: paddedRect.midX, y: yPos, textAnchor: .TopCenter, fontSize: Constants.numberFontSize, textColor: UIColor.black, textAlignment: NSTextAlignment.center)
+
 
         } else {
             if minValueLabel == nil {
@@ -114,46 +128,55 @@ import CoreGraphics
             if avgValueLabel == nil {
                 avgValueLabel = initLabel()
             }
-
             let numberFormatter = NumberFormatter()
             numberFormatter.maximumFractionDigits = 1
-            
-            let minValueText = numberFormatter.string(for: (minMaxAvg.min / TimeConstants.SECONDS_PER_DAY))
-            let minLabelRect = configureLabel(minValueLabel!, text: minValueText!, x: paddedRect.minX, y: paddedRect.midY + Constants.pointRadius + 4, textAnchor: .TopLeft, fontSize: Constants.numberFontSize, textColor: UIColor.black, textAlignment: NSTextAlignment.left)
-            
-            let maxValueText = numberFormatter.string(for: (minMaxAvg.max / TimeConstants.SECONDS_PER_DAY))
-            let maxLabelRect = configureLabel(maxValueLabel!, text: maxValueText!, x: paddedRect.maxX, y: paddedRect.midY + Constants.pointRadius + 4, textAnchor: .TopRight, fontSize: Constants.numberFontSize, textColor: UIColor.black, textAlignment: NSTextAlignment.left)
-            
-            let availableWidth = paddedRect.width
-            let usableWidth = availableWidth - (minLabelRect.width / 2.0) - (maxLabelRect.width / 2.0) // - 10.0 // add some space for margin
 
+            let minValueText = numberFormatter.string(for: (minMaxAvg.min / TimeConstants.SECONDS_PER_DAY))
+            let maxValueText = numberFormatter.string(for: (minMaxAvg.max / TimeConstants.SECONDS_PER_DAY))
+            let avgValueText = numberFormatter.string(for: minMaxAvg.avg / TimeConstants.SECONDS_PER_DAY)
+
+            let availableWidth = paddedRect.width
+            let minValueTextSize = measureText(label: minValueText!, fontSize: Constants.numberFontSize)
+            let maxValueTextSize = measureText(label: maxValueText!, fontSize: Constants.numberFontSize)
             
+            let usableWidth = availableWidth - (minValueTextSize.width / 2.0) - (maxValueTextSize.width / 2.0)
             let intervalRange = minMaxAvg.max - minMaxAvg.min
             let ptPerPixel = usableWidth / CGFloat(intervalRange)
+
+            let avgX = paddedRect.minX + (minValueTextSize.width / 2.0) + CGFloat(minMaxAvg.avg - minMaxAvg.min) * ptPerPixel
             
-            drawBox(x: Constants.leftRightPadding + (minLabelRect.width / 2.0) - Constants.pointsBoxHeight / 2.0, y: paddedRect.midY - Constants.pointsBoxHeight / 2.0, width: usableWidth + 12, height: Constants.pointsBoxHeight)
+            var yPos = Constants.topBottomPadding
             
-            // Assume this is oldest to newest. // TODO: Verify
+            let avgLabelSize = configureLabel(avgValueLabel!, text: avgValueText!, x: avgX, y: yPos, textAnchor: .TopCenter, fontSize: Constants.numberFontSize, textColor: IntervalDotPlotView.lapisLazuli, textAlignment: NSTextAlignment.center)
+            
+            yPos += avgLabelSize.height
+            // Avg triangle
+            drawTriangle(x: avgX, y: yPos)
+
+            yPos += Constants.triangleHeight
+            yPos += Constants.verticalSpacing
+            yPos += Constants.pointsBoxHeight / 2.0
+            
+            drawBox(x: paddedRect.minX + (minValueTextSize.width / 2.0) - Constants.pointsBoxHeight / 2.0, y: yPos, width: usableWidth + Constants.pointsBoxHeight, height: Constants.pointsBoxHeight)
+
             // Last one should be full
             var alpha:CGFloat = 0.1
             let alphaDelta:CGFloat = 0.9 / CGFloat(intervals!.count - 1)
             
             for intervalValue in intervals! {
-                let x = Constants.leftRightPadding + (minLabelRect.width / 2.0) + CGFloat(intervalValue - minMaxAvg.min) * ptPerPixel
-                let pointRect = CGRect(x: x - Constants.pointRadius, y: paddedRect.midY - Constants.pointRadius, width: Constants.pointDiameter, height: Constants.pointDiameter)
+                let x = paddedRect.minX + (minValueTextSize.width / 2.0) + CGFloat(intervalValue - minMaxAvg.min) * ptPerPixel
+                let pointRect = CGRect(x: x - Constants.pointRadius, y: yPos - Constants.pointRadius, width: Constants.pointDiameter, height: Constants.pointDiameter)
                 let path = UIBezierPath(ovalIn: pointRect)
-                UIColor.blue.setFill()
+//                UIColor.blue.setFill()
+                IntervalDotPlotView.lapisLazuli.setFill()
                 path.fill(with: .normal, alpha: alpha)
                 alpha += alphaDelta
             }
 
-            let avgValueText = numberFormatter.string(for: minMaxAvg.avg / TimeConstants.SECONDS_PER_DAY)
-            let avgX = Constants.leftRightPadding + (minLabelRect.width / 2.0) + CGFloat(minMaxAvg.avg - minMaxAvg.min) * ptPerPixel
+            yPos += Constants.pointsBoxHeight / 2.0 + Constants.verticalSpacing
             
-            configureLabel(avgValueLabel!, text: avgValueText!, x: avgX, y: paddedRect.midY - Constants.pointRadius - Constants.triangleHeight - 4, textAnchor: .BottomCenter, fontSize: Constants.numberFontSize, textColor: UIColor.blue, textAlignment: NSTextAlignment.center)
-            
-            // Avg triangle
-            drawTriangle(x: avgX, y: paddedRect.midY - Constants.pointRadius - 4)
+            configureLabel(minValueLabel!, text: minValueText!, x: paddedRect.minX, y: yPos, textAnchor: .TopLeft, fontSize: Constants.numberFontSize, textColor: UIColor.black, textAlignment: NSTextAlignment.left)
+            configureLabel(maxValueLabel!, text: maxValueText!, x: paddedRect.maxX, y: yPos, textAnchor: .TopRight, fontSize: Constants.numberFontSize, textColor: UIColor.black, textAlignment: NSTextAlignment.left)
         }
         
     }
@@ -172,6 +195,13 @@ import CoreGraphics
         oldLabel.frame = CGRect(x: 0.0, y: 0.0, width: 0.0, height: 0.0)
     }
     
+    private func measureText(label:String, fontSize: CGFloat, bold:Bool = false) -> CGSize {
+        let systemFont = createFont(fontSize: fontSize, bold: bold)
+        let attributes = [NSAttributedString.Key.font: systemFont]
+        return NSString(string: label).size(withAttributes: attributes)
+    }
+    
+    
     @discardableResult
     private func configureLabel(_ label:UILabel, text:String, x: CGFloat, y: CGFloat, textAnchor:UILabel.TextAnchor = .BottomLeft, fontSize:CGFloat = 16.0, textColor:UIColor = UIColor.blue, textAlignment:NSTextAlignment = NSTextAlignment.left) -> CGRect {
         let systemFont = createFont(fontSize: fontSize, bold: false)
@@ -181,19 +211,20 @@ import CoreGraphics
     
     private func drawTriangle(x:CGFloat, y: CGFloat) {
         let path = CGMutablePath()
-        path.move(to: CGPoint(x: x - Constants.triangleWidth, y: y - Constants.triangleHeight) )
-        path.addLine(to: CGPoint(x: x + Constants.triangleWidth, y: y - Constants.triangleHeight ) )
-        path.addLine(to: CGPoint(x: x, y: y) )
+        path.move(to: CGPoint(x: x - Constants.triangleWidth, y: y) )
+        path.addLine(to: CGPoint(x: x + Constants.triangleWidth, y: y ) )
+        path.addLine(to: CGPoint(x: x, y: y + Constants.triangleHeight) )
         path.closeSubpath()
         
         let triangle = UIBezierPath(cgPath: path)
-        UIColor.blue.setFill()
+//        UIColor.blue.setFill()
+        IntervalDotPlotView.lapisLazuli.setFill()
         triangle.fill()
 
     }
     
     private func drawBox(x:CGFloat, y: CGFloat, width: CGFloat, height: CGFloat) {
-        let dotBorder = CGRect(x: x, y: y, width: width, height: height)
+        let dotBorder = CGRect(x: x, y: y - height / 2.0, width: width, height: height)
         let dotBorderCurve = UIBezierPath(rect: dotBorder)
         dotBorderCurve.lineWidth = 1.0
         UIColor.lightGray.setStroke()
