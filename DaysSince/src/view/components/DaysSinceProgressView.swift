@@ -75,7 +75,7 @@ import CoreGraphics
             // Draw a progression around
             var percentComplete = 0.0
             if daysUntil! >= 0 {
-                percentComplete = Double(days) / Double(days + daysUntil! + 1)
+                percentComplete = Double(days) / Double(days + daysUntil!)
             } else {
                 let daysOverdue = abs(daysUntil!)
                 percentComplete = Double(days - daysOverdue) / Double(days)

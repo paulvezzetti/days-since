@@ -210,7 +210,7 @@ import UIKit
         var yPos:CGFloat = Constants.VerticalSpacing
         // Place the labels for "Day Since" and "Days Until" in the same row.
         let daysSinceTitleSize = configureLabel(daysSinceTitleLabel, text: TimelineView.DaysSinceLocalized, x: rect.minX + Constants.LeftRightPadding, y: yPos, textAnchor: .TopLeft, fontSize: Constants.DaysLabelFontSize, bold: true)
-        let daysOverdueTitleSize = configureLabel(daysUntilTitleLabel, text: TimelineView.OverdueForLocalized, x: rect.maxX - Constants.TimelineIndent, y: yPos, textAnchor: .TopRight, fontSize: Constants.DaysLabelFontSize, bold: true)
+        let daysOverdueTitleSize = configureLabel(daysUntilTitleLabel, text: TimelineView.OverdueForLocalized, x: rect.maxX - Constants.LeftRightPadding, y: yPos, textAnchor: .TopRight, fontSize: Constants.DaysLabelFontSize, bold: true)
         
         yPos += max(daysSinceTitleSize.height, daysOverdueTitleSize.height)
         yPos += Constants.VerticalSpacing
