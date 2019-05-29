@@ -38,6 +38,13 @@ class DetailViewController: UIViewController {
             if let label = detailDescriptionLabel {
                 label.text = detail.name
             }
+        } else {
+            if let label = detailDescriptionLabel {
+                label.text = ""
+            }
+            if let segControl = segmentedControl {
+                segControl.isHidden = true
+            }
         }
     }
 
