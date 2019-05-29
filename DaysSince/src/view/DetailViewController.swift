@@ -13,8 +13,9 @@ class DetailViewController: UIViewController {
     @IBOutlet weak var detailDescriptionLabel: UILabel!
     @IBOutlet var alternatingView: UIView!
     @IBOutlet var segmentedControl: UISegmentedControl!
+    @IBOutlet var bottomToolbar: UIToolbar!
     
-    var activeSubViewController: UITableViewController?
+    var activeSubViewController: UIViewController?
     var dataManager: DataModelManager? = nil
     
     var detailItem: ActivityMO? {
@@ -22,6 +23,7 @@ class DetailViewController: UIViewController {
             NotificationCenter.default.removeObserver(self)
             // Add new observers
             NotificationCenter.default.addObserver(self, selector: #selector(onActivityChanged(notification:)), name: Notification.Name.activityChanged, object: detailItem)
+            NotificationCenter.default.addObserver(self, selector: #selector(onActivityRemoved(notification:)), name: Notification.Name.activityRemoved, object: detailItem)
 
             // Update the view.
             configureView()
@@ -45,6 +47,22 @@ class DetailViewController: UIViewController {
             if let segControl = segmentedControl {
                 segControl.isHidden = true
             }
+            if let toolbar = bottomToolbar {
+                toolbar.isHidden = true
+            }
+            
+            if let activeViewController = self.activeSubViewController {
+                // Remove the history
+                activeViewController.willMove(toParent: nil)
+                activeViewController.view.removeFromSuperview()
+                activeViewController.removeFromParent()
+            }
+            addChild(noActivityViewController)
+            alternatingView.addSubview(noActivityViewController.view)
+            noActivityViewController.view.frame = alternatingView.bounds
+            noActivityViewController.view.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+            noActivityViewController.didMove(toParent: self)
+            activeSubViewController = noActivityViewController
         }
     }
 
@@ -111,12 +129,12 @@ class DetailViewController: UIViewController {
     
     @IBAction func unwindSaveActivity(segue: UIStoryboardSegue) {
         
-        do {
-            try dataManager?.saveContext()
-        } catch {
-            let nserror = error as NSError
-            fatalError("Unresolved error \(nserror), \(nserror.userInfo)")
-        }
+//        do {
+//            try dataManager?.saveContext()
+//        } catch {
+//            let nserror = error as NSError
+//            fatalError("Unresolved error \(nserror), \(nserror.userInfo)")
+//        }
 
         configureView()
     }
@@ -136,6 +154,17 @@ class DetailViewController: UIViewController {
     @objc
     func onActivityChanged(notification:Notification) {
         configureView()
+    }
+    
+    @objc
+    func onActivityRemoved(notification:Notification) {
+        guard let activity = notification.object as? ActivityMO else {
+            return
+        }
+        if activity === detailItem {
+            detailItem = nil
+            configureView()
+        }
     }
 
     
@@ -182,12 +211,14 @@ class DetailViewController: UIViewController {
             historyViewController.view.frame = alternatingView.bounds
             historyViewController.view.autoresizingMask = [.flexibleWidth, .flexibleHeight]
             historyViewController.didMove(toParent: self)
+            activeSubViewController = historyViewController
         } else if segmentedControl.selectedSegmentIndex == 2 {
             addChild(settingsViewController)
             alternatingView.addSubview(settingsViewController.view)
             settingsViewController.view.frame = alternatingView.bounds
             settingsViewController.view.autoresizingMask = [.flexibleWidth, .flexibleHeight]
             settingsViewController.didMove(toParent: self)
+            activeSubViewController = settingsViewController
         }
     }
     
@@ -213,6 +244,18 @@ class DetailViewController: UIViewController {
         var viewController = storyboard.instantiateViewController(withIdentifier: "ActivityInfoTableViewController") as! ActivityInfoTableViewController
         viewController.activity = detailItem
        // viewController.dataManager = dataManager
+        
+        self.addChild(viewController)
+        return viewController
+    }()
+
+    private lazy var noActivityViewController: NoActivityViewController = {
+        
+        let storyboard = UIStoryboard(name: "Main", bundle: Bundle.main)
+        
+        var viewController = storyboard.instantiateViewController(withIdentifier: "NoActivityViewController") as! NoActivityViewController
+        //viewController.activity = detailItem
+        viewController.dataManager = dataManager
         
         self.addChild(viewController)
         return viewController

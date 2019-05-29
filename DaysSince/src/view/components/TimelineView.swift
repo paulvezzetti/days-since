@@ -10,10 +10,26 @@ import UIKit
 
 @IBDesignable class TimelineView: UIView {
 
-    @IBInspectable var daysSince: Int = 0
-    @IBInspectable var daysUntil: Int = Int.max
-    @IBInspectable var prevDate:String?
-    @IBInspectable var nextDate:String?
+    @IBInspectable var daysSince: Int = 0 {
+        didSet {
+            self.setNeedsDisplay()
+        }
+    }
+    @IBInspectable var daysUntil: Int = Int.max {
+        didSet {
+            self.setNeedsDisplay()
+        }
+    }
+    @IBInspectable var prevDate:String? {
+        didSet {
+            self.setNeedsDisplay()
+        }
+    }
+    @IBInspectable var nextDate:String? {
+        didSet {
+            self.setNeedsDisplay()
+        }
+    }
     
     private struct Constants {
         static let TimelineThickness: CGFloat = 28.0

@@ -167,12 +167,12 @@ class MasterViewController: UITableViewController {
     }
     
     @IBAction func unwindSaveActivity(segue: UIStoryboardSegue) {
-        do {
-            try dataManager?.saveContext()
-        } catch {
-            let nserror = error as NSError
-            fatalError("Unresolved error \(nserror), \(nserror.userInfo)")
-        }
+//        do {
+//            try dataManager?.saveContext()
+//        } catch {
+//            let nserror = error as NSError
+//            fatalError("Unresolved error \(nserror), \(nserror.userInfo)")
+//        }
     }
 
 

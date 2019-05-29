@@ -211,6 +211,7 @@ class AddActivityTableViewController: UITableViewController, UITextFieldDelegate
             // Save the context
             do {
                 try managedObjectContext?.save()
+                try dataManager?.saveContext()
             } catch let error as NSError {
                 print("Unable to save new activity: \(error)")
             }
