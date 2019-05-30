@@ -12,6 +12,11 @@ import CoreData
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDelegate {
 
+    
+    // TODO:
+    // Possibly rename app based on existing apps in AppStore
+    //  - Daysago
+    
     var window: UIWindow?
     var dataManager: DataModelManager?
     var notificationManager: NotificationManager?

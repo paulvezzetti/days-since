@@ -66,6 +66,14 @@ class MasterViewController: UITableViewController {
     @objc func onAnyActivityChanged(notification: Notification) {
         buildTableDataStructure()
         tableView.reloadData()
+        
+        if notification.name == Notification.Name.activityAdded {
+            if let activity = notification.object as? ActivityMO {
+                if self.isViewLoaded {
+                    self.performSegue(withIdentifier: "showDetail", sender: activity)
+                }
+            }
+        }
     }
     
     @objc func showActivityRequest(notification:Notification) {
@@ -141,11 +149,13 @@ class MasterViewController: UITableViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "showDetail" {
             var activity: ActivityMO? = nil
-            if pendingActivityToShow != nil {
+            if sender is ActivityMO {
+                activity = sender as? ActivityMO
+            } else if pendingActivityToShow != nil {
                 activity = self.dataManager?.getActivityByID(uuid: pendingActivityToShow!)
                 pendingActivityToShow = nil
             }
-             else if let indexPath = tableView.indexPathForSelectedRow {
+            else if let indexPath = tableView.indexPathForSelectedRow {
                 let sectionActivities = activityDict[sectionToStatus(section: indexPath.section)] ?? []
                 activity = sectionActivities[indexPath.row] // TODO: Array size check
             }
@@ -328,6 +338,11 @@ class MasterViewController: UITableViewController {
     func getActivity(at indexPath:IndexPath) -> ActivityMO {
         let sectionActivities = activityDict[sectionToStatus(section: indexPath.section)] ?? []
         return sectionActivities[indexPath.row] // TODO: Array size check
+    }
+    
+    func getIndexPathForActivity(activity:ActivityMO) -> IndexPath {
+        
+        return IndexPath(row: 0, section: 0)
     }
 
 }
