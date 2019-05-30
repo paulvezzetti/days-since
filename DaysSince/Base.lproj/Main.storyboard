@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="H1p-Uh-vWS">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="H1p-Uh-vWS">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="Stack View standard spacing" minToolsVersion="9.0"/>
@@ -871,22 +871,22 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillProportionally" alignment="center" spacingType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="QjF-Dp-d7H">
-                                <rect key="frame" x="8" y="143" width="359" height="381"/>
+                                <rect key="frame" x="8" y="198.5" width="359" height="270"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="749" text="Welcome" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EdH-hm-PoJ">
-                                        <rect key="frame" x="91.5" y="0.0" width="176.5" height="126.5"/>
+                                        <rect key="frame" x="91.5" y="0.0" width="176.5" height="70"/>
                                         <fontDescription key="fontDescription" name="Avenir-Medium" family="Avenir" pointSize="42"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" verticalHuggingPriority="240" verticalCompressionResistancePriority="760" scrollEnabled="NO" editable="NO" text="Select an activity from the activity list or create a new one by clicking on the button below." textAlignment="center" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ADU-GY-y8c">
-                                        <rect key="frame" x="1.5" y="134.5" width="356" height="90"/>
+                                        <rect key="frame" x="1.5" y="78" width="356" height="109"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <fontDescription key="fontDescription" name="Avenir-Book" family="Avenir" pointSize="18"/>
                                         <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                     </textView>
                                     <button opaque="NO" contentMode="scaleAspectFit" verticalHuggingPriority="251" verticalCompressionResistancePriority="250" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rkV-zJ-Nnk">
-                                        <rect key="frame" x="105" y="232.5" width="149" height="148.5"/>
+                                        <rect key="frame" x="142" y="195" width="75" height="75"/>
                                         <constraints>
                                             <constraint firstAttribute="width" secondItem="rkV-zJ-Nnk" secondAttribute="height" multiplier="1:1" id="fL4-40-qiH"/>
                                         </constraints>
@@ -951,7 +951,7 @@
         </namedColor>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="exr-QC-Owm"/>
+        <segue reference="m8M-iz-Q6X"/>
         <segue reference="BMi-sG-zyJ"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" name="LapisBlue"/>

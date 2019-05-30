@@ -65,15 +65,7 @@ class MasterViewController: UITableViewController {
     
     @objc func onAnyActivityChanged(notification: Notification) {
         buildTableDataStructure()
-        tableView.reloadData()
-        
-        if notification.name == Notification.Name.activityAdded {
-            if let activity = notification.object as? ActivityMO {
-                if self.isViewLoaded {
-                    self.performSegue(withIdentifier: "showDetail", sender: activity)
-                }
-            }
-        }
+        tableView.reloadData()        
     }
     
     @objc func showActivityRequest(notification:Notification) {

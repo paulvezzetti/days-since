@@ -22,6 +22,7 @@ class DetailViewController: UIViewController {
         didSet {
             NotificationCenter.default.removeObserver(self)
             // Add new observers
+            NotificationCenter.default.addObserver(self, selector: #selector(onActivityAdded(notification:)), name: Notification.Name.activityAdded, object: nil)
             NotificationCenter.default.addObserver(self, selector: #selector(onActivityChanged(notification:)), name: Notification.Name.activityChanged, object: detailItem)
             NotificationCenter.default.addObserver(self, selector: #selector(onActivityRemoved(notification:)), name: Notification.Name.activityRemoved, object: detailItem)
 
@@ -40,6 +41,28 @@ class DetailViewController: UIViewController {
             if let label = detailDescriptionLabel {
                 label.text = detail.name
             }
+            if let segControl = segmentedControl {
+                segControl.isHidden = false
+            }
+            if let toolbar = bottomToolbar {
+                toolbar.isHidden = false
+            }
+            if let activeViewController = self.activeSubViewController {
+                if activeSubViewController == noActivityViewController {
+                    activeViewController.willMove(toParent: nil)
+                    activeViewController.view.removeFromSuperview()
+                    activeViewController.removeFromParent()
+                    
+                    if let summaryVC = summaryViewController {
+                        addChild(summaryVC)
+                        alternatingView.addSubview(summaryVC.view)
+                        summaryVC.view.frame = alternatingView.bounds
+                        summaryVC.view.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+                        summaryVC.didMove(toParent: self)
+                    }
+
+                }
+            }
         } else {
             if let label = detailDescriptionLabel {
                 label.text = ""
@@ -56,6 +79,7 @@ class DetailViewController: UIViewController {
                 activeViewController.willMove(toParent: nil)
                 activeViewController.view.removeFromSuperview()
                 activeViewController.removeFromParent()
+                
             }
             addChild(noActivityViewController)
             alternatingView.addSubview(noActivityViewController.view)
@@ -69,6 +93,8 @@ class DetailViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        NotificationCenter.default.addObserver(self, selector: #selector(onActivityAdded(notification:)), name: Notification.Name.activityAdded, object: nil)
+
         activeSubViewController = summaryViewController
         // Do any additional setup after loading the view, typically from a nib.
         configureView()
@@ -150,6 +176,17 @@ class DetailViewController: UIViewController {
         self.present(alert, animated: true, completion: nil)
     }
     
+    @objc
+    func onActivityAdded(notification:Notification) {
+        guard let activity = notification.object as? ActivityMO else {
+            return
+        }
+        if activity != detailItem {
+            detailItem = activity
+            configureView()
+        }
+
+    }
     
     @objc
     func onActivityChanged(notification:Notification) {
