@@ -54,6 +54,7 @@ class DetailViewController: UIViewController {
                     activeViewController.removeFromParent()
                     
                     if let summaryVC = summaryViewController {
+                        summaryVC.activity = detailItem
                         addChild(summaryVC)
                         alternatingView.addSubview(summaryVC.view)
                         summaryVC.view.frame = alternatingView.bounds
@@ -286,11 +287,23 @@ class DetailViewController: UIViewController {
         return viewController
     }()
 
-    private lazy var noActivityViewController: NoActivityViewController = {
+//    private lazy var noActivityViewController: NoActivityViewController = {
+//
+//        let storyboard = UIStoryboard(name: "Main", bundle: Bundle.main)
+//
+//        var viewController = storyboard.instantiateViewController(withIdentifier: "NoActivityViewController") as! NoActivityViewController
+//        //viewController.activity = detailItem
+//        viewController.dataManager = dataManager
+//
+//        self.addChild(viewController)
+//        return viewController
+//    }()
+
+    private lazy var noActivityViewController: BlankActivityTableViewController = {
         
         let storyboard = UIStoryboard(name: "Main", bundle: Bundle.main)
         
-        var viewController = storyboard.instantiateViewController(withIdentifier: "NoActivityViewController") as! NoActivityViewController
+        var viewController = storyboard.instantiateViewController(withIdentifier: "BlankActivityTableViewController") as! BlankActivityTableViewController
         //viewController.activity = detailItem
         viewController.dataManager = dataManager
         

@@ -25,6 +25,9 @@ class ActivitySummaryTableViewController: UITableViewController {
             NotificationCenter.default.removeObserver(self)
             // Add new observers
             DataModelManager.registerForAnyActivityChangeNotification(self, selector: #selector(onActivityChanged(notification:)), activity: activity)
+            if isViewLoaded {
+                configureView()
+            }
         }
     }
 
