@@ -33,6 +33,10 @@ class DetailViewController: UIViewController {
             }
         }
     }
+    
+    func presentAddViewController() {
+        performSegue(withIdentifier: "editActivity", sender: self)
+    }
 
     
     func configureView() {

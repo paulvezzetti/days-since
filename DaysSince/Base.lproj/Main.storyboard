@@ -258,17 +258,18 @@
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="XWs-O9-GAl">
                             <color key="tintColor" name="LapisBlue"/>
                             <connections>
-                                <segue destination="AE5-9Y-827" kind="show" identifier="presentAddActivity" id="m8M-iz-Q6X"/>
+                                <action selector="onAddButtonTap:" destination="7bK-jq-Zjz" id="WBZ-NC-AIu"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
                     <connections>
                         <outlet property="navigationTitle" destination="Zdf-7t-Un8" id="Nfl-II-9rf"/>
+                        <segue destination="AE5-9Y-827" kind="show" identifier="presentAddActivity" id="5VD-Ql-yKM"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Rux-fX-hf1" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="708" y="-630.13493253373315"/>
+            <point key="canvasLocation" x="804" y="-630"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="r7l-gg-dq7">
@@ -990,7 +991,7 @@
         </namedColor>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="lBy-PC-4ax"/>
+        <segue reference="5VD-Ql-yKM"/>
         <segue reference="BMi-sG-zyJ"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" name="LapisBlue"/>
