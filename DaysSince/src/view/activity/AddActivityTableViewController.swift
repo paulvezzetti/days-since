@@ -73,6 +73,9 @@ class AddActivityTableViewController: UITableViewController, UITextFieldDelegate
         titleField.delegate = self
         snoozeTextField.delegate = self
         
+        titleField.inputAssistantItem.leadingBarButtonGroups = []
+        titleField.inputAssistantItem.trailingBarButtonGroups = []
+        
         // Copy the settings to the temp activity
         if let activityToEdit = editActivity {
             // If we are editing an existing activity, clone it with just the first event history

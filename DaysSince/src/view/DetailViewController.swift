@@ -173,7 +173,7 @@ class DetailViewController: UIViewController {
         }
         if activity != detailItem {
             detailItem = activity
-            configureView()
+            //configureView()
         }
 
     }
@@ -190,7 +190,7 @@ class DetailViewController: UIViewController {
         }
         if activity === detailItem {
             detailItem = nil
-            configureView()
+            //configureView()
         }
     }
 

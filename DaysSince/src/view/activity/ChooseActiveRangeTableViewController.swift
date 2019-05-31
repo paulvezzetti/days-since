@@ -14,7 +14,9 @@ class ChooseActiveRangeTableViewController: UITableViewController {
         case AllYear = 0,
         DateRangeLabel,
         StartDate,
-        EndDate
+        StartDatePicker,
+        EndDate,
+        EndDatePicker
     }
     // MARK: Outlets
     @IBOutlet weak var dateRangeLabel: UILabel!
@@ -77,17 +79,14 @@ class ChooseActiveRangeTableViewController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return 4
+        return 6
     }
 
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let selectionChanged = setSelectedRow(row: TableRows(rawValue: indexPath.row) ?? TableRows.AllYear)
+        let row = indexPath.row > TableRows.DateRangeLabel.rawValue ? TableRows.DateRangeLabel.rawValue : indexPath.row
+        let _ = setSelectedRow(row: TableRows(rawValue: row) ?? TableRows.AllYear)
         
-        currentSelectedRow = TableRows(rawValue: indexPath.row)!
-        
-        if selectionChanged {
-//            updateInterval()
-        }
+        currentSelectedRow = TableRows(rawValue: row)!
         
         self.tableView.beginUpdates()
         self.tableView.endUpdates()
@@ -99,11 +98,27 @@ class ChooseActiveRangeTableViewController: UITableViewController {
             if currentSelectedRow != TableRows.DateRangeLabel {
                 return 0
             } else {
+                return 44
+            }
+        }
+
+        if indexPath.row == TableRows.StartDatePicker.rawValue {
+            if currentSelectedRow != TableRows.DateRangeLabel {
+                return 0
+            } else {
                 return 120
             }
         }
-        
         if indexPath.row == TableRows.EndDate.rawValue {
+            if currentSelectedRow != TableRows.DateRangeLabel {
+                return 0
+            } else {
+                return 44
+            }
+        }
+
+        
+        if indexPath.row == TableRows.EndDatePicker.rawValue {
             if currentSelectedRow != TableRows.DateRangeLabel {
                 return 0
             } else {
@@ -120,6 +135,7 @@ class ChooseActiveRangeTableViewController: UITableViewController {
         guard row != currentSelectedRow else {
             return false
         }
+        //let selectedRow = row.rawValue > TableRows.DateRangeLabel.rawValue ? .DateRangeLabel : row
         let selectedTableRow = super.tableView(tableView, cellForRowAt: IndexPath(row: currentSelectedRow.rawValue, section: 0))
         selectedTableRow.accessoryType = .none
         
