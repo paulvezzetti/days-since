@@ -49,17 +49,11 @@ class DetailViewController: UIViewController {
             }
             if let activeViewController = self.activeSubViewController {
                 if activeSubViewController == noActivityViewController {
-                    activeViewController.willMove(toParent: nil)
-                    activeViewController.view.removeFromSuperview()
-                    activeViewController.removeFromParent()
+                    removeChildFromSubview(viewController: activeViewController)
                     
                     if let summaryVC = summaryViewController {
                         summaryVC.activity = detailItem
-                        addChild(summaryVC)
-                        alternatingView.addSubview(summaryVC.view)
-                        summaryVC.view.frame = alternatingView.bounds
-                        summaryVC.view.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-                        summaryVC.didMove(toParent: self)
+                        addChildToSubview(viewController: summaryVC)
                     }
 
                 }
@@ -76,18 +70,9 @@ class DetailViewController: UIViewController {
             }
             
             if let activeViewController = self.activeSubViewController {
-                // Remove the history
-                activeViewController.willMove(toParent: nil)
-                activeViewController.view.removeFromSuperview()
-                activeViewController.removeFromParent()
-                
+                removeChildFromSubview(viewController: activeViewController)
             }
-            addChild(noActivityViewController)
-            alternatingView.addSubview(noActivityViewController.view)
-            noActivityViewController.view.frame = alternatingView.bounds
-            noActivityViewController.view.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-            noActivityViewController.didMove(toParent: self)
-            activeSubViewController = noActivityViewController
+            addChildToSubview(viewController: noActivityViewController)
         }
     }
 
@@ -225,39 +210,35 @@ class DetailViewController: UIViewController {
     @objc
     func selectionDidChange(_ sender: UISegmentedControl) {
         if let activeViewController = self.activeSubViewController {
-            // Remove the history
-            activeViewController.willMove(toParent: nil)
-            activeViewController.view.removeFromSuperview()
-            activeViewController.removeFromParent()
-
+            removeChildFromSubview(viewController: activeViewController)
         }
+        
         if segmentedControl.selectedSegmentIndex == 0 {
             // Restore the summary
             if let summaryVC = summaryViewController {
-                addChild(summaryVC)
-                alternatingView.addSubview(summaryVC.view)
-                summaryVC.view.frame = alternatingView.bounds
-                summaryVC.view.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-                summaryVC.didMove(toParent: self)
+                addChildToSubview(viewController: summaryVC)
             }
-            
-            
         } else if segmentedControl.selectedSegmentIndex == 1 {
             //Restore the history
-            addChild(historyViewController)
-            alternatingView.addSubview(historyViewController.view)
-            historyViewController.view.frame = alternatingView.bounds
-            historyViewController.view.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-            historyViewController.didMove(toParent: self)
-            activeSubViewController = historyViewController
+            addChildToSubview(viewController: historyViewController)
         } else if segmentedControl.selectedSegmentIndex == 2 {
-            addChild(settingsViewController)
-            alternatingView.addSubview(settingsViewController.view)
-            settingsViewController.view.frame = alternatingView.bounds
-            settingsViewController.view.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-            settingsViewController.didMove(toParent: self)
-            activeSubViewController = settingsViewController
+            addChildToSubview(viewController: settingsViewController)
         }
+    }
+    
+    private func addChildToSubview(viewController: UIViewController) {
+        addChild(viewController)
+        alternatingView.addSubview(viewController.view)
+        viewController.view.frame = alternatingView.bounds
+        viewController.view.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        viewController.didMove(toParent: self)
+        activeSubViewController = viewController
+    }
+    
+    private func removeChildFromSubview(viewController: UIViewController) {
+        viewController.willMove(toParent: nil)
+        viewController.view.removeFromSuperview()
+        viewController.removeFromParent()
     }
     
     private var summaryViewController:ActivitySummaryTableViewController?
@@ -287,17 +268,6 @@ class DetailViewController: UIViewController {
         return viewController
     }()
 
-//    private lazy var noActivityViewController: NoActivityViewController = {
-//
-//        let storyboard = UIStoryboard(name: "Main", bundle: Bundle.main)
-//
-//        var viewController = storyboard.instantiateViewController(withIdentifier: "NoActivityViewController") as! NoActivityViewController
-//        //viewController.activity = detailItem
-//        viewController.dataManager = dataManager
-//
-//        self.addChild(viewController)
-//        return viewController
-//    }()
 
     private lazy var noActivityViewController: BlankActivityTableViewController = {
         
