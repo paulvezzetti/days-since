@@ -14,9 +14,7 @@ class ChooseActiveRangeTableViewController: UITableViewController {
         case AllYear = 0,
         DateRangeLabel,
         StartDate,
-        StartDatePicker,
-        EndDate,
-        EndDatePicker
+        EndDate
     }
     // MARK: Outlets
     @IBOutlet weak var dateRangeLabel: UILabel!
@@ -73,13 +71,11 @@ class ChooseActiveRangeTableViewController: UITableViewController {
     // MARK: - Table view data source
 
     override func numberOfSections(in tableView: UITableView) -> Int {
-        // #warning Incomplete implementation, return the number of sections
         return 1
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of rows
-        return 6
+        return 4
     }
 
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -98,33 +94,18 @@ class ChooseActiveRangeTableViewController: UITableViewController {
             if currentSelectedRow != TableRows.DateRangeLabel {
                 return 0
             } else {
-                return 44
+                return 140
             }
         }
 
-        if indexPath.row == TableRows.StartDatePicker.rawValue {
-            if currentSelectedRow != TableRows.DateRangeLabel {
-                return 0
-            } else {
-                return 120
-            }
-        }
         if indexPath.row == TableRows.EndDate.rawValue {
             if currentSelectedRow != TableRows.DateRangeLabel {
                 return 0
             } else {
-                return 44
+                return 140
             }
         }
 
-        
-        if indexPath.row == TableRows.EndDatePicker.rawValue {
-            if currentSelectedRow != TableRows.DateRangeLabel {
-                return 0
-            } else {
-                return 120
-            }
-        }
         
         return super.tableView(tableView, heightForRowAt: indexPath)
     }
