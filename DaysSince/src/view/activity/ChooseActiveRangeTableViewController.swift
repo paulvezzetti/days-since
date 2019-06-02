@@ -16,6 +16,7 @@ class ChooseActiveRangeTableViewController: UITableViewController {
         StartDate,
         EndDate
     }
+    
     // MARK: Outlets
     @IBOutlet weak var dateRangeLabel: UILabel!
     @IBOutlet weak var startDatePickerView: UIPickerView!
@@ -89,7 +90,6 @@ class ChooseActiveRangeTableViewController: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        //print("Height for row: \(indexPath.row)")
         if indexPath.row == TableRows.StartDate.rawValue {
             if currentSelectedRow != TableRows.DateRangeLabel {
                 return 0
@@ -105,14 +105,17 @@ class ChooseActiveRangeTableViewController: UITableViewController {
                 return 140
             }
         }
-
-        
         return super.tableView(tableView, heightForRowAt: indexPath)
     }
+}
+
+// MARK: Private Extension
+
+extension ChooseActiveRangeTableViewController {
 
     // Sets the selected. Returns true if selection changes; Otherwise false.
     @discardableResult
-    func setSelectedRow(row:TableRows) -> Bool{
+    private func setSelectedRow(row:TableRows) -> Bool{
         guard row != currentSelectedRow else {
             return false
         }
@@ -127,11 +130,11 @@ class ChooseActiveRangeTableViewController: UITableViewController {
         return true
     }
     
-    func updateInterval() {
+    private func updateInterval() {
         guard let act = activity, let interval = act.interval, let moc = act.managedObjectContext else {
             return
         }
-
+        
         if currentSelectedRow == .AllYear && interval.activeRange != nil {
             interval.activeRange = nil
         } else if currentSelectedRow == .DateRangeLabel {
@@ -146,14 +149,11 @@ class ChooseActiveRangeTableViewController: UITableViewController {
             range?.endMonth = Int16(endDayPickerController?.getMonth() ?? 12)
             
         }
-                
     }
-
-
 
 }
 
-// MARK: ByYearDayPickerDelegate
+// MARK: YearDayPickerDelegate
 extension ChooseActiveRangeTableViewController : YearDayPickerDelegate {
     
     func yearDaySet(picker:UIPickerView, month: Int, monthSymbol:String, day: Int) {
