@@ -169,22 +169,7 @@ class MasterViewController: UITableViewController {
         }
     }
     
-    @IBAction func onAddButtonTap(_ sender: Any) {
-//        print("SplitViewController isCollapsed: \(splitViewController!.isCollapsed)")
-        if splitViewController!.isCollapsed {
-            self.performSegue(withIdentifier: "presentAddActivity", sender: sender)
-        } else {
-//            print("SplitViewController displayMode: \(splitViewController!.displayMode.rawValue)")
-            detailViewController?.presentAddViewController()
-            if splitViewController!.displayMode == UISplitViewController.DisplayMode.primaryOverlay {
-                let displayModeItem = splitViewController!.displayModeButtonItem
-                UIApplication.shared.sendAction(displayModeItem.action!, to: displayModeItem.target, from: nil, for: nil)
-            }
-        }
         
-    }
-    
-    
     @IBAction func unwindSaveActivity(segue: UIStoryboardSegue) {
 //        do {
 //            try dataManager?.saveContext()

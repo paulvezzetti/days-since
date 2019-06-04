@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="H1p-Uh-vWS">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="H1p-Uh-vWS">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="Stack View standard spacing" minToolsVersion="9.0"/>
@@ -258,13 +258,12 @@
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="XWs-O9-GAl">
                             <color key="tintColor" name="LapisBlue"/>
                             <connections>
-                                <action selector="onAddButtonTap:" destination="7bK-jq-Zjz" id="WBZ-NC-AIu"/>
+                                <segue destination="AE5-9Y-827" kind="show" identifier="presentAddActivity" id="D0W-LN-Nzt"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
                     <connections>
                         <outlet property="navigationTitle" destination="Zdf-7t-Un8" id="Nfl-II-9rf"/>
-                        <segue destination="AE5-9Y-827" kind="show" identifier="presentAddActivity" id="5VD-Ql-yKM"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Rux-fX-hf1" sceneMemberID="firstResponder"/>
@@ -991,7 +990,7 @@
         </namedColor>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="5VD-Ql-yKM"/>
+        <segue reference="D0W-LN-Nzt"/>
         <segue reference="BMi-sG-zyJ"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" name="LapisBlue"/>
