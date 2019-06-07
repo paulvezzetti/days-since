@@ -9,7 +9,7 @@ import CoreData
 import UIKit
 import UserNotifications
 
-class AddActivityTableViewController: UITableViewController, UITextFieldDelegate {
+class AddActivityTableViewController: UITableViewController {
 
     
     private enum ActivityRows:Int {
@@ -36,7 +36,10 @@ class AddActivityTableViewController: UITableViewController, UITextFieldDelegate
     @IBOutlet private var remindTextField: UITextField!
     @IBOutlet private var snoozeSwitch: UISwitch!
     @IBOutlet private var snoozeTextField: UITextField!
-
+    @IBOutlet private var reminderTimeTextField: UITextField!
+    
+    private var reminderTimePicker: TimePickerView?
+    
     // MARK: - Public properties
     var editActivity: ActivityMO? = nil
     var dataManager: DataModelManager? = nil
@@ -69,6 +72,24 @@ class AddActivityTableViewController: UITableViewController, UITextFieldDelegate
             // TODO Show the user an error
             return
         }
+        
+        reminderTimePicker = TimePickerView()
+        reminderTimePicker?.delegate = self
+        // TODO: If we have an activity, use the value from the model
+        reminderTimePicker?.initialDate = Calendar.current.startOfDay(for: Date())
+        reminderTimePicker?.autoresizingMask = [.flexibleHeight, .flexibleWidth]
+        
+//        reminderTimePicker?.datePickerMode = .time
+//        reminderTimePicker?.minuteInterval = 15
+//        reminderTimePicker?.date = Calendar.current.startOfDay(for: Date())
+//
+//        let subview = UIView()
+//        subview.frame = self.view.frame
+//        subview.autoresizingMask = [.flexibleHeight, .flexibleWidth]
+//        subview.addSubview(reminderTimePicker!)
+        
+        reminderTimeTextField.inputView = reminderTimePicker
+        reminderTimeTextField.delegate = self
         
         titleField.delegate = self
         snoozeTextField.delegate = self
@@ -126,7 +147,7 @@ class AddActivityTableViewController: UITableViewController, UITextFieldDelegate
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 12
+        return 13
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -283,6 +304,7 @@ class AddActivityTableViewController: UITableViewController, UITextFieldDelegate
         tempActivity?.updateFirstDate(to: Date.normalize(date: startDatePicker.date))
     }
     
+    
     @IBAction func cancelAdd(_ sender: Any) {
         //dismiss(animated: true, completion: nil)
         self.navigationController?.popViewController(animated: true)
@@ -332,8 +354,13 @@ class AddActivityTableViewController: UITableViewController, UITextFieldDelegate
     }
     
     
-    // MARK -  UITextFieldDelegate
     
+    
+}
+
+// MARK -  UITextFieldDelegate
+
+extension AddActivityTableViewController : UITextFieldDelegate {
     
     func textFieldDidEndEditing(_ textField: UITextField, reason: UITextField.DidEndEditingReason) {
         if textField === titleField {
@@ -348,4 +375,41 @@ class AddActivityTableViewController: UITableViewController, UITextFieldDelegate
             }
         }
     }
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        if textField === reminderTimeTextField {
+            return false
+        }
+        return true
+    }
+    
+//    func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
+//        if textField === reminderTimeTextField {
+//            return false
+//        }
+//        return true
+//    }
+}
+
+// MARK -  TimePickerViewDelegate
+
+extension AddActivityTableViewController : TimePickerViewDelegate {
+    
+    func timeValueChange(to date: Date) {
+        guard let reminderTextField = reminderTimeTextField else {
+            return;
+        }
+        let formatter = DateFormatter()
+        formatter.timeStyle = .short
+        formatter.dateStyle = .none
+        reminderTextField.text =  formatter.string(for: date)
+
+    }
+    
+    func done(selected date: Date) {
+        reminderTimeTextField.resignFirstResponder()
+    }
+    
+    
+    
+    
 }

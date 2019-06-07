@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="TimePickerView" customModule="DaysSince" customModuleProvider="target">
+            <connections>
+                <outlet property="contentView" destination="iN0-l3-epB" id="WQ8-Pk-1O0"/>
+                <outlet property="doneButton" destination="bk7-2I-UXx" id="VKo-VP-Vgb"/>
+                <outlet property="timePicker" destination="hl4-fC-92p" id="mqU-fz-W3k"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB" customClass="TimePickerView" customModule="DaysSince" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="166"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <datePicker contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="time" minuteInterval="15" translatesAutoresizingMaskIntoConstraints="NO" id="hl4-fC-92p">
+                    <rect key="frame" x="0.0" y="2" width="375" height="162"/>
+                    <constraints>
+                        <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="120" id="enR-Yy-dW0"/>
+                    </constraints>
+                    <date key="date" timeIntervalSinceReferenceDate="581612417.01448095">
+                        <!--2019-06-07 15:00:17 +0000-->
+                    </date>
+                    <connections>
+                        <action selector="onTimePickerValueChanged:" destination="-1" eventType="valueChanged" id="9Xe-ze-lb9"/>
+                    </connections>
+                </datePicker>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bk7-2I-UXx">
+                    <rect key="frame" x="330" y="8" width="37" height="30"/>
+                    <state key="normal" title="Done"/>
+                    <connections>
+                        <action selector="onDoneButtonPress:" destination="-1" eventType="touchUpInside" id="sZp-68-JiL"/>
+                    </connections>
+                </button>
+            </subviews>
+            <color key="backgroundColor" name="Header"/>
+            <constraints>
+                <constraint firstItem="hl4-fC-92p" firstAttribute="trailing" secondItem="vUN-kp-3ea" secondAttribute="trailing" id="Jre-Dr-f7u"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="bk7-2I-UXx" secondAttribute="trailing" constant="8" id="MtN-7q-dRO"/>
+                <constraint firstItem="hl4-fC-92p" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="dhb-7P-zsn"/>
+                <constraint firstItem="bk7-2I-UXx" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" constant="8" id="iQD-hK-3Na"/>
+                <constraint firstItem="hl4-fC-92p" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="zH5-V0-aD5"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
+            <connections>
+                <outlet property="doneButton" destination="bk7-2I-UXx" id="Y3u-UO-rJp"/>
+                <outlet property="timePicker" destination="hl4-fC-92p" id="Lm8-E6-zuD"/>
+            </connections>
+            <point key="canvasLocation" x="138.40000000000001" y="-86.35682158920541"/>
+        </view>
+    </objects>
+    <resources>
+        <namedColor name="Header">
+            <color red="0.94117647058823528" green="0.94117647058823528" blue="0.94117647058823528" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+    </resources>
+</document>
