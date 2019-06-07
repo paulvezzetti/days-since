@@ -12,7 +12,7 @@ import Foundation
 
 protocol TimePickerViewDelegate {
     
-    func timeValueChange(to date:Date)
+    func timeValueChange(to date:Date, picker:TimePickerView)
     
-    func done(selected date: Date)
+    func done(selected date: Date, picker:TimePickerView)
 }

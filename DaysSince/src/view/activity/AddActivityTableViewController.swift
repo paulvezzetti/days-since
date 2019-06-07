@@ -11,26 +11,13 @@ import UserNotifications
 
 class AddActivityTableViewController: UITableViewController {
 
-    
-    private enum ActivityRows:Int {
-        case TitleLabel = 0,
-        TitleTextField,
-        FrequencyLabel,
-        FrequencyDescLabel,
-        ActiveRangeLabel,
-        StartFromDateLabel,
-        StartFromDatePicker,
-        NotificationLabel,
-        NotificationButton
-    }
 
     // MARK: - Outlets
     @IBOutlet private var titleField: UITextField!
-    @IBOutlet private var startDateLabel: UILabel!
+    @IBOutlet private var startDateTextField: UITextField!
     @IBOutlet private var intervalLabel: UILabel!
     @IBOutlet weak var activeRangeLabel: UILabel!
     
-    @IBOutlet private var startDatePicker: UIDatePicker!
     @IBOutlet private var saveButton: UIBarButtonItem!
     @IBOutlet private var enableRemindersSwitch: UISwitch!
     @IBOutlet private var remindTextField: UITextField!
@@ -38,8 +25,9 @@ class AddActivityTableViewController: UITableViewController {
     @IBOutlet private var snoozeTextField: UITextField!
     @IBOutlet private var reminderTimeTextField: UITextField!
     
+    // MARK: - Picker input views
+    private var startDatePickerView: TimePickerView?
     private var reminderTimePicker: TimePickerView?
-    private var reminderTimeOfDay: Date = Calendar.current.startOfDay(for: Date())
     
     // MARK: - Public properties
     var editActivity: ActivityMO? = nil
@@ -49,17 +37,24 @@ class AddActivityTableViewController: UITableViewController {
     private var managedObjectContext: NSManagedObjectContext? = nil
     
     private var tempActivity: ActivityMO? = nil
-    
-    private var isStartDatePickerShowing: Bool = false
-    
-    private let dateFormatter:DateFormatter = {
+
+    private var reminderTimeOfDay: Date = Calendar.current.startOfDay(for: Date())
+
+    private lazy var dateFormatter:DateFormatter = {
         let formatter = DateFormatter()
         formatter.dateStyle = DateFormatter.Style.medium
         formatter.timeStyle = DateFormatter.Style.none
         return formatter
     }()
+    
+    private lazy var timeFormatter:DateFormatter = {
+        let formatter = DateFormatter()
+        formatter.dateStyle = .none
+        formatter.timeStyle = .short
+        return formatter
+    }()
         
-
+    // Mark: - Overrides
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -74,23 +69,8 @@ class AddActivityTableViewController: UITableViewController {
             return
         }
         
-        reminderTimePicker = TimePickerView()
-        reminderTimePicker?.delegate = self
-        // TODO: If we have an activity, use the value from the model
-        reminderTimePicker?.initialDate = reminderTimeOfDay
-        reminderTimePicker?.autoresizingMask = [.flexibleHeight, .flexibleWidth]
-        
-//        reminderTimePicker?.datePickerMode = .time
-//        reminderTimePicker?.minuteInterval = 15
-//        reminderTimePicker?.date = Calendar.current.startOfDay(for: Date())
-//
-//        let subview = UIView()
-//        subview.frame = self.view.frame
-//        subview.autoresizingMask = [.flexibleHeight, .flexibleWidth]
-//        subview.addSubview(reminderTimePicker!)
-        
-        reminderTimeTextField.inputView = reminderTimePicker
-        reminderTimeTextField.delegate = self
+        initReminderTimeInputView()
+        initStartDateInputView()
         
         titleField.delegate = self
         snoozeTextField.delegate = self
@@ -103,22 +83,25 @@ class AddActivityTableViewController: UITableViewController {
             // If we are editing an existing activity, clone it with just the first event history
             tempActivity = activityToEdit.clone(context: context, eventCloneOptions: .First)
             
-            reminderTimeOfDay = Date(timeInterval: activityToEdit.reminder?.timeOfDay ?? 0, since: reminderTimeOfDay)
+            // Initialize the reminder time of day from activity
+            reminderTimeOfDay = Date(timeInterval: activityToEdit.reminder?.timeOfDay ?? 0, since: Calendar.current.startOfDay(for: Date()))
             
             // Fill in the initial values
             configureViewForActivity()
 
         } else {
             // Otherwise, initialize a new one
-            self.tempActivity = ActivityMO(context: context)
-            self.tempActivity?.id = UUID()
-            self.tempActivity?.reminder = ReminderMO(context: context)
-            self.tempActivity?.interval = UnlimitedIntervalMO(context: context)
+            let newActivity = ActivityMO(context: context)
+            newActivity.id = UUID()
+            newActivity.reminder = ReminderMO(context: context)
+            newActivity.interval = UnlimitedIntervalMO(context: context)
+
             let firstEvent = EventMO(context: context)
             firstEvent.timestamp = Date.normalize(date: Date())
-            //print("Event timestamp: \(firstEvent.timestamp!.getLongString())")
+            newActivity.addToHistory(firstEvent)
 
-            self.tempActivity?.addToHistory(firstEvent)
+            self.tempActivity = newActivity
+            
             // If we are granted access for notifications, then enable reminders by default
             let notificationCenter = UNUserNotificationCenter.current()
             
@@ -136,7 +119,6 @@ class AddActivityTableViewController: UITableViewController {
                 }
             }
         }
-        
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -150,31 +132,9 @@ class AddActivityTableViewController: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 13
+        return 12
     }
     
-    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let needToShowDatePicker:Bool = (indexPath.row == ActivityRows.StartFromDateLabel.rawValue && !isStartDatePickerShowing)
-        let needToHideDataPicker:Bool = (indexPath.row != ActivityRows.StartFromDateLabel.rawValue && isStartDatePickerShowing)
-        
-        isStartDatePickerShowing = needToShowDatePicker
-        if needToShowDatePicker || needToHideDataPicker {
-            self.tableView.beginUpdates()
-            self.tableView.endUpdates()
-        }
-    }
-    
-    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        if indexPath.row == ActivityRows.StartFromDatePicker.rawValue {
-            if isStartDatePickerShowing {
-                return 138
-            } else {
-                return 0
-            }
-        }
-        return super.tableView(tableView, heightForRowAt: indexPath)
-    }
-
 
     // MARK: - Navigation
 
@@ -201,12 +161,18 @@ class AddActivityTableViewController: UITableViewController {
         guard let activity = tempActivity else {
             return
         }
-        
+        // Update activity from UI. Some items like the interval, start date, and active range are updated
+        // immediately when the user makes the selection.
         activity.name = titleField.text!
         let enableReminders = enableRemindersSwitch.isOn
         activity.reminder?.enabled = enableReminders
         let remindDaysBefore = UITextFieldUtility.getAsInt(textField: remindTextField, defaultValue: ReminderMO.REMIND_DAYS_BEFORE_DEFAULT, minimumValue: ReminderMO.REMIND_DAYS_BEFORE_DEFAULT)
         activity.reminder?.daysBefore = Int16(remindDaysBefore)
+
+        // Calculate the time of day for reminders based on the number of seconds since midnight.
+        let midnight = Calendar.current.startOfDay(for: reminderTimeOfDay)
+        // timeOfDay is seconds since midnight. The reminderTimeOfDay is a complete date.
+        activity.reminder?.timeOfDay = reminderTimeOfDay.timeIntervalSince(midnight)
 
         let allowSnooze = enableReminders && snoozeSwitch.isOn
         activity.reminder?.allowSnooze = allowSnooze
@@ -214,32 +180,8 @@ class AddActivityTableViewController: UITableViewController {
         let snooze = UITextFieldUtility.getAsInt(textField: snoozeTextField, defaultValue: ReminderMO.SNOOZE_FOR_DAYS_DEFAULT, minimumValue: ReminderMO.SNOOZE_FOR_DAYS_DEFAULT)
         activity.reminder?.snooze = Int16(snooze)
         
-        // Calculate the time of day for reminders based on the number of seconds since midnight.
-        let midnight = Calendar.current.startOfDay(for: reminderTimeOfDay)
-        let timeOfDay = reminderTimeOfDay.timeIntervalSince(midnight)
-        activity.reminder?.timeOfDay = timeOfDay
-        
         if let activityToUpdate = editActivity {
-            if activity.name != activityToUpdate.name {
-                activityToUpdate.name = activity.name
-            }
-            
-            if !(activity.interval!.isEquivalent(to: activityToUpdate.interval!)) {
-                if let parentMoc = managedObjectContext?.parent {
-                    activityToUpdate.interval = activity.interval?.clone(context: parentMoc)
-                }
-            }
-            let firstDate = activity.firstDate
-            if firstDate != activityToUpdate.firstDate {
-                activityToUpdate.updateFirstDate(to: Date.normalize(date:firstDate))
-            }
-            if !(activity.reminder!.isEquivalent(to: activityToUpdate.reminder!)) {
-                activityToUpdate.reminder?.enabled = activity.reminder?.enabled ?? false
-                activityToUpdate.reminder?.allowSnooze = activity.reminder?.allowSnooze ?? false
-                activityToUpdate.reminder?.daysBefore = activity.reminder?.daysBefore ?? Int16(ReminderMO.REMIND_DAYS_BEFORE_DEFAULT)
-                activityToUpdate.reminder?.timeOfDay = activity.reminder?.timeOfDay ?? 0
-                activityToUpdate.reminder?.snooze = activity.reminder?.snooze ?? Int16(ReminderMO.SNOOZE_FOR_DAYS_DEFAULT)
-            }
+            updateActivity(source: activity, target: activityToUpdate)
         } else {
             // Save the context
             do {
@@ -249,49 +191,9 @@ class AddActivityTableViewController: UITableViewController {
                 print("Unable to save new activity: \(error)")
             }
         }
-        
-        
     }
 
-    func initializeManagedObjectContext() throws {
-        if self.managedObjectContext == nil {
-            self.managedObjectContext = try dataManager?.newChildManagedObjectContext()
-        }
-    }
-    
-    func configureViewForActivity() {
-        guard let activity = tempActivity else {
-            return
-        }
-        titleField.text = activity.name
-        intervalLabel.text = activity.interval!.toPrettyString()
-        startDateLabel.text = dateFormatter.string(from: activity.firstDate)
-        startDatePicker.date = activity.firstDate
-        
-        activeRangeLabel.text = activity.interval?.activeRange != nil ? activity.interval?.activeRange?.toPrettyString() : ActiveRangeMO.getStringForNil()
-        
-        let title = titleField.text ?? ""
-        saveButton.isEnabled = !title.isEmpty
-        
-        let enableReminder = activity.reminder?.enabled ?? false
-        enableRemindersSwitch.isEnabled = !(activity.interval is UnlimitedIntervalMO)
-        enableRemindersSwitch.setOn(enableReminder, animated: false)
-        remindTextField.isEnabled = enableReminder
-        remindTextField.text = String(activity.reminder?.daysBefore ?? Int16(ReminderMO.REMIND_DAYS_BEFORE_DEFAULT))
-        reminderTimeTextField.isEnabled = enableReminder
-        
-        let timeFormatter = DateFormatter()
-        timeFormatter.dateStyle = .none
-        timeFormatter.timeStyle = .short
-        reminderTimeTextField.text = timeFormatter.string(from: reminderTimeOfDay)
-        
-        let enableSnooze = activity.reminder?.allowSnooze ?? false
-        snoozeSwitch.setOn(enableSnooze, animated: false)
-        snoozeSwitch.isEnabled = enableReminder
-        snoozeTextField.isEnabled = enableSnooze
-        snoozeTextField.text = String(activity.reminder?.snooze ?? Int16(ReminderMO.SNOOZE_FOR_DAYS_DEFAULT))
-
-    }
+    // MARK: - IBActions
     
     @IBAction func enableReminderChanged(_ sender: Any) {
         let enableReminders = enableRemindersSwitch.isOn
@@ -312,23 +214,113 @@ class AddActivityTableViewController: UITableViewController {
             snoozeTextField.text = String(ReminderMO.SNOOZE_FOR_DAYS_DEFAULT)
         }
     }
+    
     @IBAction func enableSnoozeChanged(_ sender: Any) {
         snoozeTextField.isEnabled = snoozeSwitch.isOn
     }
     
-    @IBAction func startDateValueChanged(_ sender: Any) {
-        startDateLabel.text = dateFormatter.string(from: startDatePicker.date)
-        tempActivity?.updateFirstDate(to: Date.normalize(date: startDatePicker.date))
-    }
-    
     
     @IBAction func cancelAdd(_ sender: Any) {
-        //dismiss(animated: true, completion: nil)
         self.navigationController?.popViewController(animated: true)
+    }
+    
+    @IBAction func titleFieldChanged(_ sender: Any) {
+        
+        let title = titleField.text ?? ""
+        saveButton.isEnabled = !title.isEmpty
+        navigationItem.title = title
+    }
+    
+}
+
+// MARK: - Private extension
+extension AddActivityTableViewController {
+    
+    private func initReminderTimeInputView() {
+        reminderTimePicker = TimePickerView()
+        reminderTimePicker?.delegate = self
+        reminderTimePicker?.initialDate = reminderTimeOfDay
+        reminderTimePicker?.autoresizingMask = [.flexibleHeight, .flexibleWidth]
+        
+        reminderTimeTextField.inputView = reminderTimePicker
+        reminderTimeTextField.delegate = self
+    }
+    
+    private func initStartDateInputView() {
+        startDatePickerView = TimePickerView()
+        startDatePickerView?.delegate = self
+        startDatePickerView?.initialDate = Date()
+        startDatePickerView?.mode = UIDatePicker.Mode.date
+        startDatePickerView?.autoresizingMask = [.flexibleHeight, .flexibleWidth]
+        
+        startDateTextField.inputView = startDatePickerView
+        startDateTextField.delegate = self
+
+    }
+    
+    private func initializeManagedObjectContext() throws {
+        if self.managedObjectContext == nil {
+            self.managedObjectContext = try dataManager?.newChildManagedObjectContext()
+        }
+    }
+    
+    private func configureViewForActivity() {
+        guard let activity = tempActivity else {
+            return
+        }
+        titleField.text = activity.name
+        intervalLabel.text = activity.interval!.toPrettyString()
+        startDateTextField.text = dateFormatter.string(from: activity.firstDate)
+        
+        activeRangeLabel.text = activity.interval?.activeRange != nil ? activity.interval?.activeRange?.toPrettyString() : ActiveRangeMO.getStringForNil()
+        
+        let title = titleField.text ?? ""
+        saveButton.isEnabled = !title.isEmpty
+        
+        let enableReminder = activity.reminder?.enabled ?? false
+        enableRemindersSwitch.isEnabled = !(activity.interval is UnlimitedIntervalMO)
+        enableRemindersSwitch.setOn(enableReminder, animated: false)
+        remindTextField.isEnabled = enableReminder
+        remindTextField.text = String(activity.reminder?.daysBefore ?? Int16(ReminderMO.REMIND_DAYS_BEFORE_DEFAULT))
+        reminderTimeTextField.isEnabled = enableReminder        
+        reminderTimeTextField.text = timeFormatter.string(from: reminderTimeOfDay)
+        
+        let enableSnooze = activity.reminder?.allowSnooze ?? false
+        snoozeSwitch.setOn(enableSnooze, animated: false)
+        snoozeSwitch.isEnabled = enableReminder
+        snoozeTextField.isEnabled = enableSnooze
+        snoozeTextField.text = String(activity.reminder?.snooze ?? Int16(ReminderMO.SNOOZE_FOR_DAYS_DEFAULT))
         
     }
     
-    func onPermissionForPushNotificationDenied() {
+    // Copies values from the source to the target
+    private func updateActivity(source: ActivityMO, target:ActivityMO) {
+        if source.name != target.name {
+            target.name = source.name
+        }
+        if let sourceInterval = source.interval, let targetInterval = target.interval {
+            if !(sourceInterval.isEquivalent(to: targetInterval)) {
+                if let parentMoc = managedObjectContext?.parent {
+                    target.interval = sourceInterval.clone(context: parentMoc)
+                }
+            }
+
+        }
+        let firstDate = source.firstDate
+        if firstDate != target.firstDate {
+            target.updateFirstDate(to: Date.normalize(date:firstDate))
+        }
+        if let sourceReminder = source.reminder, let targetReminder = target.reminder {
+            targetReminder.enabled = sourceReminder.enabled
+            targetReminder.allowSnooze = sourceReminder.allowSnooze
+            targetReminder.daysBefore = sourceReminder.daysBefore
+            targetReminder.timeOfDay = sourceReminder.timeOfDay
+            targetReminder.snooze = sourceReminder.snooze
+
+        }
+    }
+
+    private func onPermissionForPushNotificationDenied() {
         let alert = UIAlertController(title: NSLocalizedString("authorizationRequired.title", value: "Authorization Required", comment: ""), message:
             NSLocalizedString("pushNotificationsDisabled.msg", value: "Push notifications have been disabled for this application. Go to Settings and enable notifications in order to receive reminders.", comment: ""), preferredStyle: UIAlertController.Style.alert)
         alert.addAction(UIAlertAction(title: NSLocalizedString("settings.title", value: "Settings", comment: ""), style: UIAlertAction.Style.default) { (alert) in
@@ -336,21 +328,18 @@ class AddActivityTableViewController: UITableViewController {
         })
         alert.addAction(UIAlertAction(title: NSLocalizedString("ok", value: "OK", comment: ""), style: .default, handler: nil))
         self.present(alert, animated: true, completion: nil)
-
-    
+        
         self.tempActivity?.reminder?.enabled = false
         self.tempActivity?.reminder?.allowSnooze = false
         
         enableRemindersSwitch.setOn(false, animated: false)
         remindTextField.isEnabled = false
         snoozeSwitch.setOn(false, animated: false)
-
+        
     }
-    
-    
-    
+
     // TODO: This needs to move to some type of Notification Manager for the app
-    func requestPermissionForPushNotifications() {
+    private func requestPermissionForPushNotifications() {
         UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .badge]) {
             granted, error in
             print("Permission granted: \(granted)")
@@ -362,20 +351,9 @@ class AddActivityTableViewController: UITableViewController {
         }
     }
 
-    
-    @IBAction func titleFieldChanged(_ sender: Any) {
-        
-        let title = titleField.text ?? ""
-        saveButton.isEnabled = !title.isEmpty
-        navigationItem.title = title
-    }
-    
-    
-    
-    
 }
 
-// MARK -  UITextFieldDelegate
+// MARK: -  UITextFieldDelegate
 
 extension AddActivityTableViewController : UITextFieldDelegate {
     
@@ -393,44 +371,55 @@ extension AddActivityTableViewController : UITextFieldDelegate {
         }
     }
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-        if textField === reminderTimeTextField {
+        if textField === reminderTimeTextField || textField == startDateTextField{
             return false
         }
         return true
     }
     
-//    func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
-//        if textField === reminderTimeTextField {
-//            return false
-//        }
-//        return true
-//    }
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        if textField == reminderTimeTextField {
+            reminderTimePicker?.initialDate = reminderTimeOfDay
+        } else if textField == startDateTextField {
+            startDatePickerView?.initialDate = tempActivity?.firstDate ?? Date()
+        }
+    }
+    
 }
 
-// MARK -  TimePickerViewDelegate
+// MARK: -  TimePickerViewDelegate
 
 extension AddActivityTableViewController : TimePickerViewDelegate {
     
-    func timeValueChange(to date: Date) {
-        guard let reminderTextField = reminderTimeTextField else {
-            return;
+    func timeValueChange(to date: Date, picker: TimePickerView) {
+        if picker == reminderTimePicker {
+            guard let reminderTextField = reminderTimeTextField else {
+                return;
+            }
+            reminderTextField.text =  timeFormatter.string(for: date)
+            
+            reminderTimeOfDay = date
+        } else if picker == startDatePickerView {
+            if let activity = tempActivity {
+                activity.updateFirstDate(to: Date.normalize(date: date))
+                startDateTextField.text = dateFormatter.string(from: activity.firstDate)
+            }
         }
-        let formatter = DateFormatter()
-        formatter.timeStyle = .short
-        formatter.dateStyle = .none
-        reminderTextField.text =  formatter.string(for: date)
-        
-        reminderTimeOfDay = date
+    }
+    
+    func done(selected date: Date, picker: TimePickerView) {
+        if picker == reminderTimePicker {
+            reminderTimeTextField.resignFirstResponder()
+            
+            reminderTimeOfDay = date
+        } else if picker == startDatePickerView {
+            startDateTextField.resignFirstResponder()
+            
+            if let activity = tempActivity {
+                activity.updateFirstDate(to: Date.normalize(date: date))
+                startDateTextField.text = dateFormatter.string(from: activity.firstDate)
+            }
+        }
+    }
 
-    }
-    
-    func done(selected date: Date) {
-        reminderTimeTextField.resignFirstResponder()
-        
-        reminderTimeOfDay = date
-    }
-    
-    
-    
-    
 }

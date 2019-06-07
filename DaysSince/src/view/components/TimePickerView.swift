@@ -25,6 +25,15 @@ class TimePickerView: UIView {
         }
     }
     
+    var mode:UIDatePicker.Mode = UIDatePicker.Mode.time {
+        didSet {
+            guard let picker = timePicker else {
+                return
+            }
+            picker.datePickerMode = mode
+        }
+    }
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         Bundle.main.loadNibNamed("TimePickerView", owner: self, options: nil)
@@ -42,14 +51,14 @@ class TimePickerView: UIView {
         guard let del = delegate else {
             return;
         }
-        del.done(selected: timePicker.date)
+        del.done(selected: timePicker.date, picker: self)
     }
     
     @IBAction func onTimePickerValueChanged(_ sender: Any) {
         guard let del = delegate else {
             return;
         }
-        del.timeValueChange(to: timePicker.date)
+        del.timeValueChange(to: timePicker.date, picker: self)
 
     }
 }
