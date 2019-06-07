@@ -39,6 +39,7 @@ class AddActivityTableViewController: UITableViewController {
     @IBOutlet private var reminderTimeTextField: UITextField!
     
     private var reminderTimePicker: TimePickerView?
+    private var reminderTimeOfDay: Date = Calendar.current.startOfDay(for: Date())
     
     // MARK: - Public properties
     var editActivity: ActivityMO? = nil
@@ -76,7 +77,7 @@ class AddActivityTableViewController: UITableViewController {
         reminderTimePicker = TimePickerView()
         reminderTimePicker?.delegate = self
         // TODO: If we have an activity, use the value from the model
-        reminderTimePicker?.initialDate = Calendar.current.startOfDay(for: Date())
+        reminderTimePicker?.initialDate = reminderTimeOfDay
         reminderTimePicker?.autoresizingMask = [.flexibleHeight, .flexibleWidth]
         
 //        reminderTimePicker?.datePickerMode = .time
@@ -101,6 +102,8 @@ class AddActivityTableViewController: UITableViewController {
         if let activityToEdit = editActivity {
             // If we are editing an existing activity, clone it with just the first event history
             tempActivity = activityToEdit.clone(context: context, eventCloneOptions: .First)
+            
+            reminderTimeOfDay = Date(timeInterval: activityToEdit.reminder?.timeOfDay ?? 0, since: reminderTimeOfDay)
             
             // Fill in the initial values
             configureViewForActivity()
@@ -211,6 +214,11 @@ class AddActivityTableViewController: UITableViewController {
         let snooze = UITextFieldUtility.getAsInt(textField: snoozeTextField, defaultValue: ReminderMO.SNOOZE_FOR_DAYS_DEFAULT, minimumValue: ReminderMO.SNOOZE_FOR_DAYS_DEFAULT)
         activity.reminder?.snooze = Int16(snooze)
         
+        // Calculate the time of day for reminders based on the number of seconds since midnight.
+        let midnight = Calendar.current.startOfDay(for: reminderTimeOfDay)
+        let timeOfDay = reminderTimeOfDay.timeIntervalSince(midnight)
+        activity.reminder?.timeOfDay = timeOfDay
+        
         if let activityToUpdate = editActivity {
             if activity.name != activityToUpdate.name {
                 activityToUpdate.name = activity.name
@@ -229,6 +237,7 @@ class AddActivityTableViewController: UITableViewController {
                 activityToUpdate.reminder?.enabled = activity.reminder?.enabled ?? false
                 activityToUpdate.reminder?.allowSnooze = activity.reminder?.allowSnooze ?? false
                 activityToUpdate.reminder?.daysBefore = activity.reminder?.daysBefore ?? Int16(ReminderMO.REMIND_DAYS_BEFORE_DEFAULT)
+                activityToUpdate.reminder?.timeOfDay = activity.reminder?.timeOfDay ?? 0
                 activityToUpdate.reminder?.snooze = activity.reminder?.snooze ?? Int16(ReminderMO.SNOOZE_FOR_DAYS_DEFAULT)
             }
         } else {
@@ -269,6 +278,13 @@ class AddActivityTableViewController: UITableViewController {
         enableRemindersSwitch.setOn(enableReminder, animated: false)
         remindTextField.isEnabled = enableReminder
         remindTextField.text = String(activity.reminder?.daysBefore ?? Int16(ReminderMO.REMIND_DAYS_BEFORE_DEFAULT))
+        reminderTimeTextField.isEnabled = enableReminder
+        
+        let timeFormatter = DateFormatter()
+        timeFormatter.dateStyle = .none
+        timeFormatter.timeStyle = .short
+        reminderTimeTextField.text = timeFormatter.string(from: reminderTimeOfDay)
+        
         let enableSnooze = activity.reminder?.allowSnooze ?? false
         snoozeSwitch.setOn(enableSnooze, animated: false)
         snoozeSwitch.isEnabled = enableReminder
@@ -285,6 +301,7 @@ class AddActivityTableViewController: UITableViewController {
         }
         tempActivity?.reminder?.enabled = enableReminders
         remindTextField.isEnabled = enableReminders
+        reminderTimeTextField.isEnabled = enableReminders
         snoozeSwitch.isEnabled = enableReminders
         if !enableReminders {
             snoozeSwitch.isOn = false
@@ -402,11 +419,15 @@ extension AddActivityTableViewController : TimePickerViewDelegate {
         formatter.timeStyle = .short
         formatter.dateStyle = .none
         reminderTextField.text =  formatter.string(for: date)
+        
+        reminderTimeOfDay = date
 
     }
     
     func done(selected date: Date) {
         reminderTimeTextField.resignFirstResponder()
+        
+        reminderTimeOfDay = date
     }
     
     

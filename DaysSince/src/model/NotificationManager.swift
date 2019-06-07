@@ -129,10 +129,13 @@ class NotificationManager : NSObject {
         // Set up the trigger.
         let calendar = Calendar.current
         let daysBefore = activity.reminder?.daysBefore ?? 0
+        let timeOfDay = activity.reminder?.timeOfDay ?? 0
         
         let notificationDate = calendar.date(byAdding: .day, value: Int(-1 * daysBefore), to: nextDate)
-        postNotificationRequest(identifier: uuid, content: content, when: notificationDate)
-
+        if notificationDate != nil {
+            let notificationDateAndTime = notificationDate! + timeOfDay
+            postNotificationRequest(identifier: uuid, content: content, when: notificationDateAndTime)
+        }
     }
     
     func scheduleSnoozeReminder(for activity:ActivityMO) {

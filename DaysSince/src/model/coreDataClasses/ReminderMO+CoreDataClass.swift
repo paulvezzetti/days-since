@@ -20,6 +20,7 @@ public class ReminderMO: NSManagedObject {
         let reminder = ReminderMO(context: context)
         reminder.enabled = self.enabled
         reminder.daysBefore = self.daysBefore
+        reminder.timeOfDay = self.timeOfDay
         reminder.allowSnooze = self.allowSnooze
         reminder.snooze = self.snooze
         
@@ -29,6 +30,7 @@ public class ReminderMO: NSManagedObject {
     func isEquivalent(to other:ReminderMO) -> Bool {
         return self.enabled == other.enabled &&
             self.daysBefore == other.daysBefore &&
+            self.timeOfDay == other.timeOfDay && 
             self.allowSnooze == other.allowSnooze &&
             self.snooze == other.snooze
         
