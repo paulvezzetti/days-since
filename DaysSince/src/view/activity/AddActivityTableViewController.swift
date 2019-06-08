@@ -181,7 +181,7 @@ class AddActivityTableViewController: UITableViewController {
         activity.reminder?.snooze = Int16(snooze)
         
         if let activityToUpdate = editActivity {
-            updateActivity(source: activity, target: activityToUpdate)
+            copyActivitySettings(source: activity, target: activityToUpdate)
         } else {
             // Save the context
             do {
@@ -294,7 +294,7 @@ extension AddActivityTableViewController {
     }
     
     // Copies values from the source to the target
-    private func updateActivity(source: ActivityMO, target:ActivityMO) {
+    private func copyActivitySettings(source: ActivityMO, target:ActivityMO) {
         if source.name != target.name {
             target.name = source.name
         }
@@ -350,6 +350,20 @@ extension AddActivityTableViewController {
             }
         }
     }
+    private func setStartDate(_ date:Date) {
+        if let activity = tempActivity {
+            activity.updateFirstDate(to: Date.normalize(date: date))
+            startDateTextField.text = dateFormatter.string(from: activity.firstDate)
+        }
+    }
+    
+    private func setReminderTimeOfDay(_ date: Date) {
+        guard let reminderTextField = reminderTimeTextField else {
+            return;
+        }
+        reminderTextField.text =  timeFormatter.string(for: date)
+        reminderTimeOfDay = date
+    }
 
 }
 
@@ -393,32 +407,19 @@ extension AddActivityTableViewController : TimePickerViewDelegate {
     
     func timeValueChange(to date: Date, picker: TimePickerView) {
         if picker == reminderTimePicker {
-            guard let reminderTextField = reminderTimeTextField else {
-                return;
-            }
-            reminderTextField.text =  timeFormatter.string(for: date)
-            
-            reminderTimeOfDay = date
+            setReminderTimeOfDay(date)
         } else if picker == startDatePickerView {
-            if let activity = tempActivity {
-                activity.updateFirstDate(to: Date.normalize(date: date))
-                startDateTextField.text = dateFormatter.string(from: activity.firstDate)
-            }
+            setStartDate(date)
         }
     }
     
     func done(selected date: Date, picker: TimePickerView) {
         if picker == reminderTimePicker {
             reminderTimeTextField.resignFirstResponder()
-            
-            reminderTimeOfDay = date
+            setReminderTimeOfDay(date)
         } else if picker == startDatePickerView {
             startDateTextField.resignFirstResponder()
-            
-            if let activity = tempActivity {
-                activity.updateFirstDate(to: Date.normalize(date: date))
-                startDateTextField.text = dateFormatter.string(from: activity.firstDate)
-            }
+            setStartDate(date)
         }
     }
 

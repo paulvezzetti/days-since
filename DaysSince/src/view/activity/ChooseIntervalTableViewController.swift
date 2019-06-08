@@ -8,8 +8,11 @@
 
 import UIKit
 
-class ChooseIntervalTableViewController: UITableViewController, UITextFieldDelegate {
+class ChooseIntervalTableViewController: UITableViewController {
     
+    class Constants {
+        static let PickerHeight: CGFloat = 120
+    }
     
     enum TableRows:Int {
         case Whenever = 0,
@@ -24,7 +27,7 @@ class ChooseIntervalTableViewController: UITableViewController, UITextFieldDeleg
         YearDayPicker
     }
     
-    // MARK: Outlets
+    // MARK: - Outlets
     @IBOutlet var byDayTableViewCell: UITableViewCell!
     @IBOutlet var byDateComponentTableViewCell: UITableViewCell!
     @IBOutlet var byDateComponentPickerTableViewCell: UITableViewCell!
@@ -47,25 +50,17 @@ class ChooseIntervalTableViewController: UITableViewController, UITextFieldDeleg
     @IBOutlet var byMonthDayLabel: UILabel!
     @IBOutlet var byYearDayLabel: UILabel!
     
-    // MARK: Private variables
+    // MARK: - Private variables
     private var currentSelectedRow = TableRows.Whenever
     private var byDateComponentPickerController:ScaleDateComponentPickerController?
     private var weekdayPickerController:WeekDayPickerController?
     private var monthDayPickerController: MonthDayPickerController?
     private var yearDayPickerController: YearDayPickerController?
     
-    // MARK: Public
+    // MARK: - Public properties
     var activity:ActivityMO? = nil
     
-//    deinit {
-//        print("Destroying the ChooseFrequencyTVController")
-//    }
-//
-//    required init?(coder aDecoder: NSCoder) {
-//        super.init(coder: aDecoder)
-//        print("Creating a ChooseFreqTVController")
-//    }
-    
+    // MARK: - Override
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -106,7 +101,7 @@ class ChooseIntervalTableViewController: UITableViewController, UITextFieldDeleg
             case let weeklyInterval as WeeklyIntervalMO:
                 weeklyTableViewCell.accessoryType = .checkmark
                 weekdayPickerController?.setWeekday(to: Int(weeklyInterval.day))
-                byWeekdayLabel.text = weeklyInterval.toPrettyString() // Weekdays.day(for: weekdayPickerController?.getWeekday() ?? 0)
+                byWeekdayLabel.text = weeklyInterval.toPrettyString()
                 currentSelectedRow = .Weekly
             case let monthlyInterval as MonthlyIntervalMO:
                 monthlyTableViewCell.accessoryType = .checkmark
@@ -123,20 +118,9 @@ class ChooseIntervalTableViewController: UITableViewController, UITextFieldDeleg
                 byDateComponentPickerController?.setScaleDateComponent(component: offsetInterval.intervalType(), scale: Int(offsetInterval.offset))
                 byDateComponentLabel.text = offsetInterval.toPrettyString()
                 currentSelectedRow = .ByDateComponent
-//            case let weekOffsetInterval as WeekOffsetIntervalMO:
-//                byDateComponentTableViewCell.accessoryType = .checkmark
-//                byDateComponentPickerController?.setScaleDateComponent(component: .Week, scale: Int(weekOffsetInterval.weeks))
-//                byDateComponentLabel.text = weekOffsetInterval.toPrettyString()
-//                currentSelectedRow = .ByDateComponent
-//            case let yearOffsetInterval as YearOffsetIntervalMO:
-//                byDateComponentTableViewCell.accessoryType = .checkmark
-//                byDateComponentPickerController?.setScaleDateComponent(component: .Year, scale: Int(yearOffsetInterval.years))
-//                byDateComponentLabel.text = yearOffsetInterval.toPrettyString()
-//                currentSelectedRow = .ByDateComponent
             default:
                 wheneverTableViewCell.accessoryType = .checkmark
                 currentSelectedRow = .Whenever
-
             }
 
         } else {
@@ -173,12 +157,11 @@ class ChooseIntervalTableViewController: UITableViewController, UITextFieldDeleg
     }
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        //print("Height for row: \(indexPath.row)")
         if indexPath.row == TableRows.ByDateComponentPicker.rawValue {
             if currentSelectedRow != TableRows.ByDateComponent {
                 return 0
             } else {
-                return 120
+                return Constants.PickerHeight
             }
         }
 
@@ -186,40 +169,85 @@ class ChooseIntervalTableViewController: UITableViewController, UITextFieldDeleg
             if currentSelectedRow != TableRows.Monthly {
                 return 0
             } else {
-                return 120
+                return Constants.PickerHeight
             }
         }
         if indexPath.row == TableRows.WeekDayPicker.rawValue {
             if currentSelectedRow != TableRows.Weekly {
                 return 0
             } else {
-                return 120
+                return Constants.PickerHeight
             }
         }
         if indexPath.row == TableRows.YearDayPicker.rawValue {
             if currentSelectedRow != TableRows.Yearly {
                 return 0
             } else {
-                return 120
+                return Constants.PickerHeight
             }
         }
         
         return super.tableView(tableView, heightForRowAt: indexPath)
     }
-
-
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
     
+}
+
+// MARK: - UITextFieldDelegate
+extension ChooseIntervalTableViewController : UITextFieldDelegate {
+    
+    func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
+        if setSelectedRow(row: TableRows.ByDay) {
+            self.tableView.beginUpdates()
+            self.tableView.endUpdates()
+        }
+        return true
+    }
+}
+
+// MARK: - WeekDayPickerDelegate
+extension ChooseIntervalTableViewController : WeekDayPickerDelegate {
+    
+    func weekdaySet(day:Int, symbol:String) {
+        byWeekdayLabel.text! = String.localizedStringWithFormat(NSLocalizedString("weeklyInterval.string", value: "Every week on %@", comment: "Ex: Every week on Tuesday"), symbol)
+    }
+    
+}
+// MARK: - ByMonthDayPickerDelegate
+extension ChooseIntervalTableViewController : MonthDayPickerDelegate {
+    
+    func monthDaySet(_ day: Int, formattedValue: String) {
+        byMonthDayLabel.text! = String.localizedStringWithFormat(NSLocalizedString("monthlyInterval.string", value: "Every month on the %@", comment: "Ex: Every month on the 12th"), formattedValue)
+    }
+
+}
+// MARK: - ByYearDayPickerDelegate
+extension ChooseIntervalTableViewController : YearDayPickerDelegate {
+    
+    func yearDaySet(picker:UIPickerView, month: Int, monthSymbol:String, day: Int) {
+        byYearDayLabel.text = String.localizedStringWithFormat(NSLocalizedString("yearlyInterval.string", value: "Every year on %@ %d", comment: "Ex: Every year on Jan 15"), Months.month(for: month), day)
+    }
+
+}
+
+// MARK: - ScaleDateComponentPickerDelegate
+extension ChooseIntervalTableViewController : ScaleDateComponentPickerDelegate {
+    
+    func scaleComponentsSet(component: OffsetIntervals, scale: Int) {
+        switch component {
+        case .Week:
+            byDateComponentLabel.text = String.localizedStringWithFormat(NSLocalizedString("weekOffset.string", comment: ""), scale)
+        case .Month:
+            byDateComponentLabel.text = String.localizedStringWithFormat(NSLocalizedString("monthOffset.string", comment: ""), scale)
+        case .Year:
+            byDateComponentLabel.text = String.localizedStringWithFormat(NSLocalizedString("yearOffset.string", comment: ""), scale)
+        }
+
+    }
+    
+}
+
+// MARK: - Private functions
+extension ChooseIntervalTableViewController {
     
     // Sets the selected. Returns true if selection changes; Otherwise false.
     @discardableResult
@@ -229,7 +257,7 @@ class ChooseIntervalTableViewController: UITableViewController, UITextFieldDeleg
         }
         let selectedTableRow = super.tableView(tableView, cellForRowAt: IndexPath(row: currentSelectedRow.rawValue, section: 0))
         selectedTableRow.accessoryType = .none
-
+        
         let selectedCell = super.tableView(tableView, cellForRowAt: IndexPath(row:row.rawValue, section: 0))
         selectedCell.accessoryType = .checkmark
         
@@ -306,61 +334,7 @@ class ChooseIntervalTableViewController: UITableViewController, UITextFieldDeleg
         interval?.activeRange = activeRange
     }
     
-    
-    // MARK: UITextFieldDelegate
-    func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
-        if setSelectedRow(row: TableRows.ByDay) {
-            self.tableView.beginUpdates()
-            self.tableView.endUpdates()
-        }
-        return true
-    }
-    
-}
 
-// MARK: WeekDayPickerDelegate
-extension ChooseIntervalTableViewController : WeekDayPickerDelegate {
-    
-    func weekdaySet(day:Int, symbol:String) {
-        byWeekdayLabel.text! = String.localizedStringWithFormat(NSLocalizedString("weeklyInterval.string", value: "Every week on %@", comment: "Ex: Every week on Tuesday"), symbol)
-    }
-    
-}
-// MARK: ByMonthDayPickerDelegate
-extension ChooseIntervalTableViewController : MonthDayPickerDelegate {
-    
-    func monthDaySet(_ day: Int, formattedValue: String) {
-        byMonthDayLabel.text! = String.localizedStringWithFormat(NSLocalizedString("monthlyInterval.string", value: "Every month on the %@", comment: "Ex: Every month on the 12th"), formattedValue)
-    }
-
-}
-// MARK: ByYearDayPickerDelegate
-extension ChooseIntervalTableViewController : YearDayPickerDelegate {
-    
-    func yearDaySet(picker:UIPickerView, month: Int, monthSymbol:String, day: Int) {
-        byYearDayLabel.text = String.localizedStringWithFormat(NSLocalizedString("yearlyInterval.string", value: "Every year on %@ %d", comment: "Ex: Every year on Jan 15"), Months.month(for: month), day)
-    }
-
-}
-
-extension ChooseIntervalTableViewController : ScaleDateComponentPickerDelegate {
-    
-    func scaleComponentsSet(component: OffsetIntervals, scale: Int) {
-        switch component {
-        case .Week:
-            byDateComponentLabel.text = String.localizedStringWithFormat(NSLocalizedString("weekOffset.string", comment: ""), scale)
-        case .Month:
-            byDateComponentLabel.text = String.localizedStringWithFormat(NSLocalizedString("monthOffset.string", comment: ""), scale)
-        case .Year:
-            byDateComponentLabel.text = String.localizedStringWithFormat(NSLocalizedString("yearOffset.string", comment: ""), scale)
-        }
-
-    }
-    
-}
-
-// MARK: Private functions
-extension ChooseIntervalTableViewController {
     
     private func configureWheneverTableViewCell(interval:IntervalMO) {
         if interval is UnlimitedIntervalMO {
