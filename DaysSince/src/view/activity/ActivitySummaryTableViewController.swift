@@ -53,7 +53,7 @@ class ActivitySummaryTableViewController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return 5 //section == 0 ? 4 : 5
+        return 6 //section == 0 ? 4 : 5
     }
 
 //    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {

@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="H1p-Uh-vWS">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="H1p-Uh-vWS">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="Stack View standard spacing" minToolsVersion="9.0"/>
@@ -368,16 +368,16 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <stackView opaque="NO" contentMode="scaleToFill" spacingType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="WMV-hh-ABw">
-                                                    <rect key="frame" x="2" y="2" width="347" height="34"/>
+                                                    <rect key="frame" x="2" y="2" width="347" height="40"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="252" verticalHuggingPriority="251" text="On Time:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qpq-ig-bxo">
-                                                            <rect key="frame" x="0.0" y="0.0" width="73" height="34"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="73" height="40"/>
                                                             <fontDescription key="fontDescription" name="Avenir-Heavy" family="Avenir" pointSize="17"/>
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="PercentOnTime" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PQS-dd-cTb">
-                                                            <rect key="frame" x="81" y="0.0" width="266" height="34"/>
+                                                            <rect key="frame" x="81" y="0.0" width="266" height="40"/>
                                                             <fontDescription key="fontDescription" name="Avenir-Heavy" family="Avenir" pointSize="17"/>
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
@@ -389,12 +389,73 @@
                                                 <constraint firstItem="WMV-hh-ABw" firstAttribute="leading" secondItem="fzX-qG-7nb" secondAttribute="leading" constant="2" id="Arn-N5-eqr"/>
                                                 <constraint firstAttribute="trailing" secondItem="WMV-hh-ABw" secondAttribute="trailing" constant="2" id="Ba7-Ut-yXH"/>
                                                 <constraint firstItem="WMV-hh-ABw" firstAttribute="top" secondItem="fzX-qG-7nb" secondAttribute="top" constant="2" id="GGn-rs-y5Y"/>
-                                                <constraint firstAttribute="bottom" secondItem="WMV-hh-ABw" secondAttribute="bottom" constant="8" id="UW5-23-e7U"/>
+                                                <constraint firstAttribute="bottom" secondItem="WMV-hh-ABw" secondAttribute="bottom" constant="2" id="UW5-23-e7U"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="44" id="Xr2-hd-qgW">
+                                        <rect key="frame" x="0.0" y="193" width="351" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Xr2-hd-qgW" id="krh-PC-HLI">
+                                            <rect key="frame" x="0.0" y="0.0" width="351" height="44"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <stackView opaque="NO" contentMode="scaleToFill" spacingType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="Sbx-f1-48h">
+                                                    <rect key="frame" x="56.5" y="11" width="238" height="20"/>
+                                                    <subviews>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="7" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kJe-1t-i8H">
+                                                            <rect key="frame" x="0.0" y="0.0" width="10.5" height="20"/>
+                                                            <fontDescription key="fontDescription" name="Avenir-Heavy" family="Avenir" pointSize="17"/>
+                                                            <nil key="textColor"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="times since" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GTr-XV-3kd">
+                                                            <rect key="frame" x="18.5" y="0.0" width="69.5" height="20"/>
+                                                            <fontDescription key="fontDescription" name="Avenir-BookOblique" family="Avenir" pointSize="14"/>
+                                                            <nil key="textColor"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="249" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" text="October 15, 2018" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1Vf-Mr-99x">
+                                                            <rect key="frame" x="96" y="0.0" width="142" height="20"/>
+                                                            <fontDescription key="fontDescription" name="Avenir-Heavy" family="Avenir" pointSize="17"/>
+                                                            <nil key="textColor"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                    </subviews>
+                                                </stackView>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstAttribute="bottomMargin" secondItem="Sbx-f1-48h" secondAttribute="bottom" constant="2" id="6pj-pX-eMC"/>
+                                                <constraint firstItem="Sbx-f1-48h" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="krh-PC-HLI" secondAttribute="leadingMargin" constant="2" id="eCh-Bq-vlF"/>
+                                                <constraint firstItem="Sbx-f1-48h" firstAttribute="top" secondItem="krh-PC-HLI" secondAttribute="topMargin" id="jlQ-n1-zAl"/>
+                                                <constraint firstItem="Sbx-f1-48h" firstAttribute="centerX" secondItem="krh-PC-HLI" secondAttribute="centerX" id="qgv-NI-aAk"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" id="0U8-Fm-vfq">
+                                        <rect key="frame" x="0.0" y="237" width="351" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="0U8-Fm-vfq" id="fD0-gR-86H">
+                                            <rect key="frame" x="0.0" y="0.0" width="351" height="44"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Days Between:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9aR-F5-Sb8">
+                                                    <rect key="frame" x="2" y="2" width="347" height="40"/>
+                                                    <fontDescription key="fontDescription" name="Avenir-Heavy" family="Avenir" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstAttribute="bottom" secondItem="9aR-F5-Sb8" secondAttribute="bottom" constant="2" id="9GI-78-9j3"/>
+                                                <constraint firstItem="9aR-F5-Sb8" firstAttribute="top" secondItem="fD0-gR-86H" secondAttribute="top" constant="2" id="Xqf-gn-2Vn"/>
+                                                <constraint firstAttribute="trailing" secondItem="9aR-F5-Sb8" secondAttribute="trailing" constant="2" id="ewF-M0-Py3"/>
+                                                <constraint firstItem="9aR-F5-Sb8" firstAttribute="leading" secondItem="fD0-gR-86H" secondAttribute="leading" constant="2" id="mPT-nb-9dw"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="85" id="891-8V-abM">
-                                        <rect key="frame" x="0.0" y="193" width="351" height="85"/>
+                                        <rect key="frame" x="0.0" y="281" width="351" height="85"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="891-8V-abM" id="3Tx-7e-1Rv">
                                             <rect key="frame" x="0.0" y="0.0" width="351" height="85"/>
@@ -410,45 +471,6 @@
                                                 <constraint firstAttribute="trailing" secondItem="giJ-sn-vRw" secondAttribute="trailing" id="VdK-72-cgg"/>
                                                 <constraint firstAttribute="bottom" secondItem="giJ-sn-vRw" secondAttribute="bottom" id="Z5c-Yj-Fso"/>
                                                 <constraint firstItem="giJ-sn-vRw" firstAttribute="top" secondItem="3Tx-7e-1Rv" secondAttribute="top" id="cBG-qw-1uf"/>
-                                            </constraints>
-                                        </tableViewCellContentView>
-                                    </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="44" id="Xr2-hd-qgW">
-                                        <rect key="frame" x="0.0" y="278" width="351" height="44"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Xr2-hd-qgW" id="krh-PC-HLI">
-                                            <rect key="frame" x="0.0" y="0.0" width="351" height="44"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <stackView opaque="NO" contentMode="scaleToFill" spacingType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="Sbx-f1-48h">
-                                                    <rect key="frame" x="47" y="11" width="257.5" height="20"/>
-                                                    <subviews>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="7" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kJe-1t-i8H">
-                                                            <rect key="frame" x="0.0" y="0.0" width="12" height="20"/>
-                                                            <fontDescription key="fontDescription" name="Avenir-Heavy" family="Avenir" pointSize="20"/>
-                                                            <nil key="textColor"/>
-                                                            <nil key="highlightedColor"/>
-                                                        </label>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="times since" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GTr-XV-3kd">
-                                                            <rect key="frame" x="20" y="0.0" width="69.5" height="20"/>
-                                                            <fontDescription key="fontDescription" name="Avenir-BookOblique" family="Avenir" pointSize="14"/>
-                                                            <nil key="textColor"/>
-                                                            <nil key="highlightedColor"/>
-                                                        </label>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="249" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" text="October 15, 2018" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1Vf-Mr-99x">
-                                                            <rect key="frame" x="97.5" y="0.0" width="160" height="20"/>
-                                                            <fontDescription key="fontDescription" name="Avenir-Medium" family="Avenir" pointSize="20"/>
-                                                            <nil key="textColor"/>
-                                                            <nil key="highlightedColor"/>
-                                                        </label>
-                                                    </subviews>
-                                                </stackView>
-                                            </subviews>
-                                            <constraints>
-                                                <constraint firstAttribute="bottomMargin" secondItem="Sbx-f1-48h" secondAttribute="bottom" constant="2" id="6pj-pX-eMC"/>
-                                                <constraint firstItem="Sbx-f1-48h" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="krh-PC-HLI" secondAttribute="leadingMargin" constant="2" id="eCh-Bq-vlF"/>
-                                                <constraint firstItem="Sbx-f1-48h" firstAttribute="top" secondItem="krh-PC-HLI" secondAttribute="topMargin" id="jlQ-n1-zAl"/>
-                                                <constraint firstItem="Sbx-f1-48h" firstAttribute="centerX" secondItem="krh-PC-HLI" secondAttribute="centerX" id="qgv-NI-aAk"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>
