@@ -454,15 +454,15 @@
                                             </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="85" id="891-8V-abM">
-                                        <rect key="frame" x="0.0" y="281" width="351" height="85"/>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="105" id="891-8V-abM">
+                                        <rect key="frame" x="0.0" y="281" width="351" height="105"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="891-8V-abM" id="3Tx-7e-1Rv">
-                                            <rect key="frame" x="0.0" y="0.0" width="351" height="85"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="351" height="105"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="giJ-sn-vRw" customClass="IntervalDotPlotView" customModule="DaysSince" customModuleProvider="target">
-                                                    <rect key="frame" x="0.0" y="0.0" width="351" height="85"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="351" height="105"/>
                                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 </view>
                                             </subviews>

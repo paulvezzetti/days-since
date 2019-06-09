@@ -45,6 +45,7 @@
         <attribute name="allowSnooze" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="daysBefore" attributeType="Integer 16" minValueString="0" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="enabled" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="lastActualSnooze" optional="YES" attributeType="Integer 16" minValueString="0" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="lastSnooze" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
         <attribute name="snooze" attributeType="Integer 16" minValueString="1" defaultValueString="1" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="timeOfDay" optional="YES" attributeType="Double" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
@@ -69,7 +70,7 @@
         <element name="MonthlyInterval" positionX="77.70703125" positionY="311.53125" width="128" height="60"/>
         <element name="MonthOffsetInterval" positionX="135" positionY="144" width="128" height="45"/>
         <element name="OffsetInterval" positionX="153" positionY="162" width="128" height="60"/>
-        <element name="Reminder" positionX="158.08984375" positionY="-19.03125" width="128" height="150"/>
+        <element name="Reminder" positionX="158.08984375" positionY="-19.03125" width="128" height="165"/>
         <element name="UnlimitedInterval" positionX="503.921875" positionY="314.13671875" width="128" height="45"/>
         <element name="WeeklyInterval" positionX="219.46875" positionY="311.5234375" width="128" height="60"/>
         <element name="WeekOffsetInterval" positionX="126" positionY="135" width="128" height="45"/>

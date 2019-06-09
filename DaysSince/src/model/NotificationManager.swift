@@ -16,7 +16,7 @@ class NotificationManager : NSObject {
     private let DONE_AND_SNOOZE_CATEGORY_ID:String = "DAYS_SINCE_DONE_SNOOZE_CATEGORY"
 
     private enum NotificationActions: String {
-        case MARK_DONE, SNOOZE
+        case MARK_DONE, SNOOZE, SNOOZE_WITH_INPUT
     }
     
     private let dataManager:DataModelManager
@@ -31,9 +31,10 @@ class NotificationManager : NSObject {
         notificationCenter.delegate = self
         // Register the notification actions for 'mark done' and 'snooze'
         let markDoneAction = UNNotificationAction(identifier: NotificationActions.MARK_DONE.rawValue, title: NSLocalizedString("markDone", value: "Mark Done", comment: ""), options: UNNotificationActionOptions(rawValue: 0))
-        let snoozeAction = UNNotificationAction(identifier: NotificationActions.SNOOZE.rawValue, title: NSLocalizedString("snooze", value: "Snooze", comment: ""), options: UNNotificationActionOptions(rawValue: 0))
+        let snoozeAction = UNNotificationAction(identifier: NotificationActions.SNOOZE.rawValue, title: NSLocalizedString("snooze", value: "Snooze (default)", comment: ""), options: UNNotificationActionOptions(rawValue: 0))
+        let snoozeWithInput = UNTextInputNotificationAction(identifier: NotificationActions.SNOOZE_WITH_INPUT.rawValue, title: NSLocalizedString("snoozeWithInput", value: "Snooze (custom)", comment: ""), options: UNNotificationActionOptions(rawValue: 0), textInputButtonTitle: NSLocalizedString("snoozeButtonTitle", value: "Snooze", comment: ""), textInputPlaceholder: "Enter days to snooze")
         let doneCategory = UNNotificationCategory(identifier: DONE_ONLY_CATEGORY_ID, actions: [markDoneAction], intentIdentifiers: [], hiddenPreviewsBodyPlaceholder: "", options: UNNotificationCategoryOptions(rawValue: 0))
-        let doneAndSnoozeCategory = UNNotificationCategory(identifier: DONE_AND_SNOOZE_CATEGORY_ID, actions: [markDoneAction, snoozeAction], intentIdentifiers: [], hiddenPreviewsBodyPlaceholder: "", options: UNNotificationCategoryOptions(rawValue: 0))
+        let doneAndSnoozeCategory = UNNotificationCategory(identifier: DONE_AND_SNOOZE_CATEGORY_ID, actions: [markDoneAction, snoozeAction, snoozeWithInput], intentIdentifiers: [], hiddenPreviewsBodyPlaceholder: "", options: UNNotificationCategoryOptions(rawValue: 0))
         // Set the notification category
         notificationCenter.setNotificationCategories([doneCategory, doneAndSnoozeCategory])
         
@@ -68,6 +69,7 @@ class NotificationManager : NSObject {
 
     @objc func activityChanged(notification: Notification ) {
         if notification.userInfo?["lastSnooze"] != nil ||
+            notification.userInfo?["lastActualSnooze"] != nil ||
             notification.userInfo?["daysOverdue"] != nil ||
             notification.userInfo?["daysSincePrevious"] != nil ||
             notification.userInfo?["isOnTime"] != nil{
@@ -138,9 +140,9 @@ class NotificationManager : NSObject {
         }
     }
     
-    func scheduleSnoozeReminder(for activity:ActivityMO) {
+    func scheduleSnoozeReminder(for activity:ActivityMO, overrideDays:Int? = nil) {
         let uuid = activity.id!.uuidString
-        guard activity.reminder!.allowSnooze && activity.reminder!.enabled else {
+        guard let reminder = activity.reminder, reminder.allowSnooze && reminder.enabled else {
             // If this activity is not enabled for snooze, then yank any pending notifications from
             // the notification center. User could have turned off snooze before the notification arrived.
             notificationCenter.removePendingNotificationRequests(withIdentifiers: [uuid])
@@ -151,9 +153,14 @@ class NotificationManager : NSObject {
         // Set up the trigger. It's today + snoozeDays
         let calendar = Calendar.current
         let now = Date()
-        guard let snoozeUntil = calendar.date(byAdding: .day, value: Int(activity.reminder!.snooze), to: now) else { return }
+        let daysToSnooze = (overrideDays != nil) ? overrideDays! : Int(reminder.snooze)
+        
+        guard let snoozeDay = calendar.date(byAdding: .day, value: Int(daysToSnooze), to: now) else { return }
         // Remember when the last snooze was set
-        activity.reminder?.lastSnooze = now
+        reminder.lastSnooze = now
+        reminder.lastActualSnooze = Int16(daysToSnooze)
+        // Calculate when to snooze until
+        let snoozeUntil = Date.normalize(date: snoozeDay) + reminder.timeOfDay
         
         postNotificationRequest(identifier: uuid, content: content, when: snoozeUntil)
     }
@@ -167,10 +174,23 @@ class NotificationManager : NSObject {
         let content = buildContentForActivityNotification(activity)
         // Set up the trigger. It's lastSnooze + snoozeDays
         let calendar = Calendar.current
-        let snoozeUntil = calendar.date(byAdding: .day, value: Int(remind.snooze), to: lastSnooze)
+        // If the user specified a snooze override use it. Otherwise, use the default saved one.
+        let snoozeDays = remind.lastActualSnooze > 0 ? remind.lastActualSnooze : remind.snooze
+        // Normalize the date of the last snooze. Add in the time of day for the notification.
+        let normalizedLastSnooze = Date.normalize(date: lastSnooze) + remind.timeOfDay
+        let snoozeUntil = calendar.date(byAdding: .day, value: Int(snoozeDays), to: normalizedLastSnooze)
         
         postNotificationRequest(identifier: uuid, content: content, when: snoozeUntil)
         
+    }
+    
+    func scheduleCustomSnoozeReminder(for activity:ActivityMO, response:UNNotificationResponse) {
+        guard let textInputResponse = response as? UNTextInputNotificationResponse, let daysToSnooze = Int(textInputResponse.userText), daysToSnooze > 0 else {
+            scheduleSnoozeReminder(for: activity)
+            return
+        }
+        
+        scheduleSnoozeReminder(for: activity, overrideDays: daysToSnooze)
     }
     
     func postNotificationRequest(identifier:String, content: UNNotificationContent, when:Date?) {
@@ -302,6 +322,8 @@ extension NotificationManager : UNUserNotificationCenterDelegate {
             }
         case NotificationActions.SNOOZE.rawValue:
             scheduleSnoozeReminder(for: activity)
+        case NotificationActions.SNOOZE_WITH_INPUT.rawValue:
+            scheduleCustomSnoozeReminder(for: activity, response: response)
         case UNNotificationDefaultActionIdentifier:
             NotificationCenter.default.post(name: Notification.Name.showActivity, object: activityUUID)
         default:

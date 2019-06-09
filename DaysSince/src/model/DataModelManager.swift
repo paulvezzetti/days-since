@@ -177,7 +177,10 @@ class DataModelManager {
         let context = try getManagedObjectContext()
 
         // If we marked this done, reset the last snooze date.
-        activity.reminder?.lastSnooze = nil
+        if let reminder = activity.reminder {
+            reminder.lastSnooze = nil
+            reminder.lastActualSnooze = 0
+        }
 
         let event = EventMO(context: context)
         event.timestamp = Date.normalize(date: date ?? Date())
