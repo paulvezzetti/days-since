@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="14490.99" systemVersion="18F132" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="14460.32" systemVersion="17G6030" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
     <entity name="ActiveRange" representedClassName="ActiveRangeMO" syncable="YES" codeGenerationType="category">
         <attribute name="endDay" attributeType="Integer 16" minValueString="1" maxValueString="31" defaultValueString="1" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="endMonth" attributeType="Integer 16" minValueString="1" maxValueString="12" defaultValueString="1" usesScalarValueType="YES" syncable="YES"/>

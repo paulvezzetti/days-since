@@ -114,19 +114,27 @@ class DetailViewController: UIViewController {
 
             return
         }
-        let alert = UIAlertController(title: NSLocalizedString("snooze", value: "Snooze", comment: ""), message: String.localizedStringWithFormat(NSLocalizedString("snooze.alert.string", comment: ""), Int(reminder.snooze)), preferredStyle: UIAlertController.Style.alert)
-        alert.addAction(UIAlertAction(title: NSLocalizedString("yes", value: "Yes", comment: ""), style: .default) { (action) in
-            NotificationCenter.default.post(name: .snoozeActivity, object: self.detailItem)
-//            if let snoozeField = alert.textFields?.first {
-//                print("Snooze for \(snoozeField.text)")
-//            }
-        })
+        let alert = UIAlertController(title: NSLocalizedString("snooze", value: "Snooze", comment: ""), message: NSLocalizedString("snooze.alert", value:"Enter a number of days to snooze or select the default.", comment: ""), preferredStyle: UIAlertController.Style.alert)
+        // Add a text field where the user can enter the number of days to snooze
         alert.addTextField(configurationHandler: { (textField:UITextField) -> Void in
-            textField.placeholder = "Snooze time in days"
+            textField.placeholder = "Snooze amount in days"
             textField.keyboardType = UIKeyboardType.numberPad
-            
         })
-        alert.addAction(UIAlertAction(title: NSLocalizedString("no", value: "No", comment: ""), style: .default, handler: nil))
+        // First action is to snooze using the number that was entered.
+        alert.addAction(UIAlertAction(title: NSLocalizedString("snooze", value: "Snooze", comment: ""), style: .default) { (action) in
+
+            var daysToSnooze:Int = -1
+            if let textField = alert.textFields?.first, let text = textField.text {
+                daysToSnooze = Int(text) ?? -1
+            }
+            NotificationCenter.default.post(name: .snoozeActivity, object: self.detailItem, userInfo: ["days": daysToSnooze])
+        })
+        // Second action is default snooze
+        alert.addAction(UIAlertAction(title: String.localizedStringWithFormat(NSLocalizedString("numDays.label.string", comment: ""), Int(reminder.snooze)), style: .default) { (action) in
+            NotificationCenter.default.post(name: .snoozeActivity, object: self.detailItem)
+        })
+        // Third action is cancel
+        alert.addAction(UIAlertAction(title: NSLocalizedString("cancel", value: "Cancel", comment: ""), style: .default, handler: nil))
         self.present(alert, animated: true, completion: nil)
 
         

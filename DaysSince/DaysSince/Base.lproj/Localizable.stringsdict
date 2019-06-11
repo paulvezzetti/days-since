@@ -2,6 +2,22 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>numDays.label.string</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@days@</string>
+		<key>days</key>
+		<dict>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>other</key>
+			<string>Default (%d Days)</string>
+			<key>one</key>
+			<string>Default (%d Day)</string>
+		</dict>
+	</dict>
 	<key>snooze.alert.string</key>
 	<dict>
 		<key>NSStringLocalizedFormatKey</key>
