@@ -115,8 +115,16 @@ class DetailViewController: UIViewController {
             return
         }
         let alert = UIAlertController(title: NSLocalizedString("snooze", value: "Snooze", comment: ""), message: String.localizedStringWithFormat(NSLocalizedString("snooze.alert.string", comment: ""), Int(reminder.snooze)), preferredStyle: UIAlertController.Style.alert)
-        alert.addAction(UIAlertAction(title: NSLocalizedString("yes", value: "Yes", comment: ""), style: .default) { (alert) in
+        alert.addAction(UIAlertAction(title: NSLocalizedString("yes", value: "Yes", comment: ""), style: .default) { (action) in
             NotificationCenter.default.post(name: .snoozeActivity, object: self.detailItem)
+//            if let snoozeField = alert.textFields?.first {
+//                print("Snooze for \(snoozeField.text)")
+//            }
+        })
+        alert.addTextField(configurationHandler: { (textField:UITextField) -> Void in
+            textField.placeholder = "Snooze time in days"
+            textField.keyboardType = UIKeyboardType.numberPad
+            
         })
         alert.addAction(UIAlertAction(title: NSLocalizedString("no", value: "No", comment: ""), style: .default, handler: nil))
         self.present(alert, animated: true, completion: nil)
@@ -158,11 +166,11 @@ class DetailViewController: UIViewController {
     @IBAction func onDelete(_ sender: Any) {
         let alert = UIAlertController(title: NSLocalizedString("deleteActivity.title", value: "Delete this activity?", comment: "Title used for prompt when deleting activity"),
                                       message: NSLocalizedString("deleteActivity.msg", value: "This will permanently delete this activity and all of its history.", comment: "Message used for prompt when deleting activity"), preferredStyle: UIAlertController.Style.alert)
-        alert.addAction(UIAlertAction(title: NSLocalizedString("yes", value: "Yes", comment: ""), style: .destructive) { (alert) in
+        alert.addAction(UIAlertAction(title: NSLocalizedString("delete", value: "Delete", comment: ""), style: .destructive) { (alert) in
             self.deleteActivity()
             self.navigationController?.navigationController?.popToRootViewController(animated: false)
         })
-        alert.addAction(UIAlertAction(title: NSLocalizedString("no", value: "No", comment: ""), style: .default, handler: nil))
+        alert.addAction(UIAlertAction(title: NSLocalizedString("cancel", value: "Cancel", comment: ""), style: .default, handler: nil))
         self.present(alert, animated: true, completion: nil)
     }
     

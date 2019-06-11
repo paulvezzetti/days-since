@@ -82,7 +82,7 @@ class HistoryTableViewController: UITableViewController {
         let action = UIContextualAction(style: .normal, title: NSLocalizedString("delete", value: "Delete", comment: "")) { (action, view, completion) in
             let alert = UIAlertController(title: NSLocalizedString("deleteEvent.title", value: "Delete this event?", comment: ""),
                                           message: NSLocalizedString("deleteEvent.msg", value: "This will permanently delete this event from the activity history.", comment: ""), preferredStyle: UIAlertController.Style.alert)
-            alert.addAction(UIAlertAction(title: NSLocalizedString("yes", value: "Yes", comment: ""), style: .destructive) { [unowned self](alert) in
+            alert.addAction(UIAlertAction(title: NSLocalizedString("delete", value: "Delete", comment: ""), style: .destructive) { [unowned self](alert) in
                 guard indexPath.row < self.sortedHistory.count, let activity = self.activity, let dm = self.dataManager else {
                     return
                 }
@@ -93,7 +93,7 @@ class HistoryTableViewController: UITableViewController {
                     // TODO: Delete failed?
                 }
             })
-            alert.addAction(UIAlertAction(title: NSLocalizedString("no", value: "No", comment: ""), style: .default, handler: nil))
+            alert.addAction(UIAlertAction(title: NSLocalizedString("cancel", value: "Cancel", comment: ""), style: .default, handler: nil))
             self.present(alert, animated: true, completion: nil)
             completion(true)
         }
