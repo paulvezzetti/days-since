@@ -91,7 +91,14 @@ class NotificationManager : NSObject {
         }
 
         removeAllPendingNotifications(for: activity)
-        scheduleSnoozeReminder(for: activity)
+        
+        if let userInfo = notification.userInfo {
+            let snoozeDays = userInfo["days"] as? Int
+            scheduleSnoozeReminder(for: activity, overrideDays: snoozeDays)
+        } else {
+            scheduleSnoozeReminder(for: activity)
+
+        }
     }
 
     /* ----------------------------------------------------------
