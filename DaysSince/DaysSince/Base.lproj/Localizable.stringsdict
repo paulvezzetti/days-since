@@ -53,7 +53,7 @@
 	<key>reminder.label.string</key>
 	<dict>
 		<key>NSStringLocalizedFormatKey</key>
-		<string>%#@days@</string>
+		<string>%#@days@ at %@</string>
 		<key>days</key>
 		<dict>
 			<key>NSStringFormatSpecTypeKey</key>

@@ -37,7 +37,6 @@
 		FA1D734B22303F4600D8EBF7 /* HistoryTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA1D734A22303F4600D8EBF7 /* HistoryTableViewCell.swift */; };
 		FA1D734D22307F9B00D8EBF7 /* EventDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA1D734C22307F9B00D8EBF7 /* EventDetailsViewController.swift */; };
 		FA2215AB2252A67000FDEB96 /* ActivitySummaryTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA2215AA2252A67000FDEB96 /* ActivitySummaryTableViewController.swift */; };
-		FA25E418229EB65000F7B0B6 /* NoActivityViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA25E417229EB65000F7B0B6 /* NoActivityViewController.swift */; };
 		FA25E41A22A00C9000F7B0B6 /* BlankActivityTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA25E41922A00C9000F7B0B6 /* BlankActivityTableViewController.swift */; };
 		FA25E41C22AAB32400F7B0B6 /* TimePickerView.xib in Resources */ = {isa = PBXBuildFile; fileRef = FA25E41B22AAB32400F7B0B6 /* TimePickerView.xib */; };
 		FA25E41E22AAB47F00F7B0B6 /* TimePickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA25E41D22AAB47F00F7B0B6 /* TimePickerView.swift */; };
@@ -121,7 +120,6 @@
 		FA1D734A22303F4600D8EBF7 /* HistoryTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryTableViewCell.swift; sourceTree = "<group>"; };
 		FA1D734C22307F9B00D8EBF7 /* EventDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventDetailsViewController.swift; sourceTree = "<group>"; };
 		FA2215AA2252A67000FDEB96 /* ActivitySummaryTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivitySummaryTableViewController.swift; sourceTree = "<group>"; };
-		FA25E417229EB65000F7B0B6 /* NoActivityViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoActivityViewController.swift; sourceTree = "<group>"; };
 		FA25E41922A00C9000F7B0B6 /* BlankActivityTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlankActivityTableViewController.swift; sourceTree = "<group>"; };
 		FA25E41B22AAB32400F7B0B6 /* TimePickerView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TimePickerView.xib; sourceTree = "<group>"; };
 		FA25E41D22AAB47F00F7B0B6 /* TimePickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimePickerView.swift; sourceTree = "<group>"; };
@@ -345,7 +343,6 @@
 				FA2215AA2252A67000FDEB96 /* ActivitySummaryTableViewController.swift */,
 				DA0B1E262259412500992A42 /* ChooseActiveRangeTableViewController.swift */,
 				FAC1DEBD225E3C5600A211D6 /* ActivityInfoTableViewController.swift */,
-				FA25E417229EB65000F7B0B6 /* NoActivityViewController.swift */,
 				FA25E41922A00C9000F7B0B6 /* BlankActivityTableViewController.swift */,
 			);
 			path = activity;
@@ -489,7 +486,6 @@
 				FA3CEF4C220E0F2500634DD7 /* DaysSince.xcdatamodeld in Sources */,
 				FAC1DEBE225E3C5600A211D6 /* ActivityInfoTableViewController.swift in Sources */,
 				FAC1DE9C22562D7700A211D6 /* ScaleDateComponentPickerController.swift in Sources */,
-				FA25E418229EB65000F7B0B6 /* NoActivityViewController.swift in Sources */,
 				FA1D72EA2220784900D8EBF7 /* ActivityMO+CoreDataClass.swift in Sources */,
 				FAA6AF1E2211C1E700346CCB /* AddActivityTableViewController.swift in Sources */,
 				FAB23B74223AC332004C6252 /* NotificationManager.swift in Sources */,

@@ -90,7 +90,11 @@ extension ActivityInfoTableViewController {
         if let reminder = act.reminder {
             remindersStatusLabel.text = reminder.enabled ? NSLocalizedString("on", value: "ON", comment: "") : NSLocalizedString("off", value: "OFF", comment: "")
             if reminder.enabled {
-                reminderSettingsLabel.text = String.localizedStringWithFormat(NSLocalizedString("reminder.label.string", comment: ""), reminder.daysBefore)
+                let reminderTimeOfDay = Date(timeInterval: reminder.timeOfDay, since: Calendar.current.startOfDay(for: Date()))
+                let formatter:DateFormatter = DateFormatter()
+                formatter.dateStyle = .none
+                formatter.timeStyle = .short
+                reminderSettingsLabel.text = String.localizedStringWithFormat(NSLocalizedString("reminder.label.string", comment: ""), reminder.daysBefore, formatter.string(from: reminderTimeOfDay))
             } else {
                 reminderSettingsLabel.text = ""
             }
