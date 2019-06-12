@@ -11,16 +11,20 @@ import CoreData
 
 class MasterViewController: UITableViewController {
 
+    // MARK: - Public variables
     var detailViewController: DetailViewController? = nil
     var dataManager: DataModelManager? = nil
-    var activityDict: [ActivityMO.ActivityState : [ActivityMO] ] = [:]
-    var sectionIndices: [Int : ActivityMO.ActivityState] = [:]
-    var collapsedState: [ActivityMO.ActivityState : Bool] = [:]
-    var pendingActivityToShow: String? = nil
+    
+    // MARK: - Private variables
+    private var activityDict: [ActivityMO.ActivityState : [ActivityMO] ] = [:]
+    private var sectionIndices: [Int : ActivityMO.ActivityState] = [:]
+    private var collapsedState: [ActivityMO.ActivityState : Bool] = [:]
+    private var pendingActivityToShow: String? = nil
 
+    // MARK: - Outlets
     @IBOutlet var navigationTitle: UINavigationItem!
     
-    
+    // MARK: Overrides
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
@@ -58,6 +62,7 @@ class MasterViewController: UITableViewController {
         super.viewWillAppear(animated)
     }
 
+    // MARK: - Observers
     @objc
     func managedObjectContextObjectsDidChange(notification: NSNotification) {
         buildTableDataStructure()
@@ -84,56 +89,6 @@ class MasterViewController: UITableViewController {
             vc.dataManager = dataManager
             present(vc, animated: true, completion: nil)
         }
-    }
-    
-    func buildTableDataStructure() {
-        
-        var activityMap: [ActivityMO.ActivityState : [ActivityMO] ] = [:]
-        
-        func addToMap(state:ActivityMO.ActivityState, activity:ActivityMO) {
-            if var activityValues = activityMap[state] {
-                // Array of activities already exists, just add to it.
-                activityValues.append(activity)
-                activityMap[state] = activityValues
-            } else {
-                // Create a new array
-                let activityValues = [activity]
-                activityMap[state] = activityValues
-            }
-        }
-        
-        if let dm = dataManager {
-            do {
-                let fetchedActivities = try dm.getActivities()
-                for activity in fetchedActivities {
-                    addToMap(state: activity.state, activity: activity)
-                }
-            } catch {
-                // TODO: Handle error
-            }
-        }
-        // Sort all of the arrays in the map
-        func sortByName(_ act1: ActivityMO, _ act2: ActivityMO) -> Bool {
-            return act1.name! < act2.name! // TODO: Handle nil for name better
-        }
-        for (state, activityValues) in activityMap {
-            let sortedActivities = activityValues.sorted(by: sortByName)
-            activityMap[state] = sortedActivities
-        }
-        self.activityDict = activityMap
-        // Get the section indices
-        var sectionIndex = 0
-        for possibleState in ActivityMO.ActivityState.allCases {
-            if let _ = activityMap[possibleState] {
-                sectionIndices[sectionIndex] = possibleState
-                sectionIndex += 1
-            }
-        }
-    }
-    
-    
-    func sectionToStatus(section index:Int) -> ActivityMO.ActivityState {
-        return sectionIndices[index] ?? ActivityMO.ActivityState.Whenever // TODO
     }
     
 
@@ -171,12 +126,6 @@ class MasterViewController: UITableViewController {
     
         
     @IBAction func unwindSaveActivity(segue: UIStoryboardSegue) {
-//        do {
-//            try dataManager?.saveContext()
-//        } catch {
-//            let nserror = error as NSError
-//            fatalError("Unresolved error \(nserror), \(nserror.userInfo)")
-//        }
     }
 
 
@@ -253,6 +202,59 @@ class MasterViewController: UITableViewController {
         return collapsedState[state]! ? 0 : UITableView.automaticDimension
     }
 
+
+}
+
+// MARK: - Private extension
+
+extension MasterViewController {
+    
+    func buildTableDataStructure() {
+        
+        var activityMap: [ActivityMO.ActivityState : [ActivityMO] ] = [:]
+        
+        func addToMap(state:ActivityMO.ActivityState, activity:ActivityMO) {
+            if var activityValues = activityMap[state] {
+                // Array of activities already exists, just add to it.
+                activityValues.append(activity)
+                activityMap[state] = activityValues
+            } else {
+                // Create a new array
+                let activityValues = [activity]
+                activityMap[state] = activityValues
+            }
+        }
+        
+        if let dm = dataManager {
+            do {
+                let fetchedActivities = try dm.getActivities()
+                for activity in fetchedActivities {
+                    addToMap(state: activity.state, activity: activity)
+                }
+            } catch {
+                // TODO: Handle error
+            }
+        }
+        // Sort all of the arrays in the map
+        func sortByName(_ act1: ActivityMO, _ act2: ActivityMO) -> Bool {
+            return act1.name! < act2.name! // TODO: Handle nil for name better
+        }
+        for (state, activityValues) in activityMap {
+            let sortedActivities = activityValues.sorted(by: sortByName)
+            activityMap[state] = sortedActivities
+        }
+        self.activityDict = activityMap
+        // Get the section indices
+        var sectionIndex = 0
+        for possibleState in ActivityMO.ActivityState.allCases {
+            if let _ = activityMap[possibleState] {
+                sectionIndices[sectionIndex] = possibleState
+                sectionIndex += 1
+            }
+        }
+    }
+    
+
     func editAction(at indexPath: IndexPath) -> UIContextualAction {
         
         let action = UIContextualAction(style: .normal, title: NSLocalizedString("edit", value: "Edit", comment: "")) {[unowned self] (action, view, completion) in
@@ -262,7 +264,7 @@ class MasterViewController: UITableViewController {
         action.image = UIImage(named: "edit")
         return action
     }
-
+    
     func doneAction(at indexPath: IndexPath) -> UIContextualAction {
         
         let action = UIContextualAction(style: .normal, title: NSLocalizedString("done", value: "Done", comment: "")) {[unowned self] (action, view, completion) in
@@ -279,12 +281,11 @@ class MasterViewController: UITableViewController {
         action.backgroundColor = UIColor(named: "Medium Green")
         return action
     }
-
+    
     func deleteAction(at indexPath: IndexPath) -> UIContextualAction {
         
         let action = UIContextualAction(style: .normal, title: NSLocalizedString("delete", value: "Delete", comment: "")) { (action, view, completion) in
-            let alert = UIAlertController(title: NSLocalizedString("deleteActivity.title", value: "Delete this activity?", comment: "Title used for prompt when deleting activity") ,
-                                          message: NSLocalizedString("deleteActivity.msg", value: "This will permanently delete this activity and all of its history.", comment: "Message used for prompt when deleting activity"), preferredStyle: UIAlertController.Style.alert)
+            let alert = UIAlertController(title: NSLocalizedString("deleteActivity.title", value: "Delete this activity?", comment: "Title used for prompt when deleting activity"), message: NSLocalizedString("deleteActivity.msg", value: "This will permanently delete this activity and all of its history.", comment: "Message used for prompt when deleting activity"), preferredStyle: UIAlertController.Style.alert)
             alert.addAction(UIAlertAction(title: NSLocalizedString("delete", value: "Delete", comment: ""), style: .destructive) { (alert) in
                 self.deleteActivity(at: indexPath)
             })
@@ -296,14 +297,14 @@ class MasterViewController: UITableViewController {
         action.backgroundColor = .red
         return action
     }
-
-
+    
+    
     func configureCell(_ cell: UITableViewCell, withActivity activity: ActivityMO) {
         guard let masterCell = cell as? MasterTableViewCell else {
             return
         }
         let stats:ActivityStatistics = ActivityStatistics(activity: activity)
-        //let daysSince = stats.daySince
+
         masterCell.nameLabel!.text = activity.name
         masterCell.nextLabel!.text = NSLocalizedString("next", value: "Next:", comment: "")
         masterCell.nextDateLabel!.text = stats.nextDay
@@ -317,30 +318,36 @@ class MasterViewController: UITableViewController {
     }
     
     func deleteActivity(at indexPath:IndexPath) {
-        if let dm = dataManager {
+        if let dm = dataManager, let activity = getActivity(at: indexPath) {
             do {
-                let activity = getActivity(at: indexPath)
                 try dm.removeActivity(activity: activity)
             } catch {
-                // TODO: This should show an error screen.
                 let nserror = error as NSError
-                fatalError("Unresolved error \(nserror), \(nserror.userInfo)")
+                let alert = UIAlertController(title: NSLocalizedString("deleteActivity.error.title", value: "Error deleting activity", comment: ""), message: NSLocalizedString("deleteActivity.error.msg", value: "An error occurred while attempting to delete the activity. If this continues, please kill the application and retry. The error was: \n\(nserror.localizedDescription)", comment: ""), preferredStyle: UIAlertController.Style.alert)
+                alert.addAction(UIAlertAction(title: NSLocalizedString("ok", value: "OK", comment: ""), style: .default, handler: nil))
+                self.present(alert, animated: true, completion: nil)
             }
         }
     }
     
-    func getActivity(at indexPath:IndexPath) -> ActivityMO {
+    func getActivity(at indexPath:IndexPath) -> ActivityMO? {
         let sectionActivities = activityDict[sectionToStatus(section: indexPath.section)] ?? []
-        return sectionActivities[indexPath.row] // TODO: Array size check
+        return sectionActivities.count > indexPath.row ? sectionActivities[indexPath.row] : nil
     }
     
     func getIndexPathForActivity(activity:ActivityMO) -> IndexPath {
-        
         return IndexPath(row: 0, section: 0)
     }
+    
+    func sectionToStatus(section index:Int) -> ActivityMO.ActivityState {
+        return sectionIndices[index] ?? ActivityMO.ActivityState.Whenever // TODO
+    }
+    
+
 
 }
 
+// MARK: - MarkDoneDelegate
 extension MasterViewController : MarkDoneDelegate {
     
     func complete(sender: UIViewController) {
@@ -349,6 +356,7 @@ extension MasterViewController : MarkDoneDelegate {
     
 }
 
+// MARK: - CollapsibleTableViewHeaderDelegate
 extension MasterViewController: CollapsibleTableViewHeaderDelegate {
     
     
