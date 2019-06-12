@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="H1p-Uh-vWS">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="H1p-Uh-vWS">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="Stack View standard spacing" minToolsVersion="9.0"/>
@@ -774,16 +774,17 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="1 Day Before" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iWd-gi-EzH">
-                                                    <rect key="frame" x="0.0" y="10.5" width="375" height="23.5"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                                                     <fontDescription key="fontDescription" name="Avenir-Book" family="Avenir" pointSize="17"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstAttribute="trailing" secondItem="iWd-gi-EzH" secondAttribute="trailing" id="MXu-8J-VFg"/>
-                                                <constraint firstItem="iWd-gi-EzH" firstAttribute="centerY" secondItem="jHv-07-cV8" secondAttribute="centerY" id="ZaO-7f-xV9"/>
-                                                <constraint firstItem="iWd-gi-EzH" firstAttribute="leading" secondItem="jHv-07-cV8" secondAttribute="leading" id="ybN-5l-qvO"/>
+                                                <constraint firstAttribute="bottom" secondItem="iWd-gi-EzH" secondAttribute="bottom" id="0BQ-os-ulN"/>
+                                                <constraint firstItem="iWd-gi-EzH" firstAttribute="top" secondItem="jHv-07-cV8" secondAttribute="top" id="AHz-fk-dh6"/>
+                                                <constraint firstAttribute="trailing" secondItem="iWd-gi-EzH" secondAttribute="trailing" id="OHE-m3-8r4"/>
+                                                <constraint firstItem="iWd-gi-EzH" firstAttribute="leading" secondItem="jHv-07-cV8" secondAttribute="leading" id="xEj-CG-p44"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>
@@ -828,16 +829,17 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="252" text="For 1 Day" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dnM-sV-MpK">
-                                                    <rect key="frame" x="0.0" y="10.5" width="375" height="23.5"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                                                     <fontDescription key="fontDescription" name="Avenir-Book" family="Avenir" pointSize="17"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstAttribute="trailing" secondItem="dnM-sV-MpK" secondAttribute="trailing" id="7eS-NE-zV6"/>
-                                                <constraint firstItem="dnM-sV-MpK" firstAttribute="centerY" secondItem="Im3-zO-C7E" secondAttribute="centerY" id="IVG-O7-zQI"/>
-                                                <constraint firstItem="dnM-sV-MpK" firstAttribute="leading" secondItem="Im3-zO-C7E" secondAttribute="leading" id="Utv-ta-y1R"/>
+                                                <constraint firstAttribute="bottom" secondItem="dnM-sV-MpK" secondAttribute="bottom" id="Eb3-ZA-ctU"/>
+                                                <constraint firstAttribute="trailing" secondItem="dnM-sV-MpK" secondAttribute="trailing" id="Rv9-H7-JxI"/>
+                                                <constraint firstItem="dnM-sV-MpK" firstAttribute="top" secondItem="Im3-zO-C7E" secondAttribute="top" id="YR7-hy-aNi"/>
+                                                <constraint firstItem="dnM-sV-MpK" firstAttribute="leading" secondItem="Im3-zO-C7E" secondAttribute="leading" id="eU0-39-mhp"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>
@@ -849,16 +851,17 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="749" text="Last Snooze on Jan 1, 2019" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mfQ-4Z-1mN">
-                                                    <rect key="frame" x="0.0" y="10.5" width="375" height="23.5"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                                                     <fontDescription key="fontDescription" name="Avenir-Book" family="Avenir" pointSize="17"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstAttribute="trailing" secondItem="mfQ-4Z-1mN" secondAttribute="trailing" id="BlU-Cf-L2W"/>
-                                                <constraint firstItem="mfQ-4Z-1mN" firstAttribute="centerY" secondItem="ch5-SU-FV4" secondAttribute="centerY" id="YrU-fZ-lhT"/>
-                                                <constraint firstItem="mfQ-4Z-1mN" firstAttribute="leading" secondItem="ch5-SU-FV4" secondAttribute="leading" id="aCV-xA-QEi"/>
+                                                <constraint firstItem="mfQ-4Z-1mN" firstAttribute="top" secondItem="ch5-SU-FV4" secondAttribute="top" id="IPx-hS-RNg"/>
+                                                <constraint firstAttribute="bottom" secondItem="mfQ-4Z-1mN" secondAttribute="bottom" id="Zkw-H5-W0V"/>
+                                                <constraint firstAttribute="trailing" secondItem="mfQ-4Z-1mN" secondAttribute="trailing" id="avG-Q1-eJX"/>
+                                                <constraint firstItem="mfQ-4Z-1mN" firstAttribute="leading" secondItem="ch5-SU-FV4" secondAttribute="leading" id="i7O-7d-X54"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>
@@ -882,7 +885,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="aL5-CX-0XZ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1591" y="1027"/>
+            <point key="canvasLocation" x="1589.5999999999999" y="1026.8365817091455"/>
         </scene>
         <!--Blank Activity Table View Controller-->
         <scene sceneID="ZgS-mH-Zes">
