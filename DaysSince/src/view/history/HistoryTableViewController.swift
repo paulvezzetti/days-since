@@ -8,7 +8,7 @@
 
 import UIKit
 
-class HistoryTableViewController: UITableViewController {
+class HistoryTableViewController: UITableViewController, ActivityBased, DataModelManagerRequired {
 
     var sortedHistory: [EventMO] = []
     var activity: ActivityMO? {

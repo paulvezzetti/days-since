@@ -10,12 +10,13 @@ import UIKit
 
 class DetailViewController: UIViewController {
 
+    // MARK: - Outlets
     @IBOutlet weak var detailDescriptionLabel: UILabel!
     @IBOutlet var alternatingView: UIView!
     @IBOutlet var segmentedControl: UISegmentedControl!
     @IBOutlet var bottomToolbar: UIToolbar!
     
-    var activeSubViewController: UIViewController?
+    // MARK: - Public variables
     var dataManager: DataModelManager? = nil
     
     var detailItem: ActivityMO? {
@@ -33,13 +34,145 @@ class DetailViewController: UIViewController {
             }
         }
     }
+
+    // MARK: - Private variables
+    private var activeSubViewController: UIViewController?
+
+    private var summaryViewController:ActivitySummaryTableViewController?
     
-    func presentAddViewController() {
-        performSegue(withIdentifier: "editActivity", sender: self)
+    private lazy var historyViewController: HistoryTableViewController = {
+        return createViewController(withIdentifier: "HistoryTableViewController") as! HistoryTableViewController
+    }()
+    
+    
+    private lazy var settingsViewController: ActivityInfoTableViewController = {
+        return createViewController(withIdentifier: "ActivityInfoTableViewController") as! ActivityInfoTableViewController
+    }()
+    
+    
+    private lazy var noActivityViewController: BlankActivityTableViewController = {
+        return createViewController(withIdentifier: "BlankActivityTableViewController") as! BlankActivityTableViewController
+    }()
+
+
+    // MARK: - Overrides
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(onActivityAdded(notification:)), name: Notification.Name.activityAdded, object: nil)
+
+        activeSubViewController = summaryViewController
+        // Do any additional setup after loading the view, typically from a nib.
+        configureView()
+        segmentedControl.addTarget(self, action: #selector(selectionDidChange(_:)), for: .valueChanged)
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        do {
+            try dataManager?.saveContext()
+        } catch {
+            let nserror = error as NSError
+            let alert = UIAlertController(title: NSLocalizedString("saveActivity.error.title", value: "Error saving activity", comment: ""),message: NSLocalizedString("deleteActivity.error.msg", value: "An error occurred while attempting to save the activity. If this continues, please kill the application and retry. The error was: \n\(nserror.localizedDescription)", comment: ""), preferredStyle: UIAlertController.Style.alert)
+            alert.addAction(UIAlertAction(title: NSLocalizedString("ok", value: "OK", comment: ""), style: .default, handler: nil))
+            self.present(alert, animated: true, completion: nil)
+        }
     }
 
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "embedSummary" {
+            summaryViewController = segue.destination as? ActivitySummaryTableViewController
+            if let summaryVC = summaryViewController {
+                summaryVC.activity = detailItem
+            }
+        } else if segue.identifier == "markDoneSegue" {
+            let controller = (segue.destination as! UINavigationController).topViewController as! MarkDoneTableViewController
+            controller.doneDelegate = self
+            controller.activity = detailItem
+            controller.dataManager = dataManager
+        } else if segue.identifier == "editActivity" {
+            let controller = segue.destination as! AddActivityTableViewController
+            controller.dataManager = dataManager
+            controller.editActivity = detailItem
+        }
+    }
+
+    // MARK: - IBActions
     
-    func configureView() {
+    @IBAction func markDoneFromToolbar(_ sender: Any) {
+        self.performSegue(withIdentifier: "markDoneSegue", sender: self)
+    }
+    
+    @IBAction func snoozeFromToolbar(_ sender: Any) {
+        guard let reminder = detailItem?.reminder, reminder.allowSnooze else {
+
+            let alertNoSnooze = UIAlertController(title: NSLocalizedString("snooze", value: "Snooze", comment: ""), message: NSLocalizedString("snoozeNotEnabled.msg", value: "This activity is not enabled for snooze. You must edit this activity and enable snooze first.", comment: ""), preferredStyle: UIAlertController.Style.alert)
+            alertNoSnooze.addAction(UIAlertAction(title: NSLocalizedString("ok", value: "OK", comment: ""), style: .default, handler: nil))
+            self.present(alertNoSnooze, animated: true, completion: nil)
+
+            return
+        }
+        let alert = UIAlertController(title: NSLocalizedString("snooze", value: "Snooze", comment: ""), message: NSLocalizedString("snooze.alert", value:"Enter a number of days to snooze or select the default.", comment: ""), preferredStyle: UIAlertController.Style.alert)
+        // Add a text field where the user can enter the number of days to snooze
+        alert.addTextField(configurationHandler: { (textField:UITextField) -> Void in
+            textField.placeholder = NSLocalizedString("snoozeAmount.prompt.txt", value: "Snooze amount in days", comment: "")
+            textField.keyboardType = UIKeyboardType.numberPad
+        })
+        // First action is to snooze using the number that was entered.
+        alert.addAction(UIAlertAction(title: NSLocalizedString("snooze", value: "Snooze", comment: ""), style: .default) { (action) in
+
+            var daysToSnooze:Int = -1
+            if let textField = alert.textFields?.first, let text = textField.text {
+                daysToSnooze = Int(text) ?? -1
+            }
+            NotificationCenter.default.post(name: .snoozeActivity, object: self.detailItem, userInfo: ["days": daysToSnooze])
+        })
+        // Second action is default snooze
+        alert.addAction(UIAlertAction(title: String.localizedStringWithFormat(NSLocalizedString("numDays.label.string", comment: ""), Int(reminder.snooze)), style: .default) { (action) in
+            NotificationCenter.default.post(name: .snoozeActivity, object: self.detailItem)
+        })
+        // Third action is cancel
+        alert.addAction(UIAlertAction(title: NSLocalizedString("cancel", value: "Cancel", comment: ""), style: .default, handler: nil))
+        self.present(alert, animated: true, completion: nil)
+
+    }
+    
+    @IBAction func unwindSaveActivity(segue: UIStoryboardSegue) {
+        configureView()
+    }
+    
+    @IBAction func onDelete(_ sender: Any) {
+        let alert = UIAlertController(title: NSLocalizedString("deleteActivity.title", value: "Delete this activity?", comment: "Title used for prompt when deleting activity"), message: NSLocalizedString("deleteActivity.msg", value: "This will permanently delete this activity and all of its history.", comment: "Message used for prompt when deleting activity"), preferredStyle: UIAlertController.Style.alert)
+        alert.addAction(UIAlertAction(title: NSLocalizedString("delete", value: "Delete", comment: ""), style: .destructive) { (alert) in
+            self.deleteActivity()
+            self.navigationController?.navigationController?.popToRootViewController(animated: false)
+        })
+        alert.addAction(UIAlertAction(title: NSLocalizedString("cancel", value: "Cancel", comment: ""), style: .default, handler: nil))
+        self.present(alert, animated: true, completion: nil)
+    }
+    
+}
+
+// MARK: - Private extension
+extension DetailViewController {
+    
+    private func createViewController(withIdentifier: String) -> UIViewController {
+        let storyboard = UIStoryboard(name: "Main", bundle: Bundle.main)
+        
+        let viewController = storyboard.instantiateViewController(withIdentifier: withIdentifier)
+        
+        if var activityBasedController = viewController as? ActivityBased {
+            activityBasedController.activity = detailItem
+        }
+        if var dataManagerController = viewController as? DataModelManagerRequired {
+            dataManagerController.dataManager = dataManager
+        }
+        self.addChild(viewController)
+        return viewController
+    }
+    
+    private func configureView() {
         // Update the user interface for the detail item.
         if let detail = detailItem {
             if let label = detailDescriptionLabel {
@@ -59,7 +192,7 @@ class DetailViewController: UIViewController {
                         summaryVC.activity = detailItem
                         addChildToSubview(viewController: summaryVC)
                     }
-
+                    
                 }
             }
         } else {
@@ -80,108 +213,40 @@ class DetailViewController: UIViewController {
         }
     }
 
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-        NotificationCenter.default.addObserver(self, selector: #selector(onActivityAdded(notification:)), name: Notification.Name.activityAdded, object: nil)
-
-        activeSubViewController = summaryViewController
-        // Do any additional setup after loading the view, typically from a nib.
-        configureView()
-        segmentedControl.addTarget(self, action: #selector(selectionDidChange(_:)), for: .valueChanged)
-    }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        
-        do {
-            try dataManager?.saveContext()
-        } catch {
-            // TODO: Alert of save failure
-        }
-    }
-
-    @IBAction func markDoneFromToolbar(_ sender: Any) {
-        self.performSegue(withIdentifier: "markDoneSegue", sender: self)
-    }
-    
-    @IBAction func snoozeFromToolbar(_ sender: Any) {
-        guard let reminder = detailItem?.reminder, reminder.allowSnooze else {
-
-            let alertNoSnooze = UIAlertController(title: NSLocalizedString("snooze", value: "Snooze", comment: ""), message: NSLocalizedString("snoozeNotEnabled.msg", value: "This activity is not enabled for snooze. You must edit this activity and enable snooze first.", comment: ""), preferredStyle: UIAlertController.Style.alert)
-            alertNoSnooze.addAction(UIAlertAction(title: NSLocalizedString("ok", value: "OK", comment: ""), style: .default, handler: nil))
-            self.present(alertNoSnooze, animated: true, completion: nil)
-
+    func deleteActivity() {
+        guard let activity = detailItem else {
             return
         }
-        let alert = UIAlertController(title: NSLocalizedString("snooze", value: "Snooze", comment: ""), message: NSLocalizedString("snooze.alert", value:"Enter a number of days to snooze or select the default.", comment: ""), preferredStyle: UIAlertController.Style.alert)
-        // Add a text field where the user can enter the number of days to snooze
-        alert.addTextField(configurationHandler: { (textField:UITextField) -> Void in
-            textField.placeholder = "Snooze amount in days"
-            textField.keyboardType = UIKeyboardType.numberPad
-        })
-        // First action is to snooze using the number that was entered.
-        alert.addAction(UIAlertAction(title: NSLocalizedString("snooze", value: "Snooze", comment: ""), style: .default) { (action) in
-
-            var daysToSnooze:Int = -1
-            if let textField = alert.textFields?.first, let text = textField.text {
-                daysToSnooze = Int(text) ?? -1
+        if let dm = dataManager {
+            do {
+                try dm.removeActivity(activity: activity)
+            } catch {
+                let nserror = error as NSError
+                let alert = UIAlertController(title: NSLocalizedString("deleteActivity.error.title", value: "Error deleting activity", comment: ""), message: NSLocalizedString("deleteActivity.error.msg", value: "An error occurred while attempting to delete the activity. If this continues, please kill the application and retry. The error was: \n\(nserror.localizedDescription)", comment: ""), preferredStyle: UIAlertController.Style.alert)
+                alert.addAction(UIAlertAction(title: NSLocalizedString("ok", value: "OK", comment: ""), style: .default, handler: nil))
+                self.present(alert, animated: true, completion: nil)
             }
-            NotificationCenter.default.post(name: .snoozeActivity, object: self.detailItem, userInfo: ["days": daysToSnooze])
-        })
-        // Second action is default snooze
-        alert.addAction(UIAlertAction(title: String.localizedStringWithFormat(NSLocalizedString("numDays.label.string", comment: ""), Int(reminder.snooze)), style: .default) { (action) in
-            NotificationCenter.default.post(name: .snoozeActivity, object: self.detailItem)
-        })
-        // Third action is cancel
-        alert.addAction(UIAlertAction(title: NSLocalizedString("cancel", value: "Cancel", comment: ""), style: .default, handler: nil))
-        self.present(alert, animated: true, completion: nil)
-
-        
-    }
-    
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "embedSummary" {
-            summaryViewController = segue.destination as? ActivitySummaryTableViewController
-            if let summaryVC = summaryViewController {
-                summaryVC.activity = detailItem
-            }
-        } else if segue.identifier == "markDoneSegue" {
-            let controller = (segue.destination as! UINavigationController).topViewController as! MarkDoneTableViewController
-            controller.doneDelegate = self
-            controller.activity = detailItem
-            controller.dataManager = dataManager
-        } else if segue.identifier == "editActivity" {
-            let controller = segue.destination as! AddActivityTableViewController
-            controller.dataManager = dataManager
-            controller.editActivity = detailItem
-            // TODO: When we return, we need to refresh the view
         }
     }
-    
-    @IBAction func unwindSaveActivity(segue: UIStoryboardSegue) {
-        
-//        do {
-//            try dataManager?.saveContext()
-//        } catch {
-//            let nserror = error as NSError
-//            fatalError("Unresolved error \(nserror), \(nserror.userInfo)")
-//        }
 
-        configureView()
+    // Handles added a new child to the alternating subview
+    private func addChildToSubview(viewController: UIViewController) {
+        addChild(viewController)
+        alternatingView.addSubview(viewController.view)
+        viewController.view.frame = alternatingView.bounds
+        viewController.view.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        viewController.didMove(toParent: self)
+        activeSubViewController = viewController
+    }
+
+    // Handles removing a child to the alternating subview
+    private func removeChildFromSubview(viewController: UIViewController) {
+        viewController.willMove(toParent: nil)
+        viewController.view.removeFromSuperview()
+        viewController.removeFromParent()
     }
     
-    @IBAction func onDelete(_ sender: Any) {
-        let alert = UIAlertController(title: NSLocalizedString("deleteActivity.title", value: "Delete this activity?", comment: "Title used for prompt when deleting activity"),
-                                      message: NSLocalizedString("deleteActivity.msg", value: "This will permanently delete this activity and all of its history.", comment: "Message used for prompt when deleting activity"), preferredStyle: UIAlertController.Style.alert)
-        alert.addAction(UIAlertAction(title: NSLocalizedString("delete", value: "Delete", comment: ""), style: .destructive) { (alert) in
-            self.deleteActivity()
-            self.navigationController?.navigationController?.popToRootViewController(animated: false)
-        })
-        alert.addAction(UIAlertAction(title: NSLocalizedString("cancel", value: "Cancel", comment: ""), style: .default, handler: nil))
-        self.present(alert, animated: true, completion: nil)
-    }
-    
+    // MARK: - Observers
     @objc
     func onActivityAdded(notification:Notification) {
         guard let activity = notification.object as? ActivityMO else {
@@ -189,9 +254,7 @@ class DetailViewController: UIViewController {
         }
         if activity != detailItem {
             detailItem = activity
-            //configureView()
         }
-
     }
     
     @objc
@@ -206,27 +269,9 @@ class DetailViewController: UIViewController {
         }
         if activity === detailItem {
             detailItem = nil
-            //configureView()
         }
     }
-
     
-    func deleteActivity() {
-        guard let activity = detailItem else {
-            return
-        }
-        if let dm = dataManager {
-            do {
-                try dm.removeActivity(activity: activity)
-            } catch {
-                // TODO: This should show an error screen.
-                let nserror = error as NSError
-                fatalError("Unresolved error \(nserror), \(nserror.userInfo)")
-            }
-        }
-    }
-
-
     @objc
     func selectionDidChange(_ sender: UISegmentedControl) {
         if let activeViewController = self.activeSubViewController {
@@ -246,62 +291,11 @@ class DetailViewController: UIViewController {
         }
     }
     
-    private func addChildToSubview(viewController: UIViewController) {
-        addChild(viewController)
-        alternatingView.addSubview(viewController.view)
-        viewController.view.frame = alternatingView.bounds
-        viewController.view.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-        viewController.didMove(toParent: self)
-        activeSubViewController = viewController
-    }
-    
-    private func removeChildFromSubview(viewController: UIViewController) {
-        viewController.willMove(toParent: nil)
-        viewController.view.removeFromSuperview()
-        viewController.removeFromParent()
-    }
-    
-    private var summaryViewController:ActivitySummaryTableViewController?
-    
-    private lazy var historyViewController: HistoryTableViewController = {
-        
-        let storyboard = UIStoryboard(name: "Main", bundle: Bundle.main)
-        
-        var viewController = storyboard.instantiateViewController(withIdentifier: "HistoryTableViewController") as! HistoryTableViewController
-        viewController.activity = detailItem
-        viewController.dataManager = dataManager
-        
-        self.addChild(viewController)
-        return viewController
-    }()
-    
-    
-    private lazy var settingsViewController: ActivityInfoTableViewController = {
-        
-        let storyboard = UIStoryboard(name: "Main", bundle: Bundle.main)
-        
-        var viewController = storyboard.instantiateViewController(withIdentifier: "ActivityInfoTableViewController") as! ActivityInfoTableViewController
-        viewController.activity = detailItem
-       // viewController.dataManager = dataManager
-        
-        self.addChild(viewController)
-        return viewController
-    }()
 
-
-    private lazy var noActivityViewController: BlankActivityTableViewController = {
-        
-        let storyboard = UIStoryboard(name: "Main", bundle: Bundle.main)
-        
-        var viewController = storyboard.instantiateViewController(withIdentifier: "BlankActivityTableViewController") as! BlankActivityTableViewController
-        //viewController.activity = detailItem
-        viewController.dataManager = dataManager
-        
-        self.addChild(viewController)
-        return viewController
-    }()
 
 }
+
+// MARK: - MarkDoneDelegate
 
 extension DetailViewController : MarkDoneDelegate {
     

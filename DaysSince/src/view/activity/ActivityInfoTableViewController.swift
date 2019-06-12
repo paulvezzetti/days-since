@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ActivityInfoTableViewController: UITableViewController {
+class ActivityInfoTableViewController: UITableViewController, ActivityBased {
 
     enum TableRows:Int {
         case Due = 0,

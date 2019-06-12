@@ -8,7 +8,7 @@
 
 import UIKit
 
-class BlankActivityTableViewController: UITableViewController {
+class BlankActivityTableViewController: UITableViewController, DataModelManagerRequired {
 
     var dataManager: DataModelManager? = nil
 

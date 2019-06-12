@@ -49,6 +49,8 @@
 		FA3CEF50220E0F2500634DD7 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA3CEF4F220E0F2500634DD7 /* DetailViewController.swift */; };
 		FA3CEF55220E0F2600634DD7 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FA3CEF54220E0F2600634DD7 /* Assets.xcassets */; };
 		FA3CEF58220E0F2600634DD7 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FA3CEF56220E0F2600634DD7 /* LaunchScreen.storyboard */; };
+		FA488F4022B1720000A3BFC1 /* ActivityBased.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA488F3F22B1720000A3BFC1 /* ActivityBased.swift */; };
+		FA488F4222B1731900A3BFC1 /* DataModelManagerRequired.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA488F4122B1731900A3BFC1 /* DataModelManagerRequired.swift */; };
 		FA706DE22289FFDD0082C545 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FA706DE02289FFDD0082C545 /* Main.storyboard */; };
 		FA706DE5228A00DC0082C545 /* MarkDone.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FA706DE3228A00DC0082C545 /* MarkDone.storyboard */; };
 		FA706DE8228A01620082C545 /* AddActivity.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FA706DE6228A01620082C545 /* AddActivity.storyboard */; };
@@ -133,6 +135,8 @@
 		FA3CEF54220E0F2600634DD7 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		FA3CEF57220E0F2600634DD7 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		FA3CEF59220E0F2600634DD7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		FA488F3F22B1720000A3BFC1 /* ActivityBased.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityBased.swift; sourceTree = "<group>"; };
+		FA488F4122B1731900A3BFC1 /* DataModelManagerRequired.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataModelManagerRequired.swift; sourceTree = "<group>"; };
 		FA706DE12289FFDD0082C545 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = DaysSince/Base.lproj/Main.storyboard; sourceTree = SOURCE_ROOT; };
 		FA706DE4228A00DC0082C545 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = DaysSince/Base.lproj/MarkDone.storyboard; sourceTree = SOURCE_ROOT; };
 		FA706DE7228A01620082C545 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = DaysSince/Base.lproj/AddActivity.storyboard; sourceTree = SOURCE_ROOT; };
@@ -189,6 +193,8 @@
 		FA1D72F02226E16600D8EBF7 /* common */ = {
 			isa = PBXGroup;
 			children = (
+				FA488F3F22B1720000A3BFC1 /* ActivityBased.swift */,
+				FA488F4122B1731900A3BFC1 /* DataModelManagerRequired.swift */,
 				FA1D72F32226F7DE00D8EBF7 /* MonthDayPickerController.swift */,
 				FA1D7300222879BA00D8EBF7 /* MonthDayPickerDelegate.swift */,
 				FA1D72F12226E18500D8EBF7 /* WeekDayPickerController.swift */,
@@ -501,6 +507,7 @@
 				FA1D7347222F550D00D8EBF7 /* MarkDoneTableViewController.swift in Sources */,
 				FA1D72F42226F7DE00D8EBF7 /* MonthDayPickerController.swift in Sources */,
 				FA1D73332228C60E00D8EBF7 /* MonthlyIntervalMO+CoreDataClass.swift in Sources */,
+				FA488F4222B1731900A3BFC1 /* DataModelManagerRequired.swift in Sources */,
 				FAB8D05B2295A1FF005138C3 /* TimelineView.swift in Sources */,
 				DA0B1E272259412500992A42 /* ChooseActiveRangeTableViewController.swift in Sources */,
 				FA3197742289EBA700FECBE9 /* UITextFieldUtility.swift in Sources */,
@@ -520,6 +527,7 @@
 				FA2215AB2252A67000FDEB96 /* ActivitySummaryTableViewController.swift in Sources */,
 				FAA6AF242213684800346CCB /* HistoryTableViewController.swift in Sources */,
 				FA25E41A22A00C9000F7B0B6 /* BlankActivityTableViewController.swift in Sources */,
+				FA488F4022B1720000A3BFC1 /* ActivityBased.swift in Sources */,
 				FADE9AC1224A8A260055DA64 /* NotificationExtension.swift in Sources */,
 				FA1D72FB222854E600D8EBF7 /* WeekDayPickerDelegate.swift in Sources */,
 				FA1D72FF22286A8800D8EBF7 /* YearDayPickerDelegate.swift in Sources */,
