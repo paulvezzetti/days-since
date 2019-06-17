@@ -33,8 +33,8 @@ class NotificationManager : NSObject {
         let markDoneAction = UNNotificationAction(identifier: NotificationActions.MARK_DONE.rawValue, title: NSLocalizedString("markDone", value: "Mark Done", comment: ""), options: UNNotificationActionOptions(rawValue: 0))
         let snoozeAction = UNNotificationAction(identifier: NotificationActions.SNOOZE.rawValue, title: NSLocalizedString("snooze", value: "Snooze (default)", comment: ""), options: UNNotificationActionOptions(rawValue: 0))
         let snoozeWithInput = UNTextInputNotificationAction(identifier: NotificationActions.SNOOZE_WITH_INPUT.rawValue, title: NSLocalizedString("snoozeWithInput", value: "Snooze (custom)", comment: ""), options: UNNotificationActionOptions(rawValue: 0), textInputButtonTitle: NSLocalizedString("snoozeButtonTitle", value: "Snooze", comment: ""), textInputPlaceholder: "Enter days to snooze")
-        let doneCategory = UNNotificationCategory(identifier: DONE_ONLY_CATEGORY_ID, actions: [markDoneAction], intentIdentifiers: [], hiddenPreviewsBodyPlaceholder: "", options: UNNotificationCategoryOptions(rawValue: 0))
-        let doneAndSnoozeCategory = UNNotificationCategory(identifier: DONE_AND_SNOOZE_CATEGORY_ID, actions: [markDoneAction, snoozeAction, snoozeWithInput], intentIdentifiers: [], hiddenPreviewsBodyPlaceholder: "", options: UNNotificationCategoryOptions(rawValue: 0))
+        let doneCategory = UNNotificationCategory(identifier: DONE_ONLY_CATEGORY_ID, actions: [markDoneAction], intentIdentifiers: [], hiddenPreviewsBodyPlaceholder: "", options: [UNNotificationCategoryOptions.customDismissAction]) // UNNotificationCategoryOptions(rawValue: 0))
+        let doneAndSnoozeCategory = UNNotificationCategory(identifier: DONE_AND_SNOOZE_CATEGORY_ID, actions: [markDoneAction, snoozeAction, snoozeWithInput], intentIdentifiers: [], hiddenPreviewsBodyPlaceholder: "", options: [UNNotificationCategoryOptions.customDismissAction]) //UNNotificationCategoryOptions(rawValue: 0))
         // Set the notification category
         notificationCenter.setNotificationCategories([doneCategory, doneAndSnoozeCategory])
         
@@ -168,7 +168,6 @@ class NotificationManager : NSObject {
         reminder.lastActualSnooze = Int16(daysToSnooze)
         // Calculate when to snooze until
         let snoozeUntil = Date.normalize(date: snoozeDay) + reminder.timeOfDay
-        
         postNotificationRequest(identifier: uuid, content: content, when: snoozeUntil)
     }
     
@@ -333,6 +332,9 @@ extension NotificationManager : UNUserNotificationCenterDelegate {
             scheduleCustomSnoozeReminder(for: activity, response: response)
         case UNNotificationDefaultActionIdentifier:
             NotificationCenter.default.post(name: Notification.Name.showActivity, object: activityUUID)
+            checkApplicationBadge()
+        case UNNotificationDismissActionIdentifier:
+            checkApplicationBadge()
         default:
             print("TODO: Unknown action identifier")
         }

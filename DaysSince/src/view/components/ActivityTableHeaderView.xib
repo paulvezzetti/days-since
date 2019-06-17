@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -18,7 +18,7 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3b7-Yk-3OQ">
-                    <rect key="frame" x="40" y="6.5" width="40.5" height="22"/>
+                    <rect key="frame" x="40" y="6" width="41" height="22"/>
                     <fontDescription key="fontDescription" name="Avenir-Heavy" family="Avenir" pointSize="16"/>
                     <color key="textColor" name="HeaderText"/>
                     <nil key="highlightedColor"/>
@@ -26,21 +26,25 @@
                 <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="chevron" translatesAutoresizingMaskIntoConstraints="NO" id="aVh-Ea-6AI">
                     <rect key="frame" x="336" y="2" width="32" height="31"/>
                 </imageView>
-                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="LateIcon" translatesAutoresizingMaskIntoConstraints="NO" id="ydC-RB-YbZ">
-                    <rect key="frame" x="7" y="5" width="25" height="25"/>
+                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="749" image="StatusIconUnlimited" translatesAutoresizingMaskIntoConstraints="NO" id="ydC-RB-YbZ">
+                    <rect key="frame" x="3" y="2" width="31" height="31"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="31" id="F5M-wx-h8P"/>
+                        <constraint firstAttribute="height" constant="31" id="yX0-Wr-yWS"/>
+                    </constraints>
                 </imageView>
             </subviews>
             <constraints>
-                <constraint firstItem="3b7-Yk-3OQ" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="6lS-ya-jPA"/>
-                <constraint firstItem="ydC-RB-YbZ" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="7Oc-No-3R8"/>
-                <constraint firstItem="ydC-RB-YbZ" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="7" id="Fq8-FQ-2gK"/>
-                <constraint firstItem="vUN-kp-3ea" firstAttribute="bottom" secondItem="ydC-RB-YbZ" secondAttribute="bottom" constant="5" id="Js0-PY-l8b"/>
-                <constraint firstItem="3b7-Yk-3OQ" firstAttribute="leading" secondItem="ydC-RB-YbZ" secondAttribute="trailing" constant="8" id="NSc-Bb-azB"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="bottom" secondItem="ydC-RB-YbZ" secondAttribute="bottom" constant="2" id="3cX-j4-Xuh"/>
+                <constraint firstItem="3b7-Yk-3OQ" firstAttribute="leading" secondItem="ydC-RB-YbZ" secondAttribute="trailing" constant="6" id="H1X-aV-xwF"/>
+                <constraint firstItem="ydC-RB-YbZ" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" constant="2" id="ULV-If-mf6"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="bottom" secondItem="3b7-Yk-3OQ" secondAttribute="bottom" constant="7" id="Zlu-HP-B41"/>
                 <constraint firstItem="aVh-Ea-6AI" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="ZuK-Ot-8OW"/>
                 <constraint firstItem="aVh-Ea-6AI" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" constant="2" id="dRA-gw-gyV"/>
                 <constraint firstItem="vUN-kp-3ea" firstAttribute="bottom" secondItem="aVh-Ea-6AI" secondAttribute="bottom" constant="2" id="gf1-H9-8S0"/>
                 <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="aVh-Ea-6AI" secondAttribute="trailing" constant="7" id="hf4-bZ-eQF"/>
-                <constraint firstItem="ydC-RB-YbZ" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" constant="5" id="wuv-bF-qaa"/>
+                <constraint firstItem="ydC-RB-YbZ" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="3" id="jX7-1P-wFd"/>
+                <constraint firstItem="3b7-Yk-3OQ" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" constant="6" id="sYW-xG-21Y"/>
             </constraints>
             <nil key="simulatedTopBarMetrics"/>
             <nil key="simulatedBottomBarMetrics"/>
@@ -55,7 +59,7 @@
         </view>
     </objects>
     <resources>
-        <image name="LateIcon" width="25" height="25"/>
+        <image name="StatusIconUnlimited" width="60" height="60"/>
         <image name="chevron" width="32" height="32"/>
         <namedColor name="HeaderText">
             <color red="0.54117647058823526" green="0.54117647058823526" blue="0.54117647058823526" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

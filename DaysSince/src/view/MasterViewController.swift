@@ -161,13 +161,13 @@ class MasterViewController: UITableViewController {
         
         switch state {
         case .LastMonth, .LastWeek, .VeryOld, .Yesterday:
-            headerView.statusImage.image = UIImage(named: "LateIcon")
+            headerView.statusImage.image = UIImage(named: "StatusIconLate")
         case .NextMonth, .NextWeek, .Tomorrow, .Future:
-            headerView.statusImage.image = UIImage(named: "CompleteIcon")
+            headerView.statusImage.image = UIImage(named: "StatusIconOnTime")
         case ActivityMO.ActivityState.Today:
             headerView.statusImage.image = UIImage(named: "TodayIcon")
         case .Whenever:
-            headerView.statusImage.image = UIImage(named: "UnlimitedStatusIcon")
+            headerView.statusImage.image = UIImage(named: "StatusIconUnlimited")
         }
 
         headerView.setCollapsed(collapsed: collapsedState[state]!)
