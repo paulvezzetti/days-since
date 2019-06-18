@@ -165,7 +165,7 @@ class MasterViewController: UITableViewController {
         case .NextMonth, .NextWeek, .Tomorrow, .Future:
             headerView.statusImage.image = UIImage(named: "StatusIconOnTime")
         case ActivityMO.ActivityState.Today:
-            headerView.statusImage.image = UIImage(named: "TodayIcon")
+            headerView.statusImage.image = UIImage(named: "StatusIconToday")
         case .Whenever:
             headerView.statusImage.image = UIImage(named: "StatusIconUnlimited")
         }
