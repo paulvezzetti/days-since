@@ -161,9 +161,10 @@ import CoreGraphics
             
             drawBox(x: paddedRect.minX + (minValueTextSize.width / 2.0) - Constants.HalfDotPlotBoxHeight, y: yPos, width: usableWidth + Constants.DotPlotBoxHeight, height: Constants.DotPlotBoxHeight)
 
-            // Last one should be full
-            var alpha:CGFloat = 0.1
-            let alphaDelta:CGFloat = 0.9 / CGFloat(intervals!.count - 1)
+            // Alpha should never be below 0.1. Latest should have an alpha of 1.0. Start with steps of 0.1 until there
+            // are too many points and then start reducing the alpha delta so that all points fit between 0.1 and 1.0.
+            var alpha:CGFloat = 1.0 - (min(CGFloat(intervals!.count - 1), 9) * 0.1)
+            let alphaDelta:CGFloat = (1.0 - alpha) / CGFloat(intervals!.count - 1)
             
             for intervalValue in intervals! {
                 let x = paddedRect.minX + (minValueTextSize.width / 2.0) + CGFloat(intervalValue - minMaxAvg.min) * ptPerPixel

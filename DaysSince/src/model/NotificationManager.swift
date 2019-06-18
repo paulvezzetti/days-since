@@ -134,7 +134,6 @@ class NotificationManager : NSObject {
         guard let nextDate = stats.nextDate else { return }
 
         print("Scheduling reminder for activity: \(activity.name ?? "") with uuid: \(uuid) ")
-        let content = buildContentForActivityNotification(activity)
         // Set up the trigger.
         let calendar = Calendar.current
         let daysBefore = activity.reminder?.daysBefore ?? 0
@@ -143,6 +142,7 @@ class NotificationManager : NSObject {
         let notificationDate = calendar.date(byAdding: .day, value: Int(-1 * daysBefore), to: nextDate)
         if notificationDate != nil {
             let notificationDateAndTime = notificationDate! + timeOfDay
+            let content = buildContentForActivityNotification(activity, expectedDelivery: notificationDateAndTime)
             postNotificationRequest(identifier: uuid, content: content, when: notificationDateAndTime)
         }
     }
@@ -156,7 +156,6 @@ class NotificationManager : NSObject {
             return
         }
         print("Scheduling snooze for activity: \(activity.name ?? "") with uuid: \(uuid) ")
-        let content = buildContentForActivityNotification(activity)
         // Set up the trigger. It's today + snoozeDays
         let calendar = Calendar.current
         let now = Date()
@@ -168,6 +167,7 @@ class NotificationManager : NSObject {
         reminder.lastActualSnooze = Int16(daysToSnooze)
         // Calculate when to snooze until
         let snoozeUntil = Date.normalize(date: snoozeDay) + reminder.timeOfDay
+        let content = buildContentForActivityNotification(activity, expectedDelivery: snoozeUntil)
         postNotificationRequest(identifier: uuid, content: content, when: snoozeUntil)
     }
     
@@ -177,17 +177,16 @@ class NotificationManager : NSObject {
             return
         }
         print("Scheduling snooze for activity: \(activity.name ?? "") with uuid: \(uuid) ")
-        let content = buildContentForActivityNotification(activity)
         // Set up the trigger. It's lastSnooze + snoozeDays
         let calendar = Calendar.current
         // If the user specified a snooze override use it. Otherwise, use the default saved one.
         let snoozeDays = remind.lastActualSnooze > 0 ? remind.lastActualSnooze : remind.snooze
         // Normalize the date of the last snooze. Add in the time of day for the notification.
         let normalizedLastSnooze = Date.normalize(date: lastSnooze) + remind.timeOfDay
-        let snoozeUntil = calendar.date(byAdding: .day, value: Int(snoozeDays), to: normalizedLastSnooze)
-        
-        postNotificationRequest(identifier: uuid, content: content, when: snoozeUntil)
-        
+        if let snoozeUntil = calendar.date(byAdding: .day, value: Int(snoozeDays), to: normalizedLastSnooze) {
+            let content = buildContentForActivityNotification(activity, expectedDelivery: snoozeUntil)
+            postNotificationRequest(identifier: uuid, content: content, when: snoozeUntil)
+        }
     }
     
     func scheduleCustomSnoozeReminder(for activity:ActivityMO, response:UNNotificationResponse) {
@@ -230,7 +229,7 @@ class NotificationManager : NSObject {
     }
     
     
-    func buildContentForActivityNotification(_ activity:ActivityMO) -> UNMutableNotificationContent {
+    func buildContentForActivityNotification(_ activity:ActivityMO, expectedDelivery: Date) -> UNMutableNotificationContent {
         let content = UNMutableNotificationContent()
         
         let stats:ActivityStatistics = ActivityStatistics(activity: activity)
@@ -248,9 +247,11 @@ class NotificationManager : NSObject {
 
         }
         let lastDate = stats.lastDate
-        let daysSince = stats.daySince
-        if lastDate != nil  && daysSince != nil {
-            let body = String.localizedStringWithFormat(NSLocalizedString("notification.body", comment: ""), daysSince!, lastDate!.getFullString())
+        
+        if lastDate != nil  {
+            let daysSince = Calendar.current.dateComponents([.day], from: lastDate!, to: expectedDelivery)
+
+            let body = String.localizedStringWithFormat(NSLocalizedString("notification.body", comment: ""), daysSince.day ?? 0, lastDate!.getFullString())
             print(body)
             content.body = body
         }
