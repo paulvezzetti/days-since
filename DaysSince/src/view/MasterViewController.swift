@@ -23,6 +23,7 @@ class MasterViewController: UITableViewController {
 
     // MARK: - Outlets
     @IBOutlet var navigationTitle: UINavigationItem!
+    @IBOutlet weak var addButton: UIBarButtonItem!
     
     // MARK: Overrides
     override func viewDidLoad() {
@@ -55,7 +56,21 @@ class MasterViewController: UITableViewController {
             detailViewController = (controllers[controllers.count-1] as! UINavigationController).topViewController as? DetailViewController
             detailViewController?.dataManager = dataManager
         }
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 5) {
+            let hintViewController = HintPopoverViewController()
+            hintViewController.modalPresentationStyle = .popover
+            
+            if let popoverPresentationController = hintViewController.popoverPresentationController {
+                popoverPresentationController.permittedArrowDirections = .up
+                //popoverPresentationController.sourceView = self.navigationController!.navigationItem.rightBarButtonItem
+                popoverPresentationController.barButtonItem = self.addButton
+                popoverPresentationController.delegate = self
+                self.present(hintViewController, animated: true, completion: nil)
+            }
+        }
     }
+    
 
     override func viewWillAppear(_ animated: Bool) {
         clearsSelectionOnViewWillAppear = splitViewController!.isCollapsed
@@ -372,4 +387,12 @@ extension MasterViewController: CollapsibleTableViewHeaderDelegate {
     
 
 
+}
+
+extension MasterViewController : UIPopoverPresentationControllerDelegate {
+    
+    func adaptivePresentationStyle(for controller: UIPresentationController) -> UIModalPresentationStyle {
+        return .none
+    }
+    
 }
