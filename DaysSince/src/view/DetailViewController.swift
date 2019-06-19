@@ -291,8 +291,6 @@ extension DetailViewController {
         }
     }
     
-
-
 }
 
 // MARK: - MarkDoneDelegate

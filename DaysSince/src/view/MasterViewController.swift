@@ -56,19 +56,7 @@ class MasterViewController: UITableViewController {
             detailViewController = (controllers[controllers.count-1] as! UINavigationController).topViewController as? DetailViewController
             detailViewController?.dataManager = dataManager
         }
-        
-        DispatchQueue.main.asyncAfter(deadline: .now() + 5) {
-            let hintViewController = HintPopoverViewController()
-            hintViewController.modalPresentationStyle = .popover
-            
-            if let popoverPresentationController = hintViewController.popoverPresentationController {
-                popoverPresentationController.permittedArrowDirections = .up
-                //popoverPresentationController.sourceView = self.navigationController!.navigationItem.rightBarButtonItem
-                popoverPresentationController.barButtonItem = self.addButton
-                popoverPresentationController.delegate = self
-                self.present(hintViewController, animated: true, completion: nil)
-            }
-        }
+        checkForEmptyListPrompt()
     }
     
 
@@ -224,7 +212,7 @@ class MasterViewController: UITableViewController {
 
 extension MasterViewController {
     
-    func buildTableDataStructure() {
+    private func buildTableDataStructure() {
         
         var activityMap: [ActivityMO.ActivityState : [ActivityMO] ] = [:]
         
@@ -270,7 +258,7 @@ extension MasterViewController {
     }
     
 
-    func editAction(at indexPath: IndexPath) -> UIContextualAction {
+    private func editAction(at indexPath: IndexPath) -> UIContextualAction {
         
         let action = UIContextualAction(style: .normal, title: NSLocalizedString("edit", value: "Edit", comment: "")) {[unowned self] (action, view, completion) in
             self.performSegue(withIdentifier: "presentAddActivity", sender: self.getActivity(at: indexPath))
@@ -280,7 +268,7 @@ extension MasterViewController {
         return action
     }
     
-    func doneAction(at indexPath: IndexPath) -> UIContextualAction {
+    private func doneAction(at indexPath: IndexPath) -> UIContextualAction {
         
         let action = UIContextualAction(style: .normal, title: NSLocalizedString("done", value: "Done", comment: "")) {[unowned self] (action, view, completion) in
             if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "markDoneNavigationController") as? MarkDoneTableViewController
@@ -297,7 +285,7 @@ extension MasterViewController {
         return action
     }
     
-    func deleteAction(at indexPath: IndexPath) -> UIContextualAction {
+    private func deleteAction(at indexPath: IndexPath) -> UIContextualAction {
         
         let action = UIContextualAction(style: .normal, title: NSLocalizedString("delete", value: "Delete", comment: "")) { (action, view, completion) in
             let alert = UIAlertController(title: NSLocalizedString("deleteActivity.title", value: "Delete this activity?", comment: "Title used for prompt when deleting activity"), message: NSLocalizedString("deleteActivity.msg", value: "This will permanently delete this activity and all of its history.", comment: "Message used for prompt when deleting activity"), preferredStyle: UIAlertController.Style.alert)
@@ -314,7 +302,7 @@ extension MasterViewController {
     }
     
     
-    func configureCell(_ cell: UITableViewCell, withActivity activity: ActivityMO) {
+    private func configureCell(_ cell: UITableViewCell, withActivity activity: ActivityMO) {
         guard let masterCell = cell as? MasterTableViewCell else {
             return
         }
@@ -332,7 +320,7 @@ extension MasterViewController {
         masterCell.progressView!.setNeedsDisplay()
     }
     
-    func deleteActivity(at indexPath:IndexPath) {
+    private func deleteActivity(at indexPath:IndexPath) {
         if let dm = dataManager, let activity = getActivity(at: indexPath) {
             do {
                 try dm.removeActivity(activity: activity)
@@ -345,20 +333,44 @@ extension MasterViewController {
         }
     }
     
-    func getActivity(at indexPath:IndexPath) -> ActivityMO? {
+    private func getActivity(at indexPath:IndexPath) -> ActivityMO? {
         let sectionActivities = activityDict[sectionToStatus(section: indexPath.section)] ?? []
         return sectionActivities.count > indexPath.row ? sectionActivities[indexPath.row] : nil
     }
     
-    func getIndexPathForActivity(activity:ActivityMO) -> IndexPath {
+    private func getIndexPathForActivity(activity:ActivityMO) -> IndexPath {
         return IndexPath(row: 0, section: 0)
     }
     
-    func sectionToStatus(section index:Int) -> ActivityMO.ActivityState {
+    private func sectionToStatus(section index:Int) -> ActivityMO.ActivityState {
         return sectionIndices[index] ?? ActivityMO.ActivityState.Whenever // TODO
     }
     
-
+    private func checkForEmptyListPrompt() {
+        if activityDict.count > 0 {
+            return
+        }
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 4) {
+            // Don't show popover if the count has changed or if the user navigated away from the master list
+            if self.navigationController?.visibleViewController != self ||
+                self.activityDict.count > 0 ||
+                !self.splitViewController!.isCollapsed {
+                return
+            }
+            let hintViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "startHintPopoverController") as! HintPopoverViewController
+            hintViewController.modalPresentationStyle = .popover
+            hintViewController.preferredContentSize = CGSize(width: 300.0, height: 75.0)
+            
+            if let popoverPresentationController = hintViewController.popoverPresentationController {
+                popoverPresentationController.permittedArrowDirections = .up
+                //popoverPresentationController.sourceView = self.navigationController!.navigationItem.rightBarButtonItem
+                popoverPresentationController.barButtonItem = self.addButton
+                popoverPresentationController.delegate = self
+                self.present(hintViewController, animated: true, completion: nil)
+            }
+        }
+    }
 
 }
 
