@@ -19,6 +19,7 @@ class HistoryTableViewController: UITableViewController, ActivityBased, DataMode
             NotificationCenter.default.addObserver(self, selector: #selector(onEventChanged(notification:)), name: Notification.Name.eventChanged, object: activity)
 
             sortHistory()
+            tableView.reloadData()
         }
     }
     var dataManager:DataModelManager?

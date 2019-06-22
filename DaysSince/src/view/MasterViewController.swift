@@ -13,7 +13,13 @@ class MasterViewController: UITableViewController {
 
     // MARK: - Public variables
     var detailViewController: DetailViewController? = nil
-    var dataManager: DataModelManager? = nil
+    var dataManager: DataModelManager? = nil {
+        didSet {
+            if isViewLoaded && dataManager != nil {
+                onDataManagerAvailable()
+            }
+        }
+    }
     
     // MARK: - Private variables
     private var activityDict: [ActivityMO.ActivityState : [ActivityMO] ] = [:]
@@ -40,21 +46,9 @@ class MasterViewController: UITableViewController {
         for possibleState in ActivityMO.ActivityState.allCases {
             collapsedState[possibleState] = false
         }
-
-        buildTableDataStructure()
-
-        // Remove any current observers
-        NotificationCenter.default.removeObserver(self)
-        // Add new observers
-        DataModelManager.registerForAnyActivityChangeNotification(self, selector: #selector(onAnyActivityChanged(notification:)), activity: nil)
-        DataModelManager.registerForActivityListChangeNotification(self, selector: #selector(onAnyActivityChanged(notification:)))
         
-        NotificationCenter.default.addObserver(self, selector: #selector(showActivityRequest(notification:)), name: Notification.Name.showActivity, object: nil)
-
-        if let split = splitViewController {
-            let controllers = split.viewControllers
-            detailViewController = (controllers[controllers.count-1] as! UINavigationController).topViewController as? DetailViewController
-            detailViewController?.dataManager = dataManager
+        if dataManager != nil {
+            onDataManagerAvailable()
         }
         checkForEmptyListPrompt()
     }
@@ -211,6 +205,24 @@ class MasterViewController: UITableViewController {
 // MARK: - Private extension
 
 extension MasterViewController {
+    
+    private func onDataManagerAvailable() {
+        buildTableDataStructure()
+        
+        // Remove any current observers
+        NotificationCenter.default.removeObserver(self)
+        // Add new observers
+        DataModelManager.registerForAnyActivityChangeNotification(self, selector: #selector(onAnyActivityChanged(notification:)), activity: nil)
+        DataModelManager.registerForActivityListChangeNotification(self, selector: #selector(onAnyActivityChanged(notification:)))
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(showActivityRequest(notification:)), name: Notification.Name.showActivity, object: nil)
+        
+        if let split = splitViewController {
+            let controllers = split.viewControllers
+            detailViewController = (controllers[controllers.count-1] as! UINavigationController).topViewController as? DetailViewController
+            detailViewController?.dataManager = dataManager
+        }
+    }
     
     private func buildTableDataStructure() {
         

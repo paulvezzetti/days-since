@@ -17,7 +17,16 @@ class DetailViewController: UIViewController {
     @IBOutlet var bottomToolbar: UIToolbar!
     
     // MARK: - Public variables
-    var dataManager: DataModelManager? = nil
+    var dataManager: DataModelManager? = nil {
+        didSet {
+            if dataManager != nil && isViewLoaded {
+                configureView()
+            }
+            if let activeSubVC = activeSubViewController {
+                setViewControllerProperties(activeSubVC)
+            }
+        }
+    }
     
     var detailItem: ActivityMO? {
         didSet {
@@ -31,6 +40,9 @@ class DetailViewController: UIViewController {
             configureView()
             if let summaryVC = summaryViewController {
                 summaryVC.activity = detailItem
+            }
+            if let activeSubVC = activeSubViewController {
+                setViewControllerProperties(activeSubVC)
             }
         }
     }
@@ -162,14 +174,19 @@ extension DetailViewController {
         
         let viewController = storyboard.instantiateViewController(withIdentifier: withIdentifier)
         
+        setViewControllerProperties(viewController);
+
+        self.addChild(viewController)
+        return viewController
+    }
+    
+    private func setViewControllerProperties(_ viewController: UIViewController) {
         if var activityBasedController = viewController as? ActivityBased {
             activityBasedController.activity = detailItem
         }
         if var dataManagerController = viewController as? DataModelManagerRequired {
             dataManagerController.dataManager = dataManager
         }
-        self.addChild(viewController)
-        return viewController
     }
     
     private func configureView() {

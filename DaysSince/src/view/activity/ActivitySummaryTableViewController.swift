@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ActivitySummaryTableViewController: UITableViewController {
+class ActivitySummaryTableViewController: UITableViewController, ActivityBased {
     
     
     @IBOutlet var intervalHeaderLabel: UILabel!
