@@ -168,6 +168,7 @@ class NotificationManager : NSObject {
         // Calculate when to snooze until
         let snoozeUntil = Date.normalize(date: snoozeDay) + reminder.timeOfDay
         let content = buildContentForActivityNotification(activity, expectedDelivery: snoozeUntil)
+ //       postNotificationRequest(identifier: uuid, content: content, when: Date() + 15)
         postNotificationRequest(identifier: uuid, content: content, when: snoozeUntil)
     }
     
