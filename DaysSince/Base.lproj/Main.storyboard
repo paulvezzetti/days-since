@@ -255,7 +255,11 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="Days Since" id="Zdf-7t-Un8">
-                        <barButtonItem key="leftBarButtonItem" image="MenuIcon" style="plain" id="H20-oe-tF6"/>
+                        <barButtonItem key="leftBarButtonItem" image="MenuIcon" style="plain" id="H20-oe-tF6">
+                            <connections>
+                                <action selector="onMenuPress:" destination="7bK-jq-Zjz" id="Fdi-2k-5It"/>
+                            </connections>
+                        </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="XWs-O9-GAl">
                             <color key="tintColor" name="LapisBlue"/>
                             <connections>

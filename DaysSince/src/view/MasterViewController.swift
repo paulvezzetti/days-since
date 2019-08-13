@@ -88,7 +88,20 @@ class MasterViewController: UITableViewController {
         }
     }
     
-
+    @IBAction func onMenuPress(_ sender: Any) {
+        let menu = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        
+        let exportAction = UIAlertAction(title: "Export", style: .default, handler: nil)
+        let importAction = UIAlertAction(title: "Import", style: .default, handler: nil)
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        
+        menu.addAction(exportAction)
+        menu.addAction(importAction)
+        menu.addAction(cancelAction)
+        
+        self.present(menu, animated: true, completion: nil)
+    }
+    
     // MARK: - Segues
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
