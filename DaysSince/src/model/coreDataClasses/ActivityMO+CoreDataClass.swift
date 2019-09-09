@@ -11,7 +11,8 @@ import Foundation
 import CoreData
 
 @objc(ActivityMO)
-public class ActivityMO: NSManagedObject {
+public class ActivityMO: NSManagedObject,JSONExportable {
+    
     
     enum EventCloneOptions {
         case All,
@@ -174,6 +175,35 @@ public class ActivityMO: NSManagedObject {
         return Int(timeInterval / (60*60*24))
     }
     
+    
+    func writeJSON() -> String {
+        var json = ""
+        if let uuidValue = id?.uuidString {
+            json = JSONUtilities.appendProperty(json, name: "UUID", property: uuidValue)
+        }
+        if let nameValue = self.name {
+            json = JSONUtilities.appendProperty(json, name: "name", property: nameValue)
+        }
+        
+        if let intervalMO = self.interval {
+            let intervalJSON = JSONUtilities.wrapObject(name: "interval", objectJSON: intervalMO.writeJSON())
+            json = JSONUtilities.appendObject(json, objectJSON: intervalJSON)
+        }
+        
+        if let reminderMO = self.reminder {
+            let reminderJSON = JSONUtilities.wrapObject(name: "reminder", objectJSON: reminderMO.writeJSON())
+            json = JSONUtilities.appendObject(json, objectJSON: reminderJSON)
+        }
+        var eventJSON = ""
+        for event in self.sortedHistory {
+            let objectStr = "{\(event.writeJSON())}"
+            eventJSON = JSONUtilities.appendObject(eventJSON, objectJSON: objectStr)
+        }
+        let eventArrayJSON = JSONUtilities.wrapArray(name: "events", arrayJSON: eventJSON)
+        json = JSONUtilities.appendObject(json, objectJSON: eventArrayJSON)
+        return "{\(json)}"
+    }
+
 //    deinit {
 //        print("Destroying an Activity")
 //    }

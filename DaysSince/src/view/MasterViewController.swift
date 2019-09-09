@@ -91,7 +91,9 @@ class MasterViewController: UITableViewController {
     @IBAction func onMenuPress(_ sender: Any) {
         let menu = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         
-        let exportAction = UIAlertAction(title: "Export", style: .default, handler: nil)
+        let exportAction = UIAlertAction(title: "Export", style: .default) {(action:UIAlertAction!) in
+            self.exportAllData()
+        }
         let importAction = UIAlertAction(title: "Import", style: .default, handler: nil)
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
         
@@ -394,6 +396,37 @@ extension MasterViewController {
                 popoverPresentationController.delegate = self
                 self.present(hintViewController, animated: true, completion: nil)
             }
+        }
+    }
+    
+    private func exportAllData() {
+        let fileName = "dayssince_" // TODO: Add timestamp
+        let DocumentDirURL = try! FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
+        
+        let fileURL = DocumentDirURL.appendingPathComponent(fileName).appendingPathExtension("dsjson")
+        print("FilePath: \(fileURL.path)")
+        
+        // Create the JSON String
+        var jsonString = ""
+        if let allActivities = try? dataManager?.getActivities() {
+            if allActivities != nil && allActivities!.count > 0 {
+                for activityMO in allActivities! {
+                    let activityJSON = activityMO.writeJSON()
+                    jsonString = jsonString.isEmpty ? "\(activityJSON)" : "\(jsonString),\(activityJSON)"
+                }
+                jsonString = JSONUtilities.wrapArray(name: "Activities", arrayJSON: jsonString)
+//                jsonString = "\"Activities:\":[\(jsonString)]"
+            }
+            
+        }
+        jsonString = "{\(jsonString)}"
+        print(jsonString)
+
+        do {
+            // Write to the file
+            try jsonString.write(to: fileURL, atomically: true, encoding: String.Encoding.utf8)
+        } catch let error as NSError {
+            print("Failed writing to URL: \(fileURL), Error: " + error.localizedDescription)
         }
     }
 

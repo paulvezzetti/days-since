@@ -41,6 +41,12 @@ public class WeeklyIntervalMO: IntervalMO {
         return String.localizedStringWithFormat(NSLocalizedString("weeklyInterval.string", value: "Every week on %@", comment: "Ex: Every week on Tuesday"), Weekdays.day(for: Int(self.day)))
     }
     
+    override func writeJSON() -> String {
+        let typeProp = JSONUtilities.writeProperty(name: "type", property: "Weekly")
+        let dayProp = JSONUtilities.writeProperty(name: "day", property: self.day)
+        return "\(typeProp), \(dayProp)"
+    }
+
     override func createClone(context:NSManagedObjectContext) ->IntervalMO {
         let theClone = WeeklyIntervalMO(context: context)
         theClone.day = self.day

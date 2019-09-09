@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		DA0B1E272259412500992A42 /* ChooseActiveRangeTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA0B1E262259412500992A42 /* ChooseActiveRangeTableViewController.swift */; };
 		DA0B1E2C225950CD00992A42 /* ActiveRangeMO+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA0B1E29225950CD00992A42 /* ActiveRangeMO+CoreDataClass.swift */; };
+		DA5DFC96232456FA00E063FB /* JSONExportable.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA5DFC95232456FA00E063FB /* JSONExportable.swift */; };
+		DA5DFC98232578BA00E063FB /* JSONUtilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA5DFC97232578BA00E063FB /* JSONUtilities.swift */; };
 		DA6AAD4C22934C8A00711533 /* DaysSinceProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA6AAD4B22934C8A00711533 /* DaysSinceProgressView.swift */; };
 		DA70B19922B9B463003E1B76 /* HintPopoverViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA70B19822B9B463003E1B76 /* HintPopoverViewController.swift */; };
 		DABE10E122713B0E00AFDBAF /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = DABE10DF22713B0E00AFDBAF /* Localizable.strings */; };
@@ -91,6 +93,8 @@
 /* Begin PBXFileReference section */
 		DA0B1E262259412500992A42 /* ChooseActiveRangeTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChooseActiveRangeTableViewController.swift; sourceTree = "<group>"; };
 		DA0B1E29225950CD00992A42 /* ActiveRangeMO+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ActiveRangeMO+CoreDataClass.swift"; sourceTree = "<group>"; };
+		DA5DFC95232456FA00E063FB /* JSONExportable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONExportable.swift; sourceTree = "<group>"; };
+		DA5DFC97232578BA00E063FB /* JSONUtilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONUtilities.swift; sourceTree = "<group>"; };
 		DA6AAD4B22934C8A00711533 /* DaysSinceProgressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DaysSinceProgressView.swift; sourceTree = "<group>"; };
 		DA70B18B22AB3681003E1B76 /* DaysSinceTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DaysSinceTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		DA70B18F22AB3681003E1B76 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -236,6 +240,7 @@
 				FAC1DE9F2256772A00A211D6 /* WeekOffsetIntervalMO+CoreDataClass.swift */,
 				FA1D731F2228C60E00D8EBF7 /* YearlyIntervalMO+CoreDataClass.swift */,
 				FAC1DEA32256772A00A211D6 /* YearOffsetIntervalMO+CoreDataClass.swift */,
+				DA5DFC95232456FA00E063FB /* JSONExportable.swift */,
 			);
 			path = coreDataClasses;
 			sourceTree = "<group>";
@@ -361,6 +366,7 @@
 				FAB23B73223AC332004C6252 /* NotificationManager.swift */,
 				FADE9AC0224A8A260055DA64 /* NotificationExtension.swift */,
 				FAC1DEB5225681D400A211D6 /* OffsetIntervals.swift */,
+				DA5DFC97232578BA00E063FB /* JSONUtilities.swift */,
 			);
 			path = model;
 			sourceTree = "<group>";
@@ -504,6 +510,7 @@
 				FA25E41E22AAB47F00F7B0B6 /* TimePickerView.swift in Sources */,
 				FA133A902231D6B600F363D1 /* DateExtension.swift in Sources */,
 				FA1D72F22226E18500D8EBF7 /* WeekDayPickerController.swift in Sources */,
+				DA5DFC96232456FA00E063FB /* JSONExportable.swift in Sources */,
 				FA1D7347222F550D00D8EBF7 /* MarkDoneTableViewController.swift in Sources */,
 				FA1D72F42226F7DE00D8EBF7 /* MonthDayPickerController.swift in Sources */,
 				FA1D73332228C60E00D8EBF7 /* MonthlyIntervalMO+CoreDataClass.swift in Sources */,
@@ -514,6 +521,7 @@
 				FA1D734D22307F9B00D8EBF7 /* EventDetailsViewController.swift in Sources */,
 				FA1D72E52220675F00D8EBF7 /* TimeConstants.swift in Sources */,
 				FA1D73292228C60E00D8EBF7 /* WeeklyIntervalMO+CoreDataClass.swift in Sources */,
+				DA5DFC98232578BA00E063FB /* JSONUtilities.swift in Sources */,
 				FAC1DEA52256772A00A211D6 /* WeekOffsetIntervalMO+CoreDataClass.swift in Sources */,
 				FA3CEF4E220E0F2500634DD7 /* MasterViewController.swift in Sources */,
 				FADAA1872298737A0059015F /* UILabelExtension.swift in Sources */,

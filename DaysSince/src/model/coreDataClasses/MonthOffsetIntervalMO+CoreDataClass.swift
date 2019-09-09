@@ -34,6 +34,13 @@ public class MonthOffsetIntervalMO: OffsetIntervalMO {
         return String.localizedStringWithFormat(NSLocalizedString("monthOffset.string", comment: ""), Int(self.months))
     }
     
+    override func writeJSON() -> String {
+        let typeProp = JSONUtilities.writeProperty(name: "type", property: "MonthlyOffset")
+        let monthsProp = JSONUtilities.writeProperty(name: "months", property: self.months)
+        return "\(typeProp), \(monthsProp)"
+    }
+
+    
     override func createClone(context: NSManagedObjectContext) -> IntervalMO {
         let theClone = MonthOffsetIntervalMO(context: context)
         theClone.months = self.months

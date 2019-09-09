@@ -39,6 +39,13 @@ public class YearlyIntervalMO: IntervalMO {
         return String.localizedStringWithFormat(NSLocalizedString("yearlyInterval.string", value: "Every year on %@ %d", comment: "Ex: Every year on Jan 15"), Months.month(for: Int(self.month)), day)
     }
 
+    override func writeJSON() -> String {
+        let typeProp = JSONUtilities.writeProperty(name: "type", property: "Yearly")
+        let monthProp = JSONUtilities.writeProperty(name: "month", property: self.month)
+        let dayProp = JSONUtilities.writeProperty(name: "day", property: self.day)
+        return "\(typeProp), \(monthProp), \(dayProp)"
+    }
+
     override func createClone(context:NSManagedObjectContext) ->IntervalMO {
         let theClone = YearlyIntervalMO(context: context)
         theClone.day = self.day
