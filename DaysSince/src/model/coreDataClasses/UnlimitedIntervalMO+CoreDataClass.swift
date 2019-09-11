@@ -29,9 +29,9 @@ public class UnlimitedIntervalMO: IntervalMO {
         return other is UnlimitedIntervalMO ?  super.isEquivalent(to: other) : false
     }
 
-    override func writeJSON() -> String {
-        let typeProp = JSONUtilities.writeProperty(name: "type", property: "Unlimited")
-        return "\(typeProp)"
+    override func writeToJSON(writer: JSONWriter) {
+        super.writeToJSON(writer: writer)
+        writer.addProperty(name: "type", property: "unlimited")
     }
 
 }

@@ -25,11 +25,11 @@ public class ConstantIntervalMO: IntervalMO {
     override func toPrettyString() -> String {
         return String.localizedStringWithFormat(NSLocalizedString("constantInterval.string", value: "Every %d days", comment: "Ex: Every 5 days"), self.frequency)
     }
-    
-    override func writeJSON() -> String {
-        let typeProp = JSONUtilities.writeProperty(name: "type", property: "Constant")
-        let freqProp = JSONUtilities.writeProperty(name: "frequency", property: self.frequency)
-        return "\(typeProp), \(freqProp)"
+       
+    override func writeToJSON(writer: JSONWriter) {
+        super.writeToJSON(writer: writer)
+        writer.addProperty(name: "type", property: "constant")
+        writer.addProperty(name: "frequency", property: self.frequency)
     }
 
     override func createClone(context:NSManagedObjectContext) ->IntervalMO {

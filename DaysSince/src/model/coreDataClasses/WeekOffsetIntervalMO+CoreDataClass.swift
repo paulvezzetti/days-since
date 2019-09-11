@@ -34,12 +34,12 @@ public class WeekOffsetIntervalMO: OffsetIntervalMO {
         return String.localizedStringWithFormat(NSLocalizedString("weekOffset.string", comment: ""), Int(self.weeks))
     }
     
-    override func writeJSON() -> String {
-        let typeProp = JSONUtilities.writeProperty(name: "type", property: "WeekOffset")
-        let weeksProp = JSONUtilities.writeProperty(name: "weeks", property: self.weeks)
-        return "\(typeProp), \(weeksProp)"
+    override func writeToJSON(writer: JSONWriter) {
+        super.writeToJSON(writer: writer)
+        writer.addProperty(name: "type", property: "weekOffset")
+        writer.addProperty(name: "weeks", property: self.weeks)
     }
-    
+
     override func createClone(context:NSManagedObjectContext) ->IntervalMO {
         let theClone = WeekOffsetIntervalMO(context: context)
         theClone.weeks = self.weeks

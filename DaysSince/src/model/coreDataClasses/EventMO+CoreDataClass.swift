@@ -11,9 +11,8 @@ import Foundation
 import CoreData
 
 @objc(EventMO)
-public class EventMO: NSManagedObject, JSONExportable {
+public class EventMO: NSManagedObject, JSONWritable {
     
-
     func clone(context: NSManagedObjectContext) -> EventMO {
         let theClone = EventMO(context: context)
         theClone.timestamp = self.timestamp
@@ -37,18 +36,16 @@ public class EventMO: NSManagedObject, JSONExportable {
         return getFormattedDate(style: .medium)
     }
 
-    func writeJSON() -> String {
-        var json = ""
+
+    func writeToJSON(writer: JSONWriter) {
         if let ts = timestamp {
-            json = JSONUtilities.writeProperty(name: "timestamp", property: ts.timeIntervalSinceReferenceDate)
+            writer.addProperty(name: "timestamp", property: ts.timeIntervalSinceReferenceDate)
         }
         if let detailStr = details {
-            json = JSONUtilities.appendProperty(json, name: "details", property: detailStr)
-        }
-        return json
+            writer.addProperty(name: "details", property: detailStr)
+        }        
     }
 
-    
     
 //    deinit {
 //        print("Destroying Event at \(getFormattedDate(style: DateFormatter.Style.long))")

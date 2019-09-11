@@ -35,10 +35,11 @@ public class MonthlyIntervalMO: IntervalMO {
         return String.localizedStringWithFormat(NSLocalizedString("monthlyInterval.string", value: "Every month on the %@", comment: "Ex: Every month on the 12th"), NumberFormatterOrdinal.string(Int(self.day)))
     }
     
-    override func writeJSON() -> String {
-        let typeProp = JSONUtilities.writeProperty(name: "type", property: "Monthly")
-        let dayProp = JSONUtilities.writeProperty(name: "day", property: self.day)
-        return "\(typeProp), \(dayProp)"
+
+    override func writeToJSON(writer: JSONWriter) {
+        super.writeToJSON(writer: writer)
+        writer.addProperty(name: "type", property: "monthly")
+        writer.addProperty(name: "day", property: self.day)
     }
 
 

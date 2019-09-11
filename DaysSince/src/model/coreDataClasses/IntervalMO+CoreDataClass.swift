@@ -11,7 +11,8 @@ import Foundation
 import CoreData
 
 @objc(IntervalMO)
-public class IntervalMO: NSManagedObject, JSONExportable {
+public class IntervalMO: NSManagedObject, JSONWritable {
+    
     
     final func getNextDate(since lastDate: Date) -> Date? {
         guard let nextDate = calculateNextDate(since: lastDate, asap: false) else {
@@ -57,11 +58,13 @@ public class IntervalMO: NSManagedObject, JSONExportable {
         return "Abstract IntervalMO"
     }
     
-    func writeJSON() -> String {
-        return ""
+    func writeToJSON(writer: JSONWriter) {
+        if let range = self.activeRange {
+            writer.addPropertyObject(name: "activeRange", writable: range)
+        }
     }
 
-    
+
     final func clone(context:NSManagedObjectContext) ->IntervalMO {
         let theClone = createClone(context: context)
         if let range = self.activeRange {

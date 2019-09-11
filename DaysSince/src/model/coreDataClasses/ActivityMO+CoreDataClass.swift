@@ -11,7 +11,8 @@ import Foundation
 import CoreData
 
 @objc(ActivityMO)
-public class ActivityMO: NSManagedObject,JSONExportable {
+public class ActivityMO: NSManagedObject, JSONWritable {
+    
     
     
     enum EventCloneOptions {
@@ -175,34 +176,26 @@ public class ActivityMO: NSManagedObject,JSONExportable {
         return Int(timeInterval / (60*60*24))
     }
     
-    
-    func writeJSON() -> String {
-        var json = ""
+        
+    func writeToJSON(writer: JSONWriter) {
         if let uuidValue = id?.uuidString {
-            json = JSONUtilities.appendProperty(json, name: "UUID", property: uuidValue)
+            writer.addProperty(name: "uuid", property: uuidValue)
         }
         if let nameValue = self.name {
-            json = JSONUtilities.appendProperty(json, name: "name", property: nameValue)
+            writer.addProperty(name: "name", property: nameValue)
         }
-        
         if let intervalMO = self.interval {
-            let intervalJSON = JSONUtilities.wrapObject(name: "interval", objectJSON: intervalMO.writeJSON())
-            json = JSONUtilities.appendObject(json, objectJSON: intervalJSON)
+            writer.addPropertyObject(name: "interval", writable: intervalMO)
         }
-        
         if let reminderMO = self.reminder {
-            let reminderJSON = JSONUtilities.wrapObject(name: "reminder", objectJSON: reminderMO.writeJSON())
-            json = JSONUtilities.appendObject(json, objectJSON: reminderJSON)
+            writer.addPropertyObject(name: "reminder", writable: reminderMO)
         }
-        var eventJSON = ""
-        for event in self.sortedHistory {
-            let objectStr = "{\(event.writeJSON())}"
-            eventJSON = JSONUtilities.appendObject(eventJSON, objectJSON: objectStr)
+        let history = sortedHistory
+        if history.count > 0 {
+            writer.addPropertyArray(name: "events", writables: history)
         }
-        let eventArrayJSON = JSONUtilities.wrapArray(name: "events", arrayJSON: eventJSON)
-        json = JSONUtilities.appendObject(json, objectJSON: eventArrayJSON)
-        return "{\(json)}"
     }
+
 
 //    deinit {
 //        print("Destroying an Activity")

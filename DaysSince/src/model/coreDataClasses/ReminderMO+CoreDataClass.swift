@@ -11,7 +11,7 @@ import Foundation
 import CoreData
 
 @objc(ReminderMO)
-public class ReminderMO: NSManagedObject, JSONExportable {
+public class ReminderMO: NSManagedObject, JSONWritable {
     
     static let REMIND_DAYS_BEFORE_DEFAULT:Int = 0
     static let SNOOZE_FOR_DAYS_DEFAULT:Int = 1
@@ -36,20 +36,17 @@ public class ReminderMO: NSManagedObject, JSONExportable {
         
     }
 
-    func writeJSON() -> String {
-        
-        var json = JSONUtilities.writeProperty(name: "enabled", property: enabled)
-        json = JSONUtilities.appendProperty(json, name: "daysBefore", property: daysBefore)
-        json = JSONUtilities.appendProperty(json, name: "timeOfDay", property: timeOfDay)
-        json = JSONUtilities.appendProperty(json, name: "allowSnooze", property: allowSnooze)
-        json = JSONUtilities.appendProperty(json, name: "snooze", property: snooze)
-        json = JSONUtilities.appendProperty(json, name: "lastActualSnooze", property: lastActualSnooze)
+   
+    func writeToJSON(writer: JSONWriter) {
+        writer.addProperty(name: "enabled", property: enabled)
+        writer.addProperty(name: "daysBefore", property: daysBefore)
+        writer.addProperty(name: "timeOfDay", property: timeOfDay)
+        writer.addProperty(name: "allowSnooze", property: allowSnooze)
+        writer.addProperty(name: "snooze", property: snooze)
+        writer.addProperty(name: "lastActualSnooze", property: lastActualSnooze)
         if let lastSnoozeDate = lastSnooze {
-            json = JSONUtilities.appendProperty(json, name: "lastSnooze", property: lastSnoozeDate.timeIntervalSinceReferenceDate)
+            writer.addProperty(name: "lastSnooze", property: lastSnoozeDate.timeIntervalSinceReferenceDate)
         }
-        return json
     }
-    
 
-    
 }

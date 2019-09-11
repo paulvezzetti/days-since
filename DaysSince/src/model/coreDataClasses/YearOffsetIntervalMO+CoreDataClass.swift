@@ -34,10 +34,10 @@ public class YearOffsetIntervalMO: OffsetIntervalMO {
         return String.localizedStringWithFormat(NSLocalizedString("yearOffset.string", comment: ""), Int(self.years))
     }
     
-    override func writeJSON() -> String {
-        let typeProp = JSONUtilities.writeProperty(name: "type", property: "YearOffset")
-        let yearsProp = JSONUtilities.writeProperty(name: "years", property: self.years)
-        return "\(typeProp), \(yearsProp)"
+    override func writeToJSON(writer: JSONWriter) {
+        super.writeToJSON(writer: writer)
+        writer.addProperty(name: "type", property: "yearOffset")
+        writer.addProperty(name: "years", property: self.years)
     }
 
     

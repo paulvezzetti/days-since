@@ -400,26 +400,39 @@ extension MasterViewController {
     }
     
     private func exportAllData() {
-        let fileName = "dayssince_" // TODO: Add timestamp
+        let date = Date()
+        let fileName = "dayssince_\(date.timeIntervalSinceReferenceDate)" // TODO: Add timestamp
         let DocumentDirURL = try! FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
         
         let fileURL = DocumentDirURL.appendingPathComponent(fileName).appendingPathExtension("dsjson")
         print("FilePath: \(fileURL.path)")
         
         // Create the JSON String
-        var jsonString = ""
-        if let allActivities = try? dataManager?.getActivities() {
-            if allActivities != nil && allActivities!.count > 0 {
-                for activityMO in allActivities! {
-                    let activityJSON = activityMO.writeJSON()
-                    jsonString = jsonString.isEmpty ? "\(activityJSON)" : "\(jsonString),\(activityJSON)"
-                }
-                jsonString = JSONUtilities.wrapArray(name: "Activities", arrayJSON: jsonString)
-//                jsonString = "\"Activities:\":[\(jsonString)]"
+//        var jsonString = ""
+//        if let allActivities = try? dataManager?.getActivities() {
+//            if allActivities != nil && allActivities!.count > 0 {
+//                for activityMO in allActivities! {
+//                    let activityJSON = activityMO.writeJSON()
+//                    jsonString = jsonString.isEmpty ? "\(activityJSON)" : "\(jsonString),\(activityJSON)"
+//                }
+//                jsonString = JSONUtilities.wrapArray(name: "Activities", arrayJSON: jsonString)
+////                jsonString = "\"Activities:\":[\(jsonString)]"
+//            }
+//
+//        }
+//        jsonString = "{\(jsonString)}"
+//        print(jsonString)
+        
+        let jsonWriter:JSONWriter = JSONWriter()
+        
+        if let allActivities2 = try? dataManager?.getActivities() {
+            if allActivities2 != nil && allActivities2!.count > 0 {
+                jsonWriter.addArray(name: "Activities", writables: allActivities2!)
+
             }
-            
         }
-        jsonString = "{\(jsonString)}"
+
+        let jsonString = jsonWriter.writeJSON()
         print(jsonString)
 
         do {
