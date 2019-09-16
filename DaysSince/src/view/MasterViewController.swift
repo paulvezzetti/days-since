@@ -89,19 +89,19 @@ class MasterViewController: UITableViewController {
     }
     
     @IBAction func onMenuPress(_ sender: Any) {
-        let menu = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        let alertAction = UIAlertController(title: "Export Data", message: "This action will export all of your data to a text file in the Documents directory on your device. You can use the Files app to share the file to other locations. Do you want to continue with the export?", preferredStyle: .alert)
         
-        let exportAction = UIAlertAction(title: "Export", style: .default) {(action:UIAlertAction!) in
+        let exportAction = UIAlertAction(title: "Yes", style: .default) {(action:UIAlertAction!) in
             self.exportAllData()
         }
-        let importAction = UIAlertAction(title: "Import", style: .default, handler: nil)
+//        let importAction = UIAlertAction(title: "Import", style: .default, handler: nil)
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
         
-        menu.addAction(exportAction)
-        menu.addAction(importAction)
-        menu.addAction(cancelAction)
+        alertAction.addAction(exportAction)
+//        menu.addAction(importAction)
+        alertAction.addAction(cancelAction)
         
-        self.present(menu, animated: true, completion: nil)
+        self.present(alertAction, animated: true, completion: nil)
     }
     
     // MARK: - Segues
@@ -408,36 +408,32 @@ extension MasterViewController {
         print("FilePath: \(fileURL.path)")
         
         // Create the JSON String
-//        var jsonString = ""
-//        if let allActivities = try? dataManager?.getActivities() {
-//            if allActivities != nil && allActivities!.count > 0 {
-//                for activityMO in allActivities! {
-//                    let activityJSON = activityMO.writeJSON()
-//                    jsonString = jsonString.isEmpty ? "\(activityJSON)" : "\(jsonString),\(activityJSON)"
-//                }
-//                jsonString = JSONUtilities.wrapArray(name: "Activities", arrayJSON: jsonString)
-////                jsonString = "\"Activities:\":[\(jsonString)]"
-//            }
-//
-//        }
-//        jsonString = "{\(jsonString)}"
-//        print(jsonString)
-        
-        let jsonWriter:JSONWriter = JSONWriter()
-        
-        if let allActivities2 = try? dataManager?.getActivities() {
-            if allActivities2 != nil && allActivities2!.count > 0 {
-                jsonWriter.addArray(name: "Activities", writables: allActivities2!)
-
-            }
-        }
-
-        let jsonString = jsonWriter.writeJSON()
-        print(jsonString)
-
         do {
-            // Write to the file
-            try jsonString.write(to: fileURL, atomically: true, encoding: String.Encoding.utf8)
+            let allActivities = try dataManager?.getActivities()
+            
+            var codableActivities:[ActivityCodable] = []
+            for activity in allActivities! {
+                let codable = activity.asEncodable() as! ActivityCodable
+                codableActivities.append(codable)
+            }
+            let baseModel = BaseModel(activities: codableActivities)
+            
+            let encoder = JSONEncoder()
+//            encoder.outputFormatting = .prettyPrinted
+
+            let data = try encoder.encode(baseModel)
+            let jsonDataModel = String(data: data, encoding: .utf8)
+            if let outputString = jsonDataModel {
+                print(outputString)
+                // Write to the file
+                try outputString.write(to: fileURL, atomically: true, encoding: String.Encoding.utf8)
+                
+//                let decoder = JSONDecoder()
+//                let result = try decoder.decode(BaseModel.self, from: outputString.data(using: .utf8)!)
+//                if result.activities.count > 0 {
+//                    print("Got \(result.activities.count) activities")
+//                }
+            }
         } catch let error as NSError {
             print("Failed writing to URL: \(fileURL), Error: " + error.localizedDescription)
         }

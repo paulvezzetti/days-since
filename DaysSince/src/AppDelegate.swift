@@ -73,6 +73,37 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
             try? dm.saveContext()
         }
     }
+    
+    func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey : Any] = [:]) -> Bool {
+        print(url.absoluteString)
+
+        guard let dm = dataManager else {
+            return false
+        }
+        
+        let importManager = JSONImportManager()
+        guard let baseModel = importManager.buildBaseModel(from: url) else {
+            // Show an error message
+            let alert = UIAlertController(title: NSLocalizedString("importJSON.error.title", value: "Import failed", comment: ""), message: NSLocalizedString("importJSON.error.msg", value: "An error occurred while attempting to import the data. Either the file is not available or the contents are invalid.", comment: ""), preferredStyle: UIAlertController.Style.alert)
+            alert.addAction(UIAlertAction(title: NSLocalizedString("ok", value: "OK", comment: ""), style: .default, handler: nil))
+            
+            let splitViewController = self.window!.rootViewController as! UISplitViewController
+            splitViewController.present(alert, animated: true, completion: nil)
+
+            return false
+        }
+        
+        let importTableViewController = UIStoryboard(name: "Import", bundle: nil).instantiateViewController(withIdentifier: String(describing: ImportTableViewController.self)) as! ImportTableViewController
+        importTableViewController.baseModel = baseModel
+        importTableViewController.dataManager = dm
+        
+        let splitViewController = self.window!.rootViewController as! UISplitViewController
+        let navigationController = splitViewController.viewControllers[splitViewController.viewControllers.count-1] as! UINavigationController
+
+        navigationController.pushViewController(importTableViewController, animated: true)
+
+        return true;
+    }
 
     // MARK: - Split view
 

@@ -9,8 +9,19 @@
 /* Begin PBXBuildFile section */
 		DA0B1E272259412500992A42 /* ChooseActiveRangeTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA0B1E262259412500992A42 /* ChooseActiveRangeTableViewController.swift */; };
 		DA0B1E2C225950CD00992A42 /* ActiveRangeMO+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA0B1E29225950CD00992A42 /* ActiveRangeMO+CoreDataClass.swift */; };
-		DA5DFC9A2327182800E063FB /* JSONWriter.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA5DFC992327182800E063FB /* JSONWriter.swift */; };
-		DA5DFC9C2327190C00E063FB /* JSONWritable.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA5DFC9B2327190C00E063FB /* JSONWritable.swift */; };
+		DA5DFC9F2328727600E063FB /* BaseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA5DFC9E2328727600E063FB /* BaseModel.swift */; };
+		DA5DFCA1232872CA00E063FB /* ActivityCodable.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA5DFCA0232872CA00E063FB /* ActivityCodable.swift */; };
+		DA5DFCA32328734000E063FB /* IntervalCodable.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA5DFCA22328734000E063FB /* IntervalCodable.swift */; };
+		DA5DFCA52328737300E063FB /* ActiveRangeCodable.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA5DFCA42328737300E063FB /* ActiveRangeCodable.swift */; };
+		DA5DFCA9232874E500E063FB /* EventCodable.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA5DFCA8232874E500E063FB /* EventCodable.swift */; };
+		DA5DFCAF2328773F00E063FB /* ReminderCodable.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA5DFCAE2328773F00E063FB /* ReminderCodable.swift */; };
+		DA5DFCB12328784400E063FB /* AsEncodable.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA5DFCB02328784400E063FB /* AsEncodable.swift */; };
+		DA5DFCB4232DBEFC00E063FB /* Import.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DA5DFCB2232DBEFC00E063FB /* Import.storyboard */; };
+		DA5DFCB7232DC2F000E063FB /* ImportTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA5DFCB6232DC2F000E063FB /* ImportTableViewController.swift */; };
+		DA5DFCB9232E77B600E063FB /* JSONImportManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA5DFCB8232E77B600E063FB /* JSONImportManager.swift */; };
+		DA5DFCBB232E8BAE00E063FB /* ImportTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA5DFCBA232E8BAE00E063FB /* ImportTableViewCell.swift */; };
+		DA5DFCBD232EDA8E00E063FB /* ImportHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = DA5DFCBC232EDA8E00E063FB /* ImportHeaderView.xib */; };
+		DA5DFCBF232EE30E00E063FB /* ImportHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA5DFCBE232EE30E00E063FB /* ImportHeaderView.swift */; };
 		DA6AAD4C22934C8A00711533 /* DaysSinceProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA6AAD4B22934C8A00711533 /* DaysSinceProgressView.swift */; };
 		DA70B19922B9B463003E1B76 /* HintPopoverViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA70B19822B9B463003E1B76 /* HintPopoverViewController.swift */; };
 		DABE10E122713B0E00AFDBAF /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = DABE10DF22713B0E00AFDBAF /* Localizable.strings */; };
@@ -93,8 +104,19 @@
 /* Begin PBXFileReference section */
 		DA0B1E262259412500992A42 /* ChooseActiveRangeTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChooseActiveRangeTableViewController.swift; sourceTree = "<group>"; };
 		DA0B1E29225950CD00992A42 /* ActiveRangeMO+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ActiveRangeMO+CoreDataClass.swift"; sourceTree = "<group>"; };
-		DA5DFC992327182800E063FB /* JSONWriter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONWriter.swift; sourceTree = "<group>"; };
-		DA5DFC9B2327190C00E063FB /* JSONWritable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONWritable.swift; sourceTree = "<group>"; };
+		DA5DFC9E2328727600E063FB /* BaseModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseModel.swift; sourceTree = "<group>"; };
+		DA5DFCA0232872CA00E063FB /* ActivityCodable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityCodable.swift; sourceTree = "<group>"; };
+		DA5DFCA22328734000E063FB /* IntervalCodable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntervalCodable.swift; sourceTree = "<group>"; };
+		DA5DFCA42328737300E063FB /* ActiveRangeCodable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActiveRangeCodable.swift; sourceTree = "<group>"; };
+		DA5DFCA8232874E500E063FB /* EventCodable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventCodable.swift; sourceTree = "<group>"; };
+		DA5DFCAE2328773F00E063FB /* ReminderCodable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReminderCodable.swift; sourceTree = "<group>"; };
+		DA5DFCB02328784400E063FB /* AsEncodable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AsEncodable.swift; sourceTree = "<group>"; };
+		DA5DFCB3232DBEFC00E063FB /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = DaysSince/Base.lproj/Import.storyboard; sourceTree = SOURCE_ROOT; };
+		DA5DFCB6232DC2F000E063FB /* ImportTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImportTableViewController.swift; sourceTree = "<group>"; };
+		DA5DFCB8232E77B600E063FB /* JSONImportManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONImportManager.swift; sourceTree = "<group>"; };
+		DA5DFCBA232E8BAE00E063FB /* ImportTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImportTableViewCell.swift; sourceTree = "<group>"; };
+		DA5DFCBC232EDA8E00E063FB /* ImportHeaderView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ImportHeaderView.xib; sourceTree = "<group>"; };
+		DA5DFCBE232EE30E00E063FB /* ImportHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImportHeaderView.swift; sourceTree = "<group>"; };
 		DA6AAD4B22934C8A00711533 /* DaysSinceProgressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DaysSinceProgressView.swift; sourceTree = "<group>"; };
 		DA70B18B22AB3681003E1B76 /* DaysSinceTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DaysSinceTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		DA70B18F22AB3681003E1B76 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -186,6 +208,28 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		DA5DFC9D2328721F00E063FB /* json */ = {
+			isa = PBXGroup;
+			children = (
+				DA5DFC9E2328727600E063FB /* BaseModel.swift */,
+				DA5DFCA0232872CA00E063FB /* ActivityCodable.swift */,
+				DA5DFCA22328734000E063FB /* IntervalCodable.swift */,
+				DA5DFCA42328737300E063FB /* ActiveRangeCodable.swift */,
+				DA5DFCA8232874E500E063FB /* EventCodable.swift */,
+				DA5DFCAE2328773F00E063FB /* ReminderCodable.swift */,
+				DA5DFCB8232E77B600E063FB /* JSONImportManager.swift */,
+			);
+			path = json;
+			sourceTree = "<group>";
+		};
+		DA5DFCB5232DC2B000E063FB /* import */ = {
+			isa = PBXGroup;
+			children = (
+				DA5DFCB6232DC2F000E063FB /* ImportTableViewController.swift */,
+			);
+			path = import;
+			sourceTree = "<group>";
+		};
 		DA70B18C22AB3681003E1B76 /* DaysSinceTests */ = {
 			isa = PBXGroup;
 			children = (
@@ -240,7 +284,7 @@
 				FAC1DE9F2256772A00A211D6 /* WeekOffsetIntervalMO+CoreDataClass.swift */,
 				FA1D731F2228C60E00D8EBF7 /* YearlyIntervalMO+CoreDataClass.swift */,
 				FAC1DEA32256772A00A211D6 /* YearOffsetIntervalMO+CoreDataClass.swift */,
-				DA5DFC9B2327190C00E063FB /* JSONWritable.swift */,
+				DA5DFCB02328784400E063FB /* AsEncodable.swift */,
 			);
 			path = coreDataClasses;
 			sourceTree = "<group>";
@@ -262,6 +306,7 @@
 				FA706DE6228A01620082C545 /* AddActivity.storyboard */,
 				FA706DE3228A00DC0082C545 /* MarkDone.storyboard */,
 				FA706DE02289FFDD0082C545 /* Main.storyboard */,
+				DA5DFCB2232DBEFC00E063FB /* Import.storyboard */,
 			);
 			path = storyboards;
 			sourceTree = "<group>";
@@ -304,10 +349,11 @@
 			children = (
 				FA3CEF4D220E0F2500634DD7 /* MasterViewController.swift */,
 				FA3CEF4F220E0F2500634DD7 /* DetailViewController.swift */,
-				FA1D7345222F54EC00D8EBF7 /* history */,
-				FA1D72F02226E16600D8EBF7 /* common */,
 				FAA6AF1F2211D10800346CCB /* activity */,
+				FA1D72F02226E16600D8EBF7 /* common */,
 				FA5596B42210FE0800113AE1 /* components */,
+				FA1D7345222F54EC00D8EBF7 /* history */,
+				DA5DFCB5232DC2B000E063FB /* import */,
 				DA70B19822B9B463003E1B76 /* HintPopoverViewController.swift */,
 			);
 			path = view;
@@ -318,6 +364,7 @@
 			children = (
 				FA1D72E0221F82A300D8EBF7 /* MasterTableViewCell.swift */,
 				FA1D734A22303F4600D8EBF7 /* HistoryTableViewCell.swift */,
+				DA5DFCBA232E8BAE00E063FB /* ImportTableViewCell.swift */,
 				FAE2F69322455301009B0DCB /* ActivityTableHeaderView.swift */,
 				FAE2F69522455421009B0DCB /* ActivityTableHeaderView.xib */,
 				FAE2F69722456DEC009B0DCB /* CollapsibleTableViewHeaderDelegate.swift */,
@@ -328,6 +375,8 @@
 				FA25E41B22AAB32400F7B0B6 /* TimePickerView.xib */,
 				FA25E41D22AAB47F00F7B0B6 /* TimePickerView.swift */,
 				FA25E41F22AACA9C00F7B0B6 /* TimePickerViewDelegate.swift */,
+				DA5DFCBC232EDA8E00E063FB /* ImportHeaderView.xib */,
+				DA5DFCBE232EE30E00E063FB /* ImportHeaderView.swift */,
 			);
 			path = components;
 			sourceTree = "<group>";
@@ -360,13 +409,13 @@
 			isa = PBXGroup;
 			children = (
 				FA1D731A2228C29A00D8EBF7 /* coreDataClasses */,
+				DA5DFC9D2328721F00E063FB /* json */,
 				FA1D72DA221E2D2B00D8EBF7 /* ActivityStatistics.swift */,
 				FAA6AF212211E42700346CCB /* DataModelManager.swift */,
 				FA1D72E42220675F00D8EBF7 /* TimeConstants.swift */,
 				FAB23B73223AC332004C6252 /* NotificationManager.swift */,
 				FADE9AC0224A8A260055DA64 /* NotificationExtension.swift */,
 				FAC1DEB5225681D400A211D6 /* OffsetIntervals.swift */,
-				DA5DFC992327182800E063FB /* JSONWriter.swift */,
 			);
 			path = model;
 			sourceTree = "<group>";
@@ -466,7 +515,9 @@
 				FA706DE22289FFDD0082C545 /* Main.storyboard in Resources */,
 				FA25E41C22AAB32400F7B0B6 /* TimePickerView.xib in Resources */,
 				FAE2F69622455421009B0DCB /* ActivityTableHeaderView.xib in Resources */,
+				DA5DFCB4232DBEFC00E063FB /* Import.storyboard in Resources */,
 				FA3CEF55220E0F2600634DD7 /* Assets.xcassets in Resources */,
+				DA5DFCBD232EDA8E00E063FB /* ImportHeaderView.xib in Resources */,
 				FABBCA7F2278DFEE0034CB78 /* Localizable.stringsdict in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -485,6 +536,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DA5DFCAF2328773F00E063FB /* ReminderCodable.swift in Sources */,
 				FAE2F69822456DEC009B0DCB /* CollapsibleTableViewHeaderDelegate.swift in Sources */,
 				FA1D7340222DB9DB00D8EBF7 /* Months.swift in Sources */,
 				FAB23B7B223F2436004C6252 /* ReminderMO+CoreDataClass.swift in Sources */,
@@ -494,8 +546,13 @@
 				FA1D732B2228C60E00D8EBF7 /* YearlyIntervalMO+CoreDataClass.swift in Sources */,
 				FA1D72F622272BBF00D8EBF7 /* YearDayPickerController.swift in Sources */,
 				FA3CEF4C220E0F2500634DD7 /* DaysSince.xcdatamodeld in Sources */,
+				DA5DFCB9232E77B600E063FB /* JSONImportManager.swift in Sources */,
+				DA5DFC9F2328727600E063FB /* BaseModel.swift in Sources */,
+				DA5DFCA52328737300E063FB /* ActiveRangeCodable.swift in Sources */,
 				FAC1DEBE225E3C5600A211D6 /* ActivityInfoTableViewController.swift in Sources */,
+				DA5DFCBB232E8BAE00E063FB /* ImportTableViewCell.swift in Sources */,
 				FAC1DE9C22562D7700A211D6 /* ScaleDateComponentPickerController.swift in Sources */,
+				DA5DFCA9232874E500E063FB /* EventCodable.swift in Sources */,
 				FA1D72EA2220784900D8EBF7 /* ActivityMO+CoreDataClass.swift in Sources */,
 				FAA6AF1E2211C1E700346CCB /* AddActivityTableViewController.swift in Sources */,
 				FAB23B74223AC332004C6252 /* NotificationManager.swift in Sources */,
@@ -517,12 +574,16 @@
 				FAB8D05B2295A1FF005138C3 /* TimelineView.swift in Sources */,
 				DA0B1E272259412500992A42 /* ChooseActiveRangeTableViewController.swift in Sources */,
 				FA3197742289EBA700FECBE9 /* UITextFieldUtility.swift in Sources */,
-				DA5DFC9C2327190C00E063FB /* JSONWritable.swift in Sources */,
+				DA5DFCB12328784400E063FB /* AsEncodable.swift in Sources */,
+				DA5DFCA32328734000E063FB /* IntervalCodable.swift in Sources */,
 				FA1D734D22307F9B00D8EBF7 /* EventDetailsViewController.swift in Sources */,
 				FA1D72E52220675F00D8EBF7 /* TimeConstants.swift in Sources */,
 				FA1D73292228C60E00D8EBF7 /* WeeklyIntervalMO+CoreDataClass.swift in Sources */,
 				FAC1DEA52256772A00A211D6 /* WeekOffsetIntervalMO+CoreDataClass.swift in Sources */,
 				FA3CEF4E220E0F2500634DD7 /* MasterViewController.swift in Sources */,
+				DA5DFCB7232DC2F000E063FB /* ImportTableViewController.swift in Sources */,
+				DA5DFCA1232872CA00E063FB /* ActivityCodable.swift in Sources */,
+				DA5DFCBF232EE30E00E063FB /* ImportHeaderView.swift in Sources */,
 				FADAA1872298737A0059015F /* UILabelExtension.swift in Sources */,
 				FA1D732F2228C60E00D8EBF7 /* UnlimitedIntervalMO+CoreDataClass.swift in Sources */,
 				FAC1DEA92256772A00A211D6 /* YearOffsetIntervalMO+CoreDataClass.swift in Sources */,
@@ -533,7 +594,6 @@
 				FA1D72E1221F82A300D8EBF7 /* MasterTableViewCell.swift in Sources */,
 				FA2215AB2252A67000FDEB96 /* ActivitySummaryTableViewController.swift in Sources */,
 				FAA6AF242213684800346CCB /* HistoryTableViewController.swift in Sources */,
-				DA5DFC9A2327182800E063FB /* JSONWriter.swift in Sources */,
 				FA25E41A22A00C9000F7B0B6 /* BlankActivityTableViewController.swift in Sources */,
 				FA488F4022B1720000A3BFC1 /* ActivityBased.swift in Sources */,
 				FADE9AC1224A8A260055DA64 /* NotificationExtension.swift in Sources */,
@@ -561,6 +621,14 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
+		DA5DFCB2232DBEFC00E063FB /* Import.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				DA5DFCB3232DBEFC00E063FB /* Base */,
+			);
+			name = Import.storyboard;
+			sourceTree = "<group>";
+		};
 		DABE10DF22713B0E00AFDBAF /* Localizable.strings */ = {
 			isa = PBXVariantGroup;
 			children = (

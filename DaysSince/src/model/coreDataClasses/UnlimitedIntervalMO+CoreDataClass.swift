@@ -29,9 +29,8 @@ public class UnlimitedIntervalMO: IntervalMO {
         return other is UnlimitedIntervalMO ?  super.isEquivalent(to: other) : false
     }
 
-    override func writeToJSON(writer: JSONWriter) {
-        super.writeToJSON(writer: writer)
-        writer.addProperty(name: "type", property: "unlimited")
+    override func asEncodable() -> Codable {
+        return IntervalCodable(type: "unlimited", activeRange: getActiveRangeCodable(), day: nil, week: nil, month: nil, year: nil)
     }
 
 }

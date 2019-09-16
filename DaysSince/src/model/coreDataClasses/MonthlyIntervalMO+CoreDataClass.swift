@@ -35,14 +35,11 @@ public class MonthlyIntervalMO: IntervalMO {
         return String.localizedStringWithFormat(NSLocalizedString("monthlyInterval.string", value: "Every month on the %@", comment: "Ex: Every month on the 12th"), NumberFormatterOrdinal.string(Int(self.day)))
     }
     
-
-    override func writeToJSON(writer: JSONWriter) {
-        super.writeToJSON(writer: writer)
-        writer.addProperty(name: "type", property: "monthly")
-        writer.addProperty(name: "day", property: self.day)
+    override func asEncodable() -> Codable {
+        return IntervalCodable(type: "monthly", activeRange: getActiveRangeCodable(), day: self.day, week: nil, month: nil, year: nil)
     }
 
-
+    
     override func createClone(context:NSManagedObjectContext) ->IntervalMO {
         let theClone = MonthlyIntervalMO(context: context)
         theClone.day = self.day

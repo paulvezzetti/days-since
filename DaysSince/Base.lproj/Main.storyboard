@@ -255,7 +255,7 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="Days Since" id="Zdf-7t-Un8">
-                        <barButtonItem key="leftBarButtonItem" image="MenuIcon" id="H20-oe-tF6">
+                        <barButtonItem key="leftBarButtonItem" systemItem="organize" id="H20-oe-tF6">
                             <connections>
                                 <action selector="onMenuPress:" destination="7bK-jq-Zjz" id="Fdi-2k-5It"/>
                             </connections>
@@ -1043,7 +1043,6 @@
         <image name="AddButton" width="75" height="75"/>
         <image name="EditIcon" width="48" height="48"/>
         <image name="MarkDoneIcon" width="48" height="48"/>
-        <image name="MenuIcon" width="24" height="24"/>
         <image name="SnoozeIcon" width="48" height="48"/>
         <image name="TrashIcon" width="48" height="48"/>
         <namedColor name="Alert Red">

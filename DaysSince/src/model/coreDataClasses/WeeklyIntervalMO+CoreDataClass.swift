@@ -41,11 +41,9 @@ public class WeeklyIntervalMO: IntervalMO {
         return String.localizedStringWithFormat(NSLocalizedString("weeklyInterval.string", value: "Every week on %@", comment: "Ex: Every week on Tuesday"), Weekdays.day(for: Int(self.day)))
     }
     
-    
-    override func writeToJSON(writer: JSONWriter) {
-        super.writeToJSON(writer: writer)
-        writer.addProperty(name: "type", property: "weekly")
-        writer.addProperty(name: "day", property: self.day)
+
+    override func asEncodable() -> Codable {
+        return IntervalCodable(type: "weekly", activeRange: getActiveRangeCodable(), day: self.day, week: nil, month: nil, year: nil)
     }
 
 

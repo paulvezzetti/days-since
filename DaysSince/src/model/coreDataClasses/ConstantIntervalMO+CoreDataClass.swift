@@ -12,7 +12,7 @@ import CoreData
 
 @objc(ConstantIntervalMO)
 public class ConstantIntervalMO: IntervalMO {
-
+    
     override func calculateNextDate(since lastDate: Date, asap: Bool) -> Date? {
         let calendar = Calendar.current
         var nextDate = calendar.date(byAdding: DateComponents(day: Int(self.frequency)), to: lastDate)
@@ -26,11 +26,10 @@ public class ConstantIntervalMO: IntervalMO {
         return String.localizedStringWithFormat(NSLocalizedString("constantInterval.string", value: "Every %d days", comment: "Ex: Every 5 days"), self.frequency)
     }
        
-    override func writeToJSON(writer: JSONWriter) {
-        super.writeToJSON(writer: writer)
-        writer.addProperty(name: "type", property: "constant")
-        writer.addProperty(name: "frequency", property: self.frequency)
+    override func asEncodable() -> Codable {
+        return IntervalCodable(type: "constant", activeRange: getActiveRangeCodable(), day: self.frequency, week: nil, month: nil, year: nil)
     }
+
 
     override func createClone(context:NSManagedObjectContext) ->IntervalMO {
         let theClone = ConstantIntervalMO(context: context)

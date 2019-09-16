@@ -11,7 +11,7 @@ import Foundation
 import CoreData
 
 @objc(IntervalMO)
-public class IntervalMO: NSManagedObject, JSONWritable {
+public class IntervalMO: NSManagedObject, AsEncodable {
     
     
     final func getNextDate(since lastDate: Date) -> Date? {
@@ -58,10 +58,16 @@ public class IntervalMO: NSManagedObject, JSONWritable {
         return "Abstract IntervalMO"
     }
     
-    func writeToJSON(writer: JSONWriter) {
-        if let range = self.activeRange {
-            writer.addPropertyObject(name: "activeRange", writable: range)
+    func asEncodable() -> Codable {
+        return IntervalCodable(type: "base", activeRange: getActiveRangeCodable(), day: nil, week: nil, month: nil, year: nil)
+    }
+
+    
+    func getActiveRangeCodable() -> ActiveRangeCodable? {
+        guard let range = self.activeRange else {
+            return nil
         }
+        return ActiveRangeCodable(startDay: range.startDay, startMonth: range.startMonth, endDay: range.endDay, endMonth: range.endMonth)
     }
 
 

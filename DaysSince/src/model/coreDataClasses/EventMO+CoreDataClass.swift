@@ -11,7 +11,7 @@ import Foundation
 import CoreData
 
 @objc(EventMO)
-public class EventMO: NSManagedObject, JSONWritable {
+public class EventMO: NSManagedObject, AsEncodable {
     
     func clone(context: NSManagedObjectContext) -> EventMO {
         let theClone = EventMO(context: context)
@@ -37,13 +37,12 @@ public class EventMO: NSManagedObject, JSONWritable {
     }
 
 
-    func writeToJSON(writer: JSONWriter) {
+    func asEncodable() -> Codable {
+        var timeInterval = 0.0
         if let ts = timestamp {
-            writer.addProperty(name: "timestamp", property: ts.timeIntervalSinceReferenceDate)
+            timeInterval = ts.timeIntervalSinceReferenceDate
         }
-        if let detailStr = details {
-            writer.addProperty(name: "details", property: detailStr)
-        }        
+        return EventCodable(timestamp: timeInterval, details: details)
     }
 
     

@@ -11,8 +11,7 @@ import Foundation
 import CoreData
 
 @objc(ActiveRangeMO)
-public class ActiveRangeMO: NSManagedObject, JSONWritable {
-    
+public class ActiveRangeMO: NSManagedObject, AsEncodable {
     
     func toPrettyString() -> String {
         return ActiveRangeMO.formatAsRange(startMonth: Int(startMonth), startDay: Int(startDay), endMonth: Int(endMonth), endDay: Int(endDay))
@@ -28,11 +27,8 @@ public class ActiveRangeMO: NSManagedObject, JSONWritable {
         return theClone
     }
 
-    func writeToJSON(writer: JSONWriter) {
-        writer.addProperty(name: "startDay", property: startDay)
-        writer.addProperty(name: "startMonth", property: startMonth)
-        writer.addProperty(name: "endDay", property: endDay)
-        writer.addProperty(name: "endMonth", property: endMonth)
+    func asEncodable() -> Codable {
+        return ActiveRangeCodable(startDay: startDay, startMonth: startMonth, endDay: endDay, endMonth: endMonth)
     }
 
     

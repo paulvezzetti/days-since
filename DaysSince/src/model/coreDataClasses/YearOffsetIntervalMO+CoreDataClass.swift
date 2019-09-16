@@ -34,12 +34,9 @@ public class YearOffsetIntervalMO: OffsetIntervalMO {
         return String.localizedStringWithFormat(NSLocalizedString("yearOffset.string", comment: ""), Int(self.years))
     }
     
-    override func writeToJSON(writer: JSONWriter) {
-        super.writeToJSON(writer: writer)
-        writer.addProperty(name: "type", property: "yearOffset")
-        writer.addProperty(name: "years", property: self.years)
+    override func asEncodable() -> Codable {
+        return IntervalCodable(type: "yearOffset", activeRange: getActiveRangeCodable(), day: nil, week: nil, month: nil, year: self.years)
     }
-
     
     override func createClone(context:NSManagedObjectContext) -> IntervalMO {
         let theClone = YearOffsetIntervalMO(context: context)

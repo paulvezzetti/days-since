@@ -39,11 +39,9 @@ public class YearlyIntervalMO: IntervalMO {
         return String.localizedStringWithFormat(NSLocalizedString("yearlyInterval.string", value: "Every year on %@ %d", comment: "Ex: Every year on Jan 15"), Months.month(for: Int(self.month)), day)
     }
 
-    override func writeToJSON(writer: JSONWriter) {
-        super.writeToJSON(writer: writer)
-        writer.addProperty(name: "type", property: "yearly")
-        writer.addProperty(name: "month", property: self.month)
-        writer.addProperty(name: "day", property: self.day)
+    
+    override func asEncodable() -> Codable {
+        return IntervalCodable(type: "yearly", activeRange: getActiveRangeCodable(), day: self.day, week: nil, month: self.month, year: nil)
     }
 
     

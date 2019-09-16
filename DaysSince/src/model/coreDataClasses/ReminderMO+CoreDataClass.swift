@@ -11,7 +11,7 @@ import Foundation
 import CoreData
 
 @objc(ReminderMO)
-public class ReminderMO: NSManagedObject, JSONWritable {
+public class ReminderMO: NSManagedObject, AsEncodable {
     
     static let REMIND_DAYS_BEFORE_DEFAULT:Int = 0
     static let SNOOZE_FOR_DAYS_DEFAULT:Int = 1
@@ -36,17 +36,9 @@ public class ReminderMO: NSManagedObject, JSONWritable {
         
     }
 
-   
-    func writeToJSON(writer: JSONWriter) {
-        writer.addProperty(name: "enabled", property: enabled)
-        writer.addProperty(name: "daysBefore", property: daysBefore)
-        writer.addProperty(name: "timeOfDay", property: timeOfDay)
-        writer.addProperty(name: "allowSnooze", property: allowSnooze)
-        writer.addProperty(name: "snooze", property: snooze)
-        writer.addProperty(name: "lastActualSnooze", property: lastActualSnooze)
-        if let lastSnoozeDate = lastSnooze {
-            writer.addProperty(name: "lastSnooze", property: lastSnoozeDate.timeIntervalSinceReferenceDate)
-        }
+
+    func asEncodable() -> Codable {
+        return ReminderCodable(enabled: enabled, daysBefore: daysBefore, timeOfDay: timeOfDay, allowSnooze: allowSnooze, snooze: snooze, lastActualSnooze: lastActualSnooze, lastSnooze: lastSnooze?.timeIntervalSinceReferenceDate)
     }
 
 }

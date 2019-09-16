@@ -34,11 +34,11 @@ public class WeekOffsetIntervalMO: OffsetIntervalMO {
         return String.localizedStringWithFormat(NSLocalizedString("weekOffset.string", comment: ""), Int(self.weeks))
     }
     
-    override func writeToJSON(writer: JSONWriter) {
-        super.writeToJSON(writer: writer)
-        writer.addProperty(name: "type", property: "weekOffset")
-        writer.addProperty(name: "weeks", property: self.weeks)
+    
+    override func asEncodable() -> Codable {
+        return IntervalCodable(type: "weekOffset", activeRange: getActiveRangeCodable(), day: nil, week: self.weeks, month: nil, year: nil)
     }
+
 
     override func createClone(context:NSManagedObjectContext) ->IntervalMO {
         let theClone = WeekOffsetIntervalMO(context: context)

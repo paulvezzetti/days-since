@@ -11,8 +11,7 @@ import Foundation
 import CoreData
 
 @objc(ActivityMO)
-public class ActivityMO: NSManagedObject, JSONWritable {
-    
+public class ActivityMO: NSManagedObject, AsEncodable {
     
     
     enum EventCloneOptions {
@@ -176,25 +175,27 @@ public class ActivityMO: NSManagedObject, JSONWritable {
         return Int(timeInterval / (60*60*24))
     }
     
-        
-    func writeToJSON(writer: JSONWriter) {
-        if let uuidValue = id?.uuidString {
-            writer.addProperty(name: "uuid", property: uuidValue)
-        }
-        if let nameValue = self.name {
-            writer.addProperty(name: "name", property: nameValue)
-        }
+    
+    func asEncodable() -> Codable {
+        let uuidValue = id?.uuidString
+        let nameValue = name
+        var intervalCodable:IntervalCodable?
         if let intervalMO = self.interval {
-            writer.addPropertyObject(name: "interval", writable: intervalMO)
+            intervalCodable = intervalMO.asEncodable() as? IntervalCodable
         }
+        var reminderCodable:ReminderCodable?
         if let reminderMO = self.reminder {
-            writer.addPropertyObject(name: "reminder", writable: reminderMO)
+            reminderCodable = reminderMO.asEncodable() as? ReminderCodable
         }
+        var eventsCodable:[EventCodable] = []
         let history = sortedHistory
-        if history.count > 0 {
-            writer.addPropertyArray(name: "events", writables: history)
+        for event in history {
+            eventsCodable.append(event.asEncodable() as! EventCodable)
         }
+        return ActivityCodable(uuid: uuidValue!, name: nameValue!, interval: intervalCodable!, events: eventsCodable, reminder: reminderCodable!)
     }
+    
+
 
 
 //    deinit {

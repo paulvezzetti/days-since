@@ -34,11 +34,8 @@ public class MonthOffsetIntervalMO: OffsetIntervalMO {
         return String.localizedStringWithFormat(NSLocalizedString("monthOffset.string", comment: ""), Int(self.months))
     }
     
-
-    override func writeToJSON(writer: JSONWriter) {
-        super.writeToJSON(writer: writer)
-        writer.addProperty(name: "type", property: "monthlyOffset")
-        writer.addProperty(name: "months", property: self.months)
+    override func asEncodable() -> Codable {
+        return IntervalCodable(type: "monthOffset", activeRange: getActiveRangeCodable(), day: nil, week: nil, month: self.months, year: nil)
     }
 
     
