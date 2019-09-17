@@ -8,12 +8,19 @@
 import CoreData
 import Foundation
 
-struct ActiveRangeCodable: Codable {
+class ActiveRangeCodable: Codable {
     
     let startDay: Int16
     let startMonth: Int16
     let endDay: Int16
     let endMonth: Int16
+    
+    init(startDay:Int16, startMonth:Int16, endDay: Int16, endMonth:Int16) {
+        self.startDay = startDay
+        self.startMonth = startMonth
+        self.endDay = endDay
+        self.endMonth = endMonth
+    }
     
     func toActiveRangeMO(moc:NSManagedObjectContext) -> ActiveRangeMO? {
         let range = ActiveRangeMO(context: moc)

@@ -8,11 +8,18 @@
 
 import Foundation
 
-struct ActivityCodable: Codable {
+class ActivityCodable: Codable {
     let uuid: String
     let name: String
     let interval: IntervalCodable
     let events: [EventCodable]
     let reminder: ReminderCodable
     
+    init(uuid:String, name:String, interval:IntervalCodable, events: [EventCodable], reminder: ReminderCodable) {
+        self.uuid = uuid
+        self.name = name
+        self.interval = interval
+        self.events = events
+        self.reminder = reminder
+    }
 }

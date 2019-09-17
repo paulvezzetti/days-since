@@ -100,6 +100,12 @@ class NotificationManager : NSObject {
         }
     }
     
+    static func clearAllPendingNotifications() {
+        let notificationCenter = UNUserNotificationCenter.current()
+        notificationCenter.removeAllDeliveredNotifications()
+        notificationCenter.removeAllPendingNotificationRequests()
+    }
+    
     /* ----------------------------------------------------------
      What is the logic for setting up our reminders.
      - if reminders are enabled:

@@ -9,7 +9,7 @@
 import Foundation
 import CoreData
 
-struct IntervalCodable: Codable {
+class IntervalCodable: Codable {
     let type: String
     let activeRange: ActiveRangeCodable?
     
@@ -17,6 +17,15 @@ struct IntervalCodable: Codable {
     let week: Int16?
     let month: Int16?
     let year: Int16?
+    
+    init(type:String, activeRange:ActiveRangeCodable?, day:Int16?, week: Int16?, month:Int16?, year:Int16?) {
+        self.type = type
+        self.activeRange = activeRange
+        self.day = day
+        self.week = week
+        self.month = month
+        self.year = year
+    }
     
     func toIntervalMO(moc:NSManagedObjectContext) -> IntervalMO? {
         var intervalMO:IntervalMO? = nil

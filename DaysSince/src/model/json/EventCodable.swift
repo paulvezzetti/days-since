@@ -8,10 +8,15 @@
 import CoreData
 import Foundation
 
-struct EventCodable: Codable {
+class EventCodable: Codable {
     
     let timestamp: Double
     let details: String?
+    
+    init(timestamp:Double, details:String?) {
+        self.timestamp = timestamp
+        self.details = details
+    }
     
     func toEventMO(moc:NSManagedObjectContext) -> EventMO? {
         let event = EventMO(context: moc)

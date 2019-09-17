@@ -8,7 +8,7 @@
 import CoreData
 import Foundation
 
-struct ReminderCodable: Codable {
+class ReminderCodable: Codable {
     
     let enabled: Bool
     let daysBefore: Int16?
@@ -18,6 +18,15 @@ struct ReminderCodable: Codable {
     let lastActualSnooze: Int16?
     let lastSnooze: Double?
     
+    init(enabled:Bool, daysBefore:Int16?, timeOfDay: Double?, allowSnooze: Bool, snooze: Int16?, lastActualSnooze: Int16?, lastSnooze: Double?) {
+        self.enabled = enabled
+        self.daysBefore = daysBefore
+        self.timeOfDay = timeOfDay
+        self.allowSnooze = allowSnooze
+        self.snooze = snooze
+        self.lastActualSnooze = lastActualSnooze
+        self.lastSnooze = lastSnooze
+    }
     
     func toReminderMO(moc:NSManagedObjectContext) -> ReminderMO? {
         let reminder = ReminderMO(context: moc)

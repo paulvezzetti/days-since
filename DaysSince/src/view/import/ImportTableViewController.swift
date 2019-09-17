@@ -77,10 +77,13 @@ class ImportTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
             // Delete the row from the data source
-            tableView.deleteRows(at: [indexPath], with: .fade)
-        } else if editingStyle == .insert {
+            if let model = baseModel, model.activities.count > indexPath.row {
+                model.activities.remove(at: indexPath.row)
+                tableView.deleteRows(at: [indexPath], with: .fade)
+            }
+        } //else if editingStyle == .insert {
             // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-        }    
+        //}
     }
     
     
@@ -94,7 +97,7 @@ class ImportTableViewController: UITableViewController {
         
         return headerView
     }
-
+    
 
     /*
     // Override to support rearranging the table view.

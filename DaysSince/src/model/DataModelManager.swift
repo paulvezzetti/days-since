@@ -174,14 +174,21 @@ class DataModelManager {
     }
     
     func removeAllActivities() throws {
-        
+        // Clear all notifications
+        NotificationManager.clearAllPendingNotifications()
         let context = try getManagedObjectContext()
-        let fetch = NSFetchRequest<ActivityMO>(entityName: "Activity")
-        let activities = try context.fetch(fetch)
-        for activity in activities {
-            context.delete(activity)
+        // Create Fetch Request
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Activity")
+        
+        // Create Batch Delete Request
+        let batchDeleteRequest = NSBatchDeleteRequest(fetchRequest: fetchRequest)
+        
+        do {
+            try context.execute(batchDeleteRequest)
+            
+        } catch {
+            // Error Handling
         }
-        try save(context)
     }
     
     func markActivityDone(activity:ActivityMO, at date:Date? = nil, with details:String? = nil) throws {

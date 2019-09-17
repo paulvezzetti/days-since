@@ -8,7 +8,11 @@
 
 import Foundation
 
-struct BaseModel: Codable {
+class BaseModel: Codable {
     
-    let activities: [ActivityCodable]
+    var activities: [ActivityCodable]
+    
+    init(activities: [ActivityCodable]) {
+        self.activities = activities
+    }
 }
