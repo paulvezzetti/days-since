@@ -173,6 +173,17 @@ class DataModelManager {
         try save(context)
     }
     
+    func removeAllActivities() throws {
+        
+        let context = try getManagedObjectContext()
+        let fetch = NSFetchRequest<ActivityMO>(entityName: "Activity")
+        let activities = try context.fetch(fetch)
+        for activity in activities {
+            context.delete(activity)
+        }
+        try save(context)
+    }
+    
     func markActivityDone(activity:ActivityMO, at date:Date? = nil, with details:String? = nil) throws {
         let context = try getManagedObjectContext()
 

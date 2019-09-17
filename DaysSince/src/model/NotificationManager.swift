@@ -48,7 +48,6 @@ class NotificationManager : NSObject {
         NotificationCenter.default.addObserver(self, selector: #selector(handleSnoozeActivity(notification:)), name: Notification.Name.snoozeActivity, object: nil)
 
         checkApplicationBadge()
-
     }
     
     @objc func activityAdded(notification: Notification ) {
@@ -100,7 +99,7 @@ class NotificationManager : NSObject {
 
         }
     }
-
+    
     /* ----------------------------------------------------------
      What is the logic for setting up our reminders.
      - if reminders are enabled:

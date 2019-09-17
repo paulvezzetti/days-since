@@ -132,10 +132,16 @@ class ImportTableViewController: UITableViewController {
     @objc
     func handleImportReplaceActivities(notification: Notification) {
         print("Ready to import")
-        guard let dm = dataManager, let model = baseModel else {
+        guard let dm = dataManager else {
             return
         }
+        do {
+            try dm.removeAllActivities()
+        } catch let error as NSError {
+            print("Unable to delete all existing activities: \(error)")
 
+        }
+            
         insertImportedActivities(useSavedUUID: true)
     }
     
