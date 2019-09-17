@@ -24,6 +24,9 @@ class ImportTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        NotificationCenter.default.addObserver(self, selector: #selector(handleImportAppendActivities(notification:)), name: Notification.Name(ImportHeaderView.IMPORT_APPEND_NOTIFICATION), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(handleImportReplaceActivities(notification:)), name: Notification.Name(ImportHeaderView.IMPORT_REPLACE_NOTIFICATION), object: nil)
+
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
 
@@ -120,4 +123,47 @@ class ImportTableViewController: UITableViewController {
 
 
     
+    @objc
+    func handleImportAppendActivities(notification: Notification) {
+        print("Ready to append")
+        insertImportedActivities(useSavedUUID: false)
+    }
+
+    @objc
+    func handleImportReplaceActivities(notification: Notification) {
+        print("Ready to import")
+        guard let dm = dataManager, let model = baseModel else {
+            return
+        }
+
+        insertImportedActivities(useSavedUUID: true)
+    }
+    
+    func insertImportedActivities(useSavedUUID:Bool) {
+        guard let dm = dataManager, let model = baseModel else {
+            return
+        }
+        do {
+            let childMOC = try dm.newChildManagedObjectContext()
+            for activity in model.activities {
+                let activityMO = ActivityMO(context: childMOC)
+                activityMO.name = activity.name
+                activityMO.id = useSavedUUID ? UUID(uuidString: activity.uuid) : UUID()
+                activityMO.interval = activity.interval.toIntervalMO(moc: childMOC)
+                activityMO.reminder = activity.reminder.toReminderMO(moc: childMOC)
+                for event in activity.events {
+                    let eventMO = event.toEventMO(moc: childMOC)
+                    if eventMO != nil {
+                        activityMO.addToHistory(eventMO!)
+                    }
+                }
+            }
+            try childMOC.save()
+            try dm.saveContext()
+        } catch let error as NSError {
+            print("Unable to save activities: \(error)")
+        }
+
+    }
+
 }

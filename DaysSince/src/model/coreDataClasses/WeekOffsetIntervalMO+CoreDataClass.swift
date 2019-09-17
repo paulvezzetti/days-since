@@ -13,6 +13,8 @@ import CoreData
 @objc(WeekOffsetIntervalMO)
 public class WeekOffsetIntervalMO: OffsetIntervalMO {
 
+    static let TYPE:String = "weekOffset"
+    
     var weeks: Int16 {
         get {
             return self.offset
@@ -36,7 +38,7 @@ public class WeekOffsetIntervalMO: OffsetIntervalMO {
     
     
     override func asEncodable() -> Codable {
-        return IntervalCodable(type: "weekOffset", activeRange: getActiveRangeCodable(), day: nil, week: self.weeks, month: nil, year: nil)
+        return IntervalCodable(type: WeekOffsetIntervalMO.TYPE, activeRange: getActiveRangeCodable(), day: nil, week: self.weeks, month: nil, year: nil)
     }
 
 

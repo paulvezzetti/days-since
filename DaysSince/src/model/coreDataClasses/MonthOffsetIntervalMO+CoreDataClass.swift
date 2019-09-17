@@ -13,6 +13,8 @@ import CoreData
 @objc(MonthOffsetIntervalMO)
 public class MonthOffsetIntervalMO: OffsetIntervalMO {
 
+    static let TYPE:String = "monthOffset"
+
     var months:Int16 {
         get {
             return self.offset
@@ -35,7 +37,7 @@ public class MonthOffsetIntervalMO: OffsetIntervalMO {
     }
     
     override func asEncodable() -> Codable {
-        return IntervalCodable(type: "monthOffset", activeRange: getActiveRangeCodable(), day: nil, week: nil, month: self.months, year: nil)
+        return IntervalCodable(type: MonthOffsetIntervalMO.TYPE, activeRange: getActiveRangeCodable(), day: nil, week: nil, month: self.months, year: nil)
     }
 
     

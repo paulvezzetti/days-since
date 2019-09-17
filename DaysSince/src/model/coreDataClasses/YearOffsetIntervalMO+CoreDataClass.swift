@@ -13,6 +13,8 @@ import CoreData
 @objc(YearOffsetIntervalMO)
 public class YearOffsetIntervalMO: OffsetIntervalMO {
 
+    static let TYPE:String = "yearOffset"
+    
     var years: Int16 {
         get {
             return self.offset
@@ -35,7 +37,7 @@ public class YearOffsetIntervalMO: OffsetIntervalMO {
     }
     
     override func asEncodable() -> Codable {
-        return IntervalCodable(type: "yearOffset", activeRange: getActiveRangeCodable(), day: nil, week: nil, month: nil, year: self.years)
+        return IntervalCodable(type: YearOffsetIntervalMO.TYPE, activeRange: getActiveRangeCodable(), day: nil, week: nil, month: nil, year: self.years)
     }
     
     override func createClone(context:NSManagedObjectContext) -> IntervalMO {

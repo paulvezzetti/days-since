@@ -10,6 +10,9 @@ import UIKit
 
 class ImportHeaderView: UITableViewHeaderFooterView {
 
+    static let IMPORT_APPEND_NOTIFICATION: String = "importAppend"
+    static let IMPORT_REPLACE_NOTIFICATION: String = "importReplace"
+    
     override init(reuseIdentifier: String?) {
         super.init(reuseIdentifier: reuseIdentifier)
         
@@ -19,9 +22,6 @@ class ImportHeaderView: UITableViewHeaderFooterView {
         super.init(coder: aDecoder)
     }
 
-    //Select "Append" to add the activities to your current list of activities.
-    //Select "Replace" to remove all current activities and replace with this list.
-    
     /*
     // Only override draw() if you perform custom drawing.
     // An empty implementation adversely affects performance during animation.
@@ -32,10 +32,13 @@ class ImportHeaderView: UITableViewHeaderFooterView {
 
     @IBAction func doAppendActivities(_ sender: Any) {
         print("Append clicked")
+        NotificationCenter.default.post(name: Notification.Name(ImportHeaderView.IMPORT_APPEND_NOTIFICATION), object: nil, userInfo: nil)
+
     }
     
     
     @IBAction func onReplaceClicked(_ sender: Any) {
         print("Replace clicked")
+        NotificationCenter.default.post(name: Notification.Name(ImportHeaderView.IMPORT_REPLACE_NOTIFICATION), object: nil, userInfo: nil)
     }
 }

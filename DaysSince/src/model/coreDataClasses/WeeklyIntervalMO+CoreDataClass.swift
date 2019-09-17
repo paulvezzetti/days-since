@@ -13,6 +13,8 @@ import CoreData
 @objc(WeeklyIntervalMO)
 public class WeeklyIntervalMO: IntervalMO {
 
+    static let TYPE:String = "weekly"
+    
     override func calculateNextDate(since lastDate: Date, asap: Bool) -> Date? {
         // Construct a new date based on the previous week
         let calendar = Calendar.current
@@ -43,7 +45,7 @@ public class WeeklyIntervalMO: IntervalMO {
     
 
     override func asEncodable() -> Codable {
-        return IntervalCodable(type: "weekly", activeRange: getActiveRangeCodable(), day: self.day, week: nil, month: nil, year: nil)
+        return IntervalCodable(type: WeeklyIntervalMO.TYPE, activeRange: getActiveRangeCodable(), day: self.day, week: nil, month: nil, year: nil)
     }
 
 

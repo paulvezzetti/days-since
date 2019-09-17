@@ -21,5 +21,5 @@ extension Notification.Name {
 
     static let showActivity = Notification.Name("showActivity")
     static let snoozeActivity = Notification.Name("snoozeActivity")
-    
+        
 }

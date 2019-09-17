@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import CoreData
 
 struct IntervalCodable: Codable {
     let type: String
@@ -16,5 +17,43 @@ struct IntervalCodable: Codable {
     let week: Int16?
     let month: Int16?
     let year: Int16?
+    
+    func toIntervalMO(moc:NSManagedObjectContext) -> IntervalMO? {
+        var intervalMO:IntervalMO? = nil
+        switch type {
+        case ConstantIntervalMO.TYPE:
+            intervalMO = ConstantIntervalMO(context: moc)
+            (intervalMO as! ConstantIntervalMO).frequency = day ?? 1
+        case MonthlyIntervalMO.TYPE:
+            intervalMO = MonthlyIntervalMO(context: moc)
+            (intervalMO as! MonthlyIntervalMO).day = day ?? 1
+        case MonthOffsetIntervalMO.TYPE:
+            intervalMO = MonthOffsetIntervalMO(context: moc)
+            (intervalMO as! MonthOffsetIntervalMO).months = month ?? 1
+        case UnlimitedIntervalMO.TYPE:
+            intervalMO = UnlimitedIntervalMO(context: moc)
+        case WeeklyIntervalMO.TYPE:
+            intervalMO = WeeklyIntervalMO(context: moc)
+            (intervalMO as! WeeklyIntervalMO).day = day ?? 1
+        case WeekOffsetIntervalMO.TYPE:
+            intervalMO = WeekOffsetIntervalMO(context: moc)
+            (intervalMO as! WeekOffsetIntervalMO).weeks = week ?? 1
+        case YearlyIntervalMO.TYPE:
+            intervalMO = YearlyIntervalMO(context: moc)
+            (intervalMO as! YearlyIntervalMO).day = day ?? 1
+            (intervalMO as! YearlyIntervalMO).month = month ?? 1
+        case YearOffsetIntervalMO.TYPE:
+            intervalMO = YearOffsetIntervalMO(context: moc)
+            (intervalMO as! YearOffsetIntervalMO).years = year ?? 1
+        default:
+            intervalMO = UnlimitedIntervalMO(context: moc)
+        }
+        
+        if let range = activeRange {
+            intervalMO?.activeRange = range.toActiveRangeMO(moc: moc)
+        }
+        
+        return intervalMO
+    }
     
 }

@@ -13,6 +13,8 @@ import CoreData
 @objc(MonthlyIntervalMO)
 public class MonthlyIntervalMO: IntervalMO {
 
+    static let TYPE:String = "monthly"
+
     override func calculateNextDate(since lastDate: Date, asap: Bool) -> Date? {
         // Construct a new date based on the previous month
         let calendar = Calendar.current
@@ -36,7 +38,7 @@ public class MonthlyIntervalMO: IntervalMO {
     }
     
     override func asEncodable() -> Codable {
-        return IntervalCodable(type: "monthly", activeRange: getActiveRangeCodable(), day: self.day, week: nil, month: nil, year: nil)
+        return IntervalCodable(type: MonthlyIntervalMO.TYPE, activeRange: getActiveRangeCodable(), day: self.day, week: nil, month: nil, year: nil)
     }
 
     

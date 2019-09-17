@@ -13,6 +13,8 @@ import CoreData
 @objc(UnlimitedIntervalMO)
 public class UnlimitedIntervalMO: IntervalMO {
 
+    static let TYPE:String = "unlimited"
+    
     override func calculateNextDate(since lastDate: Date, asap: Bool) -> Date? {
         return nil
     }
@@ -30,7 +32,7 @@ public class UnlimitedIntervalMO: IntervalMO {
     }
 
     override func asEncodable() -> Codable {
-        return IntervalCodable(type: "unlimited", activeRange: getActiveRangeCodable(), day: nil, week: nil, month: nil, year: nil)
+        return IntervalCodable(type: UnlimitedIntervalMO.TYPE, activeRange: getActiveRangeCodable(), day: nil, week: nil, month: nil, year: nil)
     }
 
 }

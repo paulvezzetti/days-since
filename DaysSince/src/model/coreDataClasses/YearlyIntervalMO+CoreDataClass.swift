@@ -13,6 +13,8 @@ import CoreData
 @objc(YearlyIntervalMO)
 public class YearlyIntervalMO: IntervalMO {
 
+    static let TYPE:String = "yearly"
+    
     override func calculateNextDate(since lastDate: Date, asap: Bool) -> Date? {
         // Construct a new date based on the previous.
         // TODO: Need to consider how close we are to the expected date to know if we need to push to
@@ -41,7 +43,7 @@ public class YearlyIntervalMO: IntervalMO {
 
     
     override func asEncodable() -> Codable {
-        return IntervalCodable(type: "yearly", activeRange: getActiveRangeCodable(), day: self.day, week: nil, month: self.month, year: nil)
+        return IntervalCodable(type: YearlyIntervalMO.TYPE, activeRange: getActiveRangeCodable(), day: self.day, week: nil, month: self.month, year: nil)
     }
 
     
