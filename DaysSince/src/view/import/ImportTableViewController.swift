@@ -54,7 +54,7 @@ class ImportTableViewController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "importCell", for: indexPath) as! ImportTableViewCell
-        
+
         guard let model = baseModel, model.activities.count > indexPath.row else {
             return cell
         }
@@ -62,15 +62,19 @@ class ImportTableViewController: UITableViewController {
         cell.titleLabel.text = activity?.name
         return cell
     }
+    
+//    override func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCell.EditingStyle {
+//        return UITableViewCell.EditingStyle.none
+//    }
 
 
-    /*
+    
     // Override to support conditional editing of the table view.
     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
         // Return false if you do not want the specified item to be editable.
         return true
     }
-    */
+    
 
     
     // Override to support editing the table view.
@@ -81,9 +85,10 @@ class ImportTableViewController: UITableViewController {
                 model.activities.remove(at: indexPath.row)
                 tableView.deleteRows(at: [indexPath], with: .fade)
             }
-        } //else if editingStyle == .insert {
+        } else if editingStyle == .insert {
             // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-        //}
+            print("Insert")
+        }
     }
     
     
@@ -113,7 +118,7 @@ class ImportTableViewController: UITableViewController {
         return true
     }
     */
-
+    
     /*
     // MARK: - Navigation
 
