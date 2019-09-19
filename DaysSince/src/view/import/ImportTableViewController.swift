@@ -174,10 +174,20 @@ class ImportTableViewController: UITableViewController {
             }
             try childMOC.save()
             try dm.saveContext()
+            
+            let completeAlert = UIAlertController(title: "Import Complete", message: "Successfully imported \(model.activities.count) activities.", preferredStyle: .alert)
+            completeAlert.addAction(UIAlertAction(title: NSLocalizedString("ok", value: "OK", comment: ""), style: .default, handler: onImportComplete))
+            self.present(completeAlert, animated: true, completion: nil)
         } catch let error as NSError {
             print("Unable to save activities: \(error)")
+            let alert = UIAlertController(title: "Error importing data", message: "An error occurred importing your data. The file may be in an invalid format. \n\(error)", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: NSLocalizedString("ok", value: "OK", comment: ""), style: .default, handler: onImportComplete))
+            self.present(alert, animated: true, completion: nil)
         }
-
+    }
+    
+    func onImportComplete(action: UIAlertAction!) {
+        self.navigationController?.popViewController(animated: true)
     }
 
 }
