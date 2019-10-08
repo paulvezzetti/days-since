@@ -60,6 +60,8 @@ class ImportTableViewController: UITableViewController {
         }
         let activity = baseModel?.activities[indexPath.row]
         cell.titleLabel.text = activity?.name
+        cell.intervalLabel.text = "Interval"
+        cell.historyLabel.text = String(activity?.events.count ?? 0)
         return cell
     }
     
@@ -162,6 +164,7 @@ class ImportTableViewController: UITableViewController {
             for activity in model.activities {
                 let activityMO = ActivityMO(context: childMOC)
                 activityMO.name = activity.name
+                activityMO.isPinned = activity.isPinned
                 activityMO.id = useSavedUUID ? UUID(uuidString: activity.uuid) : UUID()
                 activityMO.interval = activity.interval.toIntervalMO(moc: childMOC)
                 activityMO.reminder = activity.reminder.toReminderMO(moc: childMOC)

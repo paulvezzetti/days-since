@@ -24,6 +24,7 @@ public class ActivityMO: NSManagedObject, AsEncodable {
     func clone(context:NSManagedObjectContext, eventCloneOptions:ActivityMO.EventCloneOptions) -> ActivityMO {
         let activity = ActivityMO(context: context)
         activity.name = self.name
+        activity.isPinned = self.isPinned
         activity.interval = self.interval?.clone(context: context)
         activity.reminder = self.reminder?.clone(context: context)
         
@@ -53,7 +54,8 @@ public class ActivityMO: NSManagedObject, AsEncodable {
     
     
     enum ActivityState: CaseIterable {
-        case VeryOld,
+        case Pinned,
+        VeryOld,
         LastMonth,
         LastWeek,
         Yesterday,
@@ -66,6 +68,8 @@ public class ActivityMO: NSManagedObject, AsEncodable {
         
         func asString() -> String {
             switch self {
+            case .Pinned:
+                return NSLocalizedString("activity.state.pinnned", value: "FAVORITES", comment: "")
             case .VeryOld:
                 return NSLocalizedString("activity.state.veryOld", value: "MONTH+ OVERDUE", comment: "")
             case .LastMonth:
@@ -91,6 +95,9 @@ public class ActivityMO: NSManagedObject, AsEncodable {
     }
     
     var state:ActivityState {
+        if isPinned {
+            return .Pinned
+        }
         guard let lastDate = lastEvent?.timestamp, let nextDate = self.interval?.getNextDate(since: lastDate) else {
             return .Whenever
         }
@@ -192,7 +199,7 @@ public class ActivityMO: NSManagedObject, AsEncodable {
         for event in history {
             eventsCodable.append(event.asEncodable() as! EventCodable)
         }
-        return ActivityCodable(uuid: uuidValue!, name: nameValue!, interval: intervalCodable!, events: eventsCodable, reminder: reminderCodable!)
+        return ActivityCodable(uuid: uuidValue!, name: nameValue!, isPinned: isPinned, interval: intervalCodable!, events: eventsCodable, reminder: reminderCodable!)
     }
     
 

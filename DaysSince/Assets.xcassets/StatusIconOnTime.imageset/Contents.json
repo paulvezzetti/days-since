@@ -3,6 +3,16 @@
     {
       "idiom" : "universal",
       "filename" : "StatusIconsOnTime.pdf"
+    },
+    {
+      "idiom" : "universal",
+      "filename" : "StatusIconsOnTimeWhite.pdf",
+      "appearances" : [
+        {
+          "appearance" : "luminosity",
+          "value" : "dark"
+        }
+      ]
     }
   ],
   "info" : {

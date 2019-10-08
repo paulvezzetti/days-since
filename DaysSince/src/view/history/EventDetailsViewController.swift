@@ -24,7 +24,7 @@ class EventDetailsViewController: UIViewController {
         detailTextView.layer.cornerRadius = 5
 //        detailTextView.layer.shadowColor = UIColor.lightGray.cgColor
 //        detailTextView.layer.shadowOpacity = 0.2
-        detailTextView.layer.borderColor = UIColor.init(red: 0.2, green: 0.2, blue: 0.2, alpha: 0.2).cgColor
+      //  detailTextView.layer.borderColor = UIColor.init(red: 0.2, green: 0.2, blue: 0.2, alpha: 0.2).cgColor
         detailTextView.layer.borderWidth = 1
 
         // Do any additional setup after loading the view.

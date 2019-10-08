@@ -19,7 +19,7 @@ import CoreGraphics
         label.textAlignment = NSTextAlignment.center
         label.font = UIFont.systemFont(ofSize: 12)
         label.adjustsFontSizeToFitWidth = true
-        label.textColor = UIColor.black
+        label.textColor = UIColor(named: "SubLabelColor") // UIColor.black
         
         return label
     }()
@@ -44,16 +44,16 @@ import CoreGraphics
         backgroundPath.lineWidth = 10.0
         if daysUntil != nil {
             if (daysUntil! >= 0) {
-                let lightYellow = UIColor(red: 250.0/255.0, green: 212.0/255.0, blue: 142.0/255.0, alpha: 1.0)
+                let lightYellow = UIColor(named: "LightYellow") ?? UIColor(red: 250.0/255.0, green: 212.0/255.0, blue: 142.0/255.0, alpha: 1.0)
                 lightYellow.setStroke()
 //                UIColor.lightGray.setStroke()
             } else {
-                let vividAuburn = UIColor(red: 165.0/255.0, green: 36.0/255.0, blue: 36.0/255.0, alpha: 1.0)
+                let vividAuburn = UIColor(named: "VividAuburn") ?? UIColor(red: 165.0/255.0, green: 36.0/255.0, blue: 36.0/255.0, alpha: 1.0)
                 vividAuburn.setStroke()
                 //UIColor.red.setStroke()
             }
         } else {
-            let lapisLazuli = UIColor(red: 36.0/255.0, green: 123.0/255.0, blue: 160.0/255.0, alpha: 1.0)
+            let lapisLazuli = UIColor(named: "LapisBlue") ?? UIColor(red: 36.0/255.0, green: 123.0/255.0, blue: 160.0/255.0, alpha: 1.0)
             lapisLazuli.setStroke()
 //            UIColor.blue.setStroke()
         }
@@ -84,7 +84,7 @@ import CoreGraphics
             
             let completedPath = UIBezierPath(arcCenter: CGPoint(x: rect.midX, y: rect.midY), radius: sideLen / 2.0 - 5.0, startAngle: startAngle, endAngle: startAngle + CGFloat(radians), clockwise: true)
             completedPath.lineWidth = 10.0
-            let lapisLazuli = UIColor(red: 36.0/255.0, green: 123.0/255.0, blue: 160.0/255.0, alpha: 1.0)
+            let lapisLazuli = UIColor(named: "LapisBlue") ?? UIColor(red: 36.0/255.0, green: 123.0/255.0, blue: 160.0/255.0, alpha: 1.0)
             lapisLazuli.setStroke()
 
 //            UIColor.blue.setStroke()

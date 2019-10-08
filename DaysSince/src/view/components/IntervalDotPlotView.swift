@@ -26,7 +26,7 @@ import CoreGraphics
         static let NumberFontSize: CGFloat = 20.0
     }
     
-    static let lapisLazuli:UIColor = UIColor(red: 36.0/255.0, green: 123.0/255.0, blue: 160.0/255.0, alpha: 1.0)
+    static let lapisLazuli:UIColor = UIColor(named: "LapisBlue") ??  UIColor(red: 36.0/255.0, green: 123.0/255.0, blue: 160.0/255.0, alpha: 1.0)
     
     var intervals:[Double]? {
         didSet {
@@ -79,7 +79,7 @@ import CoreGraphics
             if minValueLabel == nil {
                 minValueLabel = initLabel()
             }
-            configureLabel(minValueLabel!, text: "No interval data available", x: paddedRect.midX, y: paddedRect.midY, textAnchor: .MiddleCenter, fontSize: Constants.NumberFontSize, textColor: UIColor.black, textAlignment: NSTextAlignment.center)
+            configureLabel(minValueLabel!, text: "No interval data available", x: paddedRect.midX, y: paddedRect.midY, textAnchor: .MiddleCenter, fontSize: Constants.NumberFontSize, textColor: UIColor(named: "MainLabelColor") ?? UIColor.black, textAlignment: NSTextAlignment.center)
         } else if minMaxAvg.min == minMaxAvg.max && minMaxAvg.max == minMaxAvg.avg {
             // In this case, there is data, but they are all the same, non-zero value
             
@@ -113,7 +113,7 @@ import CoreGraphics
                 minValueLabel = initLabel()
             }
 
-            configureLabel(minValueLabel!, text: minValueText!, x: paddedRect.midX, y: yPos, textAnchor: .TopCenter, fontSize: Constants.NumberFontSize, textColor: UIColor.black, textAlignment: NSTextAlignment.center)
+            configureLabel(minValueLabel!, text: minValueText!, x: paddedRect.midX, y: yPos, textAnchor: .TopCenter, fontSize: Constants.NumberFontSize, textColor: UIColor(named: "MainLabelColor") ?? UIColor.black, textAlignment: NSTextAlignment.center)
 
 
         } else {
@@ -174,12 +174,12 @@ import CoreGraphics
 
             yPos += Constants.HalfDotPlotBoxHeight + Constants.VerticalSpacing
             
-            let minValueLabelSize = configureLabel(minValueLabel!, text: minValueText!, x: paddedRect.minX, y: yPos, textAnchor: .TopLeft, fontSize: Constants.NumberFontSize, textColor: UIColor.black, textAlignment: NSTextAlignment.left)
-            let maxValueLabelSize = configureLabel(maxValueLabel!, text: maxValueText!, x: paddedRect.maxX, y: yPos, textAnchor: .TopRight, fontSize: Constants.NumberFontSize, textColor: UIColor.black, textAlignment: NSTextAlignment.left)
+            let minValueLabelSize = configureLabel(minValueLabel!, text: minValueText!, x: paddedRect.minX, y: yPos, textAnchor: .TopLeft, fontSize: Constants.NumberFontSize, textColor: UIColor(named: "MainLabelColor") ?? UIColor.black, textAlignment: NSTextAlignment.left)
+            let maxValueLabelSize = configureLabel(maxValueLabel!, text: maxValueText!, x: paddedRect.maxX, y: yPos, textAnchor: .TopRight, fontSize: Constants.NumberFontSize, textColor: UIColor(named: "MainLabelColor") ?? UIColor.black, textAlignment: NSTextAlignment.left)
             
             yPos += max(minValueLabelSize.height, maxValueLabelSize.height)
-            configureLabel(minLabel!, text: "(min)", x: paddedRect.minX, y: yPos, textAnchor: .TopLeft, fontSize: 12.0, textColor: UIColor.gray, textAlignment: NSTextAlignment.left)
-            configureLabel(maxLabel!, text: "(max)", x: paddedRect.maxX, y: yPos, textAnchor: .TopRight, fontSize: 12.0, textColor: UIColor.gray, textAlignment: NSTextAlignment.left)
+            configureLabel(minLabel!, text: "(min)", x: paddedRect.minX, y: yPos, textAnchor: .TopLeft, fontSize: 12.0, textColor: UIColor(named: "SubLabelColor") ?? UIColor.gray, textAlignment: NSTextAlignment.left)
+            configureLabel(maxLabel!, text: "(max)", x: paddedRect.maxX, y: yPos, textAnchor: .TopRight, fontSize: 12.0, textColor: UIColor(named: "SubLabelColor") ?? UIColor.gray, textAlignment: NSTextAlignment.left)
         }
         
     }

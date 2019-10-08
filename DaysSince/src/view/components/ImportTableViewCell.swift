@@ -13,6 +13,8 @@ class ImportTableViewCell: UITableViewCell {
     @IBOutlet weak var titleLabel: UILabel!
     
     @IBOutlet weak var intervalLabel: UILabel!
+    @IBOutlet weak var historyLabel: UILabel!
+    @IBOutlet weak var startedLabel: UILabel!
     
     override func awakeFromNib() {
         super.awakeFromNib()

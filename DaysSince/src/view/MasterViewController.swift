@@ -172,6 +172,8 @@ class MasterViewController: UITableViewController {
         headerView.headerTitleLabel.text = state.asString()
         
         switch state {
+        case .Pinned:
+            headerView.statusImage.image = UIImage(named: "StarFilled")
         case .LastMonth, .LastWeek, .VeryOld, .Yesterday:
             headerView.statusImage.image = UIImage(named: "StatusIconLate")
         case .NextMonth, .NextWeek, .Tomorrow, .Future:
@@ -207,6 +209,11 @@ class MasterViewController: UITableViewController {
         let edit = editAction(at: indexPath)
         let delete = deleteAction(at: indexPath)
         return UISwipeActionsConfiguration(actions: [edit, delete, done])
+    }
+    
+    override func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        let pin = pinAction(at: indexPath)
+        return UISwipeActionsConfiguration(actions: [pin])
     }
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -292,6 +299,7 @@ extension MasterViewController {
             completion(true)
         }
         action.image = UIImage(named: "edit")
+        action.backgroundColor = UIColor(named: "EditGray")
         return action
     }
     
@@ -308,7 +316,7 @@ extension MasterViewController {
             completion(true)
         }
         action.image = UIImage(named: "done")
-        action.backgroundColor = UIColor(named: "Medium Green")
+        action.backgroundColor = UIColor(named: "DoneGreen")
         return action
     }
     
@@ -324,10 +332,27 @@ extension MasterViewController {
             completion(true)
         }
         action.image = UIImage(named: "trash")
-        action.backgroundColor = .red
+        action.backgroundColor = UIColor(named: "DeleteRed")
         return action
     }
-    
+
+    private func pinAction(at indexPath: IndexPath) -> UIContextualAction {
+        guard let activity = self.getActivity(at: indexPath) else {
+            return UIContextualAction(style: .normal, title: nil) {[] (action, view, completion) in
+                completion(true)
+            }
+        }
+
+        let title = activity.isPinned ? NSLocalizedString("remove", value: "Remove", comment: "") :NSLocalizedString("add", value: "Add", comment: "")
+        let action = UIContextualAction(style: .normal, title: title) {[activity] (action, view, completion) in
+            activity.isPinned = !activity.isPinned
+            completion(true)
+        }
+        action.image = activity.isPinned ?  UIImage(named: "StarAlpha") : UIImage(named: "StarOutline")
+        action.backgroundColor = activity.isPinned ? UIColor(named: "LapisBlue") : UIColor(named: "FavoriteBlue")
+        return action
+    }
+
     
     private func configureCell(_ cell: UITableViewCell, withActivity activity: ActivityMO) {
         guard let masterCell = cell as? MasterTableViewCell else {
@@ -401,10 +426,21 @@ extension MasterViewController {
     
     private func exportAllData() {
         let date = Date()
-        let fileName = "dayssince_\(date.timeIntervalSinceReferenceDate)" // TODO: Add timestamp
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy-MMM-dd'T'HH-mm-ss"
+//        formatter.dateStyle = .short
+//        formatter.timeStyle = .short
+//        let cal = Calendar.current
+//        let dc = cal.dateComponents([.day, .month, .year, .hour, .minute, .second], from: date)
+//        let formattedDate = "\(dc.day ?? 0)-\(dc.month ?? 0)-\(dc.year ?? 2000)at\(dc.hour ?? 12)-\(dc.minute ?? 0)-\(dc.second ?? 0)"
+        let formattedDate = formatter.string(from: date)
+//        formattedDate = formattedDate.replacingOccurrences(of: "/", with: "_")
+//        formattedDate = formattedDate.replacingOccurrences(of: " ", with: "_")
+//        formattedDate = formattedDate.replacingOccurrences(of: ":", with: "_")
+        let fileName = "dayssince_\(formattedDate)"
         let DocumentDirURL = try! FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
         
-        let fileURL = DocumentDirURL.appendingPathComponent(fileName).appendingPathExtension("dsjson")
+        let fileURL = DocumentDirURL.appendingPathComponent(fileName).appendingPathExtension("dsj")
         print("FilePath: \(fileURL.path)")
         
         // Create the JSON String

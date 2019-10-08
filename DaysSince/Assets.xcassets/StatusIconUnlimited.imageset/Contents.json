@@ -3,6 +3,16 @@
     {
       "idiom" : "universal",
       "filename" : "StatusIconsUnlimited.pdf"
+    },
+    {
+      "idiom" : "universal",
+      "filename" : "StatusIconsUnlimitedWhite.pdf",
+      "appearances" : [
+        {
+          "appearance" : "luminosity",
+          "value" : "dark"
+        }
+      ]
     }
   ],
   "info" : {

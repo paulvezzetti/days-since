@@ -3,6 +3,16 @@
     {
       "idiom" : "universal",
       "filename" : "StatusIconsLate.pdf"
+    },
+    {
+      "idiom" : "universal",
+      "filename" : "StatusIconsLateDark.pdf",
+      "appearances" : [
+        {
+          "appearance" : "luminosity",
+          "value" : "dark"
+        }
+      ]
     }
   ],
   "info" : {
