@@ -65,4 +65,29 @@ class IntervalCodable: Codable {
         return intervalMO
     }
     
+    func toPrettyString() -> String {
+        var pretty:String? = nil
+        switch type {
+        case ConstantIntervalMO.TYPE:
+            pretty = String.localizedStringWithFormat(NSLocalizedString("constantInterval.string", value: "Every %d days", comment: "Ex: Every 5 days"), day ?? 1)
+        case MonthlyIntervalMO.TYPE:
+            pretty = String.localizedStringWithFormat(NSLocalizedString("monthlyInterval.string", value: "Every month on the %@", comment: "Ex: Every month on the 12th"), NumberFormatterOrdinal.string(Int(day ?? 1)))
+        case MonthOffsetIntervalMO.TYPE:
+            pretty = String.localizedStringWithFormat(NSLocalizedString("monthOffset.string", comment: ""), Int(month ?? 1))
+        case UnlimitedIntervalMO.TYPE:
+            pretty = NSLocalizedString("unlimitedInterval.string", value: "Whenever I feel like it", comment: "") 
+        case WeeklyIntervalMO.TYPE:
+            pretty = String.localizedStringWithFormat(NSLocalizedString("weeklyInterval.string", value: "Every week on %@", comment: "Ex: Every week on Tuesday"), Weekdays.day(for: Int(day ?? 1)))
+        case WeekOffsetIntervalMO.TYPE:
+            pretty = String.localizedStringWithFormat(NSLocalizedString("weekOffset.string", comment: ""), Int(week ?? 1))
+        case YearlyIntervalMO.TYPE:
+            pretty = String.localizedStringWithFormat(NSLocalizedString("yearlyInterval.string", value: "Every year on %@ %d", comment: "Ex: Every year on Jan 15"), Months.month(for: Int(month ?? 1)), day ?? 1)
+        case YearOffsetIntervalMO.TYPE:
+            pretty = String.localizedStringWithFormat(NSLocalizedString("yearOffset.string", comment: ""), Int(year ?? 1))
+        default:
+            pretty = ""
+        }
+        return pretty ?? ""
+    }
+    
 }

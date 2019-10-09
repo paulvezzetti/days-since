@@ -60,7 +60,7 @@ class ImportTableViewController: UITableViewController {
         }
         let activity = baseModel?.activities[indexPath.row]
         cell.titleLabel.text = activity?.name
-        cell.intervalLabel.text = "Interval"
+        cell.intervalLabel.text = activity?.interval.toPrettyString() ?? ""
         cell.historyLabel.text = String(activity?.events.count ?? 0)
         return cell
     }
