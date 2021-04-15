@@ -14,6 +14,9 @@ Features:
 * Flexibility to include things that don't necessary have a fixed interval (i.e. Went to a movie)
 * Configurable notifications
 
-
-
+<img src="https://github.com/paulvezzetti/days-since/blob/master/DaysSince/Assets.xcassets/ActivityList.png" width=50% height=50%>
+<img src="https://github.com/paulvezzetti/days-since/blob/master/DaysSince/Assets.xcassets/Summary.png" width=50% height=50%>
+<img src="https://github.com/paulvezzetti/days-since/blob/master/DaysSince/Assets.xcassets/History.png" width=50% height=50%>
+<img src="https://github.com/paulvezzetti/days-since/blob/master/DaysSince/Assets.xcassets/MarkDone.png" width=50% height=50%>
+<img src="https://github.com/paulvezzetti/days-since/blob/master/DaysSince/Assets.xcassets/Swipe.png" width=50% height=50%>
 
